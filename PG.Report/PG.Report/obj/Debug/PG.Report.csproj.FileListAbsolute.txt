@@ -1,0 +1,167 @@
+D:\SPB_INV\PG.Report\PG.Report\obj\Debug\PG.Report.csprojResolveAssemblyReference.cache
+D:\SPB_INV\PG.Report\PG.Report\obj\Debug\RdlCompile.cache
+D:\SPB_INV\PG.Report\PG.Report\obj\Debug\RdlCompile.compiled
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\SqlServerTypes\x64\msvcr100.dll
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\SqlServerTypes\x64\SqlServerSpatial110.dll
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\SqlServerTypes\x86\msvcr100.dll
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\SqlServerTypes\x86\SqlServerSpatial110.dll
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\PG.Report.dll
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\PG.Report.pdb
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\itextsharp.dll
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\Microsoft.ReportViewer.DataVisualization.DLL
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\Microsoft.ReportViewer.Design.DLL
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\Microsoft.ReportViewer.ProcessingObjectModel.DLL
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\Microsoft.ReportViewer.WebDesign.DLL
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\Microsoft.ReportViewer.WebForms.DLL
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\Microsoft.ReportViewer.WinForms.DLL
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\Microsoft.SqlServer.Types.dll
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\Oracle.ManagedDataAccess.dll
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\PG.BLLibrary.dll
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\PG.Core.dll
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\PG.DBClass.dll
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\Microsoft.Windows.Design.Interaction.dll
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\Microsoft.Windows.Design.Extensibility.dll
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\PG.BLLibrary.pdb
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\PG.Core.pdb
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\PG.DBClass.pdb
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\Microsoft.Windows.Design.Interaction.xml
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\Microsoft.Windows.Design.Extensibility.xml
+D:\SPB_INV\PG.Report\PG.Report\obj\Debug\PG.Report.dll
+D:\SPB_INV\PG.Report\PG.Report\obj\Debug\PG.Report.pdb
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\Microsoft.ReportViewer.Common.dll
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\EPPlus.dll
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\de\Microsoft.ReportViewer.Common.resources.dll
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\es\Microsoft.ReportViewer.Common.resources.dll
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\fr\Microsoft.ReportViewer.Common.resources.dll
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\it\Microsoft.ReportViewer.Common.resources.dll
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\ja\Microsoft.ReportViewer.Common.resources.dll
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\ko\Microsoft.ReportViewer.Common.resources.dll
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\pt\Microsoft.ReportViewer.Common.resources.dll
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\ru\Microsoft.ReportViewer.Common.resources.dll
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\zh-CHS\Microsoft.ReportViewer.Common.resources.dll
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\zh-CHT\Microsoft.ReportViewer.Common.resources.dll
+D:\SPB_INV\PG.Report\PG.Report\bin\Debug\EPPlus.xml
+E:\Mamun Project\SPB_INV\PG.Report\PG.Report\bin\Debug\SqlServerTypes\x64\msvcr100.dll
+E:\Mamun Project\SPB_INV\PG.Report\PG.Report\bin\Debug\SqlServerTypes\x64\SqlServerSpatial110.dll
+E:\Mamun Project\SPB_INV\PG.Report\PG.Report\bin\Debug\SqlServerTypes\x86\msvcr100.dll
+E:\Mamun Project\SPB_INV\PG.Report\PG.Report\bin\Debug\SqlServerTypes\x86\SqlServerSpatial110.dll
+E:\Mamun Project\SPB_INV\PG.Report\PG.Report\bin\Debug\PG.Report.dll
+E:\Mamun Project\SPB_INV\PG.Report\PG.Report\bin\Debug\PG.Report.pdb
+E:\Mamun Project\SPB_INV\PG.Report\PG.Report\bin\Debug\EPPlus.dll
+E:\Mamun Project\SPB_INV\PG.Report\PG.Report\bin\Debug\itextsharp.dll
+E:\Mamun Project\SPB_INV\PG.Report\PG.Report\bin\Debug\Microsoft.ReportViewer.DataVisualization.DLL
+E:\Mamun Project\SPB_INV\PG.Report\PG.Report\bin\Debug\Microsoft.ReportViewer.Design.DLL
+E:\Mamun Project\SPB_INV\PG.Report\PG.Report\bin\Debug\Microsoft.ReportViewer.ProcessingObjectModel.DLL
+E:\Mamun Project\SPB_INV\PG.Report\PG.Report\bin\Debug\Microsoft.ReportViewer.WebDesign.DLL
+E:\Mamun Project\SPB_INV\PG.Report\PG.Report\bin\Debug\Microsoft.ReportViewer.WebForms.DLL
+E:\Mamun Project\SPB_INV\PG.Report\PG.Report\bin\Debug\Microsoft.ReportViewer.WinForms.DLL
+E:\Mamun Project\SPB_INV\PG.Report\PG.Report\bin\Debug\Microsoft.SqlServer.Types.dll
+E:\Mamun Project\SPB_INV\PG.Report\PG.Report\bin\Debug\Oracle.ManagedDataAccess.dll
+E:\Mamun Project\SPB_INV\PG.Report\PG.Report\bin\Debug\PG.BLLibrary.dll
+E:\Mamun Project\SPB_INV\PG.Report\PG.Report\bin\Debug\PG.Core.dll
+E:\Mamun Project\SPB_INV\PG.Report\PG.Report\bin\Debug\PG.DBClass.dll
+E:\Mamun Project\SPB_INV\PG.Report\PG.Report\bin\Debug\Microsoft.Windows.Design.Interaction.dll
+E:\Mamun Project\SPB_INV\PG.Report\PG.Report\bin\Debug\Microsoft.Windows.Design.Extensibility.dll
+E:\Mamun Project\SPB_INV\PG.Report\PG.Report\bin\Debug\PG.BLLibrary.pdb
+E:\Mamun Project\SPB_INV\PG.Report\PG.Report\bin\Debug\PG.Core.pdb
+E:\Mamun Project\SPB_INV\PG.Report\PG.Report\bin\Debug\PG.DBClass.pdb
+E:\Mamun Project\SPB_INV\PG.Report\PG.Report\bin\Debug\Microsoft.Windows.Design.Interaction.xml
+E:\Mamun Project\SPB_INV\PG.Report\PG.Report\bin\Debug\Microsoft.Windows.Design.Extensibility.xml
+E:\Mamun Project\SPB_INV\PG.Report\PG.Report\obj\Debug\PG.Report.csprojResolveAssemblyReference.cache
+E:\Mamun Project\SPB_INV\PG.Report\PG.Report\obj\Debug\RdlCompile.cache
+E:\Mamun Project\SPB_INV\PG.Report\PG.Report\obj\Debug\RdlCompile.compiled
+E:\Mamun Project\SPB_INV\PG.Report\PG.Report\obj\Debug\PG.Report.dll
+E:\Mamun Project\SPB_INV\PG.Report\PG.Report\obj\Debug\PG.Report.pdb
+E:\Mamun Project\HMS\PG.Report\PG.Report\bin\Debug\SqlServerTypes\x64\msvcr100.dll
+E:\Mamun Project\HMS\PG.Report\PG.Report\bin\Debug\SqlServerTypes\x64\SqlServerSpatial110.dll
+E:\Mamun Project\HMS\PG.Report\PG.Report\bin\Debug\SqlServerTypes\x86\msvcr100.dll
+E:\Mamun Project\HMS\PG.Report\PG.Report\bin\Debug\SqlServerTypes\x86\SqlServerSpatial110.dll
+E:\Mamun Project\HMS\PG.Report\PG.Report\bin\Debug\PG.Report.dll
+E:\Mamun Project\HMS\PG.Report\PG.Report\bin\Debug\PG.Report.pdb
+E:\Mamun Project\HMS\PG.Report\PG.Report\bin\Debug\EPPlus.dll
+E:\Mamun Project\HMS\PG.Report\PG.Report\bin\Debug\itextsharp.dll
+E:\Mamun Project\HMS\PG.Report\PG.Report\bin\Debug\Microsoft.ReportViewer.DataVisualization.DLL
+E:\Mamun Project\HMS\PG.Report\PG.Report\bin\Debug\Microsoft.ReportViewer.Design.DLL
+E:\Mamun Project\HMS\PG.Report\PG.Report\bin\Debug\Microsoft.ReportViewer.ProcessingObjectModel.DLL
+E:\Mamun Project\HMS\PG.Report\PG.Report\bin\Debug\Microsoft.ReportViewer.WebDesign.DLL
+E:\Mamun Project\HMS\PG.Report\PG.Report\bin\Debug\Microsoft.ReportViewer.WebForms.DLL
+E:\Mamun Project\HMS\PG.Report\PG.Report\bin\Debug\Microsoft.ReportViewer.WinForms.DLL
+E:\Mamun Project\HMS\PG.Report\PG.Report\bin\Debug\Microsoft.SqlServer.Types.dll
+E:\Mamun Project\HMS\PG.Report\PG.Report\bin\Debug\Oracle.ManagedDataAccess.dll
+E:\Mamun Project\HMS\PG.Report\PG.Report\bin\Debug\PG.BLLibrary.dll
+E:\Mamun Project\HMS\PG.Report\PG.Report\bin\Debug\PG.Core.dll
+E:\Mamun Project\HMS\PG.Report\PG.Report\bin\Debug\PG.DBClass.dll
+E:\Mamun Project\HMS\PG.Report\PG.Report\bin\Debug\Microsoft.Windows.Design.Interaction.dll
+E:\Mamun Project\HMS\PG.Report\PG.Report\bin\Debug\Microsoft.Windows.Design.Extensibility.dll
+E:\Mamun Project\HMS\PG.Report\PG.Report\bin\Debug\PG.BLLibrary.pdb
+E:\Mamun Project\HMS\PG.Report\PG.Report\bin\Debug\PG.Core.pdb
+E:\Mamun Project\HMS\PG.Report\PG.Report\bin\Debug\PG.DBClass.pdb
+E:\Mamun Project\HMS\PG.Report\PG.Report\bin\Debug\Microsoft.Windows.Design.Interaction.xml
+E:\Mamun Project\HMS\PG.Report\PG.Report\bin\Debug\Microsoft.Windows.Design.Extensibility.xml
+E:\Mamun Project\HMS\PG.Report\PG.Report\obj\Debug\PG.Report.csprojResolveAssemblyReference.cache
+E:\Mamun Project\HMS\PG.Report\PG.Report\obj\Debug\RdlCompile.cache
+E:\Mamun Project\HMS\PG.Report\PG.Report\obj\Debug\RdlCompile.compiled
+E:\Mamun Project\HMS\PG.Report\PG.Report\obj\Debug\PG.Report.dll
+E:\Mamun Project\HMS\PG.Report\PG.Report\obj\Debug\PG.Report.pdb
+D:\HotelManagement\HMS\PG.Report\PG.Report\bin\Debug\SqlServerTypes\x64\msvcr100.dll
+D:\HotelManagement\HMS\PG.Report\PG.Report\bin\Debug\SqlServerTypes\x64\SqlServerSpatial110.dll
+D:\HotelManagement\HMS\PG.Report\PG.Report\bin\Debug\SqlServerTypes\x86\msvcr100.dll
+D:\HotelManagement\HMS\PG.Report\PG.Report\bin\Debug\SqlServerTypes\x86\SqlServerSpatial110.dll
+D:\HotelManagement\HMS\PG.Report\PG.Report\bin\Debug\PG.Report.dll
+D:\HotelManagement\HMS\PG.Report\PG.Report\bin\Debug\PG.Report.pdb
+D:\HotelManagement\HMS\PG.Report\PG.Report\bin\Debug\EPPlus.dll
+D:\HotelManagement\HMS\PG.Report\PG.Report\bin\Debug\itextsharp.dll
+D:\HotelManagement\HMS\PG.Report\PG.Report\bin\Debug\Microsoft.ReportViewer.DataVisualization.DLL
+D:\HotelManagement\HMS\PG.Report\PG.Report\bin\Debug\Microsoft.ReportViewer.Design.DLL
+D:\HotelManagement\HMS\PG.Report\PG.Report\bin\Debug\Microsoft.ReportViewer.ProcessingObjectModel.DLL
+D:\HotelManagement\HMS\PG.Report\PG.Report\bin\Debug\Microsoft.ReportViewer.WebDesign.DLL
+D:\HotelManagement\HMS\PG.Report\PG.Report\bin\Debug\Microsoft.ReportViewer.WebForms.DLL
+D:\HotelManagement\HMS\PG.Report\PG.Report\bin\Debug\Microsoft.ReportViewer.WinForms.DLL
+D:\HotelManagement\HMS\PG.Report\PG.Report\bin\Debug\Microsoft.SqlServer.Types.dll
+D:\HotelManagement\HMS\PG.Report\PG.Report\bin\Debug\Oracle.ManagedDataAccess.dll
+D:\HotelManagement\HMS\PG.Report\PG.Report\bin\Debug\PG.BLLibrary.dll
+D:\HotelManagement\HMS\PG.Report\PG.Report\bin\Debug\PG.Core.dll
+D:\HotelManagement\HMS\PG.Report\PG.Report\bin\Debug\PG.DBClass.dll
+D:\HotelManagement\HMS\PG.Report\PG.Report\bin\Debug\Microsoft.Windows.Design.Interaction.dll
+D:\HotelManagement\HMS\PG.Report\PG.Report\bin\Debug\Microsoft.Windows.Design.Extensibility.dll
+D:\HotelManagement\HMS\PG.Report\PG.Report\bin\Debug\PG.BLLibrary.pdb
+D:\HotelManagement\HMS\PG.Report\PG.Report\bin\Debug\PG.Core.pdb
+D:\HotelManagement\HMS\PG.Report\PG.Report\bin\Debug\PG.DBClass.pdb
+D:\HotelManagement\HMS\PG.Report\PG.Report\bin\Debug\Microsoft.Windows.Design.Interaction.xml
+D:\HotelManagement\HMS\PG.Report\PG.Report\bin\Debug\Microsoft.Windows.Design.Extensibility.xml
+D:\HotelManagement\HMS\PG.Report\PG.Report\obj\Debug\PG.Report.csprojResolveAssemblyReference.cache
+D:\HotelManagement\HMS\PG.Report\PG.Report\obj\Debug\RdlCompile.cache
+D:\HotelManagement\HMS\PG.Report\PG.Report\obj\Debug\RdlCompile.compiled
+D:\HotelManagement\HMS\PG.Report\PG.Report\obj\Debug\PG.Report.dll
+D:\HotelManagement\HMS\PG.Report\PG.Report\obj\Debug\PG.Report.pdb
+D:\WRL_Source\WRL\PG.Report\PG.Report\bin\Debug\SqlServerTypes\x64\msvcr100.dll
+D:\WRL_Source\WRL\PG.Report\PG.Report\bin\Debug\SqlServerTypes\x64\SqlServerSpatial110.dll
+D:\WRL_Source\WRL\PG.Report\PG.Report\bin\Debug\SqlServerTypes\x86\msvcr100.dll
+D:\WRL_Source\WRL\PG.Report\PG.Report\bin\Debug\SqlServerTypes\x86\SqlServerSpatial110.dll
+D:\WRL_Source\WRL\PG.Report\PG.Report\bin\Debug\PG.Report.dll
+D:\WRL_Source\WRL\PG.Report\PG.Report\bin\Debug\PG.Report.pdb
+D:\WRL_Source\WRL\PG.Report\PG.Report\bin\Debug\EPPlus.dll
+D:\WRL_Source\WRL\PG.Report\PG.Report\bin\Debug\itextsharp.dll
+D:\WRL_Source\WRL\PG.Report\PG.Report\bin\Debug\Microsoft.ReportViewer.DataVisualization.DLL
+D:\WRL_Source\WRL\PG.Report\PG.Report\bin\Debug\Microsoft.ReportViewer.Design.DLL
+D:\WRL_Source\WRL\PG.Report\PG.Report\bin\Debug\Microsoft.ReportViewer.ProcessingObjectModel.DLL
+D:\WRL_Source\WRL\PG.Report\PG.Report\bin\Debug\Microsoft.ReportViewer.WebDesign.DLL
+D:\WRL_Source\WRL\PG.Report\PG.Report\bin\Debug\Microsoft.ReportViewer.WebForms.DLL
+D:\WRL_Source\WRL\PG.Report\PG.Report\bin\Debug\Microsoft.ReportViewer.WinForms.DLL
+D:\WRL_Source\WRL\PG.Report\PG.Report\bin\Debug\Microsoft.SqlServer.Types.dll
+D:\WRL_Source\WRL\PG.Report\PG.Report\bin\Debug\Oracle.ManagedDataAccess.dll
+D:\WRL_Source\WRL\PG.Report\PG.Report\bin\Debug\PG.BLLibrary.dll
+D:\WRL_Source\WRL\PG.Report\PG.Report\bin\Debug\PG.Core.dll
+D:\WRL_Source\WRL\PG.Report\PG.Report\bin\Debug\PG.DBClass.dll
+D:\WRL_Source\WRL\PG.Report\PG.Report\bin\Debug\Microsoft.Windows.Design.Interaction.dll
+D:\WRL_Source\WRL\PG.Report\PG.Report\bin\Debug\Microsoft.Windows.Design.Extensibility.dll
+D:\WRL_Source\WRL\PG.Report\PG.Report\bin\Debug\PG.BLLibrary.pdb
+D:\WRL_Source\WRL\PG.Report\PG.Report\bin\Debug\PG.Core.pdb
+D:\WRL_Source\WRL\PG.Report\PG.Report\bin\Debug\PG.DBClass.pdb
+D:\WRL_Source\WRL\PG.Report\PG.Report\bin\Debug\Microsoft.Windows.Design.Interaction.xml
+D:\WRL_Source\WRL\PG.Report\PG.Report\bin\Debug\Microsoft.Windows.Design.Extensibility.xml
+D:\WRL_Source\WRL\PG.Report\PG.Report\obj\Debug\PG.Report.csprojResolveAssemblyReference.cache
+D:\WRL_Source\WRL\PG.Report\PG.Report\obj\Debug\RdlCompile.cache
+D:\WRL_Source\WRL\PG.Report\PG.Report\obj\Debug\RdlCompile.compiled
+D:\WRL_Source\WRL\PG.Report\PG.Report\obj\Debug\PG.Report.dll
+D:\WRL_Source\WRL\PG.Report\PG.Report\obj\Debug\PG.Report.pdb

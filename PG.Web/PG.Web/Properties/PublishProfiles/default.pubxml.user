@@ -1,0 +1,3087 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit http://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_PublishTargetUrl>E:\SPB.Publish</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="Accounting/AccSettings.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Accounting/AccYear.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Accounting/AccYearList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Accounting/GeneralLedger/CostCenter.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Accounting/GeneralLedger/CostCenterCategory.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Accounting/GeneralLedger/CostCenterCategoryList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Accounting/GeneralLedger/CostCenterList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Accounting/GeneralLedger/GLAccount.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Accounting/GeneralLedger/GLAccountList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Accounting/GeneralLedger/GLAccountOpen.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Accounting/GeneralLedger/GLAccountOpenAccRef.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Accounting/GeneralLedger/GLAccountRefCategory.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Accounting/GeneralLedger/GLGroup.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Accounting/GeneralLedger/GLGroupList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Accounting/GeneralLedger/GLTranCode.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Accounting/GeneralLedger/GLTranCodeCategory.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Accounting/GeneralLedger/GLTranCodeCategoryList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Accounting/GeneralLedger/GLTranCodeList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Accounting/GeneralLedger/Journal.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Accounting/GeneralLedger/JournalFull.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Accounting/GeneralLedger/JournalList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Accounting/GeneralLedger/JournalSG.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Accounting/GeneralLedger/LocationwiseLedgerBinding.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Accounting/GeneralLedger/LocationwiseLedgerList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Accounting/GeneralLedger/LocationwiseRefBinding.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Accounting/GeneralLedger/LocationwiseRefList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Accounting/GeneralLedger/Reference.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Accounting/GeneralLedger/ReferenceCategory.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Accounting/GeneralLedger/ReferenceCategoryList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Accounting/GeneralLedger/ReferenceList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Accounting/Instrument.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Accounting/InstrumentList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Accounting/InstrumentReceive.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Accounting/InstrumentReceiveList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Accounting/LocationJournalType.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Admin/AdminMain.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Admin/AdminMaster.Master">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Admin/AppMenu.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Admin/AppMenuList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Admin/DataTransferProcess.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Admin/LongTask.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Admin/MenuRolePermission.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Admin/Role.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Admin/RoleList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Admin/RoleMenuAssign.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Admin/RolePermission.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Admin/SetPassword.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Admin/User.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Admin/UserDepartmentPermission.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Admin/UserList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Admin/UserLocation.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Admin/UserRolePermission.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="AppMaster.Master">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="BageMaster.Master">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="bin/AjaxControlToolkit.dll">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="bin/DropDownCheckBoxes.dll">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="bin/EPPlus.dll">
+      <publishTime>11/23/2023 15:24:37</publishTime>
+    </File>
+    <File Include="bin/itextsharp.dll">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="bin/Microsoft.ReportViewer.Common.dll">
+      <publishTime>11/23/2023 15:24:37</publishTime>
+    </File>
+    <File Include="bin/Microsoft.ReportViewer.Design.DLL">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="bin/Microsoft.ReportViewer.WebForms.dll">
+      <publishTime>09/30/2020 23:34:23</publishTime>
+    </File>
+    <File Include="bin/Microsoft.ReportViewer.WinForms.DLL">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="bin/Microsoft.SqlServer.Types.dll">
+      <publishTime>11/23/2023 15:24:38</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Windows.Design.Extensibility.dll">
+      <publishTime>02/21/2011 16:04:48</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Windows.Design.Interaction.dll">
+      <publishTime>02/21/2011 16:04:48</publishTime>
+    </File>
+    <File Include="bin/Oracle.ManagedDataAccess.dll">
+      <publishTime>11/23/2023 15:24:38</publishTime>
+    </File>
+    <File Include="bin/PG.BLLibrary.dll">
+      <publishTime>12/17/2023 13:28:57</publishTime>
+    </File>
+    <File Include="bin/PG.Common.dll">
+      <publishTime>12/17/2023 13:29:00</publishTime>
+    </File>
+    <File Include="bin/PG.Core.dll">
+      <publishTime>12/17/2023 13:28:53</publishTime>
+    </File>
+    <File Include="bin/PG.DBClass.dll">
+      <publishTime>12/17/2023 13:28:54</publishTime>
+    </File>
+    <File Include="bin/PG.Report.dll">
+      <publishTime>12/17/2023 13:29:00</publishTime>
+    </File>
+    <File Include="bin/PG.Web.PBLINV.dll">
+      <publishTime>12/17/2023 13:29:09</publishTime>
+    </File>
+    <File Include="bin/SqlServerTypes/x64/msvcr100.dll">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="bin/SqlServerTypes/x64/SqlServerSpatial110.dll">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="bin/SqlServerTypes/x86/msvcr100.dll">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="bin/SqlServerTypes/x86/SqlServerSpatial110.dll">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="Common/ChangePassword.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Common/Message.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Controls/GeoLocationTree.ascx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Controls/GLAccountSelection.ascx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Controls/GLGroupTree.ascx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Controls/GroupTree.ascx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Controls/ItemGroupTree.ascx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Controls/PrintButton.ascx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="css/cg-images/accept.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/cg-images/exclamation.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/cg-images/loading.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/cg-images/magnifier.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/contentpage.css">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/controls.css">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/fixpng.css">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/form.css">
+      <publishTime>12/03/2023 19:13:22</publishTime>
+    </File>
+    <File Include="css/grid.css">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/image/bg_greendot.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/image/blank.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/image/calendar.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/image/cleardot.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/image/cleardot2.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/image/down.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/image/dropdown.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/image/dropdown_over.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/image/emppic.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/image/go-dn-on.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/image/go-lt-of.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/image/go-lt-on.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/image/go-rt-of.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/image/go-rt-on.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/image/go-up-on.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/image/header03.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/image/logo.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/image/Logo.jpg">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/image/Logo2.jpg">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/image/payroll-03.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/image/payroll.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/image/pin-dn-o.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/image/pin-dn-p.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/image/pin-up-o.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/image/pin-up-p.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/image/resizabl.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/image/Text_01.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/image/up.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/images/animated-overlay.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/images/file.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/images/folder-closed.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/images/folder.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/images/select2-spinner.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/images/select2.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/images/treeview-black.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/images/treeview-default-line.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/images/treeview-default.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/images/treeview-famfamfam.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/images/treeview-gray.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/images/treeview-red-line.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/images/treeview-red.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/images/ui-bg_diagonals-thick_18_b81900_40x40.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/images/ui-bg_diagonals-thick_20_666666_40x40.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/images/ui-bg_flat_10_000000_40x100.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/images/ui-bg_glass_100_f6f6f6_1x400.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/images/ui-bg_glass_100_fdf5ce_1x400.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/images/ui-bg_glass_75_dadada_1x400.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/images/ui-bg_gloss-wave_35_f6a828_500x100.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/images/ui-bg_highlight-soft_100_eeeeee_1x100.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/images/ui-bg_highlight-soft_75_ffe45c_1x100.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/images/ui-icons_222222_256x240.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/images/ui-icons_888888_256x240.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/images/ui-icons_ef8c08_256x240.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/images/ui-icons_ffd27a_256x240.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/jquery.treeview.css">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/jquery.ui.combogrid.css">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/layout-default-latest.css">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/layout.css">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/pg.ui.geolocationtree.css">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/pg.ui.glgrouptree.css">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/pg.ui.grouptree.css">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/pg.ui.itemgrouptree.css">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/select2.css">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/skin/icons-rtl.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/skin/icons.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/skin/loading.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/skin/ui.dynatree.css">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/skin/vline-rtl.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/skin/vline.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/smoothness/images/ui-anim_basic_16x16.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/smoothness/images/ui-bg_flat_0_aaaaaa_40x100.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/smoothness/images/ui-bg_flat_75_ffffff_40x100.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/smoothness/images/ui-bg_glass_55_fbf9ee_1x400.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/smoothness/images/ui-bg_glass_65_ffffff_1x400.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/smoothness/images/ui-bg_glass_75_dadada_1x400.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/smoothness/images/ui-bg_glass_95_fef1ec_1x400.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/smoothness/images/ui-bg_highlight-soft_75_cccccc_1x100.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/smoothness/images/ui-icons_222222_256x240.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/smoothness/images/ui-icons_2e83ff_256x240.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/smoothness/images/ui-icons_454545_256x240.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/smoothness/images/ui-icons_888888_256x240.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/smoothness/images/ui-icons_cd0a0a_256x240.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/smoothness/jquery-ui.css">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="css/tab.css">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Default.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="download/RSClientPrint-x64.cab">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="download/RSClientPrint.cab">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="getjsondata.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Global.asax">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Home.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="image/active.jpg">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/bg003.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/bg_greendot.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/bg_greydot.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnApprove.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnCancel.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnCancelDisabled.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnCancelHover.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnClose.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnCloseDisabled.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnCloseHover.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnDelete.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnDeleteDisabled.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnDeleteGrid.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnDeleteGridDisabled.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnDeleteGridHover.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnDeleteHover.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnDeleteIcon.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnDeleteIconDisabled.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnDeleteIconHover.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnEdit.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnEditDisabled.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnEditGrid.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnEditGridDisabled.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnEditGridHover.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnEditHover.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnEditIcon.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnEditIconDisabled.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnEditIconHover.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnExport.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnExportDisabled.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnExportHover.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnListIcon.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnNew.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnNewDisabled.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnNewHover.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnNewRow.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnNewRowDisabled.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnNewRowHover.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnOK.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnOKDisabled.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnOKHover.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnOpenWindow.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnOpenWindowDisabled.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnOpenWindowHover.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnPopup.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnPrint.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnPrintDisabled.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnPrintHover.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnPrintPreview.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnPrintPreviewDisabled.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnPrintPreviewHover.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnQuickLink.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnQuickLinkDisabled.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnQuickLinkHover.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnRefresh.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnRefreshDisabled.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnRefreshHover.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnSave.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnSaveDisabled.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnSaveHover.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnSearch.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnSearchDisabled.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnSearchHover.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnViewGrid.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnViewGridDisabled.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnViewGridHover.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnViewIcon.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnViewIconDisabled.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/btnViewIconHover.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/button_bg.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/bx_home.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/calendar.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/cleardot2.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/close.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/comlogosmall.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/comlogosmall2.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/cross.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/crossred.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/crossred_over.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/cross_over.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/delete.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/delete.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/delete_icon.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/down.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/dropdown.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/dropdown2.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/dropdown_over.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/emppic.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/go-dn-on.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/go-lt-of.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/go-lt-on.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/go-rt-of.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/go-rt-on.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/go-up-on.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/header03.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/header05.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/header10.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/header11.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/header12.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/header13.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/header14.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/header16.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/header20.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/header21.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/iconCancel.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/iconDelete.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/iconEdit.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/iconFirst.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/iconLast.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/iconList.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/iconMoreList.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/iconNew.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/iconNext.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/iconPrev.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/iconView.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/less.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/loader.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/login.jpg">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/login2.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/login_screen.jpg">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/more.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/pg.jpg">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/pg.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/pin-dn-o.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/pin-dn-p.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/pin-up-o.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/pin-up-p.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/redman.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/redman1.jpg">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/redman2.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/resizabl.gif">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="image/search.png">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="image/side_background.gif">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="image/spin.gif">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="image/Text_01.png">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="image/topbannertext.png">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="image/topbannertextsys.png">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="image/up.png">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="image/wait.gif">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="image/waittrans.gif">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="Inventory/AdjustmentList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/AdjustmentListFormation.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/AdjustmentListStore.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/AdjustmentListTemp.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/Brand_entry.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/Brand_List.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/Category_Entry.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/Category_List.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/Customer.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/CustomerAdjustmentList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/CustomerList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/CustomerMoneyAdjustment.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/CustomerOpenningBalanceList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/DataTransfertoSND.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/DC_GP_StatusViewAndReportForRotaryUnit.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/DepartmentItemAdjustmentBulk.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/DepartmentWiseItem.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/Dept_Adj_Temp_Autho_List.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/DEPT_DIRECT_ITCToDept.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/Direct_ITC_Dept_To_Dept_List.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/EMP_SIGN_Upload.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/ForeignPurchaseClosing.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/ForeignPurchaseList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/IGR_List_For_Closing.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/Indent_Closing.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/Indent_Closing_List.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/InterDepartmentIGRList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/InterDepartmentIGRListForNewITC.aspx">
+      <publishTime>06/13/2023 15:24:26</publishTime>
+    </File>
+    <File Include="Inventory/InterDepartmentIGRListMRB.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/InterDepartmentIRRList.aspx">
+      <publishTime>09/14/2023 10:41:30</publishTime>
+    </File>
+    <File Include="Inventory/InterDepartmentITCList.aspx">
+      <publishTime>09/14/2023 13:02:48</publishTime>
+    </File>
+    <File Include="Inventory/InterDepartmentITCListForNewIRR.aspx">
+      <publishTime>06/15/2023 12:13:18</publishTime>
+    </File>
+    <File Include="Inventory/INVBin.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVCustomerOPBalanceEntry.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVDCGPReprint.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVDepartmentPermission.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVDirectITCListForStore.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVDirectPurchaseNew.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVDirectPurchase_SP_Update_New.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVIGRApprovalList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVIMPInvoice.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVIndentApproval.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVIndentApprovalList.aspx">
+      <publishTime>08/09/2023 10:26:22</publishTime>
+    </File>
+    <File Include="Inventory/INVIndentListForNewLC.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVIndentListForNewPurchase.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVInterdepartmentDirectITCList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVInterDepartmentITCAgainstIGRWithBatch.aspx">
+      <publishTime>10/15/2023 15:05:27</publishTime>
+    </File>
+    <File Include="Inventory/INVInvoiceApproveList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVInvoiceMst.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVInvoiceMstUpdate.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVInvoiceWiseStockIssue.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVIRRListForDepartment.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVIRRListForStore.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVIRRListView.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVITCListAgainstIGRForStore.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVITCListForDepartment.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVITEMInactive.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVItemOpeningPriceEntry.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVItemReceiveDirect.aspx">
+      <publishTime>08/29/2023 12:21:14</publishTime>
+    </File>
+    <File Include="Inventory/INVItemReceiveDirectList.aspx">
+      <publishTime>08/29/2023 12:21:14</publishTime>
+    </File>
+    <File Include="Inventory/INVLCList.aspx">
+      <publishTime>06/18/2023 15:29:07</publishTime>
+    </File>
+    <File Include="Inventory/INVLCListForPurchase.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVMRP_REQUISITION.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVMrrFromLC.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVMRRFromLP.aspx">
+      <publishTime>12/06/2023 11:25:17</publishTime>
+    </File>
+    <File Include="Inventory/INVMrrListForAccUpdate.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVNewDeptAdjustment.aspx">
+      <publishTime>11/06/2023 16:52:56</publishTime>
+    </File>
+    <File Include="Inventory/INVNewDeptAdjustmentTemp.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVNewDeptItemBinding.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVNewDirectITCFormAdminStore.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVNewDirectITCFormStore.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVNewDirectITCInterDepartment.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVNewDirectItemReceive.aspx">
+      <publishTime>08/29/2023 12:26:10</publishTime>
+    </File>
+    <File Include="Inventory/INVNewIGR.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVNewIGRApproval.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVNewIGR_For_Closing.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVNewIndentPurchase.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVNewInterDepartmentIGR.aspx">
+      <publishTime>11/14/2023 17:43:52</publishTime>
+    </File>
+    <File Include="Inventory/INVNewInterDepartmentIRR.aspx">
+      <publishTime>11/02/2023 17:07:40</publishTime>
+    </File>
+    <File Include="Inventory/INVNewInterDepartmentITCAgainstIGR.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVNewInterDepartmentMRBIGR.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVNewIRRByDepartment.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVNewIRRByStore.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVNewITCAgainstIGRFormStore.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVNewITCToStore.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVNewLCPurchaseClosing.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVNewLP_MRR_Authorize.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVNewMRR.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVNewMRRFromLC.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVNewPurchaseAgainstIndent.aspx">
+      <publishTime>09/05/2023 15:40:24</publishTime>
+    </File>
+    <File Include="Inventory/INVNewPurchaseAgainstIndentNew.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVNewPurchaseAgainstServicePR.aspx">
+      <publishTime>09/05/2023 15:40:24</publishTime>
+    </File>
+    <File Include="Inventory/INVNewPurchaseIndent.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVNewPurchaseIndentBak.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVNewReceiveFromReturn.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVNewRepareItemReceive.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVNewStoreItemAdjustment.aspx">
+      <publishTime>09/05/2023 10:55:22</publishTime>
+    </File>
+    <File Include="Inventory/InvoicePriceUpdateByAcc.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/Invoice_Price_Update.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/Invoice_Price_Update_ListAcc.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVOutStationTransfer.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVOutStationTransferRepair.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVOutStationTransferRotary.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/InvPurchaseAgainstIndentList.aspx">
+      <publishTime>07/05/2023 11:40:22</publishTime>
+    </File>
+    <File Include="Inventory/INVPurchaseIndentNew.aspx">
+      <publishTime>08/08/2023 14:15:40</publishTime>
+    </File>
+    <File Include="Inventory/INVPurchaseIndtList.aspx">
+      <publishTime>12/06/2023 10:27:29</publishTime>
+    </File>
+    <File Include="Inventory/INVPurchaseIndtListForNewPurchase.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVPurchaseRequisitionService.aspx">
+      <publishTime>08/08/2023 17:56:40</publishTime>
+    </File>
+    <File Include="Inventory/INVPurchaseRequisitionServiceList.aspx">
+      <publishTime>08/08/2023 17:55:19</publishTime>
+    </File>
+    <File Include="Inventory/INVRack.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVRepareItemReceiveList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/InvServicePOAgainstIndentList.aspx">
+      <publishTime>08/10/2023 15:52:06</publishTime>
+    </File>
+    <File Include="Inventory/INVServicePOListForReceive.aspx">
+      <publishTime>08/14/2023 13:12:16</publishTime>
+    </File>
+    <File Include="Inventory/INVServicePOReceive.aspx">
+      <publishTime>08/14/2023 15:57:09</publishTime>
+    </File>
+    <File Include="Inventory/INVServicePRForNewPurchase.aspx">
+      <publishTime>08/09/2023 17:17:59</publishTime>
+    </File>
+    <File Include="Inventory/INVSupplierReturn.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/InvSupplierReturnList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INVWorkingMonthEntry.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INV_Dashboard.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INV_IGR_Status_List.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INV_Indent_Status_List.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INV_ITC_ApprovalList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/INV_MRR_List_For_Acc.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/Item.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/ItemEntrywithatt.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/ItemGroup.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/ItemGroupList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/ItemIssueToStoreList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/ItemList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/ItemList_Prev.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/ItemReceiveByStoreList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/ItemRequisitionList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/Item_Color_Entry.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/Item_Color_List.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/Item_Generation_Entry.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/Item_Generation_List.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/Item_Group_Wise_Att_Entry.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/Item_Group_Wise_Att_EntryServiceTest.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/Item_Group_Wise_Att_List.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/Item_old.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/Item_Size_Entry.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/Item_Size_List.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/LC_Costing_Entry.aspx">
+      <publishTime>08/29/2023 12:21:14</publishTime>
+    </File>
+    <File Include="Inventory/LC_Costing_List.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/LC_ENTRY.aspx">
+      <publishTime>06/21/2023 10:55:52</publishTime>
+    </File>
+    <File Include="Inventory/LC_ENTRY_Against_Indent.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/LocalPurchaseViewList.aspx">
+      <publishTime>11/14/2023 17:44:56</publishTime>
+    </File>
+    <File Include="Inventory/LP_Indent_Approval.aspx">
+      <publishTime>08/09/2023 12:34:29</publishTime>
+    </File>
+    <File Include="Inventory/LP_Indent_Checked.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/LP_List_Special_Update.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/LP_PurchaseList_Special_Update.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/LP_Purchase_Approval_Business_H.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/LP_Purchase_Approval_Director.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/LP_Purchase_Approval_Finance_H.aspx">
+      <publishTime>08/14/2023 15:57:05</publishTime>
+    </File>
+    <File Include="Inventory/LP_Purchase_Approval_Purchase_H.aspx">
+      <publishTime>08/14/2023 15:57:01</publishTime>
+    </File>
+    <File Include="Inventory/MoneyReceivedList_x.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/Money_Receipt_Entry_x.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/MRRList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/MRRList_For_Authorize.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/MRRList_For_QCPass.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/Mrr_Authorization.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/NewDCGPAgainstInvoice.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/OpeningBalance.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/OpeningBalanceList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/OutSaleList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/PurchaseAuthorization.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/PurchaseAuthorizeUnauthorizeListView.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/PurchaseList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/PurchaseSpecialUpdateByStore.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/PurchaseSpecialUpdateByStoreList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/QCPass_List.aspx">
+      <publishTime>06/14/2023 17:58:03</publishTime>
+    </File>
+    <File Include="Inventory/QC_Pass_Entry.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/QC_Pass_List_view.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/ReceiveFromSupReturnList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/ReceiveListFromSupReturn.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/RejectionReceiveByStoreEntry.aspx">
+      <publishTime>10/30/2023 12:56:46</publishTime>
+    </File>
+    <File Include="Inventory/RejectionReceiveByStoreList.aspx">
+      <publishTime>10/30/2023 12:50:11</publishTime>
+    </File>
+    <File Include="Inventory/RejectTransferListForStoreReceive.aspx">
+      <publishTime>10/26/2023 16:32:59</publishTime>
+    </File>
+    <File Include="Inventory/Requisition.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/SalesInvoiceStatusView.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/SalesInvoiceStatusViewForRotaryUnit.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/SalesReturn.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/SalesReturnAgainstInvoice.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/StoreItemAdjustmentAuthorization.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/StoreItemAdjustmentAuthorizationList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/StoreItemAdjustmentBulk.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/StoreItemAdjustmentVerification.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/StoreItemAdjustmentVerificationList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/STORE_ITEM_REJECTION_DECLARE_SPL.aspx">
+      <publishTime>09/27/2023 11:40:38</publishTime>
+    </File>
+    <File Include="Inventory/Supplier.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/SupplierItemBind.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Inventory/SupplierList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="javascript/blank.gif">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/CommonJSForSetReset.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/DetectPrivateMode.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/jquery-latest.min.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/jquery-migrate-latest.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/jquery-ui-latest.min.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/jquery-watch.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/jquery.actual.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/jquery.attributeobserver.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/jquery.autosize.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/jquery.bgiframe.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/jquery.cookie.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/jquery.dynatree.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/jquery.layout.min-latest.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/jquery.pngFix.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/jquery.scrollablegrid.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/jquery.scrollIntoView.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/jquery.select2.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/jquery.stringify.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/jquery.treeview.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/jquery.ui.combogrid.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/jszip.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/pg.accutility.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/pg.contentform.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/pg.contentpage.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/pg.enums.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/pg.jssecurity.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/pg.jsutility.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/pg.logintask.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/pg.mcautocomplete.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/pg.tabclass.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/pg.tabmenu.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/pg.ui.glaccountist.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/pg.ui.glgrouptree.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/pg.ui.gljournalbanktran.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/pg.ui.grouptree.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/pg.ui.itemgrouptree.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/pg.ui.printbutton.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/pg.ui.projectlist.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="javascript/pg.ui.projectselectionquick.js">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="keeplive.ashx">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="License.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="License/license.dat">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="License/placeholder.txt">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Login.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="loginsilent.ashx">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="Login_Bak.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Main.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="MIS/MIS_ProductionReport.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Organization/Location.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Organization/LocationList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="packages.config">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="Production/ASM_RejectPlateBreakEntry.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ASM_RejectPlateBreak_List.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ASM_RejPlateToStore.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ASM_RejPlateToStore_List.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/BOMEntryDeptWise.aspx">
+      <publishTime>08/14/2023 17:43:09</publishTime>
+    </File>
+    <File Include="Production/BOMList.aspx">
+      <publishTime>06/14/2023 17:58:03</publishTime>
+    </File>
+    <File Include="Production/CASTING_LEAD_REPROCESS_ENTRY.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/CASTING_LEAD_REPROCESS_LIST.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/Department_Item_Mapping_V1.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/Dept_Prod_Item_Mapping.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/Grid_Dross_Entry.aspx">
+      <publishTime>10/08/2023 17:22:29</publishTime>
+    </File>
+    <File Include="Production/Grid_Dross_EntryList.aspx">
+      <publishTime>07/23/2023 12:25:26</publishTime>
+    </File>
+    <File Include="Production/IBCuttingReceive.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/IBCuttingReceiveList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/IB_Entry.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/IB_Entry_ItemWise.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/IB_FillingEntry.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/IB_Filling_List.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/IB_SulphationEntry.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/IB_Sulphation_List.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/IGR_ITC_UnAuthorization.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/MRB_Plate_Entry.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/MRB_Plate_List.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/Oxide_Wastage_Entry.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/Oxide_Wastage_List.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/Pasting_Process_Loss_Entry.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/Pasting_Process_Loss_List.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/Pasting_Scrap_Entry.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/Pasting_Scrap_List.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/Pasting_Wastage_Entry.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/Pasting_Wastage_List.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/Plate_Weight_Entry.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/Plate_Weight_List.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/Production32AntimonyEntryList.aspx">
+      <publishTime>08/03/2023 09:51:52</publishTime>
+    </File>
+    <File Include="Production/Production32AntimonyInternalEntry_SPL.aspx">
+      <publishTime>07/26/2023 13:24:01</publishTime>
+    </File>
+    <File Include="Production/ProductionAcidEntry_withBOM_SPL.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionAcidEntry_withBOM_SPL_V1.aspx">
+      <publishTime>11/07/2023 11:27:26</publishTime>
+    </File>
+    <File Include="Production/ProductionAcidList.aspx">
+      <publishTime>08/03/2023 09:51:52</publishTime>
+    </File>
+    <File Include="Production/ProductionAssamblyEntry.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionAssamblyEntryWP.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionAssamblyEntryWP_ItemWise.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionAssamblyEntryWP_P_BAT.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionAssamblyP_BAT_EntryWP_ItemWise.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionAssemblyFGEntry.aspx">
+      <publishTime>11/07/2023 10:27:26</publishTime>
+    </File>
+    <File Include="Production/ProductionAssemblyFGList.aspx">
+      <publishTime>06/20/2023 10:17:40</publishTime>
+    </File>
+    <File Include="Production/ProductionAssemblyList.aspx">
+      <publishTime>07/04/2023 10:33:48</publishTime>
+    </File>
+    <File Include="Production/ProductionAssemblySFGEntry.aspx">
+      <publishTime>11/07/2023 10:41:54</publishTime>
+    </File>
+    <File Include="Production/ProductionChargingEntryLoadingSPL.aspx">
+      <publishTime>11/06/2023 16:52:06</publishTime>
+    </File>
+    <File Include="Production/ProductionChargingPackingEntry.aspx">
+      <publishTime>11/07/2023 10:28:31</publishTime>
+    </File>
+    <File Include="Production/ProductionCMPEntryWithBOM_SPL.aspx">
+      <publishTime>11/07/2023 10:27:58</publishTime>
+    </File>
+    <File Include="Production/ProductionCMPList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionConnectingBarConversionEntry.aspx">
+      <publishTime>12/12/2023 16:03:36</publishTime>
+    </File>
+    <File Include="Production/ProductionConnectingBarConversionList.aspx">
+      <publishTime>12/13/2023 11:24:57</publishTime>
+    </File>
+    <File Include="Production/ProductionConnectingBarEntry.aspx">
+      <publishTime>12/07/2023 11:56:45</publishTime>
+    </File>
+    <File Include="Production/ProductionConnectingBarList.aspx">
+      <publishTime>12/07/2023 12:09:18</publishTime>
+    </File>
+    <File Include="Production/ProductionCrushingPPEntryWithBOM.aspx">
+      <publishTime>09/05/2023 17:17:14</publishTime>
+    </File>
+    <File Include="Production/ProductionCrushingPPEntry_SPL.aspx">
+      <publishTime>09/26/2023 10:37:02</publishTime>
+    </File>
+    <File Include="Production/ProductionCrushingPPList.aspx">
+      <publishTime>07/30/2023 10:11:06</publishTime>
+    </File>
+    <File Include="Production/ProductionDFSEntryWithBOM_SPL.aspx">
+      <publishTime>11/07/2023 10:29:17</publishTime>
+    </File>
+    <File Include="Production/ProductionDFSList.aspx">
+      <publishTime>08/03/2023 09:51:52</publishTime>
+    </File>
+    <File Include="Production/ProductionDFSMixerEntry_WithBOM_SPL.aspx">
+      <publishTime>11/07/2023 10:31:59</publishTime>
+    </File>
+    <File Include="Production/ProductionDFSMixerList.aspx">
+      <publishTime>08/03/2023 09:51:52</publishTime>
+    </File>
+    <File Include="Production/ProductionDMWaterEntry.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionDmWaterEntry_SPL.aspx">
+      <publishTime>07/16/2023 09:57:45</publishTime>
+    </File>
+    <File Include="Production/ProductionDmWaterEntry_withBOM_SPL.aspx">
+      <publishTime>09/26/2023 14:54:17</publishTime>
+    </File>
+    <File Include="Production/ProductionDmWaterList.aspx">
+      <publishTime>08/03/2023 09:51:52</publishTime>
+    </File>
+    <File Include="Production/ProductionDmWaterRegenarationList.aspx">
+      <publishTime>08/03/2023 09:51:52</publishTime>
+    </File>
+    <File Include="Production/ProductionDMWRegenConEntry_SPL.aspx">
+      <publishTime>07/16/2023 10:04:19</publishTime>
+    </File>
+    <File Include="Production/ProductionFGRejectionList.aspx">
+      <publishTime>08/20/2023 10:26:01</publishTime>
+    </File>
+    <File Include="Production/ProductionFinishedDMWaterEntry.aspx">
+      <publishTime>11/07/2023 10:32:39</publishTime>
+    </File>
+    <File Include="Production/ProductionFinishedDMWaterList.aspx">
+      <publishTime>08/03/2023 09:51:52</publishTime>
+    </File>
+    <File Include="Production/ProductionForcastEntry.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionForcastEntry_V1.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionForcastList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionFormationEntry.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionFormationEntryLoading.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionFormationEntryUnLoading.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionFormationEntryWithBOM_SPL.aspx">
+      <publishTime>09/21/2023 10:13:20</publishTime>
+    </File>
+    <File Include="Production/ProductionFormationFormEntry.aspx">
+      <publishTime>11/07/2023 10:33:44</publishTime>
+    </File>
+    <File Include="Production/ProductionFormationList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionFormationListSPL.aspx">
+      <publishTime>09/24/2023 12:07:47</publishTime>
+    </File>
+    <File Include="Production/ProductionFormationLoadingList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionFormationReFormEntry.aspx">
+      <publishTime>11/07/2023 10:35:21</publishTime>
+    </File>
+    <File Include="Production/ProductionFormationUnFormEntry.aspx">
+      <publishTime>11/07/2023 10:36:07</publishTime>
+    </File>
+    <File Include="Production/ProductionFormationUnLoadingList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionGridCastingEntry.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionGridCastingEntry_withBOM.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionGridCastingEntry_withBOM_SPL.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionGridCastingEntry_withBOM_SPL_V1.aspx">
+      <publishTime>11/07/2023 10:43:18</publishTime>
+    </File>
+    <File Include="Production/ProductionGridCastingEntry_withBOM_V1.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionGridCastingList.aspx">
+      <publishTime>08/03/2023 09:51:52</publishTime>
+    </File>
+    <File Include="Production/ProductionGridCastingQAEntry_SPL.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionGridCastingQAPendingList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionGridEntry_withBOM_SPL_v2.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionMcFGEntry.aspx">
+      <publishTime>11/07/2023 10:36:44</publishTime>
+    </File>
+    <File Include="Production/ProductionMcFGList.aspx">
+      <publishTime>07/26/2023 11:09:46</publishTime>
+    </File>
+    <File Include="Production/ProductionMcLoadingEntry.aspx">
+      <publishTime>11/07/2023 12:11:27</publishTime>
+    </File>
+    <File Include="Production/ProductionMcLodingList.aspx">
+      <publishTime>07/26/2023 13:11:24</publishTime>
+    </File>
+    <File Include="Production/ProductionMcPackingEntry.aspx">
+      <publishTime>11/07/2023 10:37:17</publishTime>
+    </File>
+    <File Include="Production/ProductionMcSFGEntry.aspx">
+      <publishTime>11/07/2023 10:26:46</publishTime>
+    </File>
+    <File Include="Production/ProductionMcSFGList.aspx">
+      <publishTime>07/05/2023 10:36:33</publishTime>
+    </File>
+    <File Include="Production/ProductionOxideCylinderEntry_withBOM_SPL.aspx">
+      <publishTime>11/07/2023 10:42:43</publishTime>
+    </File>
+    <File Include="Production/ProductionOxideCylinerList.aspx">
+      <publishTime>08/03/2023 09:51:52</publishTime>
+    </File>
+    <File Include="Production/ProductionOxideEntry.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionOxideEntry_withBOM.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionOxideEntry_WithBOM_NEW.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionOxideEntry_withBOM_SPL.aspx">
+      <publishTime>11/07/2023 10:37:43</publishTime>
+    </File>
+    <File Include="Production/ProductionOxideList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionOxidList_SPL.aspx">
+      <publishTime>08/03/2023 09:51:52</publishTime>
+    </File>
+    <File Include="Production/ProductionPackingEntry.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionPackingEntry_ItemWise.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionPacking_P_BAT_Entry_ItemWise.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionPartingEntry_withBOM_SPL.aspx">
+      <publishTime>11/07/2023 10:25:56</publishTime>
+    </File>
+    <File Include="Production/ProductionPartingList.aspx">
+      <publishTime>08/03/2023 09:51:52</publishTime>
+    </File>
+    <File Include="Production/ProductionPasteMixerEntry_BOMWise_SPL.aspx">
+      <publishTime>11/07/2023 10:23:12</publishTime>
+    </File>
+    <File Include="Production/ProductionPasteMixerList.aspx">
+      <publishTime>08/03/2023 09:51:52</publishTime>
+    </File>
+    <File Include="Production/ProductionPastingEntry.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionPastingEntryManualSPL.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionPastingEntryWithBOM_SPL.aspx">
+      <publishTime>12/10/2023 16:23:42</publishTime>
+    </File>
+    <File Include="Production/ProductionPastingEntry_ItemWise.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionPastingList.aspx">
+      <publishTime>08/03/2023 09:51:52</publishTime>
+    </File>
+    <File Include="Production/ProductionPlasticEntry_withBOM.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionPlasticList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionProcessLossEntry.aspx">
+      <publishTime>11/09/2023 10:51:37</publishTime>
+    </File>
+    <File Include="Production/ProductionProcessLossList.aspx">
+      <publishTime>11/09/2023 14:53:38</publishTime>
+    </File>
+    <File Include="Production/ProductionQAPass_List.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionQA_Pass_View.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionRecoveryPasteEntry.aspx">
+      <publishTime>11/30/2023 13:12:56</publishTime>
+    </File>
+    <File Include="Production/ProductionRecoveryPasteList.aspx">
+      <publishTime>11/30/2023 15:27:08</publishTime>
+    </File>
+    <File Include="Production/ProductionReFormFromUnformEntry.aspx">
+      <publishTime>11/07/2023 10:39:12</publishTime>
+    </File>
+    <File Include="Production/ProductionRejectionApprovalDeptH.aspx">
+      <publishTime>08/28/2023 11:48:52</publishTime>
+    </File>
+    <File Include="Production/ProductionRejectionConvertedListDeptH.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionRejectionConvertedListForApproval.aspx">
+      <publishTime>11/14/2023 17:15:41</publishTime>
+    </File>
+    <File Include="Production/ProductionRejectionList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/ProductionRejectionListForApprovalDeptH.aspx">
+      <publishTime>08/27/2023 15:33:05</publishTime>
+    </File>
+    <File Include="Production/ProductionRejectionListForTransfer.aspx">
+      <publishTime>08/24/2023 10:48:15</publishTime>
+    </File>
+    <File Include="Production/ProductionRejectionTransfer.aspx">
+      <publishTime>10/04/2023 13:33:01</publishTime>
+    </File>
+    <File Include="Production/ProductionRejectionTransferToStoreEntry.aspx">
+      <publishTime>10/25/2023 12:53:28</publishTime>
+    </File>
+    <File Include="Production/ProductionRejectionTransferToStoreList.aspx">
+      <publishTime>10/26/2023 11:10:08</publishTime>
+    </File>
+    <File Include="Production/ProductionScrapEntry.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/ProductionScrapList.aspx">
+      <publishTime>07/23/2023 12:33:26</publishTime>
+    </File>
+    <File Include="Production/ProductionSmallPartsEntry.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/ProductionSmallPartsEntryWithBOM_SPL.aspx">
+      <publishTime>11/07/2023 10:39:51</publishTime>
+    </File>
+    <File Include="Production/ProductionSmallPartsEntry_ItemWise.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/ProductionSmallPartsList.aspx">
+      <publishTime>08/03/2023 09:51:52</publishTime>
+    </File>
+    <File Include="Production/ProductionSolarBatteryEntryLoading.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/ProductionSolarBatteryEntryPacking.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/ProductionSolarBatteryEntryPackingWithBom.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/ProductionSolarBatteryEntryUnloading.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/ProductionSolarChargeLodingList.aspx">
+      <publishTime>07/26/2023 09:34:03</publishTime>
+    </File>
+    <File Include="Production/ProductionSolarChargePackingList.aspx">
+      <publishTime>10/15/2023 14:41:50</publishTime>
+    </File>
+    <File Include="Production/ProductionSolarChargeUnLodingList.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/ProductionSolarSectionEntry.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/ProductionSulphationEntryWithBOM_SPL.aspx">
+      <publishTime>11/07/2023 10:41:20</publishTime>
+    </File>
+    <File Include="Production/ProductionSulphationList.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/ProductionSupervisorEntry.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/ProductionVBarFlatBarEntryList.aspx">
+      <publishTime>08/03/2023 09:51:52</publishTime>
+    </File>
+    <File Include="Production/ProductionVBarFlatBarEntry_SPL.aspx">
+      <publishTime>07/26/2023 13:24:01</publishTime>
+    </File>
+    <File Include="Production/ProductionVRLAEntryWP_P_BAT.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/ProductionWorkingMonthEntry.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/Production_Asm_Plate_Recovery_Declare.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/Production_Asm_Plate_Rejection_Declare.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/Production_Battery_Rejection_Entry.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/Production_Battery_Rejection_Entry_V1.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/Production_Battery_Rejection_List.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/PRODUCTION_FG_REJECTION_DECLARE_SPL.aspx">
+      <publishTime>10/17/2023 15:31:24</publishTime>
+    </File>
+    <File Include="Production/PRODUCTION_ITEM_STOCK_TRANSFER.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/PRODUCTION_ITEM_STOCK_TRANSFER_List.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/Production_Pure_Lead_Entry.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/Production_Pure_Lead_List.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/PRODUCTION_REJECTION_DECLARE.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/PRODUCTION_REJECTION_DECLARE_SPL.aspx">
+      <publishTime>08/28/2023 17:44:51</publishTime>
+    </File>
+    <File Include="Production/Prod_ASM_Recovery_List.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/Prod_ASM_Rejection_List.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/Prod_DM_WaterList.aspx">
+      <publishTime>06/06/2023 10:05:36</publishTime>
+    </File>
+    <File Include="Production/Prod_UnAuthorization.aspx">
+      <publishTime>10/22/2023 10:51:49</publishTime>
+    </File>
+    <File Include="Production/RecoveryProcesEntry.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/RecoveryProcesList.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/RMRejectionList.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/RM_ForcastEntry_FM_Wise.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/RM_REJECTION_DECLARE.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/SolarElectrolyteEntry.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/SolarElectrolyteEntryList.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/Solar_Battery_Conversion.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/Solar_Battery_ConversionList.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/Solar_Openning_Entry.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/Solar_Openning_List.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/Supervisor_OperatorEntry.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/Supervisor_OperatorList.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/User_Department_Permission.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/VRLABatteryEntryLoading.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/VRLA_Assembly_Entry_BOMWise.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/VRLA_ChargeBatteryEntryUnloading.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/VRLA_ChargeEntryPackingWithBom.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/VRLA_ChargeLodingList.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/VRLA_ChargePackingList.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/VRLA_ChargeUnLodingList.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/VRLA_ProductionAssamblyEntryWP.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/VRLA_ProductionAssemblyList.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/VRLA_ProductionPackingEntry.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/Wastage_Entry.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/Wastage_List.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Production/WeeklyForcastEntry.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Properties/DataSources/PG.Report.ReportClass.InventoryRC.rcMaterialReceiveReport.datasource">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/AccountingReport/GLReports.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/GenerateReport.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/GetExcelData.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/GetReportPDF.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/GetReportPrintData.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/ApprovedOrWaitingForIssuePurchaseRequisition.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/CanceledPurchaseRequisition.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/Customer_Ledger.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/Customer_Ledger_With_Balance_Amt.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/Datewisematerialstockreport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/DeliveryChallanReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/DeptProductionReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/Dev_IGR_Report.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/Dev_IRR_By_Store_Report.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/Dev_Local_Purchase_Report.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/Dev_Mrr_Report.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/Dev_OutSale_Report.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/DirectITCReport_ByDepartment.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/DirectITCReport_ByStore.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/GatePassReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/GroupHierarchyReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/GroupItemHierarchyReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/IGRITCIRRListGridView.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/InternalReceiveReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/InventoryTypeClassGroupItemView.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/INVITCPrintReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/INVItemGroupReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/InvoiceDC_GPView.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/InvoiceDOdetailsPrintReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/InvoiceSearch.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/INV_LC_Summary_Report.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/IRRByDepartmentgridview.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/IRRByDepartmentReport.aspx">
+      <publishTime>11/08/2023 10:55:30</publishTime>
+    </File>
+    <File Include="Report/INV/IRRByFloorPrintReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/IRRByStorePrintReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/IRRByStorePrintReportPercent.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/IRRgridWithReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/IssuedOrWaitingForReceivedPurchaseRequisition.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/ITCAGAINSTIGRFROMFLOOR.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/ITCByStorePrintReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/ITCByStorePrintReportPercent.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/ITCtoStoregridview.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/ItemEgainReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/ItemReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/Item_Ledger.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/LCCostingReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/LCInvoiceMRRGridview.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/LCSummaryReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/LeadUsedBalanceReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/LocalPurchaseReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/MaterialReceiveReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/MaterialStockEvaluationReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/MaterialStockReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/MaterialStockReportNew.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/MaterialStockReportWithPrice.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/MaterialStockReportWithSF.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/MRRReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/MRRReportForAcc.aspx">
+      <publishTime>09/21/2023 11:14:15</publishTime>
+    </File>
+    <File Include="Report/INV/OutsaleReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/PurchaseAgainstIndentReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/PurchaseIndentView.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/PurchaseRequisitionStatusDetails.aspx">
+      <publishTime>12/06/2023 15:38:54</publishTime>
+    </File>
+    <File Include="Report/INV/PurchaseToMRRView.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/QCPassDetailsReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/ReceivedPurchaseRequisition.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/ReOrderToPurchase.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/RepairRefundableReportStore.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/RequisitionITCIRRDetailsPrintReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/SalesReturnReportStore.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/StockReportWithPendingPR.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/StoreRequisitionInfoView.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/SupplierListReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/INV/WaitingForApprovePurchaseRequisition.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/MS/MS_AssemblyProductionReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/MS/MS_Formation_Production_Report.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/MS/MS_Grid_Cast_Monthly_Inventory_Report.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/MS/MS_Oxide_Prod_Report.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/MS/MS_Pesting_Production_Report.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/PrintScript.txt">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/PrintScriptFF.txt">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/PrintScriptIE.txt">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/Production/ASM_Dept_Production_Detail_Report.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/Production/AssemblyProductionReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/Production/BOM_VS_Actual_Production_Report.aspx">
+      <publishTime>11/08/2023 16:05:54</publishTime>
+    </File>
+    <File Include="Report/Production/DepartmentProductionReport.aspx">
+      <publishTime>11/27/2023 11:40:17</publishTime>
+    </File>
+    <File Include="Report/Production/DepartmentRejectStockReport.aspx">
+      <publishTime>12/05/2023 11:55:19</publishTime>
+    </File>
+    <File Include="Report/Production/DepartmentRejectStockReportForAcc.aspx">
+      <publishTime>11/13/2023 12:44:12</publishTime>
+    </File>
+    <File Include="Report/Production/DepartmentStockReport.aspx">
+      <publishTime>12/06/2023 15:38:24</publishTime>
+    </File>
+    <File Include="Report/Production/Department_Production_Report.aspx">
+      <publishTime>11/28/2023 14:44:53</publishTime>
+    </File>
+    <File Include="Report/Production/DMW_Prod_Report.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/Production/Electrolyte_Prod_Report.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/Production/FG_Weekly_Forecast_Report.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/Production/FinishGoodsForcastReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/Production/Finish_Vs_Used_Raw_Material_Report.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/Production/Formation_Production_Report.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/Production/Grid_Cast_Monthly_Inventory_Report.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/Production/IB_Process_Type_Wise_Prod_Report.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/Production/IB_Production_Entry_Report.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/Production/IB_Prod_Report.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/Production/Inter_Dept_IGR_Report.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/Production/Inter_Dept_IRR_Report.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/Production/Inter_Dept_ITC_Report.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/Production/ItemTransfermationReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/Production/MRB_Prod_Report.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/Production/OxideProdReportSummary.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/Production/Oxide_Prod_Report.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/Production/Pesting_Production_Report.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/Production/Plastic_Monthly_Inventory_Report.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/Production/PlatePreparationBatchWiseStockReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/Production/ProductionBatchWiseAgingStockReport.aspx">
+      <publishTime>11/29/2023 09:52:09</publishTime>
+    </File>
+    <File Include="Report/Production/Production_AssemblyDataExport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/Production/Production_BomList.aspx">
+      <publishTime>11/08/2023 16:05:54</publishTime>
+    </File>
+    <File Include="Report/Production/Production_FillingDataExport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/Production/Production_FormationDataExport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/Production/Production_GridCastDataExport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/Production/Production_PastingDataExport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/Production/Production_SulphationDataExport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/Production/PureLeadProductionReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/Production/RawMaterialForcastReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/Production/RedOxideProdReportSummary.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/Production/ReJection_Report.aspx">
+      <publishTime>09/13/2023 15:44:26</publishTime>
+    </File>
+    <File Include="Report/Production/Small_Parts_Monthly_Inventory_Report.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/Production/SolarProductionReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/Production/VRLA_AssemblyProductionReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/Production/VRLA_ChargingReport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/ReportExport.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/ReportPDF.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/ReportPrint.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/ReportTest.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/ReportView.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Report/ReportViewPDF.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Accounting/GetAccRef.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Accounting/GetAccRefCategory.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Accounting/GetAccRefSettings.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Accounting/GetGLAccount.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Accounting/GetGLGroup.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Accounting/GetInstrument.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Accounting/GetJournal.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Accounting/GetJournalList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Accounting/GetLocationAccRef.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Accounting/GetLocationGLAccount.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Accounting/UpdateInstrument.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Accounting/UpdateJournal.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Accounting/ValidateJournal.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/GetDataInfo.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Inventory/GetAccountHolderList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Inventory/GetAllEmpList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Inventory/GetApprovalEmpList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Inventory/GetBankList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Inventory/GetBranch.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Inventory/GetBrandList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Inventory/GetCNFAgent.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Inventory/GetCompanyList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Inventory/GetCustomerList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Inventory/GetImpPOList.ashx">
+      <publishTime>06/18/2023 15:29:07</publishTime>
+    </File>
+    <File Include="Service/Inventory/GetInsuruanceCompanyList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Inventory/GetInvoiceList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Inventory/GetItemClassList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Inventory/GetItemGroupList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Inventory/GetItemList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Inventory/GetItemListbyIMPPurchaseID.ashx">
+      <publishTime>06/18/2023 15:29:07</publishTime>
+    </File>
+    <File Include="Service/Inventory/GetItemListByLc.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Inventory/GetItemTypeList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Inventory/GetLcList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Inventory/GetLCListForInvoice.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Inventory/GetManufactureList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Inventory/GetPurchaseList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Inventory/GetQcRefList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Inventory/GetRepairBattery_ITEM.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Inventory/GetRepairItemService.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Inventory/GetSupplierList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Inventory/ItemListFromIndent.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Organization/GetLocation.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Production/GetDepartmentList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Production/GetDeptwiseItemList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Production/GetDeptwiseItemList_v1.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Production/GetDeptwiseRejectItemList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Production/GetDeptwiseRejectItemList_v1.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Production/GetItemListForReformEntry.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Production/GetLinkBatchWiseItemList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Production/GetLinkBatchWiseItemListForRejectionDeclare.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Production/GetLinkBatchWiseItemListForRejectionDeclare_v1.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Production/GetLinkPackingItemListServiceLink.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Production/GetLinkStockTransferableItemList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Production/GetLink_AssemblyMachineList.ashx">
+      <publishTime>09/05/2023 15:40:24</publishTime>
+    </File>
+    <File Include="Service/Production/GetLink_BatteryCategoryList.ashx">
+      <publishTime>11/14/2023 17:44:56</publishTime>
+    </File>
+    <File Include="Service/Production/GetLink_BOMItemList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Production/GetLink_BOMList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Production/GetLink_BOMWiseItemList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Production/GetLink_ItemStock_SDateList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Production/GetLink_MACHINEList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Production/GetLink_ProducitonItemList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Production/GetLink_RejectItemList.ashx">
+      <publishTime>10/15/2023 17:12:14</publishTime>
+    </File>
+    <File Include="Service/Production/GetLink_SHIFTList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Production/GetLink_SuppervisorList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Production/GetLink_UOMList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Production/GetPackageList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Production/GetProductionDateWiseBatchNo.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Production/GetProductionNoList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Production/GetStorageLocationList.ashx">
+      <publishTime>06/14/2023 17:58:03</publishTime>
+    </File>
+    <File Include="Service/Production/GetUserList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Security/GetLink_RoleList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Security/GetObjectPermission.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Security/GeUser.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Systems/GetMenuItem.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="Service/Systems/GetMenuItemList.ashx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/blank.gif">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/CommonJSForSetReset.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/DetectPrivateMode.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/jquery-latest.min.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/jquery-migrate-latest.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/jquery-ui-latest.min.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/jquery-watch.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/jquery.actual.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/jquery.attributeobserver.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/jquery.autosize.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/jquery.bgiframe.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/jquery.cookie.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/jquery.dynatree.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/jquery.layout.min-latest.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/jquery.pngFix.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/jquery.scrollablegrid.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/jquery.scrollIntoView.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/jquery.select2.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/jquery.stringify.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/jquery.treeview.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/jquery.ui.combogrid.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/pg.accutility.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/pg.contentform.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/pg.contentpage.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/pg.enums.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/pg.jssecurity.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/pg.jsutility.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/pg.logintask.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/pg.mcautocomplete.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/pg.tabclass.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/pg.tabmenu.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/pg.ui.glaccountist.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/pg.ui.glgrouptree.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/pg.ui.gljournalbanktran.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/pg.ui.grouptree.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/pg.ui.itemgrouptree.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/pg.ui.printbutton.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/pg.ui.projectlist.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/javascript/pg.ui.projectselectionquick.js">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/readme.htm">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+    <File Include="SqlServerTypes/x64/msvcr100.dll">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="SqlServerTypes/x64/SqlServerSpatial110.dll">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="SqlServerTypes/x86/msvcr100.dll">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="SqlServerTypes/x86/SqlServerSpatial110.dll">
+      <publishTime>06/06/2023 10:05:38</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>12/17/2023 13:29:10</publishTime>
+    </File>
+    <File Include="XMLTest.aspx">
+      <publishTime>06/06/2023 10:05:37</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

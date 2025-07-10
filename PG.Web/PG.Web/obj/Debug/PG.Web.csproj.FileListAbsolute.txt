@@ -1,0 +1,166 @@
+D:\SPB_INV\PG.Web\PG.Web\obj\Debug\PG.Web.csprojResolveAssemblyReference.cache
+D:\SPB_INV\PG.Web\PG.Web\obj\Debug\PG.Web.PBLINV.dll.licenses
+D:\SPB_INV\PG.Web\PG.Web\bin\SqlServerTypes\x64\msvcr100.dll
+D:\SPB_INV\PG.Web\PG.Web\bin\SqlServerTypes\x64\SqlServerSpatial110.dll
+D:\SPB_INV\PG.Web\PG.Web\bin\SqlServerTypes\x86\msvcr100.dll
+D:\SPB_INV\PG.Web\PG.Web\bin\SqlServerTypes\x86\SqlServerSpatial110.dll
+D:\SPB_INV\PG.Web\PG.Web\bin\PG.Web.PBLINV.dll.config
+D:\SPB_INV\PG.Web\PG.Web\bin\PG.Web.PBLINV.dll
+D:\SPB_INV\PG.Web\PG.Web\bin\PG.Web.PBLINV.pdb
+D:\SPB_INV\PG.Web\PG.Web\bin\AjaxControlToolkit.dll
+D:\SPB_INV\PG.Web\PG.Web\bin\DropDownCheckBoxes.dll
+D:\SPB_INV\PG.Web\PG.Web\bin\Microsoft.ReportViewer.Design.DLL
+D:\SPB_INV\PG.Web\PG.Web\bin\Microsoft.ReportViewer.WinForms.DLL
+D:\SPB_INV\PG.Web\PG.Web\bin\PG.BLLibrary.dll
+D:\SPB_INV\PG.Web\PG.Web\bin\PG.Common.dll
+D:\SPB_INV\PG.Web\PG.Web\bin\PG.Core.dll
+D:\SPB_INV\PG.Web\PG.Web\bin\PG.DBClass.dll
+D:\SPB_INV\PG.Web\PG.Web\bin\PG.Report.dll
+D:\SPB_INV\PG.Web\PG.Web\bin\itextsharp.dll
+D:\SPB_INV\PG.Web\PG.Web\bin\Microsoft.Windows.Design.Interaction.dll
+D:\SPB_INV\PG.Web\PG.Web\bin\Microsoft.Windows.Design.Extensibility.dll
+D:\SPB_INV\PG.Web\PG.Web\bin\PG.BLLibrary.pdb
+D:\SPB_INV\PG.Web\PG.Web\bin\PG.Common.pdb
+D:\SPB_INV\PG.Web\PG.Web\bin\PG.Core.pdb
+D:\SPB_INV\PG.Web\PG.Web\bin\PG.DBClass.pdb
+D:\SPB_INV\PG.Web\PG.Web\bin\PG.Report.pdb
+D:\SPB_INV\PG.Web\PG.Web\bin\Microsoft.Windows.Design.Interaction.xml
+D:\SPB_INV\PG.Web\PG.Web\bin\Microsoft.Windows.Design.Extensibility.xml
+D:\SPB_INV\PG.Web\PG.Web\obj\Debug\PG.Web.PBLINV.dll
+D:\SPB_INV\PG.Web\PG.Web\obj\Debug\PG.Web.PBLINV.pdb
+D:\SPB_INV\PG.Web\PG.Web\bin\EPPlus.dll
+D:\SPB_INV\PG.Web\PG.Web\bin\Microsoft.SqlServer.Types.dll
+D:\SPB_INV\PG.Web\PG.Web\bin\Oracle.ManagedDataAccess.dll
+D:\SPB_INV\PG.Web\PG.Web\bin\Microsoft.ReportViewer.DataVisualization.dll
+D:\SPB_INV\PG.Web\PG.Web\bin\Microsoft.ReportViewer.ProcessingObjectModel.dll
+D:\SPB_INV\PG.Web\PG.Web\bin\EPPlus.xml
+D:\SPB_INV\PG.Web\PG.Web\bin\de\Microsoft.ReportViewer.DataVisualization.resources.dll
+D:\SPB_INV\PG.Web\PG.Web\bin\es\Microsoft.ReportViewer.DataVisualization.resources.dll
+D:\SPB_INV\PG.Web\PG.Web\bin\fr\Microsoft.ReportViewer.DataVisualization.resources.dll
+D:\SPB_INV\PG.Web\PG.Web\bin\it\Microsoft.ReportViewer.DataVisualization.resources.dll
+D:\SPB_INV\PG.Web\PG.Web\bin\ja\Microsoft.ReportViewer.DataVisualization.resources.dll
+D:\SPB_INV\PG.Web\PG.Web\bin\ko\Microsoft.ReportViewer.DataVisualization.resources.dll
+D:\SPB_INV\PG.Web\PG.Web\bin\pt\Microsoft.ReportViewer.DataVisualization.resources.dll
+D:\SPB_INV\PG.Web\PG.Web\bin\ru\Microsoft.ReportViewer.DataVisualization.resources.dll
+D:\SPB_INV\PG.Web\PG.Web\bin\zh-CHS\Microsoft.ReportViewer.DataVisualization.resources.dll
+D:\SPB_INV\PG.Web\PG.Web\bin\zh-CHT\Microsoft.ReportViewer.DataVisualization.resources.dll
+E:\Mamun Project\SPB_INV\PG.Web\PG.Web\bin\SqlServerTypes\x64\msvcr100.dll
+E:\Mamun Project\SPB_INV\PG.Web\PG.Web\bin\SqlServerTypes\x64\SqlServerSpatial110.dll
+E:\Mamun Project\SPB_INV\PG.Web\PG.Web\bin\SqlServerTypes\x86\msvcr100.dll
+E:\Mamun Project\SPB_INV\PG.Web\PG.Web\bin\SqlServerTypes\x86\SqlServerSpatial110.dll
+E:\Mamun Project\SPB_INV\PG.Web\PG.Web\bin\PG.Web.PBLINV.dll.config
+E:\Mamun Project\SPB_INV\PG.Web\PG.Web\bin\PG.Web.PBLINV.dll
+E:\Mamun Project\SPB_INV\PG.Web\PG.Web\bin\PG.Web.PBLINV.pdb
+E:\Mamun Project\SPB_INV\PG.Web\PG.Web\bin\AjaxControlToolkit.dll
+E:\Mamun Project\SPB_INV\PG.Web\PG.Web\bin\DropDownCheckBoxes.dll
+E:\Mamun Project\SPB_INV\PG.Web\PG.Web\bin\Microsoft.ReportViewer.Design.DLL
+E:\Mamun Project\SPB_INV\PG.Web\PG.Web\bin\Microsoft.ReportViewer.WinForms.DLL
+E:\Mamun Project\SPB_INV\PG.Web\PG.Web\bin\PG.BLLibrary.dll
+E:\Mamun Project\SPB_INV\PG.Web\PG.Web\bin\PG.Common.dll
+E:\Mamun Project\SPB_INV\PG.Web\PG.Web\bin\PG.Core.dll
+E:\Mamun Project\SPB_INV\PG.Web\PG.Web\bin\PG.DBClass.dll
+E:\Mamun Project\SPB_INV\PG.Web\PG.Web\bin\PG.Report.dll
+E:\Mamun Project\SPB_INV\PG.Web\PG.Web\bin\itextsharp.dll
+E:\Mamun Project\SPB_INV\PG.Web\PG.Web\bin\Microsoft.Windows.Design.Interaction.dll
+E:\Mamun Project\SPB_INV\PG.Web\PG.Web\bin\Microsoft.Windows.Design.Extensibility.dll
+E:\Mamun Project\SPB_INV\PG.Web\PG.Web\bin\PG.BLLibrary.pdb
+E:\Mamun Project\SPB_INV\PG.Web\PG.Web\bin\PG.Common.pdb
+E:\Mamun Project\SPB_INV\PG.Web\PG.Web\bin\PG.Core.pdb
+E:\Mamun Project\SPB_INV\PG.Web\PG.Web\bin\PG.DBClass.pdb
+E:\Mamun Project\SPB_INV\PG.Web\PG.Web\bin\PG.Report.pdb
+E:\Mamun Project\SPB_INV\PG.Web\PG.Web\bin\Microsoft.Windows.Design.Interaction.xml
+E:\Mamun Project\SPB_INV\PG.Web\PG.Web\bin\Microsoft.Windows.Design.Extensibility.xml
+E:\Mamun Project\SPB_INV\PG.Web\PG.Web\obj\Debug\PG.Web.csprojResolveAssemblyReference.cache
+E:\Mamun Project\SPB_INV\PG.Web\PG.Web\obj\Debug\PG.Web.PBLINV.dll.licenses
+E:\Mamun Project\SPB_INV\PG.Web\PG.Web\obj\Debug\PG.Web.PBLINV.dll
+E:\Mamun Project\SPB_INV\PG.Web\PG.Web\obj\Debug\PG.Web.PBLINV.pdb
+E:\Mamun Project\HMS\PG.Web\PG.Web\bin\SqlServerTypes\x64\msvcr100.dll
+E:\Mamun Project\HMS\PG.Web\PG.Web\bin\SqlServerTypes\x64\SqlServerSpatial110.dll
+E:\Mamun Project\HMS\PG.Web\PG.Web\bin\SqlServerTypes\x86\msvcr100.dll
+E:\Mamun Project\HMS\PG.Web\PG.Web\bin\SqlServerTypes\x86\SqlServerSpatial110.dll
+E:\Mamun Project\HMS\PG.Web\PG.Web\bin\PG.Web.PBLINV.dll.config
+E:\Mamun Project\HMS\PG.Web\PG.Web\bin\PG.Web.PBLINV.dll
+E:\Mamun Project\HMS\PG.Web\PG.Web\bin\PG.Web.PBLINV.pdb
+E:\Mamun Project\HMS\PG.Web\PG.Web\bin\AjaxControlToolkit.dll
+E:\Mamun Project\HMS\PG.Web\PG.Web\bin\DropDownCheckBoxes.dll
+E:\Mamun Project\HMS\PG.Web\PG.Web\bin\Microsoft.ReportViewer.Design.DLL
+E:\Mamun Project\HMS\PG.Web\PG.Web\bin\Microsoft.ReportViewer.WinForms.DLL
+E:\Mamun Project\HMS\PG.Web\PG.Web\bin\PG.BLLibrary.dll
+E:\Mamun Project\HMS\PG.Web\PG.Web\bin\PG.Common.dll
+E:\Mamun Project\HMS\PG.Web\PG.Web\bin\PG.Core.dll
+E:\Mamun Project\HMS\PG.Web\PG.Web\bin\PG.DBClass.dll
+E:\Mamun Project\HMS\PG.Web\PG.Web\bin\PG.Report.dll
+E:\Mamun Project\HMS\PG.Web\PG.Web\bin\itextsharp.dll
+E:\Mamun Project\HMS\PG.Web\PG.Web\bin\Microsoft.Windows.Design.Interaction.dll
+E:\Mamun Project\HMS\PG.Web\PG.Web\bin\Microsoft.Windows.Design.Extensibility.dll
+E:\Mamun Project\HMS\PG.Web\PG.Web\bin\PG.BLLibrary.pdb
+E:\Mamun Project\HMS\PG.Web\PG.Web\bin\PG.Common.pdb
+E:\Mamun Project\HMS\PG.Web\PG.Web\bin\PG.Core.pdb
+E:\Mamun Project\HMS\PG.Web\PG.Web\bin\PG.DBClass.pdb
+E:\Mamun Project\HMS\PG.Web\PG.Web\bin\PG.Report.pdb
+E:\Mamun Project\HMS\PG.Web\PG.Web\bin\Microsoft.Windows.Design.Interaction.xml
+E:\Mamun Project\HMS\PG.Web\PG.Web\bin\Microsoft.Windows.Design.Extensibility.xml
+E:\Mamun Project\HMS\PG.Web\PG.Web\obj\Debug\PG.Web.csprojResolveAssemblyReference.cache
+E:\Mamun Project\HMS\PG.Web\PG.Web\obj\Debug\PG.Web.PBLINV.dll.licenses
+E:\Mamun Project\HMS\PG.Web\PG.Web\obj\Debug\PG.Web.PBLINV.dll
+E:\Mamun Project\HMS\PG.Web\PG.Web\obj\Debug\PG.Web.PBLINV.pdb
+D:\HotelManagement\HMS\PG.Web\PG.Web\bin\SqlServerTypes\x64\msvcr100.dll
+D:\HotelManagement\HMS\PG.Web\PG.Web\bin\SqlServerTypes\x64\SqlServerSpatial110.dll
+D:\HotelManagement\HMS\PG.Web\PG.Web\bin\SqlServerTypes\x86\msvcr100.dll
+D:\HotelManagement\HMS\PG.Web\PG.Web\bin\SqlServerTypes\x86\SqlServerSpatial110.dll
+D:\HotelManagement\HMS\PG.Web\PG.Web\bin\PG.Web.PBLINV.dll.config
+D:\HotelManagement\HMS\PG.Web\PG.Web\bin\PG.Web.PBLINV.dll
+D:\HotelManagement\HMS\PG.Web\PG.Web\bin\PG.Web.PBLINV.pdb
+D:\HotelManagement\HMS\PG.Web\PG.Web\bin\AjaxControlToolkit.dll
+D:\HotelManagement\HMS\PG.Web\PG.Web\bin\DropDownCheckBoxes.dll
+D:\HotelManagement\HMS\PG.Web\PG.Web\bin\Microsoft.ReportViewer.Design.DLL
+D:\HotelManagement\HMS\PG.Web\PG.Web\bin\Microsoft.ReportViewer.WinForms.DLL
+D:\HotelManagement\HMS\PG.Web\PG.Web\bin\PG.BLLibrary.dll
+D:\HotelManagement\HMS\PG.Web\PG.Web\bin\PG.Common.dll
+D:\HotelManagement\HMS\PG.Web\PG.Web\bin\PG.Core.dll
+D:\HotelManagement\HMS\PG.Web\PG.Web\bin\PG.DBClass.dll
+D:\HotelManagement\HMS\PG.Web\PG.Web\bin\PG.Report.dll
+D:\HotelManagement\HMS\PG.Web\PG.Web\bin\itextsharp.dll
+D:\HotelManagement\HMS\PG.Web\PG.Web\bin\Microsoft.Windows.Design.Interaction.dll
+D:\HotelManagement\HMS\PG.Web\PG.Web\bin\Microsoft.Windows.Design.Extensibility.dll
+D:\HotelManagement\HMS\PG.Web\PG.Web\bin\PG.BLLibrary.pdb
+D:\HotelManagement\HMS\PG.Web\PG.Web\bin\PG.Common.pdb
+D:\HotelManagement\HMS\PG.Web\PG.Web\bin\PG.Core.pdb
+D:\HotelManagement\HMS\PG.Web\PG.Web\bin\PG.DBClass.pdb
+D:\HotelManagement\HMS\PG.Web\PG.Web\bin\PG.Report.pdb
+D:\HotelManagement\HMS\PG.Web\PG.Web\bin\Microsoft.Windows.Design.Interaction.xml
+D:\HotelManagement\HMS\PG.Web\PG.Web\bin\Microsoft.Windows.Design.Extensibility.xml
+D:\HotelManagement\HMS\PG.Web\PG.Web\obj\Debug\PG.Web.csprojResolveAssemblyReference.cache
+D:\HotelManagement\HMS\PG.Web\PG.Web\obj\Debug\PG.Web.PBLINV.dll.licenses
+D:\HotelManagement\HMS\PG.Web\PG.Web\obj\Debug\PG.Web.PBLINV.dll
+D:\HotelManagement\HMS\PG.Web\PG.Web\obj\Debug\PG.Web.PBLINV.pdb
+D:\WRL_Source\WRL\PG.Web\PG.Web\bin\SqlServerTypes\x64\msvcr100.dll
+D:\WRL_Source\WRL\PG.Web\PG.Web\bin\SqlServerTypes\x64\SqlServerSpatial110.dll
+D:\WRL_Source\WRL\PG.Web\PG.Web\bin\SqlServerTypes\x86\msvcr100.dll
+D:\WRL_Source\WRL\PG.Web\PG.Web\bin\SqlServerTypes\x86\SqlServerSpatial110.dll
+D:\WRL_Source\WRL\PG.Web\PG.Web\bin\PG.Web.PBLINV.dll.config
+D:\WRL_Source\WRL\PG.Web\PG.Web\bin\PG.Web.PBLINV.dll
+D:\WRL_Source\WRL\PG.Web\PG.Web\bin\PG.Web.PBLINV.pdb
+D:\WRL_Source\WRL\PG.Web\PG.Web\bin\AjaxControlToolkit.dll
+D:\WRL_Source\WRL\PG.Web\PG.Web\bin\DropDownCheckBoxes.dll
+D:\WRL_Source\WRL\PG.Web\PG.Web\bin\Microsoft.ReportViewer.Design.DLL
+D:\WRL_Source\WRL\PG.Web\PG.Web\bin\Microsoft.ReportViewer.WinForms.DLL
+D:\WRL_Source\WRL\PG.Web\PG.Web\bin\PG.BLLibrary.dll
+D:\WRL_Source\WRL\PG.Web\PG.Web\bin\PG.Common.dll
+D:\WRL_Source\WRL\PG.Web\PG.Web\bin\PG.Core.dll
+D:\WRL_Source\WRL\PG.Web\PG.Web\bin\PG.DBClass.dll
+D:\WRL_Source\WRL\PG.Web\PG.Web\bin\PG.Report.dll
+D:\WRL_Source\WRL\PG.Web\PG.Web\bin\itextsharp.dll
+D:\WRL_Source\WRL\PG.Web\PG.Web\bin\Microsoft.Windows.Design.Interaction.dll
+D:\WRL_Source\WRL\PG.Web\PG.Web\bin\Microsoft.Windows.Design.Extensibility.dll
+D:\WRL_Source\WRL\PG.Web\PG.Web\bin\PG.BLLibrary.pdb
+D:\WRL_Source\WRL\PG.Web\PG.Web\bin\PG.Common.pdb
+D:\WRL_Source\WRL\PG.Web\PG.Web\bin\PG.Core.pdb
+D:\WRL_Source\WRL\PG.Web\PG.Web\bin\PG.DBClass.pdb
+D:\WRL_Source\WRL\PG.Web\PG.Web\bin\PG.Report.pdb
+D:\WRL_Source\WRL\PG.Web\PG.Web\bin\Microsoft.Windows.Design.Interaction.xml
+D:\WRL_Source\WRL\PG.Web\PG.Web\bin\Microsoft.Windows.Design.Extensibility.xml
+D:\WRL_Source\WRL\PG.Web\PG.Web\obj\Debug\PG.Web.csprojResolveAssemblyReference.cache
+D:\WRL_Source\WRL\PG.Web\PG.Web\obj\Debug\PG.Web.PBLINV.dll.licenses
+D:\WRL_Source\WRL\PG.Web\PG.Web\obj\Debug\PG.Web.PBLINV.dll
+D:\WRL_Source\WRL\PG.Web\PG.Web\obj\Debug\PG.Web.PBLINV.pdb

@@ -1,0 +1,1992 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/AppMaster.Master" AutoEventWireup="true" CodeBehind="CASTING_LEAD_REPROCESS_ENTRY.aspx.cs" Inherits="PG.Web.Production.CASTING_LEAD_REPROCESS_ENTRY" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+ <script src="../javascript/jquery.ui.combogrid.js" type="text/javascript"></script>
+    <script src="../javascript/jquery.attributeobserver.js" type="text/javascript"></script>
+    <link href="../css/jquery.ui.combogrid.css" rel="stylesheet" type="text/css" />
+     <script language="javascript" type="text/javascript">
+         var isPageResize = true;
+         ContentForm.CalendarImageURL = "../image/calendar.png";
+
+         var hdnCompanyID = '<%=hdnCompanyID.ClientID%>';
+         var ddlDEPT_ID = '<%=ddlDEPT_ID.ClientID%>';
+         var ItemGroupListServiceLink = '<%=this.ItemGroupListServiceLink%>';
+         var ItemListServiceLink = '<%=this.ItemListServiceLink%>';
+         var BOMItemListServiceLink = '<%=this.BOMItemListServiceLink%>';
+         var BOMNameListServiceLink = '<%=this.BOMItemNameListServiceLink%>';
+         var BOMListServiceLink = '<%= this.BOMListServiceLink%>';
+         var PanelUOMServiceLink = '<%= this.PanelUOMServiceLink %>';
+         var MachineListServiceLink = '<%= this.MachineListServiceLink%>';
+         var SupporvisorListServiceLink = '<%= this.SupporvisorListServiceLink%>';
+         
+
+         var gridUpdatePanelIDDet = '<%=UpdatePanel1.ClientID%>';
+         var gridViewIDDet = '<%=GRDDTLITEMLIST.ClientID%>';
+         var updateProgressID = '<%=UpdateProgress2.ClientID%>';
+
+         var gridClosingUpdatePanelIDDet = '<%=UpdatePanel2.ClientID%>';
+         var gridViewClosingIDDet = '<%=grdClosingRowMaterial.ClientID%>';
+         var updateClosingProgressID = '<%=UpdateProgress3.ClientID%>';
+
+
+         var gridDrossUpdatePanelIDDet = '<%=UpdatePanel3.ClientID%>';
+         var gridViewDrossIDDet = '<%=grdDross.ClientID%>';
+         var updateDrossProgressID = '<%=UpdateProgress1.ClientID%>';
+
+
+
+         var txtSUPERVISOR_NAME = '<%= txtSUPERVISOR_NAME.ClientID%>';
+         var btnSUPERVISOR_ID = '<%=btnSUPERVISOR_ID.ClientID%>';
+         var hdnSUPERVISOR_ID = '<%=hdnSUPERVISOR_ID.ClientID%>';  
+
+         var txtSHIFT_INCHARGE = '<%= txtSHIFT_INCHARGE.ClientID%>';
+         var btnSHIFT_INCHARGE = '<%=btnSHIFT_INCHARGE.ClientID%>';
+         var hdnSHIFT_INCHARGE = '<%=hdnSHIFT_INCHARGE.ClientID%>'; 
+
+         function isNumberKey(evt, obj) {
+
+             var charCode = (evt.which) ? evt.which : event.keyCode
+             var value = obj.value;
+             var dotcontains = value.indexOf(".") != -1;
+             if (dotcontains)
+                 if (charCode == 46) return false;
+             if (charCode == 46) return true;
+             if (charCode > 31 && (charCode < 48 || charCode > 57))
+                 return false;
+             return true;
+         }
+
+         function validationPackingQty(txtbox) {
+
+             var detRow = $(txtbox).closest('tr.gridRow');
+             var batchno = $('#' + txtPROD_BATCH_NO).val();
+             var inputitemqty = $(detRow).find('input[id$="txtItem_qty"]').val();
+             var packing_batchNo = $(detRow).find('input[id$="txtPACK_FINISHED_BATCH"]').val();
+             var balAssembleQty = $(detRow).find('input[id$="hdnBALPACKINGQTY"]').val();
+             if (batchno != packing_batchNo) {
+                 if (inputitemqty > balAssembleQty) {
+                     alert("Please enter valid packing quantity!! ")
+                     $(detRow).find('input[id$="txtItem_qty"]').val('0');
+                 }
+
+             }
+
+         }
+
+         function ShowProgress() {
+             $('#' + updateProgressID).show();
+         }
+
+         function ShowPackProgress() {
+             $('#' + updatePackProgressID).show();
+         }
+         function ShowClosingProgress() {
+             $('#' + updateClosingProgressID).show();
+         }
+         function ShowDrossProgress() {
+             $('#' + updateDrossProgressID).show();
+         }
+
+         function UserDeleteConfirmation() {
+             return confirm("Are you sure you want to Save ?");
+         }
+         function UserSaveConfirmation() {
+             return confirm("Are you sure you want to Save?");
+         }
+
+         function UserAuthorizeConfirmation() {
+             return confirm("Are you sure you want to Authorized?");
+         }
+
+         function PageResizeCompleted(pg, cntMain) {
+             resizeContentInner(cntMain);
+         }
+
+         function resizeContentInner(cntMain) {
+             var contHeight = $("#dvContentMainInner").height();
+
+             var topHeight = $("#dvTop").height();
+
+             var middleHeight = contHeight - topHeight;
+
+             $("#dvMiddle").height(middleHeight);
+             $("#tblMiddle").height(middleHeight);
+
+             $("#dvReportList").height(middleHeight);
+             $("#dvParam").height(middleHeight);
+
+         }
+
+
+
+
+         function tbopen(key, isPrint, isPDFAutoPrint, showWait) {
+             key = key || '';
+             isPrint = isPrint || false;
+             showWait = showWait || true;
+
+             if (isPrint) {
+                 if (key != '') {
+                     ReportPrint(key, isPDFAutoPrint);
+                     return;
+                 }
+             }
+
+             //var url = "/Report/ReportView.aspx?rk=" + key
+
+             var now = new Date();
+             var strTime = now.getTime().toString();
+             var url = ReportViewPageLink + "?rk=" + key + "&_tt=" + strTime;
+             //var url = ReportViewPageLink + "?rk=" + key;
+
+             //if (pageInTab == 1)
+             if (TabVar.PageMode == Enums.PageMode.InTab) {
+
+                 var tdata = new xtabdata();
+                 tdata.linktype = Enums.LinkType.Direct;
+                 tdata.id = 7999;
+                 tdata.name = "Report view";
+                 //tdata.label = "User: " + userid;
+                 tdata.label = "Report view";
+                 tdata.type = 0;
+                 tdata.url = url;
+                 tdata.tabaction = Enums.TabAction.InNewTab;
+                 tdata.selecttab = 1;
+                 tdata.reload = 0;
+                 tdata.param = "";
+                 tdata.showWait = showWait;
+
+                 try {
+                     //window.parent.OpenMenuByData(tdata);
+                     window.parent.TabMenu.OpenMenuByData(tdata);
+                 }
+                 catch (err) {
+                     alert("error in page");
+                 }
+             }
+             else {
+                 //on new window/tab
+                 //window.open(url,'_blank');   
+
+                 window.location = url;
+             }
+         }
+
+
+
+         $(document).ready(function () {
+
+             var pageInstance = Sys.WebForms.PageRequestManager.getInstance();
+
+             pageInstance.add_pageLoaded(function (sender, args) {
+                 var panels = args.get_panelsUpdated();
+                 for (i = 0; i < panels.length; i++) {
+                     if (panels[i].id == gridUpdatePanelIDDet) {
+                         bindItemList(gridViewIDDet);
+                         bindMachineList(gridViewIDDet);
+                    
+                     }
+
+                     if (panels[i].id == gridClosingUpdatePanelIDDet) {
+                         bindMachineList(gridViewClosingIDDet);
+                         bindClosingItemList(gridViewClosingIDDet);
+                     }
+
+
+                     if (panels[i].id == gridDrossUpdatePanelIDDet) {
+                         bindMachineList(gridViewDrossIDDet);
+                         bindDrossItemList(gridViewDrossIDDet);
+                     }
+                 }
+             });
+
+             bindItemList(gridViewIDDet);
+             bindShiftinchargeList();
+             bindMachineList(gridViewIDDet);
+             bindMachineList(gridViewDrossIDDet);
+             bindMachineList(gridViewClosingIDDet);
+             bindSupporvisorList();
+             bindDrossItemList(gridViewDrossIDDet);
+             bindClosingItemList(gridViewClosingIDDet);
+
+         });
+
+
+
+         function bindItemGroupList(gridViewID) {
+             var cgColumns = [{ 'columnName': 'itemgroupdesc', 'width': '150', 'align': 'left', 'highlight': 4, 'label': 'Name' }
+                              , { 'columnName': 'itemgroupcode', 'width': '80', 'align': 'left', 'highlight': 4, 'label': 'Code' }
+             ];
+
+             var serviceURL = ItemGroupListServiceLink + "?isterm=1&includeempty=0&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+             serviceURL += "&ispaging=1";
+             var gridSelector = "#" + gridViewID;
+
+
+             $(gridSelector).find('input[id$="txtGroupName"]').each(function (index, elem) {
+                 var elemRow = $(elem).closest('tr.gridRow');
+
+                 $(elem).closest('tr').find('input[id$="btnItemGroup"]').click(function (e) {
+                     elmID = $(elem).attr('id');
+                     $(elem).combogrid("dropdownClick");
+                 });
+
+
+                 $(elem).combogrid({
+                     debug: true,
+                     searchButton: false,
+                     resetButton: false,
+                     alternate: true,
+                     munit: 'px',
+                     scrollBar: true,
+                     showPager: true,
+                     colModel: cgColumns,
+                     autoFocus: true,
+                     showError: true,
+                     width: 600,
+                     url: serviceURL,
+                     search: function (event, ui) {
+
+                         var newServiceURL = JSUtility.AddTimeToQueryString(serviceURL);
+                         $(this).combogrid("option", "url", newServiceURL);
+
+
+                     },
+
+                     select: function (event, ui) {
+                         elemID = $(elem).attr('id');
+                         if (!ui.item) {
+                             event.preventDefault();
+                             ClearItemGroupData(elemID);
+                             return false;
+                         }
+
+
+
+                         if (ui.item.id == 0) {
+                             event.preventDefault();
+                             return false;
+                         }
+                         else {
+                             SetItemGroupData(elemID, ui.item);
+                         }
+                         return false;
+                     }
+                 });
+
+
+                 $(elem).blur(function () {
+                     var self = this;
+                     elemID = $(elem).attr('id');
+                     eCode = $(elem).val();
+                     isComboGridOpen = $(self).combogrid('isOpened');
+                     if (eCode == '') {
+                         ClearItemGroupData(elemID);
+                     }
+                     else {
+
+                         if (grp == null) {
+                             ClearItemGroupData(elemID);
+                         }
+                         else {
+                             SetItemGroupData(elemID, grp);
+                         }
+                     }
+                     //setDetInstrument(hdnIsInstrumentElem, txtInstrumentElem, btnInstrumentElem);
+                     grpID = $(self).closest('tr').find('input[id$="hdngroupId"]').val();
+                     if (grpID == '0' | grpID == '') {
+                         $(self).addClass('textError');
+                     }
+
+                 });
+
+                 $(elem).blur(function () {
+                     var self = this;
+
+                     var seID = $(elem).val();
+                     if (seID == '') {
+                         $('#' + hdngroupId).val('0');
+                         //  $('#' + txtExecutiveName).val('');
+                     }
+                 });
+             });
+         }
+
+         function bindItemList(gridViewID) {
+             var cgColumns = [
+                                { 'columnName': 'itemname', 'width': '260', 'align': 'left', 'highlight': 4, 'label': 'Name' }
+                              , { 'columnName': 'uomname', 'width': '70', 'align': 'left', 'highlight': 4, 'label': 'UOM' }
+             ];
+
+
+             //var companyid = $('#' + hdnCompanyID).val();
+             //var depthead = $('#' + hdnEmpCode).val();
+             //var locationid = $('#' + ddlLocation).val();
+
+             //var serviceURL = GLAccountServiceLink + "?isterm=1&includeempty=1&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+             var serviceURL = BOMNameListServiceLink + "?isterm=1&includeempty=0&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+             serviceURL += "&isFinished=Y";
+             //serviceURL += "&ispaging=1&classid=3" &companyid=" + companyid;;
+             var gridSelector = "#" + gridViewID;
+             $(gridSelector).find('input[id$="txtITEM_NAME"]').each(function (index, elem) {
+                 ///list click
+                 var elemRow = $(elem).closest('tr.gridRow');
+
+                 var hdnItemIDElem = $(elemRow).find('input[id$="txtITEM_NAME"]');
+
+                 //var prevGLCode = '';
+
+                 $(elem).closest('tr').find('input[id$="btnITEM_NAME"]').click(function (e) {
+                     elmID = $(elem).attr('id');
+                     //$(elem).combogrid("show");
+                     $(elem).combogrid("dropdownClick");
+                 });
+
+                 $(elem).combogrid({
+                     debug: true,
+                     searchButton: false,
+                     resetButton: false,
+                     alternate: true,
+                     munit: 'px',
+                     scrollBar: true,
+                     showPager: true,
+                     colModel: cgColumns,
+                     autoFocus: true,
+                     showError: true,
+                     width: 450,
+                     url: serviceURL,
+                     search: function (event, ui) {
+                         var elemRowCur = $(elem).closest('tr.gridRow');
+                         //var vgroupid = $(elemRowCur).find('input[id$="hdngroupId"]').val();
+                       <%--  var e = document.getElementById("<%=ddlDEPT_ID.ClientID%>");
+                         var deptid = e.options[e.selectedIndex].value;--%>
+                         var newServiceURL = serviceURL + "&deptid=5";
+                        
+                         //var newServiceURL = serviceURL + "&companycode=" + companyCode + "&branchcode=" + branchCode + "&deptcode=" + deptCode
+                         newServiceURL = JSUtility.AddTimeToQueryString(newServiceURL);
+                         $(this).combogrid("option", "url", newServiceURL);
+
+
+                     },
+
+                     select: function (event, ui) {
+                         //alert(ui.item.typename);
+                         //$(".txtComboGrid").val(ui.item.code);
+                         elemID = $(elem).attr('id');
+                         //                    if (!validateGLAccount(elemID, ui.item)) {
+                         //                        $(elem).val(prevGLCode);
+                         //                        return false;
+                         //                    }
+                         if (!ui.item) {
+                             event.preventDefault();
+                             ClearItemData(elemID);
+                             return false;
+                             //ClearGLAccountData(elemID);
+                         }
+                         if (ui.item.id == 0) {
+                             event.preventDefault();
+                             return false;
+                             //ClearGLAccountData(elemID);
+                         }
+                         else {
+                             SetItemData(elemID, ui.item);
+                         }
+                         // setDetInstrument(hdnIsInstrumentElem, txtInstrumentElem, btnInstrumentElem);
+                         return false;
+                     }
+
+
+                     // lc: ''
+                 });
+
+                 $(elem).blur(function () {
+                     var self = this;
+                     elemID = $(elem).attr('id');
+                     eCode = $(elem).val();
+                     isComboGridOpen = $(self).combogrid('isOpened');
+                     if (eCode == '') {
+                         ClearItemData(elemID);
+                     }
+                     else {
+                         var serviceURL = BOMNameListServiceLink + "?isterm=1&includeempty=0&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+                         serviceURL += "&ispaging=1&deptid=5";
+
+                         var prcNo = GetItemNo(eCode, serviceURL);
+
+                         if (prcNo == null) {
+                             ClearItemData(elemID);
+                         }
+                         else {
+                             SetItemData(elemID, grp);
+                         }
+
+                     }
+                 });
+
+             });
+
+         }
+
+         function GetItemNo(eCode, serviceURL) {
+             var prcNo = null;
+             var isError = false;
+             var isComplete = false;
+             //ajax call
+
+             var newServiceURL = serviceURL + " &selectedId=" + eCode;
+             var dummyVar = $.ajax({
+                 type: "GET",
+                 cache: false,
+                 async: false,
+                 dataType: "json",
+                 url: newServiceURL,
+
+                 success: function (prddata) {
+                     //            if (accdata.menu[0].count > 0) {
+                     //                menu = menudata.menu[0];
+                     //            }
+                     if (prddata.rows.length > 0) {
+                         prcNo = prddata.rows[0];
+                     }
+                 },
+                 complete: function () {
+                     if (!isError) {
+                         //return;
+                         //alert (menu.name);
+                     }
+                     isComplete = true;
+                 },
+                 error: function (XMLHttpRequest, textStatus, errorThrown) {
+                     isError = true;
+                     alert(textStatus);
+                 }
+             });
+             return prcNo;
+         }
+
+       
+
+
+         function bindClosingItemList(gridViewIDD) {
+             var cgColumns = [{ 'columnName': 'itemname', 'width': '150', 'align': 'left', 'highlight': 4, 'label': 'Name' }
+                              , { 'columnName': 'uomname', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Uom' }
+                              //, { 'columnName': 'itemcode', 'width': '80', 'align': 'left', 'highlight': 4, 'label': 'Code' }
+                              , { 'columnName': 'closing_qty', 'width': '80', 'align': 'left', 'highlight': 4, 'label': 'Cls Qty' }
+                               , { 'columnName': 'item_std_wt', 'width': '50', 'align': 'left', 'highlight': 4, 'label': 'Std. Wt' }
+                              , { 'columnName': 'itemgroupdesc', 'width': '150', 'align': 'left', 'highlight': 4, 'label': 'Group Name' }
+                              , { 'columnName': 'class_name', 'width': '120', 'align': 'left', 'highlight': 4, 'label': 'Class Name' }
+                              , { 'columnName': 'item_type', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Item Type' }
+             ];
+
+             
+             var serviceURL = ItemListServiceLink + "?isterm=1&includeempty=0&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+             //serviceURL += "&companyid=" + companyid;&deptid=135&forProduction=Y&forProduction=Y
+             serviceURL += "&ispaging=1&isFinished=N";
+             
+
+
+             var gridSelector = "#" + gridViewIDD;
+
+
+             $(gridSelector).find('input[id$="txtCLOSINGITEM_NAME"]').each(function (index, elem) {
+                 ///list click
+                 var elemRow = $(elem).closest('tr.gridRow');
+
+                 var hdnItemIDElem = $(elemRow).find('input[id$="txtCLOSINGITEM_NAME"]');
+
+                 //var prevGLCode = '';
+
+                 $(elem).closest('tr').find('input[id$="btnCLOSINGITEM_NAME"]').click(function (e) {
+                     elmID = $(elem).attr('id');
+                     //$(elem).combogrid("show");
+                     $(elem).combogrid("dropdownClick");
+                 });
+
+                 $(elem).combogrid({
+                     debug: true,
+                     searchButton: false,
+                     resetButton: false,
+                     alternate: true,
+                     munit: 'px',
+                     scrollBar: true,
+                     showPager: true,
+                     colModel: cgColumns,
+                     autoFocus: true,
+                     showError: true,
+                     width: 800,
+                     url: serviceURL,
+                     search: function (event, ui) {
+                         var elemRowCur = $(elem).closest('tr.gridRow');
+                         //var vgroupid = $(elemRowCur).find('input[id$="hdngroupId"]').val();
+                         //var vgroupid = $('#' + hdngroupId).val();
+                         var e = document.getElementById("<%=ddlDEPT_ID.ClientID%>");
+                         var deptid = e.options[e.selectedIndex].value;
+                        <%-- //var vgroupid =--%>
+                         var newServiceURL = serviceURL+"&deptid=5";//+ "&deptid=" + deptid + "&groupid=" + vgroupid
+                         //var newServiceURL = serviceURL + "&companycode=" + companyCode + "&branchcode=" + branchCode + "&deptcode=" + deptCode
+                         newServiceURL = JSUtility.AddTimeToQueryString(newServiceURL);
+                         $(this).combogrid("option", "url", newServiceURL);
+                     },
+
+                     select: function (event, ui) {
+                         //alert(ui.item.typename);
+                         //$(".txtComboGrid").val(ui.item.code);
+                         elemID = $(elem).attr('id');
+                         //                    if (!validateGLAccount(elemID, ui.item)) {
+                         //                        $(elem).val(prevGLCode);
+                         //                        return false;
+                         //                    }
+                         if (!ui.item) {
+                             event.preventDefault();
+                             ClearClosingItemData(elemID);
+                             return false;
+                             //ClearGLAccountData(elemID);
+                         }
+                         if (ui.item.id == 0) {
+                             event.preventDefault();
+                             return false;
+                             //ClearGLAccountData(elemID);
+                         }
+                         else {
+                             SetClosingItemData(elemID, ui.item);
+                         }
+                         // setDetInstrument(hdnIsInstrumentElem, txtInstrumentElem, btnInstrumentElem);
+                         return false;
+                     }
+                     // lc: ''
+                 });
+
+                 $(elem).blur(function () {
+                     var self = this;
+                     elemID = $(elem).attr('id');
+                     eCode = $(elem).val();
+                     isComboGridOpen = $(self).combogrid('isOpened');
+                     if (eCode == '') {
+                         ClearClosignItemData(elemID);
+                     }
+                     else {
+                         var serviceURL = ItemListServiceLink + "?isterm=1&includeempty=0&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+                         serviceURL += "&ispaging=1";
+                         var prcNo = GetItemNo(eCode, serviceURL);
+
+                         if (prcNo == null) {
+                             ClearClosingItemData(elemID);
+                         }
+                         else {
+                             SetClosingItemData(elemID, grp);
+                         }
+
+                     }
+                 });
+
+             });
+         }
+
+
+
+         function bindDrossItemList(gridViewID) {
+             var cgColumns = [
+                                { 'columnName': 'itemname', 'width': '160', 'align': 'left', 'highlight': 4, 'label': 'Name' }
+                              , { 'columnName': 'uomname', 'width': '70', 'align': 'left', 'highlight': 4, 'label': 'Uom Name' }
+             ];
+             var serviceURL = BOMNameListServiceLink + "?isterm=1&includeempty=0&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+             serviceURL += "&isFinished=D";
+             var gridSelector = "#" + gridViewID;
+             $(gridSelector).find('input[id$="txtITEM_NAME"]').each(function (index, elem) {
+                 ///list click
+                 var elemRow = $(elem).closest('tr.gridRow');
+                 var hdnItemIDElem = $(elemRow).find('input[id$="txtITEM_NAME"]');
+                 //var prevGLCode = '';
+                 $(elem).closest('tr').find('input[id$="btnITEM_NAME"]').click(function (e) {
+                     elmID = $(elem).attr('id');
+                     $(elem).combogrid("dropdownClick");
+                 });
+
+                 $(elem).combogrid({
+                     debug: true,
+                     searchButton: false,
+                     resetButton: false,
+                     alternate: true,
+                     munit: 'px',
+                     scrollBar: true,
+                     showPager: true,
+                     colModel: cgColumns,
+                     autoFocus: true,
+                     showError: true,
+                     width: 450,
+                     url: serviceURL,
+                     search: function (event, ui) {
+                         var elemRowCur = $(elem).closest('tr.gridRow');
+                         var newServiceURL = serviceURL + "&deptid=5";
+                         newServiceURL = JSUtility.AddTimeToQueryString(newServiceURL);
+                         $(this).combogrid("option", "url", newServiceURL);
+                     },
+
+                     select: function (event, ui) {
+                         elemID = $(elem).attr('id');
+                         if (!ui.item) {
+                             event.preventDefault();
+                             ClearItemData(elemID);
+                             return false;
+                         }
+                         if (ui.item.id == 0) {
+                             event.preventDefault();
+                             return false;
+                         }
+                         else {
+                             SetItemData(elemID, ui.item);
+                         }
+                         return false;
+                     }
+                 });
+
+                 $(elem).blur(function () {
+                     var self = this;
+                     elemID = $(elem).attr('id');
+                     eCode = $(elem).val();
+                     isComboGridOpen = $(self).combogrid('isOpened');
+                     if (eCode == '') {
+                         ClearItemData(elemID);
+                     }
+                     else {
+                         var serviceURL = BOMNameListServiceLink + "?isterm=1&includeempty=0&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+                         serviceURL += "&ispaging=1&deptid=5";
+
+                         var prcNo = GetItemNo(eCode, serviceURL);
+
+                         if (prcNo == null) {
+                             ClearItemData(elemID);
+                         }
+                         else {
+                             SetItemData(elemID, grp);
+                         }
+
+                     }
+                 });
+
+             });
+
+         }
+
+
+         function ClearClosingItemData(txtCLOSINGITEM_NAME) {
+             //$('#' + txtGLAccCodeID).val('');
+             var detRow = $('#' + txtCLOSINGITEM_NAME).closest('tr.gridRow');
+             $(detRow).find('input[id$="hdnCLOSING_ITEM_ID"]').val('0');
+             $(detRow).find('input[id$="txtCLOSINGITEM_NAME"]').val('');
+             $(detRow).find('input[id$="hdnCLOSING_UOM_ID"]').val('0');
+             $(detRow).find('input[id$="txtCLOSING_UOM_NAME"]').val('');
+             $(detRow).find('input[id$="txtSYSTEM_OPENING_STOCK"]').val('');
+
+         }
+         function SetClosingItemData(txtCLOSINGITEM_NAME, data) {
+             //$('#' + hdnCLOSING_ITEM_ID).val(data.itemid);
+             var detRow = $('#' + txtCLOSINGITEM_NAME).closest('tr.gridRow');
+             $(detRow).find('input[id$="hdnCLOSING_ITEM_ID"]').val(data.itemid);
+             $(detRow).find('input[id$="txtCLOSINGITEM_NAME"]').val(data.itemname);
+             $(detRow).find('input[id$="hdnCLOSING_UOM_ID"]').val(data.uomid);
+             $(detRow).find('input[id$="txtCLOSING_UOM_NAME"]').val(data.uomname);
+             $(detRow).find('input[id$="txtSYSTEM_OPENING_STOCK"]').val(data.closing_qty);
+         }
+
+
+         function ClearItemGroupData(txtItemGroupID) {
+             //$('#' + txtGLAccCodeID).val('');
+             var detRow = $('#' + txtItemGroupID).closest('tr.gridRow');
+             $(detRow).find('input[id$="hdngroupId"]').val('0');
+             //$(detRow).find('input[id$="txtGLGroupName"]').val('');
+         }
+
+         function SetItemGroupData(txtItemGroupCodeID, data) {
+             $('#' + txtItemGroupCodeID).val(data.itemgroupid);
+             var detRow = $('#' + txtItemGroupCodeID).closest('tr.gridRow');
+             $(detRow).find('input[id$="hdngroupId"]').val(data.itemgroupid);
+             $(detRow).find('input[id$="txtGroupName"]').val(data.itemgroupdesc);
+
+         }
+
+         function bindBOMItemList(gridViewID) {
+             var cgColumns = [{ 'columnName': 'bomid', 'width': '80', 'align': 'left', 'highlight': 4, 'label': 'BOM ID' }
+                              , { 'columnName': 'bomitemdesc', 'width': '150', 'align': 'left', 'highlight': 4, 'label': 'BOM Name' }
+                              , { 'columnName': 'bomitemid', 'width': '50', 'align': 'left', 'highlight': 4, 'label': 'Item ID' }
+                              , { 'columnName': 'itemname', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Item Name' }
+                              , { 'columnName': 'bomver', 'width': '80', 'align': 'left', 'highlight': 4, 'label': 'BOM Ver' }
+
+
+             ];
+             var serviceURL = BOMListServiceLink + "?isterm=1&includeempty=0&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+             serviceURL += "&ispaging=1";
+             // serviceURL += "&namecomptype=" + Enums.DataCompareType.Contains;
+
+
+             var gridSelector = "#" + gridViewID;
+
+
+             $(gridSelector).find('input[id$="txtBOM_Name"]').each(function (index, elem) {
+                 ///list click
+                 var elemRow = $(elem).closest('tr.gridRow');
+
+                 var hdnItemIDElem = $(elemRow).find('input[id$="txtBOM_Name"]');
+
+                 //var prevGLCode = '';
+
+                 $(elem).closest('tr').find('input[id$="btnITEM_BOM_ID"]').click(function (e) {
+                     elmID = $(elem).attr('id');
+                     //$(elem).combogrid("show");
+                     $(elem).combogrid("dropdownClick");
+                 });
+
+
+                 $(elem).combogrid({
+                     debug: true,
+                     searchButton: false,
+                     resetButton: false,
+                     alternate: true,
+                     munit: 'px',
+                     scrollBar: true,
+                     showPager: true,
+                     colModel: cgColumns,
+                     autoFocus: true,
+                     showError: true,
+                     width: 500,
+                     url: serviceURL,
+                     search: function (event, ui) {
+                         var elemRowCur = $(elem).closest('tr.gridRow');
+                         var ItemID = $(elemRowCur).find('input[id$="hdnItemID"]').val();
+                         //var vgroupid = $('#' + hdngroupId).val();+ "&groupid=" + vgroupid
+                         var newServiceURL = serviceURL + "&itemid=" + ItemID;
+                         //var newServiceURL = serviceURL + "&companycode=" + companyCode + "&branchcode=" + branchCode + "&deptcode=" + deptCode
+                         newServiceURL = JSUtility.AddTimeToQueryString(newServiceURL);
+                         $(this).combogrid("option", "url", newServiceURL);
+
+
+                     },
+
+                     select: function (event, ui) {
+                         //alert(ui.item.typename);
+                         //$(".txtComboGrid").val(ui.item.code);
+                         elemID = $(elem).attr('id');
+                         //                    if (!validateGLAccount(elemID, ui.item)) {
+                         //                        $(elem).val(prevGLCode);
+                         //                        return false;
+                         //                    }
+                         if (!ui.item) {
+                             event.preventDefault();
+                             ClearBOMData(elemID);
+                             return false;
+                             //ClearGLAccountData(elemID);
+                         }
+
+
+
+                         if (ui.item.id == 0) {
+                             event.preventDefault();
+                             return false;
+                             //ClearGLAccountData(elemID);
+                         }
+                         else {
+                             SetBOMData(elemID, ui.item);
+                         }
+                         // setDetInstrument(hdnIsInstrumentElem, txtInstrumentElem, btnInstrumentElem);
+                         return false;
+                     }
+
+
+                     // lc: ''
+                 });
+
+                 $(elem).blur(function () {
+                     var self = this;
+                     elemID = $(elem).attr('id');
+                     eCode = $(elem).val();
+                     isComboGridOpen = $(self).combogrid('isOpened');
+                     if (eCode == '') {
+                         //                    if (!validateGLAccount(elemID, null)) {
+                         //                        $(elem).val(prevGLCode);
+                         //                        return false;
+                         //                    }
+                         //ClearItemGroupData(elemID);
+                     }
+                     else {
+
+                         if (grp == null) {
+                             ClearItemData(elemID);
+                         }
+                         else {
+                             SetItemData(elemID, grp);
+                         }
+                     }
+                     //setDetInstrument(hdnIsInstrumentElem, txtInstrumentElem, btnInstrumentElem);
+                     grpID = $(self).closest('tr').find('input[id$="hdngroupId"]').val();
+                     if (grpID == '0' | grpID == '') {
+                         $(self).addClass('textError');
+                     }
+
+                 });
+
+             });
+
+         }
+
+         function ClearItemData(txtItemID) {
+             //$('#' + txtGLAccCodeID).val('');
+             var detRow = $('#' + txtItemID).closest('tr.gridRow');
+             $(detRow).find('input[id$="hdnItemId"]').val('0');
+             $(detRow).find('input[id$="txtITEM_NAME"]').val('');
+             $(detRow).find('input[id$="hdngroupId"]').val('0');
+             $(detRow).find('input[id$="txtGroupName"]').val('');
+             $(detRow).find('input[id$="hdnUomID"]').val('0');
+             $(detRow).find('input[id$="txtUOM_NAME"]').val('');
+
+             $(detRow).find('input[id$="txtBOM_Name"]').val('');
+             $(detRow).find('input[id$="hdnITEM_BOM_ID"]').val('0');
+
+         }
+         function SetItemData(txtItemCodeID, data) {
+             $('#' + txtItemCodeID).val(data.itemid);
+
+             var detRow = $('#' + txtItemCodeID).closest('tr.gridRow');
+             $(detRow).find('input[id$="hdnItemID"]').val(data.itemid);
+             $(detRow).find('input[id$="txtITEM_NAME"]').val(data.itemname);
+             $(detRow).find('input[id$="hdngroupId"]').val(data.itemgroupid);
+             $(detRow).find('input[id$="txtGroupName"]').val(data.itemgroupdesc);
+             $(detRow).find('input[id$="hdnUomID"]').val(data.uomid);
+             $(detRow).find('input[id$="txtUOM_NAME"]').val(data.uomname);
+
+             $(detRow).find('input[id$="txtBOM_Name"]').val(data.bomname);
+             $(detRow).find('input[id$="hdnITEM_BOM_ID"]').val(data.bomid);
+
+             $(detRow).find('input[id$="txtWEIGHT_UOM_NAME"]').val('kg');
+             $(detRow).find('input[id$="hndWEIGHT_UOM_ID"]').val('2');
+
+            // $(detRow).find('input[id$="hdnUomID"]').val(data.isprime);
+             // bomno
+
+
+         }
+
+
+         function SetBOMData(txtBOM_ITEM_DESC, data) {
+             $('#' + txtBOM_ITEM_DESC).val(data.bomitemdesc);
+
+             var detRow = $('#' + txtBOM_ITEM_DESC).closest('tr.gridRow');
+             $(detRow).find('input[id$="hdnITEM_BOM_ID"]').val(data.bomid);
+         }
+         function ClearBOMData(txtBOM_ITEM_DESC) {
+             var detRow = $('#' + txtBOM_ITEM_DESC).closest('tr.gridRow');
+             $(detRow).find('input[id$="hdnITEM_BOM_ID"]').val('0');
+             $(detRow).find('input[id$="txtBOM_ITEM_DESC"]').val('');
+
+         }
+
+         function calcIssueStock(txtbox)
+         {
+             var detRow = $(txtbox).closest('tr.gridRow');
+             var SYSTEM_OPENING_STOCK = $(detRow).find('input[id$="txtSYSTEM_OPENING_STOCK"]').val();
+             var CLOSING_QTY = $(detRow).find('input[id$="txtCLOSING_QTY"]').val();
+
+             var ISSUE_QTY = SYSTEM_OPENING_STOCK - CLOSING_QTY;
+             $(detRow).find('input[id$="txtISSUE_STOCK"]').val(ISSUE_QTY);
+         }
+          
+         function calcCloseingStock(txtbox) {
+             var detRow = $(txtbox).closest('tr.gridRow');
+             var SYSTEM_OPENING_STOCK = $(detRow).find('input[id$="txtSYSTEM_OPENING_STOCK"]').val();
+             var ISSUE_QTY = $(detRow).find('input[id$="txtISSUE_STOCK"]').val();
+
+             var CLOSING_QTY = SYSTEM_OPENING_STOCK - ISSUE_QTY;
+             $(detRow).find('input[id$="txtCLOSING_QTY"]').val(CLOSING_QTY);
+         }
+ 
+
+         function bindMachineList(gridViewID) {
+             var cgColumns = [
+                                //{ 'columnName': 'machineid', 'width': '80', 'align': 'left', 'highlight': 4, 'label': 'Line ID' },
+                               { 'columnName': 'machinename', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Pot Name' }
+                              , { 'columnName': 'machinedescription', 'width': '200', 'align': 'left', 'highlight': 4, 'label': 'Pot Description' }
+
+             ];
+             var serviceURL = MachineListServiceLink + "?isterm=1&includeempty=0&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+             serviceURL += "&ispaging=0";
+
+             var gridSelector = "#" + gridViewID;
+
+             $(gridSelector).find('input[id$="txtMACHINE_NAME"]').each(function (index, elem) {
+                 ///list click
+                 var elemRow = $(elem).closest('tr.gridRow');
+
+                 var hdnItemIDElem = $(elemRow).find('input[id$="txtMACHINE_NAME"]');
+
+                 //var prevGLCode = '';
+
+                 $(elem).closest('tr').find('input[id$="btnMACHINE_NAME"]').click(function (e) {
+                     elmID = $(elem).attr('id');
+                     //$(elem).combogrid("show");
+                     $(elem).combogrid("dropdownClick");
+                 });
+
+
+                 $(elem).combogrid({
+                     debug: true,
+                     searchButton: false,
+                     resetButton: false,
+                     alternate: true,
+                     munit: 'px',
+                     scrollBar: true,
+                     showPager: true,
+                     colModel: cgColumns,
+                     autoFocus: true,
+                     showError: true,
+                     width: 400,
+                     url: serviceURL,
+                     search: function (event, ui) {
+                         var elemRowCur = $(elem).closest('tr.gridRow');
+                         var e = document.getElementById("<%=ddlDEPT_ID.ClientID%>");  
+                         var dept_id = e.options[e.selectedIndex].value;
+                        
+                         var newServiceURL = serviceURL + "&deptid=" + dept_id;
+                         newServiceURL = JSUtility.AddTimeToQueryString(newServiceURL);
+                         $(this).combogrid("option", "url", newServiceURL);
+
+
+                     },
+
+                     select: function (event, ui) {
+                         //alert(ui.item.typename);
+                         //$(".txtComboGrid").val(ui.item.code);
+                         elemID = $(elem).attr('id');
+                         //                    if (!validateGLAccount(elemID, ui.item)) {
+                         //                        $(elem).val(prevGLCode);
+                         //                        return false;
+                         //                    }
+                         if (!ui.item) {
+                             event.preventDefault();
+                             ClearMachineData(elemID);
+                             return false;
+                             //ClearGLAccountData(elemID);
+                         }
+
+
+
+                         if (ui.item.id == 0) {
+                             event.preventDefault();
+                             return false;
+                             //ClearGLAccountData(elemID);
+                         }
+                         else {
+                             SetMachineData(elemID, ui.item);
+                         }
+                         // setDetInstrument(hdnIsInstrumentElem, txtInstrumentElem, btnInstrumentElem);
+                         return false;
+                     }
+                     // lc: ''
+                 });
+
+                 $(elem).blur(function () {
+                     var self = this;
+                     elemID = $(elem).attr('id');
+                     eCode = $(elem).val();
+                     isComboGridOpen = $(self).combogrid('isOpened');
+                     if (eCode == '') {
+                         //                    if (!validateGLAccount(elemID, null)) {
+                         //                        $(elem).val(prevGLCode);
+                         //                        return false;
+                         //                    }
+                         //ClearItemGroupData(elemID);
+                     }
+                     else {
+
+                         if (eCode == null) {
+                             ClearMachineData(elemID);
+                         }
+                         else {
+                             SetMachineData(elemID, grp);
+                         }
+                     }
+                     //setDetInstrument(hdnIsInstrumentElem, txtInstrumentElem, btnInstrumentElem);
+                     grpID = $(self).closest('tr').find('input[id$="hndMACHINE_ID"]').val();
+                     if (grpID == '0' | grpID == '') {
+                         $(self).addClass('textError');
+                     }
+                 });
+             });
+         }
+
+
+         function SetMachineData(txtMACHINE_NAME, data) {
+             $('#' + txtMACHINE_NAME).val(data.machinename);
+             var detRow = $('#' + txtMACHINE_NAME).closest('tr.gridRow');
+             $(detRow).find('input[id$="hndMACHINE_ID"]').val(data.machineid);
+         }
+         function ClearMachineData(txtMACHINE_NAME) {
+             var detRow = $('#' + txtMACHINE_NAME).closest('tr.gridRow');
+             $(detRow).find('input[id$="hndMACHINE_ID"]').val('0');
+             $(detRow).find('input[id$="txtMACHINE_NAME"]').val('');
+         }
+
+
+
+         function bindSupporvisorList() {
+
+             var cgColumns = [{ 'columnName': 'empid', 'width': '80', 'align': 'left', 'highlight': 4, 'label': 'Emp ID' }
+                              , { 'columnName': 'fullname', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Emp Name' }
+                              , { 'columnName': 'designationName', 'width': '150', 'align': 'left', 'highlight': 4, 'label': ' Designation Name' }
+
+             ];
+             var serviceURL = SupporvisorListServiceLink + "?isterm=1&includeempty=0&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+             serviceURL += "&ispaging=0&isOperator=1";
+             var groupIDElem = $('#' + txtSUPERVISOR_NAME);
+
+             $('#' + btnSUPERVISOR_ID).click(function (e) {
+                 $(groupIDElem).combogrid("dropdownClick");
+             });
+
+             $(groupIDElem).combogrid({
+                 debug: true,
+                 searchButton: false,
+                 resetButton: false,
+                 alternate: true,
+                 munit: 'px',
+                 scrollBar: true,
+                 showPager: true,
+                 colModel: cgColumns,
+                 autoFocus: true,
+                 showError: true,
+                 width: 350,
+                 url: serviceURL,
+                 search: function (event, ui) {
+                     var e = document.getElementById("<%=ddlDEPT_ID.ClientID%>");
+                     var dept_id = e.options[e.selectedIndex].value;
+                     var newServiceURL = serviceURL + "&deptid=" + dept_id;
+                    
+                     $(this).combogrid("option", "url", newServiceURL);
+                 },
+                 select: function (event, ui) {
+                     if (!ui.item) {
+                         event.preventDefault();
+                         return false;
+                     }
+
+
+                     if (ui.item.dealerid == '') {
+                         event.preventDefault();
+                         return false;
+                     }
+                     else {
+                         // $('#' + hdnDealerID).val(ui.item.dealerid);
+                         $('#' + hdnSUPERVISOR_ID).val(ui.item.empid);
+                         $('#' + txtSUPERVISOR_NAME).val(ui.item.fullname);
+                     }
+                     return false;
+                 },
+                 lc: ''
+             });
+
+             $(groupIDElem).blur(function () {
+                 var self = this;
+
+                 var groupID = $(groupIDElem).val();
+                 if (groupID == '') {
+                     // $('#' + hdnDealerID).val('0');
+
+                     $('#' + hdnSUPERVISOR_ID).val('0');
+                     $('#' + txtSUPERVISOR_NAME).val('');
+                 }
+             });
+         }
+
+
+
+         function bindShiftinchargeList() {
+
+             var cgColumns = [{ 'columnName': 'empid', 'width': '80', 'align': 'left', 'highlight': 4, 'label': 'Emp ID' }
+                              , { 'columnName': 'fullname', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Emp Name' }
+                              , { 'columnName': 'designationName', 'width': '150', 'align': 'left', 'highlight': 4, 'label': ' Designation Name' }
+
+             ];
+             var serviceURL = SupporvisorListServiceLink + "?isterm=1&includeempty=0&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+             serviceURL += "&ispaging=0&isOperator=0";
+             var groupIDElem = $('#' + txtSHIFT_INCHARGE);
+
+             $('#' + btnSHIFT_INCHARGE).click(function (e) {
+                 $(groupIDElem).combogrid("dropdownClick");
+             });
+
+             $(groupIDElem).combogrid({
+                 debug: true,
+                 searchButton: false,
+                 resetButton: false,
+                 alternate: true,
+                 munit: 'px',
+                 scrollBar: true,
+                 showPager: true,
+                 colModel: cgColumns,
+                 autoFocus: true,
+                 showError: true,
+                 width: 350,
+                 url: serviceURL,
+                 search: function (event, ui) {
+                     var e = document.getElementById("<%=ddlDEPT_ID.ClientID%>");
+                     var dept_id = e.options[e.selectedIndex].value;
+                     var newServiceURL = serviceURL + "&deptid=" + dept_id;
+
+                     $(this).combogrid("option", "url", newServiceURL);
+                 },
+                 select: function (event, ui) {
+                     if (!ui.item) {
+                         event.preventDefault();
+                         return false;
+                     }
+
+
+                     if (ui.item.dealerid == '') {
+                         event.preventDefault();
+                         return false;
+                     }
+                     else {
+                         // $('#' + hdnDealerID).val(ui.item.dealerid);
+                         $('#' + hdnSHIFT_INCHARGE).val(ui.item.empid);
+                         $('#' + txtSHIFT_INCHARGE).val(ui.item.fullname);
+                     }
+                     return false;
+                 },
+                 lc: ''
+             });
+
+             $(groupIDElem).blur(function () {
+                 var self = this;
+
+                 var groupID = $(groupIDElem).val();
+                 if (groupID == '') {
+                     // $('#' + hdnDealerID).val('0');
+
+                     $('#' + hdnSHIFT_INCHARGE).val('0');
+                     $('#' + txtSHIFT_INCHARGE).val('');
+                 }
+             });
+         }
+
+
+         function SetOperatorData(txtOPERATOR_NAME, data) {
+             $('#' + txtOPERATOR_NAME).val(data.fullname);
+             var detRow = $('#' + txtOPERATOR_NAME).closest('tr.gridRow');
+             $(detRow).find('input[id$="hdnOPERATOR_ID"]').val(data.empid);
+
+         }
+         function ClearOperatorData(txtOPERATOR_NAME) {
+             var detRow = $('#' + txtOPERATOR_NAME).closest('tr.gridRow');
+             $(detRow).find('input[id$="hdnOPERATOR_ID"]').val('0');
+             $(detRow).find('input[id$="txtOPERATOR_NAME"]').val('');
+         }
+
+
+         /* Tab javascript */
+         function openCity(evt, cityName) {
+             var i, tabcontent, tablinks;
+             tabcontent = document.getElementsByClassName("tabcontent");
+             for (i = 0; i < tabcontent.length; i++) {
+                 tabcontent[i].style.display = "none";
+             }
+             tablinks = document.getElementsByClassName("tablinks");
+             for (i = 0; i < tablinks.length; i++) {
+                 //tablinks[i].className = tablinks[i].className.replace(" active", "#");
+             }
+             document.getElementById(cityName).style.display = "block";
+             evt.currentTarget.className += " active";
+         }
+
+         $(function () {
+             $("#tabs").tabs();
+         });
+
+         $(':input').keypress(function (e) {
+             if (e.which == 13) {
+                 ti = $(this).attr('tabindex') + 1;
+                 $('input[tabindex=' + ti + ']').focus();
+                 //try to use________ e.which = 9; return e.which;
+             } else if (e.which == 9) {
+                 e.preventDefault(); //or return false;
+             }
+         });
+
+           </script>
+
+     <style type="text/css">
+ 
+
+/* Style the tab */
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+    
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+        .colourdisabletextBox {}
+         .auto-style9 {
+             width: 455px;
+         }
+    </style>
+
+
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+     <div id="dvPageContent" style="width: 100%; height: 100%;">
+         <asp:HiddenField ID="hdnLoggedInUser" runat="server" />
+         <asp:HiddenField ID="hdnCompanyID" runat="server" Value="0" />
+          <div id="dvContentHeader" class="dvContentHeader">
+            <div id="dvHeader" class="dvHeader_Prod" align="left">
+                <asp:Label ID="lblHeader" runat="server" Text="CASTING LEAD REPROCESS" CssClass="lblHeader" Font-Bold="true" Font-Size="15px"></asp:Label>
+            </div>
+            <div id="dvMessage" class="dvMessage">
+                <asp:Label ID="lblMessage" runat="server" CssClass="lblMessage" Text="" Width="100%"></asp:Label>
+            </div>
+
+            <div id="dvHeaderControl" class="dvHeaderControl">
+            </div>
+
+        </div>
+
+           <div id="dvContentMain" class="dvContentMain" align="left">
+
+               <div id="tabs" style="height: 95%; background : url(../image/bg_greendot.gif) !important;">
+                 <ul>
+                 <li><a href="#tabs-1">CASTING LEAD DETAILS</a></li>
+                  <li><a href="#tabs-2">USED RM </a></li>
+                   <li><a href="#tabs-3">DROSS ENTRY </a></li>
+                 </ul> 
+
+                 <div id="dvControlsHead" style="height: auto; width: 100%;" align="left">
+                      <table border="0" cellspacing="4" cellpadding="2" align="left" style="width: 90%" id="tblProductionMstEntry">
+                          <tr>
+                              <td style="text-align: right">
+                                  <asp:Label ID="lblPROD_CODE" runat="server" Text="PROD. NO : "></asp:Label>
+                              </td>
+                              <td style="text-align: left">
+                                  <asp:TextBox ID="txtPROD_NO" runat="server" CssClass="colourdisabletextBox" Enabled="false" Width="163px"></asp:TextBox>
+                              </td>
+                              <td style="text-align: right">
+                                  <asp:Label ID="lblDEPT_ID" runat="server" Text="Department : "></asp:Label>
+                              </td>
+                              <td style="text-align: left">
+
+                                  <asp:DropDownList ID="ddlDEPT_ID" runat="server" CssClass="dropDownList required" Width="190px" ></asp:DropDownList>
+                              </td>
+                              <td style="text-align: right"> 
+                                  
+                              </td>
+                              <td style="text-align: left">
+                                   
+                                 
+                                  <asp:Label ID="lblPRODUCTION_DATE" runat="server"  Text="Production Date :"></asp:Label> 
+                                   <asp:TextBox ID="txtPRODUCTION_DATE" runat="server" CssClass="textBox textDate dateParse" Style="text-align: left;" Width="100px"></asp:TextBox>
+                                   
+                                 
+                              </td> 
+
+                              <td> 
+                                  &nbsp;</td>
+                              <td style="text-align: left"> 
+                                  <asp:HiddenField ID="hdnPROD_ID" runat="server" />
+                              </td>
+
+
+                          </tr>
+                          
+                          
+                          
+                          </table>
+                     </div>
+
+               <div id="dvControls" style="height: auto; width: 100%; ">
+ 
+            <div id="groupDataDetails" style="width: 100%; height: auto;">
+              <div id="tabs-1">  
+                
+                  
+                <table style="width : 1200px; border : 2px;">
+                    <tr >
+                        
+                        <td style="border-right: solid 2px #C0C0C0;">
+                                <div id="dvGridContainer2" runat="server" class="" style="width: auto; height: auto; text-align: left; float : left; padding-right : 2px; border: solid 1px #2e4be5;">
+                                                    <div id="groupDataHeaderCredit" runat="server" class="" style="width: 100%; text-align: left;">
+                                                    <span style="font-weight: bold;font-size : 15px; color :#ff3b00;">  LEAD ITEMS DETAILS: </span>
+                                                </div>
+                                                    <div id="dvGridHeader2" style=" width:1060px; height: 25px; font-size: smaller;" class="subHeader_Prod">
+                                                        <table style="height: 80%; color: #FFFFFF; font-weight: bold; text-align: left;"
+                                                            class="defFont" cellspacing="1" cellpadding="1">
+                                                            <tr class="headerRow_Prod">
+                                                                <td width="30px" class="headerColCenter_prod">SL#
+                                                                </td>
+                                                                <td width="150px" class="headerColCenter_prod"> Pot NO</td>
+                                                                <td width="15px" class="headerColCenter_prod"></td>
+                                                                <td width="350px" class="headerColCenter_prod">Item
+                                                                </td>
+                                                                 <td width="15px" class="headerColCenter_prod"></td>
+                                                                  <td width="55px" class="headerColCenter_prod">Item Qty
+                                                                </td>
+                                                                <td width="50px" class="headerColCenter_prod">UOM
+                                                                </td>
+                                                                <td width="300px" class="headerColCenter_prod">Remarks
+                                                                </td>
+                                                                <td width="16px" class="headerColCenter_prod">Delete
+                                                                </td>
+                                
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                    <div id="dvGrid" style="width: 1050px; height: 150px; overflow: auto;" class="dvGrid">
+                                                      <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+                                                        <ContentTemplate>
+                                                                <asp:GridView ID="GRDDTLITEMLIST" runat="server" AutoGenerateColumns="False" ShowHeader="False" 
+                                                                    CellPadding="1" CellSpacing="1" ForeColor="#333333" GridLines="Both" DataKeyNames="ITEM_ID" 
+                                                                    EnableModelValidation="True" ClientIDMode="AutoID" OnRowCommand="GRDDTLITEMLIST_RowCommand" OnRowCreated="GRDDTLITEMLIST_RowCreated" OnRowDataBound="GRDDTLITEMLIST_RowDataBound" OnRowDeleting="GRDDTLITEMLIST_RowDeleting"  >
+                                                                    <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
+                                                                    <Columns>
+                                       
+
+                                                                        <asp:TemplateField HeaderText="SL#">
+                                                                            <ItemTemplate>
+                                                                                <asp:Label ID="lblSLNo" runat="server" Text='<%# Bind("SLNO") %>' Style="text-align: center;"
+                                                                                    Width="30px">
+                                                                                </asp:Label>
+
+                                                                            </ItemTemplate>
+                                                                            <ItemStyle VerticalAlign="Top" />
+                                                                        </asp:TemplateField>
+
+                                                                        <asp:TemplateField HeaderText=" Item Type" HeaderStyle-HorizontalAlign="Left">
+                                                                            <ItemTemplate>
+                                                                                <div>
+                                                                                    <table border="0" cellpadding="1" cellspacing="1">
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                  <td>
+                                                                                                     <asp:TextBox ID="txtMACHINE_NAME" runat="server" CssClass="textBox textAutoSelect" Width="148px" Text='<%#Bind("MACHINE_NAME") %>'></asp:TextBox>
+                                                                                                     <asp:HiddenField ID="hndMACHINE_ID" runat="server" Value='<%# Bind("MACHINE_ID") %>' />
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <input id="btnMACHINE_NAME" type="button" value="" runat="server"  class="buttonDropdown" tabindex="-1" />
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <asp:HiddenField ID="hdnPROD_DTL_ID" runat="server" Value='<%# Bind("PROD_DTL_ID") %>' />
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <asp:TextBox ID="txtITEM_NAME" runat="server" CssClass="textBox textAutoSelect" Width="348px" Text='<%# Bind("ITEM_NAME") %>'></asp:TextBox>
+                                                                                                    <asp:HiddenField ID="hdnItemID" runat="server" Value='<%# Bind("ITEM_ID") %>' />
+                                                                                                    <asp:HiddenField ID="hdnITEM_BOM_ID" runat="server" Value='<%# Bind("BOM_ID") %>' />
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <input id="btnITEM_NAME" type="button" value="" runat="server" class="buttonDropdown"
+                                                                                                        tabindex="-1" />
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <asp:TextBox ID="txtItem_qty" runat="server" CssClass="textBox textAutoSelect" Width="52px" align="right" Text='<%# Bind("ITEM_QTY") %>'  onkeypress="return isNumberKey(event,this);"></asp:TextBox>
+                                                                                                </td>
+                                                                                                 <td>
+                                                                                                    <asp:TextBox ID="txtUOM_NAME" runat="server" CssClass="textBox textAutoSelect"  Width="45px" Text='<%# Bind("UOM_NAME") %>'></asp:TextBox>
+                                                                                                    <asp:HiddenField ID="hdnUomID" runat="server" Value='<%# Bind("UOM_ID") %>' />
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <asp:TextBox ID="txtRemarks" runat="server" CssClass="textBox textAutoSelect" Width="300px" Text='<%# Bind("REMARKS") %>' Style=""></asp:TextBox>
+                                                                                                </td>
+
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                                <div style="overflow: visible;">
+                                                                                </div>
+                                                                            </ItemTemplate>
+                                                                            <ItemStyle Width="10" />
+                                                                            <HeaderStyle HorizontalAlign="Left" />
+                                                                            <ItemStyle VerticalAlign="Top" HorizontalAlign="Left" />
+                                                                        </asp:TemplateField>
+                                                                        <asp:TemplateField HeaderText="Delete" ShowHeader="false">
+                                                                            <ItemTemplate>
+                                                                                <asp:LinkButton ID="btnDeleteRow" CssClass="buttonDeleteIcon" Height="16px" Width="18px"
+                                                                                    CommandName="delete" runat="server">
+                                                                                </asp:LinkButton>
+                                                                            </ItemTemplate>
+                                                                            <ItemStyle VerticalAlign="Top" />
+                                                                        </asp:TemplateField>
+
+                                        
+
+                                                                        <asp:TemplateField Visible="false">
+                                                                            <ItemTemplate>
+                                                                                <div style="width: 10px;">
+                                                                                    <div>
+                                                                                        <div style="background-position: right center; height: 25px; cursor: pointer; background-image: url('../image/more.png'); background-repeat: no-repeat; text-align: left; vertical-align: middle;"
+                                                                                            onclick="togglePannelStatus(this)"
+                                                                                            title="More..">
+                                                                                            ...
+                                                                                        </div>
+                                                                                        <div style="display: none;">
+                                                                                            <div class="gridPanel" style="float: right; width: 0px; height: 0px;">
+                                                                                                <div style="position: relative; height: 100%; width: 100%;">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </ItemTemplate>
+                                                                        </asp:TemplateField>
+                                                                    </Columns>
+                                                                    <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                                                                    <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
+                                                                    <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
+                                                                    <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" Font-Size="Smaller" />
+                                                                    <EditRowStyle BackColor="#999999" />
+                                                                    <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
+                                                                </asp:GridView>
+                                                                <input id="hdnJournalDetRefJson2" type="hidden" runat="server" value="[]" />
+                                                                <input id="hdnJournalDetInsJson2" type="hidden" runat="server" value="[]" />
+                                                       </ContentTemplate>
+                                                         <Triggers>
+                                                                <asp:AsyncPostBackTrigger ControlID="btnNewRow" EventName="Click" />
+                                                            </Triggers>
+                                                    </asp:UpdatePanel>
+
+
+                                                    </div>
+                                                    <div id="divGridControls2" style="width: auto; height: 30px; border-top: solid 1px #C0C0C0;">
+                                                        <table style="width: 100%; height: 30px; text-align: center;" cellspacing="1" cellpadding="1"
+                                                            border="0">
+                                                            <tr>
+                                                                <td style="width: 2px"></td>
+                                                               
+                                                                <td style="width: 160px; text-align: right;">
+                                                                </td>
+                                                                <td align="right" style="text-align: left">
+                                                                   &nbsp;
+                                                                </td>
+                                                                <td align="right">
+                                                                    &nbsp;</td>
+                                                                <td align="right">
+                                                                    &nbsp;</td>
+                                                                <td align="right">&nbsp;
+                                                                </td>
+                                                                 <td style="width: 90px" align="left">
+                                                                    <asp:Button ID="btnNewRow" runat="server" CssClass="buttonNewRow" Text="" OnClientClick="ShowProgress()" OnClick="btnNewRow_Click" />
+                                                                </td>
+                                                                <td style="width: 20px;">
+                                                                    <asp:UpdateProgress ID="UpdateProgress2" runat="server" AssociatedUpdatePanelID="UpdatePanel1"
+                                                                        DisplayAfter="300">
+                                                                        <ProgressTemplate>
+                                                                            <asp:Image ID="imgProgress2" runat="server" ImageUrl="~/image/loader.gif" />
+                                                                        </ProgressTemplate>
+                                                                    </asp:UpdateProgress>
+                                                                </td>
+                                                            </tr>
+                            
+                                
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                        </td>
+                       
+                    </tr>
+                </table>
+                   
+                </div>  
+                
+                <div id="tabs-2">
+                 <div id="Div2" runat="server" style="width:1194px; border:1px solid blue; float:left ">
+                    <div id="Div3" runat="server" class="" style="width: 100%; text-align: left;">
+                       <span style="font-weight: bold ; font-size : 15px; color :#ff3b00;">USED RAW MATERIALS DETAILS: </span>
+                    </div>
+                    <div id="Div1" runat="server" class="" style="width: auto; height: auto; text-align: left">
+                     
+                        <div id="dvGridHeaderClosing" style="width: 1060px; height: 25px; font-size: smaller;" class="subHeader_Prod">
+                            <table style="height: 80%; color: #FFFFFF; font-weight: bold; text-align: left;"
+                                class="defFont" cellspacing="1" cellpadding="1">
+                                <tr class="headerRow_Prod">
+                                    <td width="65px" class="headerColCenter_prod">SL#
+                                    </td>
+                                     <td width="150px" class="headerColCenter_prod"> Pot NO</td>
+                                    <td width="235px" class="headerColCenter_prod">Item
+                                    </td>
+                                    <td width="15px" class="headerColCenter_prod"></td>
+                                     <td width="65px" class="headerColCenter_prod">UOM
+                                    </td>
+                                     <td width="145px" class="headerColCenter_prod">OP Stock
+                                    </td>
+                                     <td width="80px" class="headerColCenter_prod">Closing Qty
+                                    </td>
+                                    <%--<td width="145px" class="headerColCenter">Manual Opening Stock
+                                    </td>--%>
+
+                                     <td width="80px" class="headerColCenter_prod"> Wastage Qty
+                                    </td>
+                                        <td width="80px" class="headerColCenter_prod"> Rejected Qty
+                                    </td>
+                                    <%--<td width="80px" class="headerColCenter_prod"> Pos Dev
+                                    </td>
+                                    <td width="80px" class="headerColCenter_prod"> Neg Dev
+                                    </td>--%>
+
+                                    <td width="80px" class="headerColCenter_prod">Used Qty
+                                    </td>
+                                    <td width="150px" class="headerColCenter_prod">Remarks
+                                    </td>
+                                    <td width="16px" class="headerColCenter_prod">Delete
+                                    </td>
+                                
+                                </tr>
+                            </table>
+                        </div>
+                        <div id="dvGridClosing" style="width: 1060px; height: 150px; overflow: auto;" class="dvGrid">
+                          <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
+                            <ContentTemplate>
+                                    <asp:GridView ID="grdClosingRowMaterial" runat="server" AutoGenerateColumns="False" ShowHeader="False" 
+                                        CellPadding="1" CellSpacing="1" ForeColor="#333333" GridLines="Both" DataKeyNames="CLOSING_ITEM_ID" 
+                                        EnableModelValidation="True" ClientIDMode="AutoID" OnRowCommand="grdClosingRowMaterial_RowCommand" OnRowCreated="grdClosingRowMaterial_RowCreated" OnRowDataBound="grdClosingRowMaterial_RowDataBound" OnRowDeleting="grdClosingRowMaterial_RowDeleting"  >
+                                        <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
+                                        <Columns>
+                                       
+
+                                            <asp:TemplateField HeaderText="SL#">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="lblCLOSING_SI" runat="server" Text=<%# Container.DataItemIndex + 1 %> Style="text-align: center;"
+                                                        Width="60px">
+                                                    </asp:Label>
+
+                                                </ItemTemplate>
+                                                <ItemStyle VerticalAlign="Top" />
+                                            </asp:TemplateField>
+
+                                            <asp:TemplateField HeaderText=" Item Type" HeaderStyle-HorizontalAlign="Left">
+                                                <ItemTemplate>
+                                                    <div>
+                                                        <table border="0" cellpadding="1" cellspacing="1">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        <asp:HiddenField ID="hdnCLOSING_ID" runat="server" Value='<%# Bind("CLOSING_ID") %>' />
+                                                                    </td>
+                                                                    <td>
+                                                                        <asp:HiddenField ID="hdnPROD_MST_ID" runat="server" Value='<%# Bind("PROD_MST_ID") %>' />
+                                                                    </td>
+                                                                       <td>
+                                                                                                     <asp:TextBox ID="txtMACHINE_NAME" runat="server" CssClass="textBox textAutoSelect" Width="100px" Text='<%#Bind("MACHINE_NAME") %>'></asp:TextBox>
+                                                                                                     <asp:HiddenField ID="hndMACHINE_ID" runat="server" Value='<%# Bind("MACHINE_ID") %>' />
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <input id="btnMACHINE_NAME" type="button" value="" runat="server"  class="buttonDropdown" tabindex="-1" />
+                                                                                                </td>
+                                                                    <td>
+                                                                        <asp:TextBox ID="txtCLOSINGITEM_NAME" runat="server" CssClass="textBox textAutoSelect" Width="195px" Text='<%# Bind("CLOSINGITEM_NAME") %>'></asp:TextBox>
+                                                                        <asp:HiddenField ID="hdnCLOSING_ITEM_ID" runat="server" Value='<%# Bind("CLOSING_ITEM_ID") %>' />
+                                                                    </td>
+                                                                    <td>
+                                                                        <input id="btnCLOSINGITEM_NAME" type="button" value="" runat="server" class="buttonDropdown" tabindex="-1" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <asp:TextBox ID="txtCLOSING_UOM_NAME" runat="server" CssClass="textBox textAutoSelect"  Width="55px" Text='<%# Bind("CLOSING_UOM_NAME") %>'></asp:TextBox>
+                                                                        <asp:HiddenField ID="hdnCLOSING_UOM_ID" runat="server" Value='<%# Bind("CLOSING_UOM_ID") %>' />
+                                                                    </td>
+                                                                     <td>
+                                                                        <asp:TextBox ID="txtSYSTEM_OPENING_STOCK" runat="server" CssClass="textBox textAutoSelect" Width="120px" align="right" Text='<%# Bind("SYSTEM_OPENING_STOCK") %>'  onkeypress="return isNumberKey(event,this);"></asp:TextBox>
+                                                                    </td>
+                                                                     <td>
+                                                                        <asp:TextBox ID="txtCLOSING_QTY" runat="server" CssClass="textBox textAutoSelect"   Width="70px" align="right" onchange="calcIssueStock(this)" Text='<%# Bind("CLOSING_QTY") %>'  ></asp:TextBox>
+                                                                    </td>
+                                                                    <%-- <td>
+                                                                        <asp:TextBox ID="txtMANUAL_OPENING_STOCK" runat="server" CssClass="textBox textAutoSelect" Width="135px" align="right" onchange="calcIssueStock(this)" Text='<%# Bind("MANUAL_OPENING_STOCK") %>'  onkeypress="return isNumberKey(event,this);"></asp:TextBox>
+                                                                    </td>--%>
+
+                                                                    <td>
+                                                                                        <asp:TextBox ID="txtWASTAGE_QTY" runat="server" CssClass="textBox textAutoSelect"   Width="75px" align="right" Text='<%# Bind("WASTAGE_QTY") %>' onkeypress="return isNumberKey(event,this);"  ></asp:TextBox>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <asp:TextBox ID="txtREJECTED_QTY" runat="server" CssClass="textBox textAutoSelect"   Width="70px" align="right" Text='<%# Bind("REJECTED_QTY") %>' onkeypress="return isNumberKey(event,this);" ></asp:TextBox>
+                                                                                    </td>
+                                                                                    <%--<td>
+                                                                                        <asp:TextBox ID="txtPOSITIVE_DEV" runat="server" CssClass="textBox textAutoSelect"   Width="70" align="right" Text='<%# Bind("POSITIVE_DEV") %>' onkeypress="return isNumberKey(event,this);" ></asp:TextBox>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <asp:TextBox ID="txtNEGATIVE_DEV" runat="server" CssClass="textBox textAutoSelect"   Width="70" align="right" Text='<%# Bind("NEGATIVE_DEV") %>' onkeypress="return isNumberKey(event,this);" ></asp:TextBox>
+                                                                                    </td>--%>
+                                                                     <td>
+                                                                        <asp:TextBox ID="txtISSUE_STOCK" runat="server" CssClass="textBox textAutoSelect" Width="70px" align="right" Text='<%# Bind("ISSUE_STOCK") %>' onchange="calcCloseingStock(this)"  onkeypress="return isNumberKey(event,this);"></asp:TextBox>
+                                                                    </td>
+                                                                   
+                                                                
+                                                                     
+
+                                                                    <td>
+                                                                        <asp:TextBox ID="txtCLOSING_REMARKS" runat="server" CssClass="textBox textAutoSelect" Width="130px" Text='<%# Bind("CLOSING_REMARKS") %>' Style=""></asp:TextBox>
+                                                                    </td>
+
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div style="overflow: visible;">
+                                                    </div>
+                                                </ItemTemplate>
+                                                <ItemStyle Width="10" />
+                                                <HeaderStyle HorizontalAlign="Left" />
+                                                <ItemStyle VerticalAlign="Top" HorizontalAlign="Left" />
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Delete" ShowHeader="false">
+                                                <ItemTemplate>
+                                                    <asp:LinkButton ID="btnDeleteRow" CssClass="buttonDeleteIcon" Height="16px" Width="18px"
+                                                        CommandName="delete" runat="server">
+                                                    </asp:LinkButton>
+                                                </ItemTemplate>
+                                                <ItemStyle VerticalAlign="Top" />
+                                            </asp:TemplateField>
+
+                                        
+
+                                            <asp:TemplateField Visible="false">
+                                                <ItemTemplate>
+                                                    <div style="width: 10px;">
+                                                        <div>
+                                                            <div style="background-position: right center; height: 25px; cursor: pointer; background-image: url('../image/more.png'); background-repeat: no-repeat; text-align: left; vertical-align: middle;"
+                                                                onclick="togglePannelStatus(this)"
+                                                                title="More..">
+                                                                ...
+                                                            </div>
+                                                            <div style="display: none;">
+                                                                <div class="gridPanel" style="float: right; width: 0px; height: 0px;">
+                                                                    <div style="position: relative; height: 100%; width: 100%;">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        </Columns>
+                                        <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                                        <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
+                                        <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
+                                        <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" Font-Size="Smaller" />
+                                        <EditRowStyle BackColor="#999999" />
+                                        <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
+                                    </asp:GridView>
+                                    <input id="Hidden1" type="hidden" runat="server" value="[]" />
+                                    <input id="Hidden2" type="hidden" runat="server" value="[]" />
+                           </ContentTemplate>
+                             <Triggers>
+                                    <asp:AsyncPostBackTrigger ControlID="btnNewRowClosing" EventName="Click" />
+                                </Triggers>
+                        </asp:UpdatePanel>
+
+
+                        </div>
+                        <div id="divGridControlsClosing" style="width: 92%; height: 30px; border-top: solid 1px #C0C0C0;">
+                            <table style="width: 90%; height: 100%; text-align: center;" cellspacing="1" cellpadding="1"
+                                border="0">
+                                <tr>
+                                  <td style="width: 2px"></td>
+                                   <td style="width: 160px; text-align: right;">
+                                  </td>
+                                      <td align="right" style=" width: 300px;text-align: left">
+                                                                   &nbsp;
+                                        </td>
+                                      <td align="right" style="width:300px">
+                                           &nbsp;</td>
+                                           <td align="right"style="width:500px;">
+                                            &nbsp;</td>
+                                           <td align="right">&nbsp;
+                                        </td>                             
+                                                               
+                                   
+                                    <td style="width: 90px" align="left">
+                                        <asp:Button ID="btnNewRowClosing" runat="server" CssClass="buttonNewRow" Text="" OnClientClick="ShowClosingProgress()" OnClick="btnNewRowClosing_Click" />
+                                    </td>
+                                    <td style="width: 20px;">
+                                        <asp:UpdateProgress ID="UpdateProgress3" runat="server" AssociatedUpdatePanelID="UpdatePanel2"
+                                            DisplayAfter="300">
+                                            <ProgressTemplate>
+                                                <asp:Image ID="imgProgressClosing" runat="server" ImageUrl="~/image/loader.gif" />
+                                            </ProgressTemplate>
+                                        </asp:UpdateProgress>
+                                    </td>
+                                     
+                                    <td align="right">
+                                        &nbsp;</td>
+                                    <td style="width: 10px; text-align: right;">
+                                        
+                                    </td>
+                                </tr>
+                            
+                                
+                            </table>
+                        </div>
+                    </div>
+                     </div>
+                    </div>
+
+
+
+                  <div id="tabs-3">
+                 <div id="Div4" runat="server" class="" style="width: auto; height: auto; text-align: left; float : left; padding-right : 2px; border: solid 1px #2e4be5;">
+                                                    <div id="Div5" runat="server" class="" style="width: 100%; text-align: left;">
+                                                    <span style="font-weight: bold;font-size : 15px; color :#ff3b00;">DROSS ITEMS DETAILS: </span>
+                                                </div>
+                                                    <div id="dvGridHeaderDross" style=" width:1060px; height: 25px; font-size: smaller;" class="subHeader_Prod">
+                                                        <table style="height: 80%; color: #FFFFFF; font-weight: bold; text-align: left;"
+                                                            class="defFont" cellspacing="1" cellpadding="1">
+                                                            <tr class="headerRow_Prod">
+                                                                <td width="30px" class="headerColCenter_prod">SL#
+                                                                </td>
+                                                                <td width="150px" class="headerColCenter_prod"> Pot NO</td>
+                                                                <td width="15px" class="headerColCenter_prod"></td>
+                                                                <td width="350px" class="headerColCenter_prod">Item
+                                                                </td>
+                                                                 <td width="15px" class="headerColCenter_prod"></td>
+                                                                  <td width="55px" class="headerColCenter_prod">Item Qty
+                                                                </td>
+                                                                <td width="50px" class="headerColCenter_prod">UOM
+                                                                </td>
+                                                                <td width="300px" class="headerColCenter_prod">Remarks
+                                                                </td>
+                                                                <td width="16px" class="headerColCenter_prod">Delete
+                                                                </td>
+                                
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                    <div id="dvGridDross" style="width: 1050px; height: 150px; overflow: auto;" class="dvGrid">
+                                                      <asp:UpdatePanel ID="UpdatePanel3" runat="server" UpdateMode="Conditional">
+                                                        <ContentTemplate>
+                                                                <asp:GridView ID="grdDross" runat="server" AutoGenerateColumns="False" ShowHeader="False" 
+                                                                    CellPadding="1" CellSpacing="1" ForeColor="#333333" GridLines="Both" DataKeyNames="ITEM_ID" 
+                                                                    EnableModelValidation="True" ClientIDMode="AutoID" OnRowCommand="grdDross_RowCommand" OnRowCreated="grdDross_RowCreated" OnRowDataBound="grdDross_RowDataBound" OnRowDeleting="grdDross_RowDeleting"  >
+                                                                    <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
+                                                                    <Columns>
+                                       
+
+                                                                        <asp:TemplateField HeaderText="SL#">
+                                                                            <ItemTemplate>
+                                                                                <asp:Label ID="lblSLNo" runat="server" Text=' <%# Container.DataItemIndex + 1 %>  ' Style="text-align: center;"
+                                                                                    Width="30px">
+                                                                                </asp:Label>
+
+                                                                            </ItemTemplate>
+                                                                            <ItemStyle VerticalAlign="Top" />
+                                                                        </asp:TemplateField>
+
+                                                                        <asp:TemplateField HeaderText=" Item Type" HeaderStyle-HorizontalAlign="Left">
+                                                                            <ItemTemplate>
+                                                                                <div>
+                                                                                    <table border="0" cellpadding="1" cellspacing="1">
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                  <td>
+                                                                                                     <asp:TextBox ID="txtMACHINE_NAME" runat="server" CssClass="textBox textAutoSelect" Width="148px" Text='<%#Bind("MACHINE_NAME") %>'></asp:TextBox>
+                                                                                                     <asp:HiddenField ID="hndMACHINE_ID" runat="server" Value='<%# Bind("MACHINE_ID") %>' />
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <input id="btnMACHINE_NAME" type="button" value="" runat="server"  class="buttonDropdown" tabindex="-1" />
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <asp:HiddenField ID="hdnPUR_DROSS_DTL_ID" runat="server" Value='<%# Bind("PUR_DROSS_DTL_ID") %>' />
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <asp:TextBox ID="txtITEM_NAME" runat="server" CssClass="textBox textAutoSelect" Width="348px" Text='<%# Bind("ITEM_NAME") %>'></asp:TextBox>
+                                                                                                    <asp:HiddenField ID="hdnItemID" runat="server" Value='<%# Bind("ITEM_ID") %>' />
+                                                                                                   
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <input id="btnITEM_NAME" type="button" value="" runat="server" class="buttonDropdown"
+                                                                                                        tabindex="-1" />
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <asp:TextBox ID="txtItem_qty" runat="server" CssClass="textBox textAutoSelect" Width="52px" align="right" Text='<%# Bind("ITEM_QTY") %>'  onkeypress="return isNumberKey(event,this);"></asp:TextBox>
+                                                                                                </td>
+                                                                                                 <td>
+                                                                                                    <asp:TextBox ID="txtUOM_NAME" runat="server" CssClass="textBox textAutoSelect"  Width="45px" Text='<%# Bind("UOM_NAME") %>'></asp:TextBox>
+                                                                                                    <asp:HiddenField ID="hdnUomID" runat="server" Value='<%# Bind("UOM_ID") %>' />
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <asp:TextBox ID="txtRemarks" runat="server" CssClass="textBox textAutoSelect" Width="300px" Text='<%# Bind("REMARKS") %>' Style=""></asp:TextBox>
+                                                                                                </td>
+
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                                <div style="overflow: visible;">
+                                                                                </div>
+                                                                            </ItemTemplate>
+                                                                            <ItemStyle Width="10" />
+                                                                            <HeaderStyle HorizontalAlign="Left" />
+                                                                            <ItemStyle VerticalAlign="Top" HorizontalAlign="Left" />
+                                                                        </asp:TemplateField>
+                                                                        <asp:TemplateField HeaderText="Delete" ShowHeader="false">
+                                                                            <ItemTemplate>
+                                                                                <asp:LinkButton ID="btnDeleteRow" CssClass="buttonDeleteIcon" Height="16px" Width="18px"
+                                                                                    CommandName="delete" runat="server">
+                                                                                </asp:LinkButton>
+                                                                            </ItemTemplate>
+                                                                            <ItemStyle VerticalAlign="Top" />
+                                                                        </asp:TemplateField>
+
+                                        
+
+                                                                        <asp:TemplateField Visible="false">
+                                                                            <ItemTemplate>
+                                                                                <div style="width: 10px;">
+                                                                                    <div>
+                                                                                        <div style="background-position: right center; height: 25px; cursor: pointer; background-image: url('../image/more.png'); background-repeat: no-repeat; text-align: left; vertical-align: middle;"
+                                                                                            onclick="togglePannelStatus(this)"
+                                                                                            title="More..">
+                                                                                            ...
+                                                                                        </div>
+                                                                                        <div style="display: none;">
+                                                                                            <div class="gridPanel" style="float: right; width: 0px; height: 0px;">
+                                                                                                <div style="position: relative; height: 100%; width: 100%;">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </ItemTemplate>
+                                                                        </asp:TemplateField>
+                                                                    </Columns>
+                                                                    <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                                                                    <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
+                                                                    <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
+                                                                    <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" Font-Size="Smaller" />
+                                                                    <EditRowStyle BackColor="#999999" />
+                                                                    <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
+                                                                </asp:GridView>
+                                                                <input id="Hidden3" type="hidden" runat="server" value="[]" />
+                                                                <input id="Hidden4" type="hidden" runat="server" value="[]" />
+                                                       </ContentTemplate>
+                                                         <Triggers>
+                                                                <asp:AsyncPostBackTrigger ControlID="btnNewRowDross" EventName="Click" />
+                                                            </Triggers>
+                                                    </asp:UpdatePanel>
+
+
+                                                    </div>
+                                                    <div id="divGridControlsDross" style="width: auto; height: 30px; border-top: solid 1px #C0C0C0;">
+                                                        <table style="width: 100%; height: 30px; text-align: center;" cellspacing="1" cellpadding="1"
+                                                            border="0">
+                                                            <tr>
+                                                                <td style="width: 2px"></td>
+                                                               
+                                                                <td style="width: 160px; text-align: right;">
+                                                                </td>
+                                                                <td align="right" style="text-align: left">
+                                                                   &nbsp;
+                                                                </td>
+                                                                <td align="right">
+                                                                    &nbsp;</td>
+                                                                <td align="right">
+                                                                    &nbsp;</td>
+                                                                <td align="right">&nbsp;
+                                                                </td>
+                                                                 <td style="width: 90px" align="left">
+                                                                    <asp:Button ID="btnNewRowDross" runat="server" CssClass="buttonNewRow" Text="" OnClientClick="ShowDrossProgress()" OnClick="btnNewRowDross_Click" />
+                                                                </td>
+                                                                <td style="width: 20px;">
+                                                                    <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="UpdatePanel1"
+                                                                        DisplayAfter="300">
+                                                                        <ProgressTemplate>
+                                                                            <asp:Image ID="imgProgressDross" runat="server" ImageUrl="~/image/loader.gif" />
+                                                                        </ProgressTemplate>
+                                                                    </asp:UpdateProgress>
+                                                                </td>
+                                                            </tr>
+                            
+                                
+                                                        </table>
+                                                    </div>
+                                                </div>
+                    </div>
+
+
+
+                 </div>
+               </div>
+                   </div>
+
+            </div>
+
+                    <div id="dvContentFooter" class="dvContentFooter">
+                <table>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <asp:Button ID="btnAddNew" runat="server" Text="New" CssClass="buttonNew" OnClick="btnAddNew_Click"  />
+                            <asp:Button ID="btnCancel" runat="server" Text="Cancel" CssClass="buttonCancel checkIsDirty" />
+                        </td>
+                        <td>
+                            <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="buttonSave checkRequired" AccessKey="s" OnClientClick="if ( ! UserDeleteConfirmation()) return false;" OnClick="btnSave_Click" />
+                            <asp:Button ID="btnEdit" runat="server" Text="Edit" CssClass="buttonEdit" OnClick="btnEdit_Click" />
+                        </td>
+                        <td>
+                            <asp:Button ID="btnAuthorize" runat="server" Text="Authorize" CssClass="buttoncommon" OnClientClick="if ( ! UserAuthorizeConfirmation()) return false;" OnClick="btnAuthorize_Click" />
+                        </td>
+                        <td>
+                            <asp:Button ID="btnDelete" runat="server" Text="Delete" CssClass="buttonDelete" />
+                        </td>
+                        <td>
+                            <asp:Button ID="btnRefresh" runat="server" Text="Refresh" CssClass="buttonRefresh checkIsDirty" />
+                        </td>
+                        <td>
+                            <%-- <td>
+                                                                        <asp:TextBox ID="txtMANUAL_OPENING_STOCK" runat="server" CssClass="textBox textAutoSelect" Width="135px" align="right" onchange="calcIssueStock(this)" Text='<%# Bind("MANUAL_OPENING_STOCK") %>'  onkeypress="return isNumberKey(event,this);"></asp:TextBox>
+                                                                    </td>--%>
+                        </td>
+                        <td>
+                            <input id="btnClose" type="button" runat="server" class="buttonClose" value="Close" onclick="if (ContentForm) { ContentForm.CloseForm(); }" />
+                        </td>
+                        <td></td>
+                        <td>
+                             
+                        </td>
+                        <td>
+                            
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+               
+
+        
+
+
+         </div>
+</asp:Content>

@@ -1,0 +1,12 @@
+D:\SPB_INV\PG.Core\PG.Core\bin\Release\PG.Core.dll
+D:\SPB_INV\PG.Core\PG.Core\bin\Release\PG.Core.pdb
+D:\SPB_INV\PG.Core\PG.Core\bin\Release\Oracle.ManagedDataAccess.dll
+D:\SPB_INV\PG.Core\PG.Core\obj\Release\PG.Core.Windows.ExControls.DateRangeEx.DateRangeCombobox.resources
+D:\SPB_INV\PG.Core\PG.Core\obj\Release\PG.Core.Windows.ExControls.ListBar.ButtonListBar.resources
+D:\SPB_INV\PG.Core\PG.Core\obj\Release\PG.Core.Windows.Forms.frmFilter.resources
+D:\SPB_INV\PG.Core\PG.Core\obj\Release\PG.Core.Windows.Forms.frmFilterSelect.resources
+D:\SPB_INV\PG.Core\PG.Core\obj\Release\PG.Core.Windows.Forms.frmProgressBar.resources
+D:\SPB_INV\PG.Core\PG.Core\obj\Release\PG.Core.Windows.Forms.frmWait.resources
+D:\SPB_INV\PG.Core\PG.Core\obj\Release\PG.Core.csproj.GenerateResource.Cache
+D:\SPB_INV\PG.Core\PG.Core\obj\Release\PG.Core.dll
+D:\SPB_INV\PG.Core\PG.Core\obj\Release\PG.Core.pdb

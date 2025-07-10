@@ -1,0 +1,433 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FD5A644B-C3AF-4479-B46A-F7540D411273}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PG.DBClass</RootNamespace>
+    <AssemblyName>PG.DBClass</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Activities" />
+    <Reference Include="System.Activities.Presentation" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AccountingDC\AccEnums.cs" />
+    <Compile Include="AccountingDC\clsPrmLedger.cs" />
+    <Compile Include="AccountingDC\dcAccountSystem.cs" />
+    <Compile Include="AccountingDC\dcAccSettings.cs" />
+    <Compile Include="AccountingDC\dcAccSLNo.cs" />
+    <Compile Include="AccountingDC\dcAccYear.cs" />
+    <Compile Include="AccountingDC\GeneralLedgerDC\dcAccRef.cs" />
+    <Compile Include="AccountingDC\GeneralLedgerDC\dcAccRefCategory.cs" />
+    <Compile Include="AccountingDC\GeneralLedgerDC\dcAccRefSettings.cs" />
+    <Compile Include="AccountingDC\GeneralLedgerDC\dcAccRefType.cs" />
+    <Compile Include="AccountingDC\GeneralLedgerDC\dcCashTranType.cs" />
+    <Compile Include="AccountingDC\GeneralLedgerDC\dcLocationAccRef .cs" />
+    <Compile Include="AccountingDC\GeneralLedgerDC\dcLocationGLAccount.cs" />
+    <Compile Include="MasterDC\dcDEPARTMENT_INFO.cs" />
+    <Compile Include="General\MailMaster.cs" />
+    <Compile Include="HMSDC\dcHMCOUNTRY_MST.cs" />
+    <Compile Include="HMSDC\dcHMGUEST_MST.cs" />
+    <Compile Include="HMSDC\dcHMRESERVATION_DTL.cs" />
+    <Compile Include="HMSDC\dcHMRESERVATION_MST.cs" />
+    <Compile Include="HMSDC\dcHMROOM.cs" />
+    <Compile Include="HMSDC\dcHMROOM_TYPE.cs" />
+    <Compile Include="HMSDC\dcPrmHMS.cs" />
+    <Compile Include="InventoryDC\dcACCOUNT_HOLDER.cs" />
+    <Compile Include="InventoryDC\dcACCOUNT_HOLDER_DTL.cs" />
+    <Compile Include="InventoryDC\dcADJUSTMENT_TYPE.cs" />
+    <Compile Include="InventoryDC\dcBANK_BRANCH_MST.cs" />
+    <Compile Include="InventoryDC\dcBANK_MST.cs" />
+    <Compile Include="InventoryDC\dcBATERY_CATEGORY.cs" />
+    <Compile Include="InventoryDC\dcBATTERY_TYPE_MST.cs" />
+    <Compile Include="InventoryDC\dcBRAND.cs" />
+    <Compile Include="InventoryDC\dcCASH_MEDIA_MST.cs" />
+    <Compile Include="InventoryDC\dcCATEGORY_MST.cs" />
+    <Compile Include="InventoryDC\dcCS_DTL.cs" />
+    <Compile Include="InventoryDC\dcCS_MST.cs" />
+    <Compile Include="InventoryDC\dcCUSTOMER_ADJUSTMENT.cs" />
+    <Compile Include="InventoryDC\dcCUSTOMER_OPENNING_BALANCE.cs" />
+    <Compile Include="InventoryDC\dcCUSTOMER_PAYMENT_MST.cs" />
+    <Compile Include="InventoryDC\dcDEPARTMENT_STORE_CONFIG.cs" />
+    <Compile Include="InventoryDC\dcDIRECT_RECEIVE_DTL.cs" />
+    <Compile Include="InventoryDC\dcDIRECT_RECEIVE_MST.cs" />
+    <Compile Include="InventoryDC\dcDIVISION_INFO.cs" />
+    <Compile Include="InventoryDC\dcEMP_SIGNATURE_UPLOAD.cs" />
+    <Compile Include="InventoryDC\dcINDT_APPROVAL_CONFIG.cs" />
+    <Compile Include="InventoryDC\dcINDT_COMMENT_DTL.cs" />
+    <Compile Include="InventoryDC\dcINDT_STATUS.cs" />
+    <Compile Include="InventoryDC\dcINDT_STATUS_DTL.cs" />
+    <Compile Include="InventoryDC\dcINV_ADJUST_DEPT_DETAILS_TEMP.cs" />
+    <Compile Include="InventoryDC\dcINV_ADJUST_DEPT_MASTER_TEMP.cs" />
+    <Compile Include="InventoryDC\dcINV_ADJUST_DETAILS.cs" />
+    <Compile Include="InventoryDC\dcINV_ADJUST_DETAILS_DEPT.cs" />
+    <Compile Include="InventoryDC\dcINV_ADJUST_MASTER.cs" />
+    <Compile Include="InventoryDC\dcINV_ADJUST_MASTER_DEPT.cs" />
+    <Compile Include="InventoryDC\dcINV_DEPARTMENT_PERMISSION.cs" />
+    <Compile Include="InventoryDC\dcINV_ITEM_COLOR.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="InventoryDC\dcINV_ITEM_GENERATION.cs" />
+    <Compile Include="InventoryDC\dcINV_ITEM_GROP_WISE_ATTRIBUTE.cs" />
+    <Compile Include="InventoryDC\dcINV_ITEM_SIZE.cs" />
+    <Compile Include="InventoryDC\dcINV_ITEM_SNS_MST.cs" />
+    <Compile Include="InventoryDC\dcINV_REJECTION_RECEIVE_DTL.cs" />
+    <Compile Include="InventoryDC\dcINV_REJECTION_RECEIVE_MST.cs" />
+    <Compile Include="InventoryDC\dcINV_WORKING_MONTH.cs" />
+    <Compile Include="InventoryDC\dcITC_BATCH_INFO.cs" />
+    <Compile Include="InventoryDC\dcITC_TEMP_BATCH_INFO.cs" />
+    <Compile Include="InventoryDC\dcITEM_MASTER_PRICE_UPDATE_LOG.cs" />
+    <Compile Include="InventoryDC\dcITEM_SPECIFICATION_TYPE.cs" />
+    <Compile Include="InventoryDC\dcLC_COSTING_MST.cs" />
+    <Compile Include="InventoryDC\dcLC_WISE_FIXED_CHARGE.cs" />
+    <Compile Include="InventoryDC\dcLEAD_VALIDATION_MONTHLY.cs" />
+    <Compile Include="InventoryDC\dcPO_TERMS_AND_CONDITION.cs" />
+    <Compile Include="InventoryDC\dcPRICE_VIEW_PERMISSION.cs" />
+    <Compile Include="InventoryDC\dcMR_ADJUSTMENT_TYPE.cs" />
+    <Compile Include="InventoryDC\dcPRICE_VIEW_PERM_DEPT_RESTRICT.cs" />
+    <Compile Include="InventoryDC\dcPurchaseAgainstIndentReport.cs" />
+    <Compile Include="InventoryDC\dcPURCHASE_COMMENTS.cs" />
+    <Compile Include="InventoryDC\dcPURCHASE_STATUS.cs" />
+    <Compile Include="InventoryDC\dcQC_DETAILS.cs" />
+    <Compile Include="InventoryDC\dcQC_ITEM_CRITERION_CONFIG.cs" />
+    <Compile Include="InventoryDC\dcQC_ITEM_CRITERION_DTL_TEMP.cs" />
+    <Compile Include="InventoryDC\dcQC_MASTER.cs" />
+    <Compile Include="InventoryDC\dcQUOTATION_DTL.cs" />
+    <Compile Include="InventoryDC\dcQUOTATION_FILE_UPLOAD.cs" />
+    <Compile Include="InventoryDC\dcQUOTATION_MST.cs" />
+    <Compile Include="InventoryDC\dcRECEIVE_ACC_HOLDER.cs" />
+    <Compile Include="InventoryDC\dcRECEIVE_CHEQUE.cs" />
+    <Compile Include="InventoryDC\dcRECEIVE_MR_MST.cs" />
+    <Compile Include="InventoryDC\dcREQ_COMMENT_DTL.cs" />
+    <Compile Include="InventoryDC\dcREQ_ISSUE_STATUS.cs" />
+    <Compile Include="InventoryDC\dcREQ_ISSUE_STATUS_DTL.cs" />
+    <Compile Include="InventoryDC\dcRTN_RECEIVE_DTL.cs" />
+    <Compile Include="InventoryDC\dcRTN_RECEIVE_MST.cs" />
+    <Compile Include="InventoryDC\dcSALES_RETURN_DETAILS.cs" />
+    <Compile Include="InventoryDC\dcSALES_RETURN_MASTER.cs" />
+    <Compile Include="InventoryDC\dcSERVICE_PO_DTL.cs" />
+    <Compile Include="InventoryDC\dcSERVICE_PO_MST.cs" />
+    <Compile Include="InventoryDC\dcSERVICE_PO_TERMS_AND_CONDITION.cs" />
+    <Compile Include="InventoryDC\dcSERVICE_PR_DTL.cs" />
+    <Compile Include="InventoryDC\dcSERVICE_PR_MST.cs" />
+    <Compile Include="InventoryDC\dcSUPPLIER_RETURN_DTL.cs" />
+    <Compile Include="InventoryDC\dcSUPPLIER_RETURN_MST.cs" />
+    <Compile Include="InventoryDC\dcTBLCOMPANY.cs" />
+    <Compile Include="InventoryDC\dcTBLUSER .cs" />
+    <Compile Include="InventoryDC\dcDC_DETAILS.cs" />
+    <Compile Include="InventoryDC\dcDC_MASTER.cs" />
+    <Compile Include="InventoryDC\dcIMP_PURCHASE_DETAILS.cs" />
+    <Compile Include="InventoryDC\dcIMP_PURCHASE_MASTER.cs" />
+    <Compile Include="InventoryDC\dcCNF_MASTER.cs" />
+    <Compile Include="InventoryDC\dcInvSettings.cs" />
+    <Compile Include="InventoryDC\dcLC_BANK_BRANCH.cs" />
+    <Compile Include="InventoryDC\dcLC_BANK_MASTER.cs" />
+    <Compile Include="InventoryDC\dcLC_CURRENCY.cs" />
+    <Compile Include="InventoryDC\dcLC_DETAILS.cs" />
+    <Compile Include="InventoryDC\dcLC_MASTER.cs" />
+    <Compile Include="InventoryDC\dcLC_MOD_OF_PAY_MASTER.cs" />
+    <Compile Include="InventoryDC\dcLC_TYPE_MASTER.cs" />
+    <Compile Include="InventoryDC\dcMRP_DETAILS.cs" />
+    <Compile Include="InventoryDC\dcMRP_MASTER.cs" />
+    <Compile Include="InventoryDC\dcMRR_DETAILS.cs" />
+    <Compile Include="InventoryDC\dcTBLUSERDEPARTMENT.cs" />
+    <Compile Include="InventoryDC\dcTERMS_AND_CONDITION_MST.cs" />
+    <Compile Include="InventoryDC\dcTRANSPORT_TYPE_MASTER.cs" />
+    <Compile Include="InventoryDC\INSURANCE_COM_MASTER.cs" />
+    <Compile Include="InventoryDC\InventoryEnums.cs" />
+    <Compile Include="InventoryDC\clsPrmInventory.cs" />
+    <Compile Include="InventoryDC\dcBRANCH_INFO.cs" />
+    <Compile Include="InventoryDC\dcCOMPANY_INFO.cs" />
+    <Compile Include="InventoryDC\dcCOUNTRY_MASTER .cs" />
+    <Compile Include="InventoryDC\dcCUSTOMER_INFO.cs" />
+    <Compile Include="InventoryDC\dcCUSTOMER_MST.cs" />
+    <Compile Include="InventoryDC\dcDeliveryChallanReport.cs" />
+    <Compile Include="InventoryDC\dcDEPARTMENT_INFO.cs" />
+    <Compile Include="InventoryDC\dcDEPARTMENT_INFO_MVW.cs" />
+    <Compile Include="InventoryDC\dcDEPARTMENT_ITEM.cs" />
+    <Compile Include="InventoryDC\dcEMP_INFO.cs" />
+    <Compile Include="InventoryDC\dcGatePassItemDetailsReport.cs" />
+    <Compile Include="InventoryDC\dcGatePassPrepairedChAuBy.cs" />
+    <Compile Include="InventoryDC\dcGatePassReport.cs" />
+    <Compile Include="InventoryDC\dcInternalReceiveItemDetailsReport.cs" />
+    <Compile Include="InventoryDC\dcInternalReceiveReport.cs" />
+    <Compile Include="InventoryDC\dcINVOICE_DETAILS.cs" />
+    <Compile Include="InventoryDC\dcINVOICE_MASTER.cs" />
+    <Compile Include="InventoryDC\dcINV_BIN.cs" />
+    <Compile Include="InventoryDC\dcINV_BRAND.cs" />
+    <Compile Include="InventoryDC\dcINV_ITEM_CATEGORY.cs" />
+    <Compile Include="InventoryDC\dcINV_ITEM_CLASS.cs" />
+    <Compile Include="InventoryDC\dcINV_ITEM_DTL.cs" />
+    <Compile Include="InventoryDC\dcINV_ITEM_GROUP.cs" />
+    <Compile Include="InventoryDC\dcINV_ITEM_MASTER.cs" />
+    <Compile Include="InventoryDC\dcINV_ITEM_SUB_CATEGORY.cs" />
+    <Compile Include="InventoryDC\dcINV_ITEM_TYPE.cs" />
+    <Compile Include="InventoryDC\dcINV_MSR_UNIT.cs" />
+    <Compile Include="InventoryDC\dcINV_RACK.cs" />
+    <Compile Include="InventoryDC\dcISSUE_RECEIVE_DETAILS.cs" />
+    <Compile Include="InventoryDC\dcISSUE_RECEIVE_MASTER.cs" />
+    <Compile Include="InventoryDC\dcITEM_STOCK_DETAILS_N.cs" />
+    <Compile Include="InventoryDC\dcLP_DEL_CHALL_DTL.cs" />
+    <Compile Include="InventoryDC\dcLP_DEL_CHALL_MST.cs" />
+    <Compile Include="InventoryDC\dcLP_INDT_DETAILS.cs" />
+    <Compile Include="InventoryDC\dcLP_INDT_MASTER.cs" />
+    <Compile Include="InventoryDC\dcLP_INDT_PURCHASE_DETAILS.cs" />
+    <Compile Include="InventoryDC\dcLP_INVOICE_LIST.cs" />
+    <Compile Include="InventoryDC\dcLP_PURCHASE_DETAILS.cs" />
+    <Compile Include="InventoryDC\dcLP_PURCHASE_MASTER.cs" />
+    <Compile Include="InventoryDC\dcMaterialReceiveItemDetailsReport.cs" />
+    <Compile Include="InventoryDC\dcMaterialReceiveReport.cs" />
+    <Compile Include="InventoryDC\dcMRN_INVOICE_RCV_DTL.cs" />
+    <Compile Include="InventoryDC\dcMRN_INVOICE_RCV_MST.cs" />
+    <Compile Include="InventoryDC\dcMRP_REQUISITION.cs" />
+    <Compile Include="InventoryDC\dcMRR_MASTER.cs" />
+    <Compile Include="InventoryDC\dcOpeningBlanceItemInfo.cs" />
+    <Compile Include="InventoryDC\dcOPENING_BALANCE .cs" />
+    <Compile Include="InventoryDC\dcRECEIVE_STORE_DETAILS.cs" />
+    <Compile Include="InventoryDC\dcReOrderLebel_InfoView.cs" />
+    <Compile Include="InventoryDC\dcREQ_RECEIVE_DETAILS.cs" />
+    <Compile Include="InventoryDC\dcREQ_RECEIVE_MASTER.cs" />
+    <Compile Include="InventoryDC\dcREQ_RETURN_DETAILS.cs" />
+    <Compile Include="InventoryDC\dcREQ_RETURN_MASTER.cs" />
+    <Compile Include="InventoryDC\dcSTORE_INFO.cs" />
+    <Compile Include="InventoryDC\dcSUPPLIER_INFO.cs" />
+    <Compile Include="InventoryDC\dcSUPPLIER_ITEM .cs" />
+    <Compile Include="InventoryDC\dcUOM_INFO.cs" />
+    <Compile Include="InventoryDC\dcUOM_TYPE_INFO.cs" />
+    <Compile Include="InventoryDC\dcREQ_DETAILS.cs" />
+    <Compile Include="InventoryDC\dcREQ_ISSUE_DETAILS.cs" />
+    <Compile Include="InventoryDC\dcREQ_ISSUE_MASTER.cs" />
+    <Compile Include="InventoryDC\dcREQ_MASTER.cs" />
+    <Compile Include="InventoryDC\InvoicePrepairedChAuBy.cs" />
+    <Compile Include="InventoryDC\IPSInvoiceItem.cs" />
+    <Compile Include="InventoryDC\PurchaseIndentInfo.cs" />
+    <Compile Include="InventoryDC\PURCHASE_STATUSBL.cs" />
+    <Compile Include="InventoryDC\ReportParameterClass.cs" />
+    <Compile Include="InventoryDC\SalesRequisitionDetails.cs" />
+    <Compile Include="InventoryDC\StorePurchaseIndent.cs" />
+    <Compile Include="InventoryDC\StoreRequisitionInfo.cs" />
+    <Compile Include="WRELDC\dcCLIENT_MST.cs" />
+    <Compile Include="WRELDC\dcCLIENT_TYPE_MST.cs" />
+    <Compile Include="OrganiztionDC\dcGeoLocation.cs" />
+    <Compile Include="OrganiztionDC\dcGeoLocationType.cs" />
+    <Compile Include="AccountingDC\GeneralLedgerDC\dcGLAccount.cs" />
+    <Compile Include="AccountingDC\GeneralLedgerDC\dcGLAccountRefCategory.cs" />
+    <Compile Include="AccountingDC\GeneralLedgerDC\dcGLAccountHistory.cs" />
+    <Compile Include="AccountingDC\GeneralLedgerDC\dcGLAccountHistoryRef.cs" />
+    <Compile Include="AccountingDC\GeneralLedgerDC\dcGLAccountType.cs" />
+    <Compile Include="AccountingDC\GeneralLedgerDC\dcGLClass.cs" />
+    <Compile Include="AccountingDC\GeneralLedgerDC\dcGLGroup.cs" />
+    <Compile Include="AccountingDC\GeneralLedgerDC\dcGLGroupClass.cs" />
+    <Compile Include="AccountingDC\GeneralLedgerDC\dcInstruemntLinkType.cs" />
+    <Compile Include="AccountingDC\GeneralLedgerDC\dcInstrument.cs" />
+    <Compile Include="AccountingDC\GeneralLedgerDC\dcInstrumentMode.cs" />
+    <Compile Include="AccountingDC\GeneralLedgerDC\dcInstrumentSettings.cs" />
+    <Compile Include="AccountingDC\GeneralLedgerDC\dcInstrumentStatus.cs" />
+    <Compile Include="AccountingDC\GeneralLedgerDC\dcInstrumentType.cs" />
+    <Compile Include="AccountingDC\GeneralLedgerDC\dcJournal.cs" />
+    <Compile Include="AccountingDC\GeneralLedgerDC\dcJournalAdjustTypeID.cs" />
+    <Compile Include="AccountingDC\GeneralLedgerDC\dcJournalDet.cs" />
+    <Compile Include="AccountingDC\GeneralLedgerDC\dcJournalDetIns.cs" />
+    <Compile Include="AccountingDC\GeneralLedgerDC\dcJournalDetRef.cs" />
+    <Compile Include="AccountingDC\GeneralLedgerDC\dcJournalOptionalType.cs" />
+    <Compile Include="AccountingDC\GeneralLedgerDC\dcJournalTranType.cs" />
+    <Compile Include="AccountingDC\GeneralLedgerDC\dcJournalReportFormat.cs" />
+    <Compile Include="AccountingDC\GeneralLedgerDC\dcJournalType.cs" />
+    <Compile Include="AccountingDC\GeneralLedgerDC\dcJournalTypeClass.cs" />
+    <Compile Include="AccountingDC\TaxDC\dcTaxYear.cs" />
+    <Compile Include="OrganiztionDC\dcCompany.cs" />
+    <Compile Include="OrganiztionDC\dcCompanyType.cs" />
+    <Compile Include="OrganiztionDC\dcLocation.cs" />
+    <Compile Include="OrganiztionDC\dcLocationType.cs" />
+    <Compile Include="OrganiztionDC\dcLocationUser.cs" />
+    <Compile Include="OrganiztionDC\dcTBLUSERDEPARTMENT.cs" />
+    <Compile Include="PDLAccountingDC\dcGL_VOUCHER_DETAIL.cs" />
+    <Compile Include="PDLAccountingDC\dcGL_VOUCHER_MAIN.cs" />
+    <Compile Include="PDLAccountingDC\dcGL_COA.cs" />
+    <Compile Include="ProductionDC\BOM_DTL_T_LOG.cs" />
+    <Compile Include="ProductionDC\dcASM_REJECTION_PLATE_STORE_DTL.cs" />
+    <Compile Include="ProductionDC\dcASM_REJECTION_PLATE_STORE_MST.cs" />
+    <Compile Include="ProductionDC\dcBATERY_CATEGORY.cs" />
+    <Compile Include="ProductionDC\dcBOM_COMPOSITE_PACKAGE_DTL_T.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ProductionDC\dcBOM_COMPOSITE_PACKAGE_MST_T.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ProductionDC\dcBOM_DTL2_T.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ProductionDC\dcBOM_DTL_T.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ProductionDC\dcBOM_MST_T.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ProductionDC\dcBOM_MST_T_log.cs" />
+    <Compile Include="ProductionDC\dcCAST_LEAD_REPROCESS_DROSS_DTL.cs" />
+    <Compile Include="ProductionDC\dcCAST_LEAD_REPROCESS_FG_DTL.cs" />
+    <Compile Include="ProductionDC\dcCAST_LEAD_REPROCESS_MST.cs" />
+    <Compile Include="ProductionDC\dcCAST_LEAD_REPROCESS_RM_DTL.cs" />
+    <Compile Include="ProductionDC\dcITEM_CONVERSION_DTL.cs" />
+    <Compile Include="ProductionDC\dcITEM_CONVERSION_MST.cs" />
+    <Compile Include="ProductionDC\dcGRID_DROSS_DTL.cs" />
+    <Compile Include="ProductionDC\dcGRID_DROSS_MST.cs" />
+    <Compile Include="ProductionDC\dcGRID_REJ_CONVERSION_DTL.cs" />
+    <Compile Include="ProductionDC\dcGRID_REJ_CONVERSION_MST.cs" />
+    <Compile Include="ProductionDC\dcIB_CUTTING_DTL.cs" />
+    <Compile Include="ProductionDC\dcIB_CUTTING_MST.cs" />
+    <Compile Include="ProductionDC\dcINV_ITEM_STOCK_TRANSFER_DTL.cs" />
+    <Compile Include="ProductionDC\dcINV_ITEM_STOCK_TRANSFER_MST.cs" />
+    <Compile Include="ProductionDC\dcMACHINE_MST.cs" />
+    <Compile Include="ProductionDC\dcMACHINE_MST_ASM.cs" />
+    <Compile Include="ProductionDC\dcMaterialStock.cs" />
+    <Compile Include="ProductionDC\dcPRODUCTION_BATCH_INFO.cs" />
+    <Compile Include="ProductionDC\dcPRODUCTION_DTL.cs" />
+    <Compile Include="ProductionDC\dcPRODUCTION_FLOOR_CLOSING.cs" />
+    <Compile Include="ProductionDC\dcPRODUCTION_MST.cs" />
+    <Compile Include="ProductionDC\dcPROD_ANTIMONY_ALOY_DROSS_DTL.cs" />
+    <Compile Include="ProductionDC\dcPROD_ANTIMONY_DROSS_MST.cs" />
+    <Compile Include="ProductionDC\dcPROD_BATTERY_REJECT_DTL .cs" />
+    <Compile Include="ProductionDC\dcPROD_BATTERY_REJECT_MST.cs" />
+    <Compile Include="ProductionDC\dcPROD_BATT_BREAKING_BATCH.cs" />
+    <Compile Include="ProductionDC\dcPROD_BATT_BREAKING_CLOSING.cs" />
+    <Compile Include="ProductionDC\dcPROD_BATT_BREAKING_DTL.cs" />
+    <Compile Include="ProductionDC\dcPROD_BATT_BREAKING_MST.cs" />
+    <Compile Include="ProductionDC\dcPROD_BATT_BREAKING_TEMP_BATCH.cs" />
+    <Compile Include="ProductionDC\dcPROD_CMP_CRUSHING_PP_DTL.cs" />
+    <Compile Include="ProductionDC\dcPROD_CMP_CRUSHING_PP_MST.cs" />
+    <Compile Include="ProductionDC\dcPROD_CRUSHING_PP_BATCH.cs" />
+    <Compile Include="ProductionDC\dcPROD_CRUSHING_PP_BATCH_TEMP.cs" />
+    <Compile Include="ProductionDC\dcPROD_ITEM_CONVERSION_BATCH.cs" />
+    <Compile Include="ProductionDC\dcPROD_ITEM_CONVER_BATCH_TEMP.cs" />
+    <Compile Include="ProductionDC\dcPROD_CRUSHING_TYPE.cs" />
+    <Compile Include="ProductionDC\dcPROD_DMW_REGEN_CONSUM_DTL.cs" />
+    <Compile Include="ProductionDC\dcPROD_DMW_REGEN_CONSUM_MST.cs" />
+    <Compile Include="ProductionDC\dcPROD_FG_WEEKLY_FORECAST_DTL.cs" />
+    <Compile Include="ProductionDC\dcPROD_FG_WEEKLY_FORECAST_MST.cs" />
+    <Compile Include="ProductionDC\dcPROD_ITEM_STANDARD_WEIGHT.cs" />
+    <Compile Include="ProductionDC\dcPROD_OPERATOR_LIST.cs" />
+    <Compile Include="ProductionDC\dcPROD_OPERATOR_TEMP.cs" />
+    <Compile Include="ProductionDC\dcPROD_PASTING_WASTAGE_DTL.cs" />
+    <Compile Include="ProductionDC\dcPROD_PAST_PROCESS_LOSS_DTL.cs" />
+    <Compile Include="ProductionDC\dcPROD_PAST_PROCESS_LOSS_MST.cs" />
+    <Compile Include="ProductionDC\dcPROD_PURELEAD_DROSS_DTL.cs" />
+    <Compile Include="ProductionDC\dcPROD_QA_OPERATION_DTL.cs" />
+    <Compile Include="ProductionDC\dcPROD_QA_OPERATION_DTL_TEMP.cs" />
+    <Compile Include="ProductionDC\dcPROD_QA_OPERATION_MST.cs" />
+    <Compile Include="ProductionDC\dcPROD_RECOVERY_DTL_ASM.cs" />
+    <Compile Include="ProductionDC\dcPROD_RECOVERY_MST_ASM.cs" />
+    <Compile Include="ProductionDC\dcPROD_RECOVERY_PASTE_DTL.cs" />
+    <Compile Include="ProductionDC\dcPROD_RECOVERY_PASTE_MST.cs" />
+    <Compile Include="ProductionDC\dcPROD_REJECTION_BATCH.cs" />
+    <Compile Include="ProductionDC\dcPROD_REJECTION_BATCH_TEMP.cs" />
+    <Compile Include="ProductionDC\dcPROD_REJECTION_CLOSING.cs" />
+    <Compile Include="ProductionDC\dcPROD_REJECTION_DTL.cs" />
+    <Compile Include="ProductionDC\dcPROD_REJECTION_DTL_ASM .cs" />
+    <Compile Include="ProductionDC\dcPROD_REJECTION_ISSUE_DTL.cs" />
+    <Compile Include="ProductionDC\dcPROD_REJECTION_ISSUE_MST.cs" />
+    <Compile Include="ProductionDC\dcPROD_REJECTION_MST.cs" />
+    <Compile Include="ProductionDC\dcPROD_FORMATION_CIRCUIT_INFO.cs" />
+    <Compile Include="ProductionDC\dcPROD_REJECTION_MST_ASM.cs" />
+    <Compile Include="ProductionDC\dcPROD_RM_FORECAST_DTL.cs" />
+    <Compile Include="ProductionDC\dcPROD_RM_FORECAST_MST.cs" />
+    <Compile Include="ProductionDC\dcPROD_SCRAP_DTL.cs" />
+    <Compile Include="ProductionDC\dcPROD_SCRAP_MST.cs" />
+    <Compile Include="ProductionDC\dcPROD_TBLFORECAST_DTL.cs" />
+    <Compile Include="ProductionDC\dcPROD_TBLFORECAST_MST.cs" />
+    <Compile Include="ProductionDC\dcPROD_TEMP_BATCH_INFO.cs" />
+    <Compile Include="ProductionDC\dcPROD_TRANSFER_DTL.cs" />
+    <Compile Include="ProductionDC\dcPROD_TRANSFER_MST.cs" />
+    <Compile Include="ProductionDC\dcPROD_WORKING_MONTH.cs" />
+    <Compile Include="ProductionDC\dcPRO_DEPARTMENT_ITEM.cs" />
+    <Compile Include="ProductionDC\dcREJECT_PLATE_BREAKING_DTL.cs" />
+    <Compile Include="ProductionDC\dcREJECT_PLATE_BREAKING_MST.cs" />
+    <Compile Include="ProductionDC\dcSHIFT_MST.cs" />
+    <Compile Include="ProductionDC\dcSOLAR_BATTERY_CONVERSION.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ProductionDC\dcSOLAR_BATT_OPENING.cs" />
+    <Compile Include="ProductionDC\dcSOLAR_BATT_OPENING_MST.cs" />
+    <Compile Include="ProductionDC\dcSTORAGE_LOCATION_MST.cs" />
+    <Compile Include="ProductionDC\dcPROD_PASTING_WASTAGE_MST.cs" />
+    <Compile Include="ProductionDC\dcSUPPERVISOR_MST.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SecurityDC\dcAppObject.cs" />
+    <Compile Include="SecurityDC\dcAppObjectType.cs" />
+    <Compile Include="AccountingDC\dcLocationJournalType.cs" />
+    <Compile Include="SecurityDC\dcDATATRANSFER_DTL_TAB_COL_PER.cs" />
+    <Compile Include="SecurityDC\dcDATATRANSFER_MASTER_DETAIL.cs" />
+    <Compile Include="SecurityDC\dcDATATRANSFER_MSTR_TAB_COL_PER.cs" />
+    <Compile Include="SecurityDC\dcDATATRANSFER_TABLE_LOG.cs" />
+    <Compile Include="SecurityDC\dcDATATRANSFER_TABLE_MAP.cs" />
+    <Compile Include="SecurityDC\dcEmp_Info.cs" />
+    <Compile Include="SecurityDC\dcRole.cs" />
+    <Compile Include="SecurityDC\dcRoleMenu.cs" />
+    <Compile Include="SecurityDC\dcRolePermission.cs" />
+    <Compile Include="SecurityDC\dcUser.cs" />
+    <Compile Include="SecurityDC\dcUserLoginType.cs" />
+    <Compile Include="SecurityDC\dcUserRole.cs" />
+    <Compile Include="SecurityDC\SecurityEnums.cs" />
+    <Compile Include="SystemDC\dcAppInfo.cs" />
+    <Compile Include="SystemDC\dcAppMenu.cs" />
+    <Compile Include="SystemDC\dcLongTask.cs" />
+    <Compile Include="SystemDC\dcSysOption.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\PG.Core\PG.Core\PG.Core.csproj">
+      <Project>{9c92ff86-7065-46d6-909b-3f25d011a693}</Project>
+      <Name>PG.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

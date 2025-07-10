@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D6DF363E-16ED-489D-A5B5-63AE7008BA7F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PG.BLLibrary</RootNamespace>
+    <AssemblyName>PG.BLLibrary</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Oracle.ManagedDataAccess">
+      <HintPath>..\..\PG.Web\PG.Web\bin\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AccountingBL\AccHelper.cs" />
+    <Compile Include="AccountingBL\AccSettingsBL.cs" />
+    <Compile Include="AccountingBL\AccSLNoBL.cs" />
+    <Compile Include="AccountingBL\AccYearBL.cs" />
+    <Compile Include="AccountingBL\GeneralLedgerBL\AccRefBL.cs" />
+    <Compile Include="AccountingBL\GeneralLedgerBL\AccRefCategoryBL.cs" />
+    <Compile Include="AccountingBL\GeneralLedgerBL\GLAccountRefCategoryBL.cs" />
+    <Compile Include="AccountingBL\GeneralLedgerBL\AccRefSettingsBL.cs" />
+    <Compile Include="AccountingBL\GeneralLedgerBL\AccRefTypeBL.cs" />
+    <Compile Include="AccountingBL\GeneralLedgerBL\GLAccountBL.cs" />
+    <Compile Include="AccountingBL\GeneralLedgerBL\GLAccountHistoryBL.cs" />
+    <Compile Include="AccountingBL\GeneralLedgerBL\GLAccountHistoryRefBL.cs" />
+    <Compile Include="AccountingBL\GeneralLedgerBL\GLAccountTypeBL.cs" />
+    <Compile Include="AccountingBL\GeneralLedgerBL\GLClassBL.cs" />
+    <Compile Include="AccountingBL\GeneralLedgerBL\GLGroupBL.cs" />
+    <Compile Include="AccountingBL\GeneralLedgerBL\GLGroupClassBL.cs" />
+    <Compile Include="AccountingBL\GeneralLedgerBL\JournalTranTypeBL.cs" />
+    <Compile Include="AccountingBL\GeneralLedgerBL\JournalAdjustTypeBL.cs" />
+    <Compile Include="AccountingBL\GeneralLedgerBL\JournalBL.cs" />
+    <Compile Include="AccountingBL\GeneralLedgerBL\JournalDetBL.cs" />
+    <Compile Include="AccountingBL\GeneralLedgerBL\JournalDetInsBL.cs" />
+    <Compile Include="AccountingBL\GeneralLedgerBL\JournalDetRefBL.cs" />
+    <Compile Include="AccountingBL\GeneralLedgerBL\JournalPrintFormatBL.cs" />
+    <Compile Include="AccountingBL\GeneralLedgerBL\JournalTypeBL.cs" />
+    <Compile Include="AccountingBL\GeneralLedgerBL\JournalTypeClassBL.cs" />
+    <Compile Include="AccountingBL\GeneralLedgerBL\JournalValidationBL.cs" />
+    <Compile Include="AccountingBL\GeneralLedgerBL\LocationAccRefBL.cs" />
+    <Compile Include="AccountingBL\GeneralLedgerBL\LocationGLAccountBL.cs" />
+    <Compile Include="AccountingBL\InstrumentBL.cs" />
+    <Compile Include="AccountingBL\InstrumentModeBL.cs" />
+    <Compile Include="AccountingBL\InstrumentStatusBL.cs" />
+    <Compile Include="AccountingBL\InstrumentSettingsBL.cs" />
+    <Compile Include="AccountingBL\InstrumentTypeBL.cs" />
+    <Compile Include="GlobalsBL.cs" />
+    <Compile Include="HMSBL\HMCOUNTRY_MSTBL.cs" />
+    <Compile Include="HMSBL\HMGUEST_MSTBL.cs" />
+    <Compile Include="HMSBL\HMRESERVATION_DTLBL.cs" />
+    <Compile Include="HMSBL\HMRESERVATION_MSTBL.cs" />
+    <Compile Include="HMSBL\HMROOMBL.cs" />
+    <Compile Include="HMSBL\HMROOM_TYPEBL.cs" />
+    <Compile Include="InventoryBL\BANK_MSTBL.cs" />
+    <Compile Include="InventoryBL\BRANDBL.cs" />
+    <Compile Include="InventoryBL\CATEGORY_MSTBL.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="InventoryBL\COMPANY_INFOBL.cs" />
+    <Compile Include="InventoryBL\DepartmentWiseItemBL.cs" />
+    <Compile Include="InventoryBL\DEPARTMENT_INFOBL.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="InventoryBL\EMP_INFOBL.cs" />
+    <Compile Include="InventoryBL\EMP_SIGNATURE_UPLOADBL.cs" />
+    <Compile Include="InventoryBL\INV_DEPARTMENT_PERMISSIONBL.cs" />
+    <Compile Include="InventoryBL\INV_ITEM_MASTERBL.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="InventoryBL\INV_WORKING_MONTHBL.cs" />
+    <Compile Include="InventoryBL\QC_MASTERBL.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="InventoryBL\SUPPLIERBL.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="InventoryBL\TBLUSERDEPARTMENTBL.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="InventoryBL\UOM_INFOBL.cs" />
+    <Compile Include="InventoryBL\INV_BRANDBL.cs" />
+    <Compile Include="InventoryBL\INV_ITEM_CLASSBL.cs" />
+    <Compile Include="InventoryBL\INV_ITEM_DTLBL.cs" />
+    <Compile Include="InventoryBL\INV_ITEM_GROUPBL.cs" />
+    <Compile Include="InventoryBL\INV_ITEM_TYPEBL.cs" />
+    <Compile Include="InventoryBL\INV_MSR_UNITBL.cs" />
+    <Compile Include="InventoryBL\ITEM_STOCK_DETAILBL.cs" />
+    <Compile Include="InventoryBL\ITEM_STOCK_DETAILS_NBL.cs" />
+    <Compile Include="InventoryBL\InvSettingsBL.cs" />
+    <Compile Include="InventoryBL\MaterialStockBL.cs" />
+    <Compile Include="OrganizationBL\GeoLocationTypeBL.cs" />
+    <Compile Include="OrganizationBL\GeoLocationBL.cs" />
+    <Compile Include="OrganizationBL\LocationUserBL.cs" />
+    <Compile Include="OrganizationBL\LocationTypeBL.cs" />
+    <Compile Include="OrganizationBL\LocationBL.cs" />
+    <Compile Include="OrganizationBL\CompanyBL.cs" />
+    <Compile Include="OrganizationBL\TBLUSERDEPARTMENTBL.cs" />
+    <Compile Include="ProductionBL\BATERY_CATEGORYBL.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ProductionBL\BOM_COMPOSITE_PACKAGE_MST_TBL.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ProductionBL\BOM_DTL_TBL.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ProductionBL\BOM_MST_T_BL.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ProductionBL\MACHINE_MSTBL.cs" />
+    <Compile Include="ProductionBL\MACHINE_MST_ASMBL.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ProductionBL\PRODUCTION_BATCH_INFOBL.cs" />
+    <Compile Include="ProductionBL\PRODUCTION_DTLBL.cs" />
+    <Compile Include="ProductionBL\PRODUCTION_FLOOR_CLOSINGBL.cs" />
+    <Compile Include="ProductionBL\PRODUCTION_MSTBL.cs" />
+    <Compile Include="ProductionBL\PROD_FG_WEEKLY_FORECAST_DTLBL.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ProductionBL\PROD_OPERATOR_LISTBL.cs" />
+    <Compile Include="ProductionBL\PROD_PURELEAD_DROSS_DTLBL.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ProductionBL\PROD_TBLFORECAST_DTLBL.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ProductionBL\PROD_TEMP_BATCH_INFOBL.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ProductionBL\SHIFT_MSTBL.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ProductionBL\STORAGE_LOCATION_MSTBL.cs" />
+    <Compile Include="ProductionBL\SUPPERVISOR_MSTBL.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SecurityBL\AppObjectsBL.cs" />
+    <Compile Include="SecurityBL\DataTransferProcessBL.cs" />
+    <Compile Include="SecurityBL\DATATRANSFER_TABLE_LOGBL.cs" />
+    <Compile Include="SecurityBL\DATATRANSFER_TABLE_MAPBL.cs" />
+    <Compile Include="SecurityBL\RoleBL.cs" />
+    <Compile Include="AccountingBL\LocationJournalTypeBL.cs" />
+    <Compile Include="SecurityBL\RoleMenuBL.cs" />
+    <Compile Include="SecurityBL\RolePermissionBL.cs" />
+    <Compile Include="SecurityBL\UserBL.cs" />
+    <Compile Include="SecurityBL\UserRoleBL.cs" />
+    <Compile Include="ServiceBL\ServiceDataBL.cs" />
+    <Compile Include="SystemsBL\AppInfoBL.cs" />
+    <Compile Include="SystemsBL\AppMenuBL.cs" />
+    <Compile Include="SystemsBL\LongTaskBL.cs" />
+    <Compile Include="SystemsBL\SentMailBL.cs" />
+    <Compile Include="WRElBL\CLIENT_MSTBL.cs" />
+    <Compile Include="WRElBL\CLIENT_TYPE_MSTBL.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="General\" />
+    <Folder Include="MasterBL\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\PG.Core\PG.Core\PG.Core.csproj">
+      <Project>{9c92ff86-7065-46d6-909b-3f25d011a693}</Project>
+      <Name>PG.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\PG.DBClass\PG.DBClass\PG.DBClass.csproj">
+      <Project>{fd5a644b-c3af-4479-b46a-f7540d411273}</Project>
+      <Name>PG.DBClass</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

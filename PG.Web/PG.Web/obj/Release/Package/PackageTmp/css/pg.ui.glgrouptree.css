@@ -1,0 +1,135 @@
+﻿
+
+   .dvGroupListPopup
+   {
+	  display: none;    
+	  border: 1px solid lightgrey;
+	  width: 100%;
+	  height: auto;
+
+
+	  background-color : White;
+	  padding: 2px 2px 2px 4px;
+	  
+	  
+   }
+   
+   .dvGLGroupList
+   {
+	 width: 100%;
+	 height: auto;
+   }
+   
+   
+   .dvGLGroupHeader
+{
+	height: auto;
+	width: 100%;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-bottom-color: #808080;
+}
+   
+   .dvGLGroupBody
+   {
+	  height: 265px;
+	  width: 100%;
+	  background-color : White;
+   }
+	 
+   .dvGLGroupTree
+   {
+	  height:100%; 
+	  width :100%;
+	  overflow:auto;
+	  outline : none;
+	  border: none;
+   }
+   
+   .dvGLGroupFooter
+   {
+	  height:auto;
+	  width:100%;
+	  border-top: 1px solid lightgrey;
+   }
+   
+   .dvGLGroupFooterButton
+   {
+	 width:100%;
+	 height: 25px;
+   }
+   
+   
+	.ui-widget input
+	{
+		font-size: 8pt;
+	}
+   
+   .glgroup_div  
+   {
+	  outline : none;
+	  border: none;
+	  font-size : 8pt;
+   } 
+
+   
+   .glgroup_tree    
+   {
+	  outline : none;
+	  border: none;
+	  font-size : 8pt;
+   }
+   .group_node{ }
+   .group_nodeHighlight{}
+   .group_nodeSelected { }
+	
+   .group_nodeSpan { cursor:pointer; padding: 1px 0px 1px 0px;} 
+   .group_nodeSpanHover { background:#e7f4f9; padding:0 2px 0 1px;  }
+   
+   .group_nodeSpanHighlight
+	{
+		background-color: #EBEBEB;
+	}
+   
+   .group_nodeSpanSelected { background:#beebff; }
+   
+	.group_dvNodePathText
+	{
+	  height: auto;
+	  min-height: 20px;
+	  width: 100%;
+	
+	}
+
+   .group_nodePathText
+   {
+	  height:auto;
+	  width:100%;
+   }
+   
+   
+   
+   
+   .glgroup_btnOk{}
+   .glgroup_btnCancel{}
+   
+   
+   .glgroup_linkControlSelected
+   {
+	 border: 1px solid blue;    
+   }
+   
+   .glgroup_linkText{}
+   .glgroup_linkValue {}
+   
+   
+   .glgroup_textSearch
+   {
+	 width:98%;
+   }
+   
+   .dvSearch {}   
+   
+   
+   
+   

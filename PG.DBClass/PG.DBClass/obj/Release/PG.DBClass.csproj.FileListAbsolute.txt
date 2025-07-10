@@ -1,0 +1,8 @@
+D:\SPB_INV\PG.DBClass\PG.DBClass\bin\Release\PG.DBClass.dll
+D:\SPB_INV\PG.DBClass\PG.DBClass\bin\Release\PG.DBClass.pdb
+D:\SPB_INV\PG.DBClass\PG.DBClass\bin\Release\PG.Core.dll
+D:\SPB_INV\PG.DBClass\PG.DBClass\bin\Release\Oracle.ManagedDataAccess.dll
+D:\SPB_INV\PG.DBClass\PG.DBClass\bin\Release\PG.Core.pdb
+D:\SPB_INV\PG.DBClass\PG.DBClass\obj\Release\PG.DBClass.csprojResolveAssemblyReference.cache
+D:\SPB_INV\PG.DBClass\PG.DBClass\obj\Release\PG.DBClass.dll
+D:\SPB_INV\PG.DBClass\PG.DBClass\obj\Release\PG.DBClass.pdb

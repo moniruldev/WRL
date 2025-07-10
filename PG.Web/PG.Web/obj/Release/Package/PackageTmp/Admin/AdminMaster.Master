@@ -1,0 +1,14 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/BageMaster.Master" AutoEventWireup="true" CodeBehind="AdminMaster.master.cs" Inherits="PG.Web.Admin.AdminMaster" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="headBage" runat="server">
+    <title>Admin Home</title>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderBage" runat="server">
+       <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+</asp:Content>

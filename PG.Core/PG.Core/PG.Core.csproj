@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9C92FF86-7065-46D6-909B-3F25D011A693}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PG.Core</RootNamespace>
+    <AssemblyName>PG.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Oracle.ManagedDataAccess">
+      <HintPath>..\..\PG.Web\PG.Web\bin\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ControlChars.cs" />
+    <Compile Include="DBBase\DataTypeConverter.cs" />
+    <Compile Include="DBBase\DBBaseClass.cs" />
+    <Compile Include="DBBase\DBBaseEnums.cs" />
+    <Compile Include="DBBase\DBColumnAttribute.cs" />
+    <Compile Include="DBBase\DBCommandInfo.cs" />
+    <Compile Include="DBBase\DBContext.cs" />
+    <Compile Include="DBBase\DBContextManagerConfiguration.cs" />
+    <Compile Include="DBBase\DBContextManger.cs" />
+    <Compile Include="DBBase\DBContextSettings.cs" />
+    <Compile Include="DBBase\DBMap.cs" />
+    <Compile Include="DBBase\DBMapField.cs" />
+    <Compile Include="DBBase\DBMapList.cs" />
+    <Compile Include="DBBase\DBMapTable.cs" />
+    <Compile Include="DBBase\DBParameterInfo.cs" />
+    <Compile Include="DBBase\DBQuery.cs" />
+    <Compile Include="DBBase\DBTableAttribute.cs" />
+    <Compile Include="DBBase\dcDataSelection.cs" />
+    <Compile Include="DBBase\OracleContext.cs" />
+    <Compile Include="DBBase\SQLServerContext.cs" />
+    <Compile Include="DBFilters\DBFilter.cs" />
+    <Compile Include="DBFilters\DBFilterEnums.cs" />
+    <Compile Include="DBFilters\DBFilterField.cs" />
+    <Compile Include="DBFilters\DBFilterManager.cs" />
+    <Compile Include="DBFilters\DBFilterPresetValue.cs" />
+    <Compile Include="DBFilters\DBFilterResult.cs" />
+    <Compile Include="DBFilters\DBFilterSettings.cs" />
+    <Compile Include="DBValidation\DBValidationError.cs" />
+    <Compile Include="DBValidation\DBValidationResult.cs" />
+    <Compile Include="DBValidation\DBValidationTask.cs" />
+    <Compile Include="Encryption\DataSetXMLEncryptor.cs" />
+    <Compile Include="Encryption\SymmetricEncryption.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="Extentions\Dynamic.cs" />
+    <Compile Include="Extentions\Extentions.cs" />
+    <Compile Include="Extentions\WebExtentions.cs" />
+    <Compile Include="Globals.cs" />
+    <Compile Include="Internals.cs" />
+    <Compile Include="License\AppLicense.cs" />
+    <Compile Include="License\LicenseInfo.cs" />
+    <Compile Include="License\TokenPrivilege.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reporting\ReportHelper.cs" />
+    <Compile Include="Utility\Conversion.cs" />
+    <Compile Include="Utility\DateDifference.cs" />
+    <Compile Include="Utility\Helper.cs" />
+    <Compile Include="Utility\NumberInWord.cs" />
+    <Compile Include="Utility\SQLHelper.cs" />
+    <Compile Include="Utility\TaskProgress.cs" />
+    <Compile Include="Utility\WildCard.cs" />
+    <Compile Include="Web\AppMessage.cs" />
+    <Compile Include="Web\ICoreBagePage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Web\Impersonate.cs" />
+    <Compile Include="Web\UIDataBinder\UIDataBind.cs" />
+    <Compile Include="Web\UIDataBinder\UIDataBindItem.cs" />
+    <Compile Include="Web\WebControls\CompositeBoundField.cs" />
+    <Compile Include="Web\WebControls\MyGrid.cs" />
+    <Compile Include="Web\WebEnums.cs" />
+    <Compile Include="Web\WebUtility.cs" />
+    <Compile Include="Windows\ExControls\ComboBoxEx\CustomComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Windows\ExControls\ComboBoxEx\MultiColumnComboBoxEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Windows\ExControls\DateRangeEx\DateRangeCombobox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Windows\ExControls\DateRangeEx\DateRangeCombobox.designer.cs">
+      <DependentUpon>DateRangeCombobox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ExControls\ListBarEx\ButtonListBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Windows\ExControls\OldNewEvent.cs" />
+    <Compile Include="Windows\ExControls\PanelEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Windows\ExControls\PopupControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Windows\Forms\frmFilter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Forms\frmFilter.Designer.cs">
+      <DependentUpon>frmFilter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Forms\frmFilterSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Forms\frmFilterSelect.Designer.cs">
+      <DependentUpon>frmFilterSelect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Forms\frmProgressBar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Forms\frmProgressBar.designer.cs">
+      <DependentUpon>frmProgressBar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Forms\frmWait.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Forms\frmWait.Designer.cs">
+      <DependentUpon>frmWait.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ListViewColumnSorter.cs" />
+    <Compile Include="Windows\ListViewExtensions.cs" />
+    <Compile Include="Windows\ListViewSortManager.cs" />
+    <Compile Include="Windows\ProgressBarUI.cs" />
+    <Compile Include="Windows\WaitBarUI.cs" />
+    <Compile Include="Windows\WinEnums.cs" />
+    <Compile Include="Windows\WinUtility.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Windows\ExControls\DateRangeEx\DateRangeCombobox.resx">
+      <DependentUpon>DateRangeCombobox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\ExControls\ListBarEx\ButtonListBar.resx">
+      <DependentUpon>ButtonListBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\frmFilter.resx">
+      <DependentUpon>frmFilter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\frmFilterSelect.resx">
+      <DependentUpon>frmFilterSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\frmProgressBar.resx">
+      <DependentUpon>frmProgressBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\frmWait.resx">
+      <DependentUpon>frmWait.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,1488 @@
+﻿/*
+Version: 2.2.0
+Date: June 02, 2014 
+*/
+
+*
+{
+	border-style: none;
+    border-color: inherit;
+    border-width: medium;
+    padding: 0;
+    outline: none;
+    margin-left: 0;
+    margin-right: 0;
+    }
+
+
+
+a:focus {
+	outline: none;
+	-moz-outline-style: none;
+	outline-style: none;
+}
+a:active {
+  outline: none;
+}
+
+button::-moz-focus-inner,
+input[type="reset"]::-moz-focus-inner,
+input[type="button"]::-moz-focus-inner,
+input[type="submit"]::-moz-focus-inner,
+select::-moz-focus-inner,
+input[type="file"] > input[type="button"]::-moz-focus-inner {
+	border: none;
+	outline: none;
+}
+
+
+:focus 
+{
+	outline:none;
+	 -moz-outline-style: none;
+}
+::-moz-focus-inner {border:0;}
+
+
+BODY {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	Background-color: #DCE4EF;	
+	
+	background-image:url(../image/bgblue.jpg);
+	font-family: Verdana ; 	
+	FONT-SIZE: 11px; 	
+	font-weight: normal; 
+	COLOR: #465360; 	
+	text-align: left;
+	vertical-align: top;
+    outline: none; 
+}
+
+
+.defFonts
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	FONT-SIZE:11px;
+}
+
+.label
+{
+	font-family: Verdana ; 	
+	FONT-SIZE: 11px;
+	font-weight: normal; 
+	COLOR: #465360; 		
+}
+
+
+.textBox
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	border: 1px #1B68B8 solid;
+	BACKGROUND-COLOR: #FFFFFF;
+	COLOR: #000000;
+	FONT-SIZE:11px;
+    WIDTH: 160px;
+	height: 18px;
+	padding-left:2px;
+    
+}
+
+.textBox[disabled]
+{
+	color: Gray;
+	background-color: #EFEFEF;
+}
+
+.textBox[readonly]
+{
+	color:Gray;
+}
+
+.textBox:focus
+{
+	border: 1px solid #3366FF;
+	box-shadow: 0px 0px 5px #6EA2DE;
+	background-color: #FFFFD5; 
+	
+    filter: progid:DXImageTransform.Microsoft.Glow(Color=#6EA2DE, Strength=1);
+	position: relative;
+	top: -1px;
+	left: -1px;
+}
+
+.textBox[disabled]:focus
+{
+	
+}
+
+
+.textBox[readonly]:focus
+{
+	background-color:white;
+}
+
+
+
+.textBoxFocus
+{
+	border: 1px solid #3366FF;
+	box-shadow: 0px 0px 5px #6EA2DE;
+	background-color: #FFFFD5; 
+	
+    filter: progid:DXImageTransform.Microsoft.Glow(Color=#6EA2DE, Strength=1);
+	position: relative;
+	top: -1px;
+	left: -1px;
+}
+
+
+.textBoxReadOnlyEdit
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	border: 1px #1B68B8 solid;
+	BACKGROUND-COLOR: #FFFFFF;
+	COLOR: #000000;
+	FONT-SIZE:11px;
+	WIDTH: 160px;
+	height: 18px;
+	padding-left:2px;
+}
+
+.textBoxReadOnlyEdit[disabled] 
+{
+  color: Gray;
+  background-color : #EFEFEF;
+}
+
+.textBoxReadOnlyEdit[readonly]
+{
+
+	
+}
+
+.textBoxReadOnlyEdit:focus
+{
+	border: 1px solid #3366FF;
+	box-shadow: 0px 0px 5px #6EA2DE;
+	background-color: #FFFFD5; 
+	
+    filter: progid:DXImageTransform.Microsoft.Glow(Color=#6EA2DE, Strength=1);
+	position: relative;
+	top: -1px;
+	left: -1px;
+}
+
+textBoxReadOnlyEdit[disabled]:focus
+{
+	
+}
+
+.textBoxReadOnlyEdit[readonly]:focus
+{
+	border: 1px solid #3366FF;
+	box-shadow: 0px 0px 5px #6EA2DE;
+	background-color: #FFFFD5; 
+	
+    filter: progid:DXImageTransform.Microsoft.Glow(Color=#6EA2DE, Strength=1);
+	position: relative;
+	top: -1px;
+	left: -1px;
+}
+
+
+
+.textBox2
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	border: 1px #1B68B8 solid;
+	BACKGROUND-COLOR: #FFFFFF;
+	COLOR: #000000;
+	FONT-SIZE:11px;
+	HEIGHT:18px;
+   	padding-left:2px;
+}
+
+.textBox3
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	border: 1px #1B68B8 solid;
+	BACKGROUND-COLOR: #FFFFFF;
+	COLOR: #000000;
+	FONT-SIZE:11px;
+	WIDTH: 100px;
+	HEIGHT:18px;
+   	padding-left:2px;
+}
+
+.textBox4
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	border: 1px #1B68B8 solid;
+	BACKGROUND-COLOR: #FFFFFF;
+	COLOR: #000000;
+	FONT-SIZE:11px;
+	WIDTH: 100%;
+	HEIGHT:18px;
+   	padding-left:2px;
+}
+
+        .TextBoxnew
+        {
+           
+            border: 1px solid rgb(173, 204, 204);
+            border-radius:4px;
+            transition: 500ms all ease;
+            padding: 4px;
+            resize: vertical;
+        }
+         .TextBoxnew:focus
+        {
+           
+            border: 1px solid blue;
+            border-radius:4px;
+            box-shadow: 0 0 10px #719ECE;
+         
+        }
+        .TextBoxnew:hover
+         {
+          box-shadow: 0 0 10px #719ECE;
+         }
+
+.textBoxReadOnly
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	border: 1px #1B68B8 solid;
+	BACKGROUND-COLOR:#eaf4fb;
+	COLOR: #808080;
+	FONT-SIZE:11px;
+	WIDTH: 160px;
+	HEIGHT:16px;
+   	padding-left:2px;
+    text-align: right;
+}
+
+
+.textLabel
+{
+	border:none;
+	FONT-SIZE:11px;
+	WIDTH: 160px;
+	HEIGHT:16px;
+   	padding-left:2px;
+   	font-family: Verdana, Arial, Helvetica, sans-serif;
+   	background-color: Transparent;
+}
+
+.textLabelWithBorder
+{
+	border: 1px #1B68B8 solid;
+	font-size: 11px;
+	width: 160px;
+	height: 16px;
+	padding-left: 2px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color:Gray;
+	background-color: #FFFFFF;
+}
+
+
+
+.modalBackground {
+	background-color:Gray;
+	filter:alpha(opacity=70);
+	opacity:0.7;
+}
+.listbox
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+	COLOR: #000000; 
+	FONT-SIZE: 12px; 
+	BACKGROUND-COLOR: #FFFFFF;
+	border: 1px #666666 solid;
+	WIDTH: 151px;
+}
+.listboxsmall
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+	COLOR: #000000; 
+	FONT-SIZE: 12px; 
+	BACKGROUND-COLOR: #FFFFFF;
+	border: 1px #666666 solid;
+	WIDTH: 80px;
+}
+
+
+.dropDownList
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	border: 1px #3366FF solid;
+	BACKGROUND-COLOR: #FFFFFF;
+	COLOR: #000000;
+	FONT-SIZE:11px;
+	HEIGHT:20px;
+	padding: 0px 0px 0px 0px;
+  	/*padding-left:2px;*/
+}
+
+.dropDownList[disabled]
+{
+	color: Gray;
+	background-color: #EFEFEF;
+}
+.dropDownList[readonly]
+{
+	color:Gray;
+}
+
+.dropDownList:focus 
+{ 
+	border: 1px solid #3366FF;
+	box-shadow: 0px 0px 5px #6EA2DE;
+	background-color: #FFFFD5; 
+	
+	filter: progid:DXImageTransform.Microsoft.Glow(Color=#6EA2DE, Strength=1);
+	position: relative;
+	top: -1px;
+	left: -1px;
+}
+
+
+.DropDownListWide
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	border: 1px #666666 solid;
+	BACKGROUND-COLOR: #FFFFFF;
+	COLOR: #000000;
+	FONT-SIZE:10px;
+	WIDTH: 194px;
+	HEIGHT:20px;
+  	padding-left:2px;
+}
+.DropDownListWide2
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	border: 1px #666666 solid;
+	BACKGROUND-COLOR: #FFFFFF;
+	COLOR: #000000;
+	FONT-SIZE:10px;
+	WIDTH: 210px;
+	HEIGHT:20px;
+  	padding-left:2px;
+}
+.buttoncommon
+{
+	background: #80ade5 url('../image/button_bg.gif') repeat-x left top;
+    border-top: 1px solid #CCCCCC;
+    border-bottom: 1px solid #000000;
+    border-left: 1px solid #CCCCCC;
+    border-right: 1px solid #000000;
+    COLOR: black; 
+	FONT-WEIGHT: bold; FONT-SIZE: 11px; 
+	WIDTH: 90px;
+    cursor:pointer;
+    outline: none;
+    }
+.buttoncommon:hover
+{
+	background-position: left bottom;
+	
+}
+.buttoncommon:hover[disabled]
+{
+	background-position: left top;
+	
+}
+
+.buttoncommon[disabled]
+{
+	color: #999999;
+	cursor: default;
+}
+
+.buttoncommon:focus
+{
+	background-position: left bottom;
+	outline: gray solid 1px;
+}
+
+
+.buttonSave
+{
+	BORDER-TOP: #CCCCCC 1px solid; 
+	BORDER-BOTTOM: #000000 1px solid; 
+	BORDER-LEFT: #CCCCCC 1px solid; 
+	BORDER-RIGHT: #000000 1px solid; 
+	COLOR: black; 
+	FONT-WEIGHT: bold; FONT-SIZE: 11px; 
+	BACKGROUND-COLOR: #547AC6;
+	cursor:pointer;
+    outline: none;
+    WIDTH: 90px;
+    height: 26px;
+    
+	background-color: #80ade5;
+	background-image: url('../image/btnSave.png');
+    background-attachment: scroll;
+	
+}
+
+.buttonSave:hover
+{
+	background-image: url('../image/btnSaveHover.png');
+}
+
+.buttonSave:focus
+{
+	outline: gray solid 1px;
+}
+
+
+.buttonSave[disabled]
+{
+	color: #999999;
+	cursor: default;
+	background-image: url('../image/btnSaveDisabled.png');
+}
+
+.buttonNew
+{
+	BORDER-TOP: #CCCCCC 1px solid; 
+	BORDER-BOTTOM: #000000 1px solid; 
+	BORDER-LEFT: #CCCCCC 1px solid; 
+	BORDER-RIGHT: #000000 1px solid; 
+	COLOR: black; 
+	FONT-WEIGHT: bold; FONT-SIZE: 11px; 
+	BACKGROUND-COLOR: #547AC6;
+	cursor:pointer;
+    outline: none;
+    /*padding-left:22px;*/
+    WIDTH: 90px;
+    height: 26px;
+	background-color: #80ade5;
+	background-image: url('../image/btnNew.png');
+    background-attachment: scroll;
+}
+
+.buttonNew:hover
+{
+	background-image: url('../image/btnNewHover.png');
+}
+
+.buttonNew:focus
+{
+	outline: gray solid 1px;
+}
+
+
+.buttonNew[disabled]
+{
+	color: #999999;
+	cursor: default;
+	background-image: url('../image/btnNewDisabled.png');
+}
+
+
+.buttonRefresh
+{
+	BORDER-TOP: #CCCCCC 1px solid; 
+	BORDER-BOTTOM: #000000 1px solid; 
+	BORDER-LEFT: #CCCCCC 1px solid; 
+	BORDER-RIGHT: #000000 1px solid; 
+	COLOR: black; 
+	FONT-WEIGHT: bold; FONT-SIZE: 11px; 
+	BACKGROUND-COLOR: #547AC6;
+	WIDTH: 90px;
+	height: 26px;
+	cursor:pointer;
+    outline: none;
+    padding-left:22px;
+    
+	background-color: #80ade5;
+	background-image: url('../image/btnRefresh.png');
+    background-attachment: scroll;
+    height:26px;
+	
+}
+
+.buttonRefresh:hover
+{
+	background-image: url('../image/btnRefreshHover.png');
+}
+
+.buttonRefresh:focus
+{
+	outline: gray solid 1px;
+}
+
+
+.buttonRefresh[disabled]
+{
+	color: #999999;
+	cursor: default;
+	background-image: url('../image/btnRefreshDisabled.png');
+}
+
+.buttonDelete
+{
+	BORDER-TOP: #CCCCCC 1px solid; 
+	BORDER-BOTTOM: #000000 1px solid; 
+	BORDER-LEFT: #CCCCCC 1px solid; 
+	BORDER-RIGHT: #000000 1px solid; 
+	COLOR: black; 
+	FONT-WEIGHT: bold; FONT-SIZE: 11px; 
+	BACKGROUND-COLOR: #547AC6;
+	WIDTH: 90px;
+	height: 26px;
+	cursor:pointer;
+    outline: none;
+    
+	background-color: #80ade5;
+	background-image: url('../image/btnDelete.png');
+    background-attachment: scroll;
+	
+}
+
+.buttonDelete:hover
+{
+	background-image: url('../image/btnDeleteHover.png');
+	src: url('../image/btnDeleteHover.png');
+}
+
+.buttonDelete:focus
+{
+	outline: gray solid 1px;
+	
+}
+
+
+.buttonDelete[disabled]
+{
+	color: #999999;
+	cursor: default;
+	background-image: url('../image/btnDeleteDisabled.png');
+	src: url('../image/btnDeleteDisabled.png');
+}
+
+.buttonEdit
+{
+	BORDER-TOP: #CCCCCC 1px solid; 
+	BORDER-BOTTOM: #000000 1px solid; 
+	BORDER-LEFT: #CCCCCC 1px solid; 
+	BORDER-RIGHT: #000000 1px solid; 
+	COLOR: black; 
+	FONT-WEIGHT: bold; FONT-SIZE: 11px; 
+	BACKGROUND-COLOR: #547AC6;
+	WIDTH: 90px;
+	height: 26px;
+	cursor:pointer;
+    outline: none;
+    
+	background-color: #80ade5;
+	background-image: url('../image/btnEdit.png');
+    background-attachment: scroll;
+	
+}
+
+.buttonEdit:hover
+{
+	background-image: url('../image/btnEditHover.png');
+}
+
+.buttonEdit:focus
+{
+	outline: gray solid 1px;
+}
+
+
+.buttonEdit[disabled]
+{
+	color: #999999;
+	cursor: default;
+	background-image: url('../image/btnEditDisabled.png');
+}
+
+.buttonOK
+{
+	BORDER-TOP: #CCCCCC 1px solid; 
+	BORDER-BOTTOM: #000000 1px solid; 
+	BORDER-LEFT: #CCCCCC 1px solid; 
+	BORDER-RIGHT: #000000 1px solid; 
+	COLOR: black; 
+	FONT-WEIGHT: bold; FONT-SIZE: 11px; 
+	BACKGROUND-COLOR: #547AC6;
+	WIDTH: 90px;
+	height: 26px;
+	cursor:pointer;
+    outline: none;
+    
+	background-color: #80ade5;
+	background-image: url('../image/btnOK.png');
+    background-attachment: scroll;
+	
+}
+
+
+
+.buttonOK:hover
+{
+	background-image: url('../image/btnOKHover.png');
+}
+
+.buttonOK:focus
+{
+	outline: gray solid 1px;
+}
+
+
+.buttonOK[disabled]
+{
+	color: #999999;
+	cursor: default;
+	background-image: url('../image/btnOKDisabled.png');
+}
+.buttonApprove
+{
+	BORDER-TOP: #CCCCCC 1px solid; 
+	BORDER-BOTTOM: #000000 1px solid; 
+	BORDER-LEFT: #CCCCCC 1px solid; 
+	BORDER-RIGHT: #000000 1px solid; 
+	COLOR: black; 
+	FONT-WEIGHT: bold; FONT-SIZE: 11px; 
+	BACKGROUND-COLOR: #547AC6;
+	WIDTH: 22px;
+	height: 22px;
+	cursor:pointer;
+	outline: none;
+    border-radius:14px;
+    width:28px;
+    height:24px;	
+	background-color: #80ade5;
+	background-image: url('../image/btnApprove.png');
+	background-attachment: scroll;
+	
+}
+
+.buttonAthorize
+{
+	BORDER-TOP: #CCCCCC 1px solid; 
+	BORDER-BOTTOM: #000000 1px solid; 
+	BORDER-LEFT: #CCCCCC 1px solid; 
+	BORDER-RIGHT: #000000 1px solid; 
+	COLOR: black; 
+	FONT-WEIGHT: bold; FONT-SIZE: 11px; 
+	BACKGROUND-COLOR: #547AC6;
+	WIDTH: 90px;
+	height: 26px;
+	cursor:pointer;
+    outline: none;
+    
+	background-color: #80ade5;
+	background-image: url('../image/btnAuthorize.png');
+    background-repeat:no-repeat;
+	background-attachment: scroll;
+	
+}
+
+
+.buttonAthorize:hover
+{
+	background-position: left bottom;
+	
+}
+.buttonAthorize:hover[disabled]
+{
+	background-position: left top;
+	
+}
+
+.buttonAthorize[disabled]
+{
+	color: #999999;
+	cursor: default;
+}
+
+.buttonCancel
+{
+	BORDER-TOP: #CCCCCC 1px solid; 
+	BORDER-BOTTOM: #000000 1px solid; 
+	BORDER-LEFT: #CCCCCC 1px solid; 
+	BORDER-RIGHT: #000000 1px solid; 
+	COLOR: black; 
+	FONT-WEIGHT: bold; FONT-SIZE: 11px; 
+	BACKGROUND-COLOR: #547AC6;
+	WIDTH: 90px;
+	height: 26px;
+	cursor:pointer;
+    outline: none;
+    
+	background-color: #80ade5;
+	background-image: url('../image/btnCancel.png');
+    background-attachment: scroll;
+	
+}
+
+
+
+.buttonCancel:hover
+{
+	background-image: url('../image/btnCancelHover.png');
+}
+
+.buttonCancel:focus
+{
+	outline: gray solid 1px;
+}
+
+
+.buttonCancel[disabled]
+{
+	color: #999999;
+	cursor: default;
+	background-image: url('../image/btnCancelDisabled.png');
+}
+
+
+.buttonClose
+{
+	BORDER-TOP: #CCCCCC 1px solid; 
+	BORDER-BOTTOM: #000000 1px solid; 
+	BORDER-LEFT: #CCCCCC 1px solid; 
+	BORDER-RIGHT: #000000 1px solid; 
+	COLOR: black; 
+	FONT-WEIGHT: bold; FONT-SIZE: 11px; 
+	BACKGROUND-COLOR: #547AC6;
+	WIDTH: 90px;
+	height: 26px;
+	cursor:pointer;
+    outline: none;
+    
+	background-color: #80ade5;
+	background-image: url('../image/btnClose.png');
+    background-attachment: scroll;
+	
+}
+
+
+
+.buttonClose:hover
+{
+	background-image: url('../image/btnCloseHover.png');
+}
+
+.buttonClose:focus
+{
+	outline: gray solid 1px;
+}
+
+
+.buttonClose[disabled]
+{
+	color: #999999;
+	cursor: default;
+	background-image: url('../image/btnCloseDisabled.png');
+}
+
+.buttonQuickLink
+{
+	BORDER-TOP: #CCCCCC 1px solid; 
+	BORDER-BOTTOM: #000000 1px solid; 
+	BORDER-LEFT: #CCCCCC 1px solid; 
+	BORDER-RIGHT: #000000 1px solid; 
+	COLOR: black; 
+	FONT-WEIGHT: bold; FONT-SIZE: 11px; 
+	BACKGROUND-COLOR: #547AC6;
+	WIDTH: 90px;
+	height: 26px;
+	cursor:pointer;
+    outline: none;
+    padding-left: 10px;
+    
+	background-color: #80ade5;
+	background-image: url('../image/btnQuickLink.png');
+    background-attachment: scroll;
+	
+}
+
+
+
+.buttonQuickLink:hover
+{
+	background-image: url('../image/btnQuickLinkHover.png');
+}
+
+.buttonQuickLink:focus
+{
+	outline: gray solid 1px;
+}
+
+
+.buttonQuickLink[disabled]
+{
+	color: #999999;
+	cursor: default;
+	background-image: url('../image/btnQuickLinkDisabled.png');
+}
+
+
+
+
+.buttonSearch
+{
+	BORDER-TOP: #CCCCCC 1px solid; 
+	BORDER-BOTTOM: #000000 1px solid; 
+	BORDER-LEFT: #CCCCCC 1px solid; 
+	BORDER-RIGHT: #000000 1px solid; 
+	COLOR: black; 
+	FONT-WEIGHT: bold; FONT-SIZE: 11px; 
+	BACKGROUND-COLOR: #547AC6;
+	WIDTH: 90px;
+	cursor:pointer;
+    outline: none;
+    height: 25px;
+	background-color: #80ade5;
+	background-image: url('../image/btnSearch.png');
+    background-attachment: scroll;
+	
+}
+
+.buttonSearch:hover
+{
+	background-image: url('../image/btnSearchHover.png');
+}
+
+.buttonSearch:focus
+{
+	outline: gray solid 1px;
+}
+
+
+.buttonSearch[disabled]
+{
+	color: #999999;
+	cursor: default;
+	background-image: url('../image/btnSearchDisabled.png');
+}
+
+.buttonOpenWindow
+{
+	BORDER-TOP: #CCCCCC 1px solid; 
+	BORDER-BOTTOM: #000000 1px solid; 
+	BORDER-LEFT: #CCCCCC 1px solid; 
+	BORDER-RIGHT: #000000 1px solid; 
+	COLOR: black; 
+	FONT-WEIGHT: bold; FONT-SIZE: 11px; 
+	BACKGROUND-COLOR: #547AC6;
+	WIDTH: 90px;
+	height: 26px;
+	cursor:pointer;
+    outline: none;
+    
+	background-color: #80ade5;
+	background-image: url('../image/btnOpenWindow.png');
+    background-attachment: scroll;
+	
+}
+
+.buttonOpenWindow:hover
+{
+	background-image: url('../image/btnOpenWindowHover.png');
+}
+
+.buttonOpenWindow:focus
+{
+	outline: gray solid 1px;
+}
+
+
+.buttonOpenWindow[disabled]
+{
+	color: #999999;
+	cursor: default;
+	background-image: url('../image/btnOpenWindowDisabled.png');
+}
+
+
+.buttonViewGrid
+{
+    width:40px; 
+    height:20px;
+    
+    cursor:pointer;
+      
+    background-color: #80ade5;
+	background-image: url('../image/btnViewGrid.png');
+    background-repeat: repeat-x;
+    background-attachment: scroll; 
+}
+
+.buttonViewGrid:hover
+{
+	background-image: url('../image/btnViewGridHover.png');
+}
+
+.buttonViewGrid[disabled]
+{
+	background-image: url('../image/btnViewGridDisabled.png');
+}
+
+
+ 
+.buttonEditGrid
+{
+    width:40px; 
+    height:20px;
+   
+    cursor:pointer;
+    background-color: #80ade5;
+	background-image: url('../image/btnEditGrid.png');
+    background-repeat: repeat-x;
+    background-attachment: scroll; 
+}
+
+.buttonEditGrid:hover
+{
+	background-image: url('../image/btnEditGridHover.png');
+}
+
+.buttonEditGrid[disabled]
+{
+	background-image: url('../image/btnEditGridDisabled.png');
+}
+
+.buttonDeleteGrid
+{
+    width:40px; 
+    height:20px;
+    
+    cursor:pointer;
+    background-color: #80ade5;
+	background-image: url('../image/btnDeleteGrid.png');
+    background-repeat: repeat-x;
+    background-attachment: scroll; 
+}
+
+.buttonDeleteGrid:hover
+{
+	background-image: url('../image/btnDeleteGridHover.png');
+}
+.buttonDeleteGrid[disabled]
+{
+	background-image: url('../image/btnDeleteGridDisabled.png');
+}
+
+
+.buttonViewIcon
+{
+    width:16px; 
+    height:16px;
+    cursor:pointer;
+    background-color: #80ade5;
+	background-image: url('../image/btnViewIcon.png');
+    background-repeat: repeat-x;
+    background-attachment: scroll; 
+    
+}
+
+.buttonViewIcon:hover
+{
+	background-image: url('../image/btnViewIconHover.png');
+}
+
+.buttonViewIcon[disabled]
+{
+	background-image: url('../image/btnViewIconDisabled.png');
+}
+
+.buttonEditIcon
+{
+    width:16px; 
+    height:16px;
+    cursor:pointer;
+    
+    background-color: #80ade5;
+	background-image: url('../image/btnEditIcon.png');
+    background-repeat: repeat-x;
+    background-attachment: scroll; 
+}
+
+.buttonEditIcon:hover
+{
+	background-image: url('../image/btnEditIconHover.png');
+}
+
+.buttonEditIcon[disabled]
+{
+	background-image: url('../image/btnViewEditDisabled.png');
+}
+
+.buttonDeleteIcon
+{
+    width:16px; 
+    height:16px;
+    cursor:pointer;
+    background-color: #80ade5;
+	background-image: url('../image/btnDeleteIcon.png');
+    background-repeat: repeat-x;
+    background-attachment: scroll;
+}
+
+.buttonDeleteIcon:hover
+{
+	background-image: url('../image/btnDeleteIconHover.png');
+}
+
+.buttonDeleteIcon[disabled]
+{
+	background-image: url('../image/btnDeleteIconDisabled.png');
+}
+
+
+
+
+.buttonNewRow
+{
+	BORDER-TOP: #CCCCCC 1px solid; 
+	BORDER-BOTTOM: #000000 1px solid; 
+	BORDER-LEFT: #CCCCCC 1px solid; 
+	BORDER-RIGHT: #000000 1px solid; 
+	COLOR: black; 
+	FONT-WEIGHT: bold; FONT-SIZE: 11px; 
+	BACKGROUND-COLOR: #547AC6;
+	WIDTH: 90px;
+	cursor:pointer;
+    outline: none;
+        background-color: #80ade5;
+	background-image: url('../image/btnNewRow.png');
+    background-attachment: scroll;
+	HEIGHT: 20px;
+}
+
+.buttonNewRow:hover
+{
+	background-image: url('../image/btnNewRowHover.png');
+}
+
+.buttonNewRow:focus
+{
+	outline: gray solid 1px;
+}
+
+
+.buttonNewRow[disabled]
+{
+	color: #999999;
+	cursor: default;
+	background-image: url('../image/btnNewRowDisabled.png');
+}
+
+.buttonHidden
+{
+	display:none;
+	height:0px;
+	width:0px;
+}
+
+
+.buttonPrint
+{
+	BORDER-TOP: #CCCCCC 1px solid; 
+	BORDER-BOTTOM: #000000 1px solid; 
+	BORDER-LEFT: #CCCCCC 1px solid; 
+	BORDER-RIGHT: #000000 1px solid; 
+	COLOR: black; 
+	FONT-WEIGHT: bold; FONT-SIZE: 11px; 
+	BACKGROUND-COLOR: #547AC6;
+	WIDTH: 90px;
+	cursor:pointer;
+    outline: none;
+    padding-left: 20px;
+    
+	background-color: #80ade5;
+	background-image: url('../image/btnPrint.png');
+    background-attachment: scroll;
+	
+}
+
+
+
+.buttonPrint:hover
+{
+	background-image: url('../image/btnPrintHover.png');
+}
+
+.buttonPrint:focus
+{
+	outline: gray solid 1px;
+}
+
+
+.buttonPrint[disabled]
+{
+	color: #999999;
+	cursor: default;
+	background-image: url('../image/btnPrintDisabled.png');
+}
+
+
+
+.buttonPrintPreview
+{
+	BORDER-TOP: #CCCCCC 1px solid; 
+	BORDER-BOTTOM: #000000 1px solid; 
+	BORDER-LEFT: #CCCCCC 1px solid; 
+	BORDER-RIGHT: #000000 1px solid; 
+	COLOR: black; 
+	FONT-WEIGHT: bold; FONT-SIZE: 11px; 
+	BACKGROUND-COLOR: #547AC6;
+	WIDTH: 90px;
+	height: 26px;
+	cursor:pointer;
+    outline: none;
+    padding-left: 20px;
+    
+	background-color: #80ade5;
+	background-image: url('../image/btnPrintPreview.png');
+    background-attachment: scroll;
+	
+}
+
+
+
+.buttonPrintPreview:hover
+{
+	background-image: url('../image/btnPrintPreviewHover.png');
+}
+
+.buttonPrintPreview:focus
+{
+	outline: gray solid 1px;
+}
+
+
+.buttonPrintPreview[disabled]
+{
+	color: #999999;
+	cursor: default;
+	background-image: url('../image/btnPrintPreviewDisabled.png');
+}
+
+
+.buttonExport
+{
+	BORDER-TOP: #CCCCCC 1px solid; 
+	BORDER-BOTTOM: #000000 1px solid; 
+	BORDER-LEFT: #CCCCCC 1px solid; 
+	BORDER-RIGHT: #000000 1px solid; 
+	COLOR: black; 
+	FONT-WEIGHT: bold; FONT-SIZE: 11px; 
+	BACKGROUND-COLOR: #547AC6;
+	WIDTH: 90px;
+	height: 26px;
+	cursor:pointer;
+    outline: none;
+    padding-left: 15px;
+    
+	background-color: #80ade5;
+	background-image: url('../image/btnExport.png');
+    background-attachment: scroll;
+	
+}
+
+
+
+.buttonExport:hover
+{
+	background-image: url('../image/btnExportHover.png');
+}
+
+.buttonExport:focus
+{
+	outline: gray solid 1px;
+}
+
+
+.buttonExport[disabled]
+{
+	color: #999999;
+	cursor: default;
+	background-image: url('../image/btnExportDisabled.png');
+}
+
+
+
+.buttonDropdown
+{
+    height: 20px;
+    width: 16px; 
+    background-image : url(../image/dropdown.gif) ;
+    background-repeat: no-repeat;
+    background-position : center bottom;
+    cursor: pointer;
+}
+        
+.buttonDropdown:hover
+{
+   	background-image : url(../image/dropdown_over.gif)
+} 
+
+
+.buttonListIcon
+{
+    height: 20px;
+    width: 16px; 
+    background-image : url(../image/btnListIcon.png) ;
+    background-repeat: no-repeat;
+    background-position : center bottom;
+    cursor: pointer;
+}
+        
+.buttonListIcon:hover
+{
+   	background-image : url(../image/btnListIcon.png)
+} 
+
+
+
+
+.iconList
+{
+	background-image: url('../image/iconList.png');
+	height: 16px;
+	width: 16px;
+}
+
+.iconView
+{
+	background-image: url('../image/iconView.png');
+	height: 16px;
+	width: 16px;
+}
+
+.iconNew
+{
+	background-image: url('../image/iconNew.png');
+	height: 16px;
+	width: 16px;
+}
+
+.iconEdit
+{
+	background-image: url('../image/iconEdit.png');
+	height: 16px;
+	width: 16px;
+}
+
+.iconDelete
+{
+	background-image: url('../image/iconDelete.png');
+	height: 16px;
+	width: 16px;
+}
+
+.iconCancel
+{
+	background-image: url('../image/iconCancel.png');
+	height: 16px;
+	width: 16px;
+}
+
+
+
+
+.checkbox
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+	COLOR: #000000; 
+	FONT-SIZE: 12px; 
+}
+
+.checkbox:focus
+{
+	border: solid 1px blue;
+	background-color: red;
+}
+
+.checkbox[disabled]
+{
+	color:Gray;
+}
+
+.boxShadow
+{
+    border: solid 1px blue;
+	background-image:url('../image/bg_greendot.gif');
+    -moz-box-shadow: 3px 3px 4px #C0C0C0;
+    -webkit-box-shadow: 3px 3px 4px #C0C0C0;
+    box-shadow: 3px 3px 4px #C0C0C0;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#C0C0C0')";
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#C0C0C0');
+}
+
+
+.fldDataError
+{
+	 color: red;
+	 font-style:italic;
+}
+
+.textError {
+	color: red;
+}
+
+
+
+.fldRequired
+{
+	
+}
+
+
+.lblRequired
+{
+	color:red;
+	vertical-align : middle;
+	margin-left: 2px;
+	font-weight:bold;
+}
+
+.fldRequiredMark
+{
+	
+}
+
+
+.lblRequiredMark
+{
+	color:red;
+	vertical-align : middle;
+	margin-left: 2px;
+	font-weight:bold;
+}
+
+
+.textDate
+{
+	
+}
+
+.dateParse
+{
+	
+}
+
+.textAreaAutoSize
+{
+	
+}
+
+.textAutoSelect
+{
+
+}
+
+.textNumberOnly
+{
+	text-align:right;
+	padding-left: 0px;
+	padding-right: 2px;
+}
+
+.textNumberFormat
+{
+	
+}
+
+.textCurrencyFormat 
+{
+	
+}
+
+.checkIsDirty
+{
+}
+
+.enableIsDirty
+{
+	
+}
+
+.isDirty
+{
+	
+}
+
+.enableConfirm
+{
+	
+}
+
+.notEnterToTab
+{
+	
+}
+
+.stopEnterToTab {
+	
+}
+
+
+
+/*
+Search Box /popup
+*/
+
+    .btnPopup
+    {
+        height: 20px;
+        width: 16px; 
+        background-image : url(../image/dropdown.gif) ;
+        background-repeat: no-repeat;
+        background-position : center bottom;
+        cursor: pointer;
+    }
+        
+    .btnPopup:hover
+   {
+      background-image : url(../image/dropdown_over.gif)
+   } 
+        
+    .btnClear
+    {
+        height: 20px;
+        width: 16px; 
+        background-image : url(../image/crossred.png) ;
+        background-repeat: no-repeat;
+        background-position : center bottom;
+        cursor: pointer;
+    }
+        
+   .btnClear:hover
+   {
+      background-image : url(../image/crossred_over.png)
+   } 
+   
+   
+          
+    .btnGoTo
+    {
+        height: 20px;
+        width: 16px; 
+        background-image : url(../image/crossred.png) ;
+        background-repeat: no-repeat;
+        background-position : center bottom;
+        cursor: pointer;
+    }
+        
+   .btnGoTo:hover
+   {
+      background-image : url(../image/crossred_over.png)
+   } 
+   
+   
+   
+       
+       
+      

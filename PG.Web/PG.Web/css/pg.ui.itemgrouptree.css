@@ -1,0 +1,146 @@
+﻿
+
+   .dvItemListPopup
+   {
+	  display: none;    
+	  border: 1px solid lightgrey;
+	  width: 100%;
+	  height: auto;
+
+
+	  background-color : White;
+	  padding: 2px 2px 2px 4px;
+	  
+	  
+   }
+   
+   .dvItemGroupList
+   {
+	 width: 100%;
+	 height: auto;
+   }
+   
+   
+   .dvItemGroupHeader
+{
+	height: auto;
+	width: 100%;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-bottom-color: #808080;
+}
+   
+   .dvItemGroupBody
+   {
+	  height: 265px;
+	  width: 100%;
+	  background-color : White;
+   }
+	 
+   .dvItemGroupTree
+   {
+	  height:100%; 
+	  width :100%;
+	  overflow:auto;
+	  outline : none;
+	  border: none;
+   }
+   
+   .dvItemGroupFooter
+   {
+	  height:auto;
+	  width:100%;
+	  border-top: 1px solid lightgrey;
+   }
+   
+   .dvItemGroupFooterButton
+   {
+	 width:100%;
+	 height: 25px;
+   }
+   
+   
+	.ui-widget input
+	{
+		font-size: 8pt;
+	}
+   
+   .itemgroup_div  
+   {
+	  outline : none;
+	  border: none;
+	  font-size : 8pt;
+   } 
+
+   
+   .itemgroup_tree    
+   {
+	  outline : none;
+	  border: none;
+	  font-size : 8pt;
+   }
+   .group_node{ }
+   .group_nodeHighlight{}
+   .group_nodeSelected { }
+	
+   .group_nodeSpan { cursor:pointer; padding: 1px 0px 1px 0px;} 
+   .group_nodeSpanHover { background:#e7f4f9; padding:0 2px 0 1px;  }
+   
+   .group_nodeSpanHighlight
+	{
+		background-color: #EBEBEB;
+	}
+   
+   .group_nodeSpanSelected { background:#beebff; }
+   
+	.group_dvNodePathText
+	{
+	  height: auto;
+	  min-height: 20px;
+	  width: 100%;
+	
+	}
+
+   .group_nodePathText
+   {
+	  height:auto;
+	  width:100%;
+   }
+   
+   
+   
+   
+   .itemgroup_btnOk{}
+   .itemgroup_btnCancel{}
+   
+   
+   .itemgroup_linkControlSelected
+   {
+	 border: 1px solid blue;    
+   }
+   
+   .itemgroup_linkText{}
+   .itemgroup_linkValue {}
+   
+   
+   .itemgroup_textSearch
+   {
+	 width:98%;
+   }
+   
+   .dvSearch {}  
+   
+   
+   .btnPopupSearch
+    {
+        height: 20px;
+        width: 16px; 
+        background-image : url(../image/dropdown.gif) ;
+        background-repeat: no-repeat;
+        background-position : center bottom;
+        cursor: pointer;
+    } 
+   
+   
+   
+   

@@ -1,0 +1,139 @@
+﻿/*
+Version: 2.2.0
+Date: June 02, 2014 
+*/
+
+*
+{
+	border: 0 0 0 0;
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+	outline: none;
+}
+
+
+body
+{
+	font-family: Verdana;
+	font-size: 10pt;
+	font-weight: normal;
+	color: #465360;
+	text-align: left;
+	vertical-align: top;
+	background-color: #D8D8D8;
+}
+
+.dvMain
+{
+	height: auto;
+	width: 1000px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.dvMainInner
+{
+	height:100%;
+	width:100%;
+}
+
+.dvHeader
+{
+	width:100%;
+	height:auto;
+	Background-color: #1F4AA5;
+}
+
+.dvHeaderInner
+{
+	width:100%;
+	height:50px;
+}
+
+.dvTopBar
+{
+	width:100%;
+	height:auto;
+	Background-color: #B5C7DE;
+}
+
+.dvTopBarInner
+{
+	width:100%;
+	height:20px;
+}
+
+
+.dvMainBody
+{
+	width:100%;
+	height:auto;
+	min-height:400px;
+}
+
+.dvMainBodyInner
+{
+	width:100%;
+	height:auto;
+	min-height:400px;
+}
+.dvLeftSideBar
+{
+	width: 200px;
+	height: 100%;
+	float: left;
+	background-color: #FFFFFF;
+}
+
+.dvLeftSideBarInner
+{
+	width:100%;
+	height:400px;
+	max-height:100%;
+}
+
+.dvRightSideBar
+{
+	width:auto;
+	height:auto;
+	float:right;
+}
+
+.dvRightSideBarInner
+{
+	width:100%;
+	height:auto;
+	min-height:200px;
+}
+
+
+.dvContent
+{
+	width:800px;
+	height:auto;
+	float:left;
+}
+
+.dvContentInner
+{
+	width:100%;
+	height:100%;
+}
+
+
+
+.dvFooter
+{
+	width: 100%;
+	height: auto;
+	background-color: #000000;
+}
+
+.dvFooterInner
+{
+	
+	width:100%;
+	height:auto;
+	min-height:10px;
+	text-align:center;
+}

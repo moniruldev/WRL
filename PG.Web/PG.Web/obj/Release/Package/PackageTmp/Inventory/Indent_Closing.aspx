@@ -1,0 +1,1334 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/AppMaster.Master" AutoEventWireup="true" CodeBehind="Indent_Closing.aspx.cs" Inherits="PG.Web.Inventory.Indent_Closing" ViewStateMode="Disabled" %>
+
+<%@ Register Assembly="DevExpress.Web.v14.2, Version=14.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web" TagPrefix="dx" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
+    <link href="../css/jquery.ui.combogrid.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        #dvControlsTab {
+            padding: 0px;
+            background: none;
+            border-width: 0px;
+        }
+
+            #dvControlsTab .ui-tabs-nav {
+                padding-left: 0px;
+                background: transparent;
+                border-width: 0px 0px 1px 0px;
+                border-radius: 0px;
+                -moz-border-radius: 0px;
+                -webkit-border-radius: 0px;
+            }
+
+            #dvControlsTab .ui-tabs-selected a {
+                color: #000;
+                font-weight: bold; 
+                border-top: 3px solid blue;
+                margin-bottom: -1px;
+                overflow: visible;
+            }
+
+            #dvControlsTab .ui-state-default {
+                /*background: transparent;*/ /* border: none; */
+            }
+                #dvControlsTab .ui-state-default a {
+                    /*color: #c0c0c0;*/
+                }
+
+            #dvControlsTab .ui-state-active a {
+                /* color: #459E00; */
+                color: blue;
+            }
+
+
+        .groupBoxContainer {
+            height: 100%;
+            width: 1024px;
+            overflow: auto;
+            margin-left: 5px;
+            margin-top: 5px;
+        }
+
+        .groupHeader {
+            height: 20px;
+            background-image: url('../../image/header13.png');
+            background-repeat: repeat-x;
+            color: black;
+            font-weight: bold;
+        }
+
+        .groupBox {
+            background-image: url('../../image/bg_greendot.gif');
+            height: 100%;
+            width: 100%;
+            min-width: 500px;
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .groupContent {
+            width: 100%;
+            height: 100%;
+        }
+
+        .groupContenInner {
+            width: 100%;
+            height: auto;
+            overflow: auto;
+        }
+
+        .subHeader {
+            height: 20px;
+            width: 100%;
+            background-image: url('../../image/header13.png');
+            background-repeat: repeat-x;
+            color: White;
+            vertical-align: middle;
+            font-weight: bold;
+        }
+
+            .subHeader span {
+                margin-left: 2px;
+            }
+
+
+        .groupHeader span {
+            margin-left: 2px;
+            margin-top: 4px;
+        }
+
+        .dvGridDetailsPopup {
+            display: none;
+            border: 0px solid black;
+            height: 0px;
+            width: 0px;
+        }
+
+        .ui-widget input {
+            font-size: 11px;
+        }
+
+        .ui-widget select {
+            font-size: 11px;
+        }
+
+
+        .dvPopupProject {
+            display: none;
+            border: 0px solid black;
+            height: 0px;
+            width: 0px;
+        }
+
+
+        .btnSearch {
+            height: 19px;
+            width: 16px;
+            background-image: url('../../image/search.png');
+            background-repeat: no-repeat;
+            background-position: center bottom;
+            cursor: pointer;
+        }
+
+        .dvPopupGLAccount {
+            display: none;
+            border: 0px solid black;
+            width: 0px;
+            height: 0px;
+        }
+
+
+        .dvPopupTranType {
+            display: none;
+            border: 0px solid black;
+            width: 0px;
+            height: 0px;
+        }
+
+        .dvPopupCashTranInfo {
+            display: none;
+            border: 0px solid black;
+            width: 0px;
+            height: 0px;
+        }
+
+
+
+
+
+
+        .dvPopupIns {
+            display: none;
+            border: 0px solid black;
+            width: 0px;
+            height: 0px;
+        }
+
+
+
+        .ui-dialog .ui-dialog-content {
+            padding: 2px 0px 0px 0px;
+        }
+
+        .ui-dialog .ui-dialog-titlebar {
+            padding: 4px 2px 0px 2px;
+        }
+
+        .tableRowOdd {
+            background-color: #F7F6F3;
+        }
+
+        .tableRowEven {
+            background-color: White;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #Text1 {
+            width: 538px;
+        }
+
+        .multitextbox{
+            resize:none
+        }
+
+    </style>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <asp:HiddenField ID="hdnIndentId" runat="server" Value="0" />
+    <div id="dvPageContent" style="width: 100%; height: 100%;">
+        <div id="dvContentHeader" class="dvContentHeader">
+            <div id="dvHeader" class="dvHeader">
+                <asp:Label ID="lblHeader" CssClass="lblHeader" runat="server" Text="Purchase Indent Closing"></asp:Label>
+            </div>
+            <div id="dvMsg" runat="server" class="dvMessage" style="width: 100%; min-height: 20px; height: auto; text-align: center;">
+                <asp:Label ID="lblMessage" runat="server" Font-Size="Small" Width="100%" Height="16px"></asp:Label>
+            </div>
+        </div>
+        <div id="dvContentMain" class="dvContentMain">
+            <div id="dvControlsHead" style="height: auto; width: auto; text-align: left; vertical-align: top;">
+            </div>
+            <div id="dvControls" style="height: auto; width: 100%">
+                <div id="dvControlsInner" class="groupBoxContainer boxShadow">
+                    <div id="groupBox">
+                        <div id="groupHeader" class="groupHeader">
+                            <span>Purchase Indent Closing </span>
+                        </div>
+                        <div id="groupContent" class="groupContent scrollBar">
+                            <div id="groupContenInner">
+                                <div id="groupDataMaster" style="width: 109%; height: auto;">
+                                    <table style="" border="0" cellspacing="2" cellpadding="1">
+                                        <tr>
+                                            <td align="right">
+                                                <asp:Label ID="lblPurchaseNO" runat="server" Text="Indent No:"></asp:Label>
+                                            </td>
+                                            <td>
+                                                <asp:TextBox ID="txtIndtNo" runat="server" CssClass="colourdisabletextBox" Enabled="false" BackColor="#FFFFCC"></asp:TextBox>
+                                                <asp:HiddenField ID="hdnIsClosed" runat="server" Value="N" />
+                                            </td>
+                                            <td align="right">
+                                                <asp:Label ID="lblInvoiceDate" runat="server" Text="Indent Date:"></asp:Label><span style="color: red">*</span>
+                                            </td>
+                                            <td>
+                                                <asp:TextBox ID="txtIndtDate" Enabled="false" runat="server" CssClass="textBox textDate dateParse" Style="text-align: left;" Width="100px"></asp:TextBox>
+                                                <asp:RegularExpressionValidator runat="server" ControlToValidate="txtIndtDate" ValidationExpression="(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$" ErrorMessage="Invalid date format." ValidationGroup="Group1" ForeColor="Red" />
+                                            </td>
+                                            <td align="right">
+                                                <asp:Label ID="Label1" runat="server" Text="Required Date:"></asp:Label><span style="color: red">*</span>
+                                            </td>
+                                            <td>
+                                                <asp:TextBox ID="txtRequiredDate" runat="server" CssClass="textBox textDate dateParse" Style="text-align: left;" Width="100px"></asp:TextBox>
+                                                <asp:RegularExpressionValidator runat="server" ControlToValidate="txtRequiredDate" ValidationExpression="(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$" ErrorMessage="Invalid date format." ValidationGroup="Group1" ForeColor="Red" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Indent Department:</td>
+                                            <td>
+                                                <asp:DropDownList ID="ddlFromDepartment" Width="170px" runat="server" CssClass="dropDownList"  Enabled="false" >
+                                                </asp:DropDownList>
+                                            </td>
+                                            <td align="right">
+                                                <asp:Label ID="lblRemarks" runat="server" Text="Remarks:"></asp:Label>
+                                            </td>
+                                            <td colspan="5">
+                                                <asp:TextBox ID="txtRemarks" runat="server" CssClass="textBox multitextbox" TextMode="MultiLine" Height="30px" Width="433px"   Enabled="false" ></asp:TextBox>
+                                            </td>
+                                        </tr>
+                                         <tr style="display:none">
+                                            <td style="text-align: right">Item Type:</td>
+                                            <td>
+                                                <asp:DropDownList ID="ddlItemType" runat="server" Width="170px" CssClass="dropDownList"   Enabled="false" >
+                                                    <asp:ListItem Value="" Selected="True">All</asp:ListItem>
+                                                    <asp:ListItem Value="Y">Storeable</asp:ListItem>
+                                                    <asp:ListItem Value="N">Non Storeable</asp:ListItem>
+                                                </asp:DropDownList>
+                                            </td>
+                                            <td style="text-align: right">Local/Foreign:</td>
+                                            <td>
+                                                <asp:DropDownList ID="ddlLocalOrForeign" runat="server" Width="105px" CssClass="dropDownList required"   Enabled="false" >
+                                                    <asp:ListItem Value="">All</asp:ListItem>
+                                                    <asp:ListItem Value="1">Local</asp:ListItem>
+                                                    <asp:ListItem Value="2">Foreign</asp:ListItem>
+                                                </asp:DropDownList>
+                                            </td>
+                                        </tr>
+                                         <tr style="display:none">
+                                            <td align="right">From:</td>
+                                            <td>
+                                                <asp:TextBox ID="txtFromDate"  Enabled="false"  runat="server" CssClass="textBox textDate dateParse" Style="text-align: left;" Width="100px"></asp:TextBox>
+                                                <asp:RegularExpressionValidator runat="server" ControlToValidate="txtFromDate" ValidationExpression="(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$" ErrorMessage="Invalid date format." ValidationGroup="Group1" ForeColor="Red" />
+                                            </td>
+                                            <td align="right">To:</td>
+                                            <td>
+                                                <asp:TextBox ID="txtToDate"  Enabled="false"  runat="server" CssClass="textBox textDate dateParse" Style="text-align: left;" Width="100px"></asp:TextBox>
+                                                <asp:RegularExpressionValidator runat="server" ControlToValidate="txtToDate" ValidationExpression="(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$" ErrorMessage="Invalid date format." ValidationGroup="Group1" ForeColor="Red" />
+                                            </td>
+                                        </tr>
+                                         <tr style="display:none">
+                                            <td align="right">Consider Safety Stock:</td>
+                                            <td>
+                                                <asp:DropDownList ID="ddlSafetyStock" runat="server"   Enabled="false" >
+                                                    <asp:ListItem Value="Y">Yes</asp:ListItem>
+                                                    <asp:ListItem Value="N">No</asp:ListItem>
+                                                </asp:DropDownList>
+                                            </td>
+                                            <td style="text-align: right">Against IGR:</td>
+                                            <td>
+                                                <asp:DropDownList ID="ddlIsAgainstRequisition" Width="105px" runat="server" CssClass="dropDownList"   Enabled="false" >
+                                                    <asp:ListItem Value="N">No</asp:ListItem>
+                                                    <asp:ListItem Value="Y">Yes</asp:ListItem>
+                                                </asp:DropDownList>
+                                            </td>
+                                        </tr>
+                                        <tr style="display:none">
+                                            <td align="right">
+                                                <asp:Label ID="Label3" runat="server" Text="Item Group:"></asp:Label>
+                                            </td>
+                                            <td>
+                                                <asp:TextBox ID="txtGroupName" Width="197px" runat="server" CssClass="textBox"  Enabled="false" ></asp:TextBox>
+                                                <input id="btnGroupID" type="button" value="" runat="server" class="buttonDropdown" tabindex="-1" />
+                                                <asp:HiddenField ID="hdnGroupID" runat="server" Value="0" />
+                                            </td>
+                                            <td align="right">
+                                                <asp:Label ID="Label4" runat="server" Text="Item:"></asp:Label>
+                                            </td>
+                                            <td>
+                                                <asp:TextBox ID="txtItemName" runat="server" CssClass="textBox"   Enabled="false" ></asp:TextBox>
+                                                <input id="btnItemID" type="button" value="" runat="server" class="buttonDropdown" tabindex="-1" />
+                                                <asp:HiddenField ID="hdnItemID" runat="server" Value="0" />
+                                            </td>
+                                            <td align="right">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <div id="dvGridContainer" style="width: 95%; height: auto; text-align: left; padding-top: 20px">
+                                        <div id="dvGridDev" style="width: 100%; height: 500px; overflow: auto;">
+                                            <dx:ASPxGridView ID="ASPxGridView1" ClientInstanceName="ASPxGridView1" runat="server" Width="95%" AutoGenerateColumns="False" KeyFieldName="REQ_NO">
+                                                <Settings VerticalScrollableHeight="250" ShowFooter="True" ShowGroupFooter="VisibleAlways" />
+                                                <TotalSummary>
+                                                    <dx:ASPxSummaryItem FieldName="Size" SummaryType="Sum" />
+                                                    <dx:ASPxSummaryItem FieldName="REQ_QNTY" ShowInColumn="REQ_QNTY" DisplayFormat="Total:{0}" ShowInGroupFooterColumn="REQ_QNTY" SummaryType="Sum" />
+                                                    <dx:ASPxSummaryItem FieldName="ISSUE_QNTY" ShowInColumn="ISSUE_QNTY" DisplayFormat="Total:{0}" ShowInGroupFooterColumn="ISSUE_QNTY" SummaryType="Sum" />
+                                                    <dx:ASPxSummaryItem FieldName="RCV_QNTY" ShowInColumn="RCV_QNTY" DisplayFormat="Total:{0}" ShowInGroupFooterColumn="RCV_QNTY" SummaryType="Sum" />
+                                                </TotalSummary>
+
+                                                <GroupSummary>
+                                                    <dx:ASPxSummaryItem SummaryType="Count" />
+                                                    <dx:ASPxSummaryItem FieldName="REQ_QNTY" ShowInGroupFooterColumn="REQ_QNTY" SummaryType="Sum" />
+                                                    <dx:ASPxSummaryItem FieldName="ISSUE_QNTY" ShowInGroupFooterColumn="ISSUE_QNTY" SummaryType="Sum" />
+                                                    <dx:ASPxSummaryItem FieldName="RCV_QNTY" ShowInGroupFooterColumn="RCV_QNTY" SummaryType="Sum" />
+                                                </GroupSummary>
+
+                                                <Columns>
+                                                    <dx:GridViewDataTextColumn Caption="Item Group Name" FieldName="item_group_name" VisibleIndex="1" />
+                                                    <dx:GridViewDataTextColumn Caption="Item Code" FieldName="item_code" VisibleIndex="2" />
+                                                    <dx:GridViewDataTextColumn Caption="Item Name" FieldName="item_name" VisibleIndex="3" />
+                                                    <dx:GridViewDataTextColumn Caption="Indent Qty" FieldName="INDT_QTY_APPROVED" VisibleIndex="3" />
+                                                    <dx:GridViewDataTextColumn Caption="Req Qty" FieldName="TOTAL_REQ_QTY" VisibleIndex="3" />
+                                                    <dx:GridViewDataTextColumn Caption="WeighAvg Price" FieldName="UNIT_PRICE" VisibleIndex="4" />
+                                                    <dx:GridViewDataTextColumn Caption="Safety Stock" FieldName="SAFTY_STOCK_LEVEL" VisibleIndex="8" />
+                                                    <dx:GridViewDataTextColumn Caption="Stock Qty" FieldName="CLOSING_QTY" VisibleIndex="8" />
+                                                    <dx:GridViewDataTextColumn Caption="Priority" FieldName="PRIORITY" VisibleIndex="8" />
+                                                    <dx:GridViewDataTextColumn Caption="Remarks" FieldName="INDT_REMARKS" VisibleIndex="8" />
+                                                </Columns>
+                                                <SettingsBehavior AllowFixedGroups="True" AutoExpandAllGroups="True" SortMode="Value" />
+                                                <SettingsPager NumericButtonCount="20">
+                                                    <PageSizeItemSettings Visible="true" Items="50,100" />
+                                                </SettingsPager>
+                                                <Settings ShowGroupPanel="false" ShowFilterBar="Hidden" ShowFilterRow="false" ShowFilterRowMenu="True" ShowGroupedColumns="false" ShowHeaderFilterButton="false" ShowGroupButtons="false" />
+                                                <SettingsDataSecurity AllowInsert="false" AllowEdit="false" AllowDelete="false" />
+                                                <Styles>
+                                                    <Header BackColor="#0033CC" ForeColor="White">
+                                                    </Header>
+                                                    <AlternatingRow BackColor="#FFFFCC">
+                                                    </AlternatingRow>
+                                                    <GroupFooter BackColor="#CCCCFF">
+                                                    </GroupFooter>
+                                                    <GroupPanel BackColor="#9999FF">
+                                                    </GroupPanel>
+                                                    <Cell Wrap="False"></Cell>
+                                                </Styles>
+                                            </dx:ASPxGridView>
+                                            <dx:ASPxGridViewExporter ID="gridExport" runat="server" GridViewID="ASPxGridView1"></dx:ASPxGridViewExporter>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="dvControlsFooter" style="height: auto; width: auto">
+                <div style="height: 10px;">
+                </div>
+            </div>
+        </div>
+
+        <div id="dvContentFooter" class="dvContentFooter">
+            <table>
+                <tr>
+                    <td></td>
+                    <td>
+                        <%--  <asp:Button ID="btnAddNew" runat="server" Text="New" CssClass="buttonNew" OnClick="btnAddNew_Click" Visible="false" />--%>
+                        <asp:Button ID="btnCancel" runat="server" Text="Cancel" CssClass="buttonCancel checkIsDirty" />
+                    </td>
+                    <td>
+                        <asp:Button ID="btnCloseIndent" runat="server" Width="100px" Text="        Close Indent" CssClass="buttonSave checkRequired" AccessKey="s" OnClick="btnCloseIndent_Click" OnClientClick="if ( ! UserCloseIndentConfirmation()) return false;" />
+                        <%--<asp:Button ID="btnEdit" runat="server" Text="Edit" CssClass="buttonEdit" OnClick="btnEdit_Click" />--%>
+                    </td>
+
+                    <td>
+                        <%-- <asp:Button ID="btnDelete" runat="server" Text="Delete" CssClass="buttonDelete" />--%>
+                    </td>
+                    <td>
+                        <asp:Button ID="btnRefresh" runat="server" Text="Refresh" CssClass="buttonRefresh checkIsDirty" />
+                    </td>
+                    <td>
+                        <%--<uc:PrintButton runat="server" ID="ucPrintButton" DefaultPrintAction="Preview" AutoPrint="False" />--%>
+                    </td>  
+                    <td>
+                        <asp:Button ID="btnMRRPrint" runat="server" Text="Print Indent" CssClass="buttoncommon" Enabled="True" OnClick="btnMRRPrint_Click" />
+                    </td>
+                    <td>
+                        <input id="btnClose" type="button" runat="server" class="buttonClose" value="Close" onclick="if (ContentForm) { ContentForm.CloseForm(); }" />
+                    </td>
+                  
+                    <td>
+                        <asp:Label ID="Label2" runat="server" Text="Print Format:"></asp:Label>
+                    </td>
+                    <td>
+                        <asp:DropDownList ID="ddlReportViewType" runat="server" CssClass="dropDownList">
+                            <asp:ListItem Value="0">Screen</asp:ListItem>
+                            <asp:ListItem Selected="True" Value="1">PDF</asp:ListItem>
+                        </asp:DropDownList>
+                    </td>
+                    <td>
+                        <asp:DropDownList ID="ddlReportViewMode" runat="server" CssClass="dropDownList">
+                            <asp:ListItem Value="0">In This Tab</asp:ListItem>
+                            <asp:ListItem Value="1">In New Tab</asp:ListItem>
+                            <asp:ListItem Selected="True" Value="2">In New Window</asp:ListItem>
+                        </asp:DropDownList>
+                    </td>
+                    <td>
+                        <asp:Button ID="btnPopupTrigger" runat="server" Text="Button" CssClass="buttonHidden" />
+                        <asp:HiddenField ID="hdnPopupTriggerID" runat="server" Value="" />
+                        <asp:HiddenField ID="hdnPopupCommand" runat="server" Value="" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+
+    <script src="../javascript/jquery.ui.combogrid.js" type="text/javascript"></script>
+    <script src="../javascript/jquery.attributeobserver.js" type="text/javascript"></script>
+    <script language="javascript" type="text/javascript">
+        // <!CDATA[
+
+        var isPageResize = true;
+        ContentForm.CalendarImageURL = "../image/calendar.png";
+
+
+
+        var ReportViewPageLink = '<%=this.ReportViewPageLink%>';
+        var ReportViewPDFPageLink = '<%=this.ReportViewPDFPageLink%>';
+        var ReportPrintPageLink = '<%=this.ReportPrintPageLink%>';
+        var ReportPDFPageLink = '<%=this.ReportPDFPageLink%>';
+
+     <%--   var ItemGroupListServiceLink = '<%=this.ItemGroupListServiceLink%>';
+        var ItemListServiceLink = '<%=this.ItemListServiceLink%>'--%>;
+
+
+        var hdnGroupID = '<%= hdnGroupID.ClientID%>';
+        var txtGroupName = '<%= txtGroupName.ClientID%>';
+        var btnGroupID = '<%= btnGroupID.ClientID%>';
+
+        var hdnItemID = '<%=hdnItemID.ClientID %>';
+        var txtItemName = '<%=txtItemName.ClientID %>';
+        var btnItemID = '<%= btnItemID.ClientID%>';
+
+
+        <%--  var txtCustomerID = '<%=txtCustomerID.ClientID%>';--%>
+
+        <%-- var gridUpdatePanelIDDet = '<%=UpdatePanel1.ClientID%>';
+        var gridViewIDDet = '<%=GridView1.ClientID%>';
+        var updateProgressID = '<%=UpdateProgress2.ClientID%>';--%>
+
+        <%--var txtGroupName='<%=txtGroupName.ClientID%>'--%>
+
+        <%-- var txtSalesExecutiveName = '<%=txtSalesExecutiveName.ClientID%>';
+
+             var txtReferenceby = '<%=txtReferenceby.ClientID%>';
+             var btnReferenceBy = '<%=btnReferenceBy.ClientID%>';
+             var lblReferencebyName = '<%=lblReferencebyName.ClientID%>';
+
+
+             var txtPreparedBy = '<%=txtPreparedBy.ClientID%>';
+             var btnPreparedby = '<%=btnPreparedby.ClientID%>';
+             var lblPreparedByName = '<%=lblPreparedByName.ClientID%>';
+
+             var lblLocationID = '<%=lblLocationID.ClientID%>';
+
+
+
+             var txtAuthorizedBy = '<%=txtAuthorizedBy.ClientID%>';
+             var btnAuthorizedBy = '<%=btnAuthorizedBy.ClientID%>';
+             var lblAuthorizedByName = '<%=lblAuthorizedByName.ClientID%>';
+
+             var txtLocation = '<%=txtLocation.ClientID%>';--%>
+
+        function checkDt(fld) {
+            var mo, day, yr;
+            var entry = fld.value;
+            var reLong = /\b\d{1,2}[\/-]\d{1,2}[\/-]\d{4}\b/;
+            var reShort = /\b\d{1,2}[\/-]\d{1,2}[\/-]\d{2}\b/;
+            var valid = (reLong.test(entry)) || (reShort.test(entry));
+            if (valid) {
+                var delimChar = (entry.indexOf("/") != -1) ? "/" : "-";
+                var delim1 = entry.indexOf(delimChar);
+                var delim2 = entry.lastIndexOf(delimChar);
+                mo = parseInt(entry.substring(0, delim1), 10);
+                day = parseInt(entry.substring(delim1 + 1, delim2), 10);
+                yr = parseInt(entry.substring(delim2 + 1), 10);
+                // handle two-digit year
+                if (yr < 100) {
+                    var today = new Date();
+                    // get current century floor (e.g., 2000)
+                    var currCent = parseInt(today.getFullYear() / 100) * 100;
+                    // two digits up to this year + 15 expands to current century
+                    var threshold = (today.getFullYear() + 15) - currCent;
+                    if (yr > threshold) {
+                        yr += currCent - 100;
+                    } else {
+                        yr += currCent;
+                    }
+                }
+                var testDate = new Date(yr, mo - 1, day);
+                if (testDate.getDate() == day) {
+                    if (testDate.getMonth() + 1 == mo) {
+                        if (testDate.getFullYear() == yr) {
+                            // fill field with database-friendly format
+                            fld.value = mo + "/" + day + "/" + yr;
+                            return true;
+                        } else {
+                            alert("Check the year entry.");
+                        }
+                    } else {
+                        alert("Check the month entry.");
+                    }
+                } else {
+                    alert("Check the date entry.");
+                }
+            } else {
+                alert("Invalid date format. Enter as mm/dd/yyyy.");
+            }
+            return false;
+        }
+
+
+        function onlyNos(e, t) {
+            try {
+                if (window.event) {
+                    var charCode = window.event.keyCode;
+                }
+                else if (e) {
+                    var charCode = e.which;
+                }
+                else { return true; }
+                if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                    return false;
+                }
+                return true;
+            }
+            catch (err) {
+                alert(err.Description);
+            }
+        }
+
+
+        function ShowProgress() {
+            $('#' + updateProgressID).show();
+        }
+
+        function UserCloseIndentConfirmation() {
+            return confirm("Are you sure you want to close the Indent?");
+        }
+
+
+        function PageResizeCompleted(pg, cntMain) {
+            resizeContentInner(cntMain);
+        }
+
+        function resizeContentInner(cntMain) {
+            var contHeight = $("#dvContentMainInner").height();
+
+            var topHeight = $("#dvTop").height();
+
+            var middleHeight = contHeight - topHeight;
+
+            $("#dvMiddle").height(middleHeight);
+            $("#tblMiddle").height(middleHeight);
+
+            $("#dvReportList").height(middleHeight);
+            $("#dvParam").height(middleHeight);
+
+        }
+
+
+
+
+        function tbopen(key, isPrint, isPDFAutoPrint, showWait) {
+            key = key || '';
+            isPrint = isPrint || false;
+            showWait = showWait || true;
+
+            if (isPrint) {
+                if (key != '') {
+                    ReportPrint(key, isPDFAutoPrint);
+                    return;
+                }
+            }
+
+            //var url = "/Report/ReportView.aspx?rk=" + key
+
+            var now = new Date();
+            var strTime = now.getTime().toString();
+            var url = ReportViewPageLink + "?rk=" + key + "&_tt=" + strTime;
+            //var url = ReportViewPageLink + "?rk=" + key;
+
+            //if (pageInTab == 1)
+            if (TabVar.PageMode == Enums.PageMode.InTab) {
+
+                var tdata = new xtabdata();
+                tdata.linktype = Enums.LinkType.Direct;
+                tdata.id = 7999;
+                tdata.name = "Report view";
+                //tdata.label = "User: " + userid;
+                tdata.label = "Report view";
+                tdata.type = 0;
+                tdata.url = url;
+                tdata.tabaction = Enums.TabAction.InNewTab;
+                tdata.selecttab = 1;
+                tdata.reload = 0;
+                tdata.param = "";
+                tdata.showWait = showWait;
+
+                try {
+                    //window.parent.OpenMenuByData(tdata);
+                    window.parent.TabMenu.OpenMenuByData(tdata);
+                }
+                catch (err) {
+                    alert("error in page");
+                }
+            }
+            else {
+                //on new window/tab
+                //window.open(url,'_blank');   
+
+                window.location = url;
+            }
+        }
+
+        function ReportPrint(key, isPDFAutoPrint) {
+            var rptPageLink = ReportViewPageLink;
+            if (isPDFAutoPrint) {
+                //rptPageLink = ReportPDFPageLink;
+                rptPageLink = ReportViewPDFPageLink;
+            }
+
+            //var url = "./Report/ReportView.aspx?rk=" + key
+            var now = new Date();
+            var strTime = now.getTime().toString();
+            var url = ReportViewPageLink + "?rk=" + key + "&_tt=" + strTime;
+
+            //var url = rptPageLink + "?rk=" + key;
+
+            iframe = document.getElementById(ifPrintButton);
+            if (iframe === null) {
+                iframe = document.createElement('iframe');
+                iframe.id = hiddenIFrameID;
+                //        iframe.style.display = 'none';
+                //        iframe.style = 'none';
+                document.body.appendChild(iframe);
+            }
+            iframe.src = url;
+        }
+
+        function fromParent(val1) {
+            alert('this is called from parent: ' + val1);
+        }
+
+        // alert('OK');
+        $(document).ready(function () {
+
+            var pageInstance = Sys.WebForms.PageRequestManager.getInstance();
+
+            pageInstance.add_pageLoaded(function (sender, args) {
+                var panels = args.get_panelsUpdated();
+                for (i = 0; i < panels.length; i++) {
+                    //alert(panels[i].id);
+                    //ContentForm.InitDefualtFeatureInScope(panels[i].id);
+
+                    if (panels[i].id == gridUpdatePanelIDDet) {
+                        bindItemList(gridViewIDDet);
+                        bindItemGroupList(gridViewIDDet);
+                    }
+
+                }
+                //$('#' + dvGridDetailsPopup).parent().appendTo(jQuery("form:first"));
+                //gridTaskAfter();
+
+            });
+
+            //alert('OK 1');
+            bindItemGroupList(gridViewIDDet);
+            //alert('OK 2');
+            bindItemList(gridViewIDDet);
+
+
+            if ($('#' + txtGroupName).is(':visible')) {
+                //alert(1);
+                bindGroupListFilter();
+
+            }
+
+            if ($('#' + txtItemName).is(':visible')) {
+                bindItemListFilter();
+            }
+
+
+
+        });
+
+        function bindGroupListFilter() {
+            var cgColumns = [
+                             //{ 'columnName': 'itemgroupid', 'width': '80', 'align': 'left', 'highlight': 2, 'label': 'Group ID' }
+                             { 'columnName': 'itemgroupcode', 'width': '50', 'align': 'left', 'highlight': 4, 'label': 'Code' }
+                            , { 'columnName': 'itemgroupdesc', 'width': '160', 'align': 'left', 'highlight': 4, 'label': 'Name' }
+                            , { 'columnName': 'itemgroupnameparent', 'width': '80', 'align': 'left', 'highlight': 4, 'label': 'Group Parent' }
+
+
+            ];
+            var serviceURL = ItemGroupListServiceLink + "?isterm=1&includeempty=0&hasitem=1&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+
+            serviceURL += "&ispaging=1";
+            var groupIDElem = $('#' + txtGroupName);
+
+            $('#' + btnGroupID).click(function (e) {
+                $(groupIDElem).combogrid("dropdownClick");
+            });
+
+            $(groupIDElem).combogrid({
+                debug: true,
+                searchButton: false,
+                resetButton: false,
+                alternate: true,
+                munit: 'px',
+                scrollBar: true,
+                showPager: true,
+                colModel: cgColumns,
+                autoFocus: true,
+                showError: true,
+                width: 360,
+                url: serviceURL,
+                search: function (event, ui) {
+                    var newServiceURL = serviceURL;
+                    $(this).combogrid("option", "url", newServiceURL);
+                },
+                select: function (event, ui) {
+                    if (!ui.item) {
+                        event.preventDefault();
+
+                        $('#' + hdnGroupID).val('0');
+                        return false;
+
+                    }
+
+
+                    if (ui.item.itemgroupid == '') {
+                        event.preventDefault();
+                        return false;
+
+                    }
+                    else {
+
+                        $('#' + hdnGroupID).val(ui.item.itemgroupid);
+                        $('#' + txtGroupName).val(ui.item.itemgroupdesc);
+
+                    }
+                    return false;
+                },
+
+                lc: ''
+            });
+
+            $(groupIDElem).blur(function () {
+                var self = this;
+                elemID = $(groupIDElem).attr('id');
+                eCode = $(groupIDElem).val();
+                isComboGridOpen = $(self).combogrid('isOpened');
+                if (eCode == '') {
+
+                    $('#' + hdnGroupID).val('0');
+                }
+                else {
+
+                    if (grp == null) {
+                        $('#' + hdnGroupID).val('0');
+                    }
+                    else {
+
+                    }
+                }
+
+                grpID = $(self).closest('tr').find('input[id$="hdnGroupID"]').val();
+                if (grpID == '0' | grpID == '') {
+                    $(self).addClass('textError');
+                }
+
+            });
+
+
+            $(groupIDElem).blur(function () {
+                var self = this;
+
+                var groupID = $(groupIDElem).val();
+                if (groupID == '') {
+                    // $('#' + hdnDealerID).val('0');
+                    $('#' + txtGroupName).val('');
+                    //$('#' + txtGroupCode).val('');
+                }
+            });
+        }
+
+        function bindItemGroupList(gridViewID) {
+            var cgColumns = [{ 'columnName': 'itemgroupdesc', 'width': '150', 'align': 'left', 'highlight': 4, 'label': 'Name' }
+                             , { 'columnName': 'itemgroupcode', 'width': '80', 'align': 'left', 'highlight': 4, 'label': 'Code' }
+            ];
+
+            //var companyid = $('#' + hdnCompanyID).val();
+            //var depthead = $('#' + hdnEmpCode).val();
+            //var locationid = $('#' + ddlLocation).val();
+
+            //var serviceURL = GLAccountServiceLink + "?isterm=1&includeempty=1&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+            var serviceURL = ItemGroupListServiceLink + "?isterm=1&hasitem=1&includeempty=0&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+            //serviceURL += "&companyid=" + companyid;
+            serviceURL += "&ispaging=1";
+            //serviceURL += "&locationid=" + locationid;
+            // serviceURL += "&empstatus=" + "A";
+            //serviceURL += "&acctypefilter=" + Enums.GLAccountTypeFilter.AllAccount;
+            // serviceURL += "&namecomptype=" + Enums.DataCompareType.Contains;
+
+            //alert(gridViewID);
+            var gridSelector = "#" + gridViewID;
+
+
+            $(gridSelector).find('input[id$="txtGroupName"]').each(function (index, elem) {
+                ///list click
+
+                var elemRow = $(elem).closest('tr.gridRow');
+
+                //var hdnJournalDetID_LinkElem = $(elemRow).find('input[id$="hdnJournalDetID_Link"]');
+
+                //var hdnDrCrElem = $(elemRow).find('select[id$="hdnDrCr"]');
+
+                //var hdnItemGroupIDElem = $(elemRow).find('input[id$="txtGroupName"]');
+
+
+
+                //alert('OK 3');
+                //var prevGLCode = '';
+
+                $(elem).closest('tr').find('input[id$="btnItemGroup"]').click(function (e) {
+
+                    //alert('OK 4');
+
+                    elmID = $(elem).attr('id');
+                    //$(elem).combogrid("show");
+                    $(elem).combogrid("dropdownClick");
+                });
+
+                //alert('OK 5');
+
+                //var compNameElem = $('#' + txtCompanyName);
+
+                //$('#' + btnCompanyID).click(function (e) {
+                //    //elmID = $(elem).attr('id');
+                //    //$(elem).combogrid("show");
+                //    $(compNameElem).combogrid("dropdownClick");
+                //});
+
+
+                $(elem).combogrid({
+                    debug: true,
+                    searchButton: false,
+                    resetButton: false,
+                    alternate: true,
+                    munit: 'px',
+                    scrollBar: true,
+                    showPager: true,
+                    colModel: cgColumns,
+                    autoFocus: true,
+                    showError: true,
+                    width: 600,
+                    url: serviceURL,
+                    search: function (event, ui) {
+                        //var companyCode = $('#' + ddlCompany).val();
+                        //var branchCode = $('#' + hdnBranch).val();
+                        //var deptCode = $('#' + hdnDepartment).val();
+                        //var locationid = $('#' + lblLocationID).val();
+                        //var newServiceURL = serviceURL + "&companycode=" + companyCode + "&branchcode=" + branchCode + "&deptcode=" + deptCode
+                        var newServiceURL = JSUtility.AddTimeToQueryString(serviceURL);
+                        $(this).combogrid("option", "url", newServiceURL);
+                    },
+
+                    select: function (event, ui) {
+                        //alert(ui.item.typename);
+                        //$(".txtComboGrid").val(ui.item.code);
+                        elemID = $(elem).attr('id');
+                        //                    if (!validateGLAccount(elemID, ui.item)) {
+                        //                        $(elem).val(prevGLCode);
+                        //                        return false;
+                        //                    }
+                        if (!ui.item) {
+                            event.preventDefault();
+                            //ClearItemGroupData(elemID);
+                            //ClearItemData()
+                            return false;
+                            //ClearGLAccountData(elemID);
+                        }
+
+                        if (ui.item.id == 0) {
+                            event.preventDefault();
+                            return false;
+                            //ClearGLAccountData(elemID);
+                        }
+                        else {
+                            SetItemGroupData(elemID, ui.item);
+                        }
+                        // setDetInstrument(hdnIsInstrumentElem, txtInstrumentElem, btnInstrumentElem);
+                        return false;
+                    }
+                    //select: function (event, ui) {
+                    //    if (!ui.item) {
+                    //        event.preventDefault();
+
+                    //        //$('#' + hdnExecutiveID).val('0');
+                    //        $('#' + txtGroupName).val('');
+                    //        return false;
+                    //        //ClearGLAccountData(elemID);
+                    //    }
+
+
+                    //    if (ui.item.itemgroupid == '') {
+                    //        event.preventDefault();
+                    //        return false;
+                    //        //ClearGLAccountData(elemID);
+                    //    }
+                    //    else {
+                    //        // $('#' + hdnExecutiveID).val(ui.item.seid);
+                    //        $('#' + hdngroupId).val(ui.item.itemgroupid);
+                    //        $('#' + txtGroupName).val(ui.item.itemgroupdesc);
+                    //    }
+                    //    return false;
+                    //},
+
+                    // lc: ''
+                });
+
+
+                $(elem).blur(function () {
+                    var self = this;
+                    elemID = $(elem).attr('id');
+                    eCode = $(elem).val();
+                    isComboGridOpen = $(self).combogrid('isOpened');
+                    if (eCode == '') {
+                        //                    if (!validateGLAccount(elemID, null)) {
+                        //                        $(elem).val(prevGLCode);
+                        //                        return false;
+                        //                    }
+                        ClearItemGroupData(elemID);
+                    }
+                    else {
+                        //grp = GetGLGroup(eCode);
+                        ////                    if (!validateGLAccount(elemID, grp)) {
+                        ////                        $(elem).val(prevGLCode);
+                        ////                        return false;
+                        ////                    }
+
+                        if (grp == null) {
+                            ClearItemGroupData(elemID);
+                        }
+                        else {
+                            SetItemGroupData(elemID, grp);
+                        }
+                    }
+                    //setDetInstrument(hdnIsInstrumentElem, txtInstrumentElem, btnInstrumentElem);
+                    grpID = $(self).closest('tr').find('input[id$="hdngroupId"]').val();
+                    if (grpID == '0' | grpID == '') {
+                        $(self).addClass('textError');
+                    }
+
+                });
+
+                $(elem).blur(function () {
+                    var self = this;
+
+                    var seID = $(elem).val();
+                    if (seID == '') {
+                        $('#' + hdngroupId).val('0');
+                        //  $('#' + txtExecutiveName).val('');
+                    }
+                });
+            });
+        }
+
+
+        function ClearItemGroupData(txtItemGroupID) {
+            //$('#' + txtGLAccCodeID).val('');
+            var detRow = $('#' + txtItemGroupID).closest('tr.gridRow');
+            $(detRow).find('input[id$="hdngroupId"]').val('0');
+            //$(detRow).find('input[id$="txtGLGroupName"]').val('');
+
+        }
+
+        function SetItemGroupData(txtItemGroupCodeID, data) {
+            $('#' + txtItemGroupCodeID).val(data.itemgroupid);
+
+            var detRow = $('#' + txtItemGroupCodeID).closest('tr.gridRow');
+
+            $(detRow).find('input[id$="hdngroupId"]').val(data.itemgroupid);
+            $(detRow).find('input[id$="txtGroupName"]').val(data.itemgroupdesc);
+
+        }
+
+
+
+        function bindItemListFilter() {
+
+            var cgColumns = [
+                { 'columnName': 'itemcode', 'width': '80', 'align': 'left', 'highlight': 4, 'label': 'Code' }
+                             , { 'columnName': 'itemname', 'width': '150', 'align': 'left', 'highlight': 4, 'label': 'Name' }
+                             , { 'columnName': 'itemgroupdesc', 'width': '80', 'align': 'left', 'highlight': 4, 'label': 'Group' }
+                             , { 'columnName': 'uomname', 'width': '40', 'align': 'left', 'highlight': 4, 'label': 'UOM' }
+                              //, { 'columnName': 'class_name', 'width': '80', 'align': 'left', 'highlight': 4, 'label': 'Class Name' }
+                             , { 'columnName': 'item_type', 'width': '80', 'align': 'left', 'highlight': 4, 'label': 'Item Type' }
+            ];
+
+            var itemServiceURL = ItemListServiceLinkTop + "?isterm=1&includeempty=0&iscodename=1&isIndentPurchase=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+
+            itemServiceURL += "&ispaging=1";
+            var itemIDElem = $('#' + txtItemName);
+
+            $('#' + btnItemID).click(function (e) {
+                $(itemIDElem).combogrid("dropdownClick");
+            });
+
+            $(itemIDElem).combogrid({
+                debug: true,
+                searchButton: false,
+                resetButton: false,
+                alternate: true,
+                munit: 'px',
+                scrollBar: true,
+                showPager: true,
+                colModel: cgColumns,
+                autoFocus: true,
+                showError: true,
+                width: 500,
+                url: itemServiceURL,
+                search: function (event, ui) {
+                    //var companyCode = $('#' + ddlCompany).val();
+                    //var branchCode = $('#' + hdnBranch).val();
+                    //var deptCode = $('#' + hdnDepartment).val();
+                    //var locationid = $('#' + lblLocationID).val();
+                    // var seid = $('#' + txtExecutiveID).val();
+                    var vgroupid = $('#' + hdnGroupID).val();
+                    var newServiceURL = itemServiceURL + "&groupid=" + vgroupid;
+                    $(this).combogrid("option", "url", newServiceURL);
+
+
+                },
+                select: function (event, ui) {
+                    if (!ui.item) {
+                        event.preventDefault();
+
+                        $('#' + hdnGroupID).val('0');
+                        $('#' + hdnItemID).val('0');
+                        return false;
+                        //ClearGLAccountData(elemID);
+                    }
+
+
+                    if (ui.item.itemid == '') {
+                        event.preventDefault();
+                        return false;
+                        //ClearGLAccountData(elemID);
+                    }
+                    else {
+                        // $('#' + hdnDealerID).val(ui.item.dealerid);
+                        $('#' + hdnItemID).val(ui.item.itemid);
+                        $('#' + txtItemName).val(ui.item.itemname);
+
+                        //$('#' + hdnUomID).val(ui.item.itemid);
+                        //$('#' + hdnUomName).val(ui.item.uomname);
+
+                        //$('#' + txtGroupCode).val(ui.item.itemgroupcode);
+
+                    }
+                    return false;
+                },
+
+                lc: ''
+            });
+
+
+            $(itemIDElem).blur(function () {
+                var self = this;
+                var groupID = $(itemIDElem).val();
+                if (groupID == '') {
+                    // $('#' + hdnDealerID).val('0');
+                    $('#' + txtItemName).val('');
+                    $('#' + hdnItemID).val('0');
+                    //$('#' + txtGroupCode).val('');
+                }
+            });
+        }
+
+
+
+        function bindItemList(gridViewID) {
+            var cgColumns = [{ 'columnName': 'itemname', 'width': '150', 'align': 'left', 'highlight': 4, 'label': 'Name' }
+                             , { 'columnName': 'uomname', 'width': '60', 'align': 'left', 'highlight': 4, 'label': 'Uom' }
+                             , { 'columnName': 'itemcode', 'width': '80', 'align': 'left', 'highlight': 4, 'label': 'Code' }
+                             , { 'columnName': 'itemgroupdesc', 'width': '120', 'align': 'left', 'highlight': 4, 'label': 'Group Name' }
+                             , { 'columnName': 'class_name', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Class Name' }
+                             , { 'columnName': 'item_type', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Item Type' }
+                              , { 'columnName': 'closing_qty', 'width': '60', 'align': 'left', 'highlight': 4, 'label': 'Stock Qty' }
+                             , { 'columnName': 'safety_stock', 'width': '60', 'align': 'left', 'highlight': 4, 'label': 'Safety Stock' }
+                             , { 'columnName': 'reorder_leavel', 'width': '60', 'align': 'left', 'highlight': 4, 'label': 'Reorder Level' }
+
+            ];
+
+            //var serviceURL = GLAccountServiceLink + "?isterm=1&includeempty=1&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+            var serviceURL = ItemListServiceLink + "?isterm=1&includeempty=0&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+            //serviceURL += "&companyid=" + companyid;
+            serviceURL += "&ispaging=1";
+
+            var gridSelector = "#" + gridViewID;
+
+
+            $(gridSelector).find('input[id$="txtITEM_NAME"]').each(function (index, elem) {
+                ///list click
+
+                var elemRow = $(elem).closest('tr.gridRow');
+
+                var hdnItemIDElem = $(elemRow).find('input[id$="txtITEM_NAME"]');
+
+                //var prevGLCode = '';
+
+                $(elem).closest('tr').find('input[id$="btnITEM_NAME"]').click(function (e) {
+                    elmID = $(elem).attr('id');
+                    //$(elem).combogrid("show");
+                    $(elem).combogrid("dropdownClick");
+                });
+
+
+
+                //var compNameElem = $('#' + txtCompanyName);
+
+                //$('#' + btnCompanyID).click(function (e) {
+                //    //elmID = $(elem).attr('id');
+                //    //$(elem).combogrid("show");
+                //    $(compNameElem).combogrid("dropdownClick");
+                //});
+
+
+                $(elem).combogrid({
+                    debug: true,
+                    searchButton: false,
+                    resetButton: false,
+                    alternate: true,
+                    munit: 'px',
+                    scrollBar: true,
+                    showPager: true,
+                    colModel: cgColumns,
+                    autoFocus: true,
+                    showError: true,
+                    width: 850,
+                    url: serviceURL,
+                    search: function (event, ui) {
+
+                        var elemRowCur = $(elem).closest('tr.gridRow');
+                        var vgroupid = $(elemRowCur).find('input[id$="hdngroupId"]').val();
+                        //var vgroupid = $('#' + hdngroupId).val();
+                        var newServiceURL = serviceURL + "&groupid=" + vgroupid
+                        //var newServiceURL = serviceURL + "&companycode=" + companyCode + "&branchcode=" + branchCode + "&deptcode=" + deptCode
+                        newServiceURL = JSUtility.AddTimeToQueryString(newServiceURL);
+                        $(this).combogrid("option", "url", newServiceURL);
+
+
+                    },
+
+                    select: function (event, ui) {
+                        //alert(ui.item.typename);
+                        //$(".txtComboGrid").val(ui.item.code);
+                        elemID = $(elem).attr('id');
+                        //                    if (!validateGLAccount(elemID, ui.item)) {
+                        //                        $(elem).val(prevGLCode);
+                        //                        return false;
+                        //                    }
+                        if (!ui.item) {
+                            event.preventDefault();
+                            ClearItemData(elemID);
+                            return false;
+                            //ClearGLAccountData(elemID);
+                        }
+
+
+
+                        if (ui.item.id == 0) {
+                            event.preventDefault();
+                            return false;
+                            //ClearGLAccountData(elemID);
+                        }
+                        else {
+                            SetItemData(elemID, ui.item);
+                        }
+                        // setDetInstrument(hdnIsInstrumentElem, txtInstrumentElem, btnInstrumentElem);
+                        return false;
+                    }
+
+
+                    // lc: ''
+                });
+
+                $(elem).blur(function () {
+                    var self = this;
+                    elemID = $(elem).attr('id');
+                    eCode = $(elem).val();
+                    isComboGridOpen = $(self).combogrid('isOpened');
+                    if (eCode == '') {
+                        //                    if (!validateGLAccount(elemID, null)) {
+                        //                        $(elem).val(prevGLCode);
+                        //                        return false;
+                        //                    }
+                        //ClearItemGroupData(elemID);
+                    }
+                    else {
+                        //grp = GetGLGroup(eCode);
+                        ////                    if (!validateGLAccount(elemID, grp)) {
+                        ////                        $(elem).val(prevGLCode);
+                        ////                        return false;
+                        ////                    }
+
+                        if (grp == null) {
+                            ClearItemData(elemID);
+                        }
+                        else {
+                            SetItemData(elemID, grp);
+                        }
+                    }
+                    //setDetInstrument(hdnIsInstrumentElem, txtInstrumentElem, btnInstrumentElem);
+                    grpID = $(self).closest('tr').find('input[id$="hdngroupId"]').val();
+                    if (grpID == '0' | grpID == '') {
+                        $(self).addClass('textError');
+                    }
+
+                });
+
+            });
+
+        }
+
+        function ClearItemData(txtItemID) {
+            //$('#' + txtGLAccCodeID).val('');
+            var detRow = $('#' + txtItemID).closest('tr.gridRow');
+            $(detRow).find('input[id$="hdnItemId"]').val('0');
+            $(detRow).find('input[id$="txtITEM_NAME"]').val('');
+
+        }
+        function SetItemData(txtItemCodeID, data) {
+            $('#' + txtItemCodeID).val(data.itemid);
+            var detRow = $('#' + txtItemCodeID).closest('tr.gridRow');
+            $(detRow).find('input[id$="hdnItemID"]').val(data.itemid);
+            $(detRow).find('input[id$="txtITEM_NAME"]').val(data.itemname);
+            $(detRow).find('input[id$="hdngroupId"]').val(data.itemgroupid);
+            $(detRow).find('input[id$="txtGroupName"]').val(data.itemgroupdesc);
+            $(detRow).find('input[id$="hdnUomID"]').val(data.uomid);
+            $(detRow).find('input[id$="txtUOM_NAME"]').val(data.uomname);
+            $(detRow).find('input[id$="txtStockQty"]').val(data.closing_qty);
+            $(detRow).find('input[id$="txtSafetyStock"]').val(data.safety_stock);
+            $(detRow).find('input[id$="lblItemCode"]').val(data.itemcode);
+            $(detRow).find('input[id$="txtWeightAvgPrice"]').val(data.weightedAvgPrice);
+
+            var arrayItemID = new Array();
+            arrayItemID.push(data.itemid);
+
+            $.ajax({
+                url: 'INVNewPurchaseIndent.aspx/IsPriceViewPermissible',
+                type: 'POST',
+                data: JSON.stringify({ 'arrayItemID': arrayItemID }),
+                contentType: 'application/json; charset=UTF-8',
+                dataType: 'json',
+                success: function (result) {
+                    var isPermissible = result.d;
+                    if (isPermissible == 1)
+                        $(detRow).find('input[id$="txtWeightAvgPriceView"]').val(data.weightedAvgPrice);
+                    else
+                        $(detRow).find('input[id$="txtWeightAvgPriceView"]').val('');
+                },
+                error: function () {
+                }
+
+            });
+
+
+
+
+        }
+
+        function isNumberKey(evt, obj) {
+
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            var value = obj.value;
+            var dotcontains = value.indexOf(".") != -1;
+            if (dotcontains)
+                if (charCode == 46) return false;
+            if (charCode == 46) return true;
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
+
+    </script>
+</asp:Content>

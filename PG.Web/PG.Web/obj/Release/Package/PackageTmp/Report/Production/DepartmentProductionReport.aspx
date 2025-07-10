@@ -1,0 +1,1328 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/AppMaster.Master" AutoEventWireup="true" CodeBehind="DepartmentProductionReport.aspx.cs" Inherits="PG.Web.Report.Production.DepartmentProductionReport" %>
+
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+<%@ Register assembly="DropDownCheckBoxes" namespace="Saplin.Controls" tagprefix="cc1" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <script src="../../javascript/jquery.ui.combogrid.js" type="text/javascript"></script>
+    <link href="../../css/jquery.ui.combogrid.css" rel="stylesheet" type="text/css" />
+
+    <script language="javascript" type="text/javascript">
+        // <!CDATA[
+
+        var ItemGroupListServiceLink = '<%=this.ItemGroupListServiceLink%>';
+        var hdnGroupID = '<%= hdnGroupID.ClientID%>';
+        var txtGroupName = '<%= txtGroupName.ClientID%>';
+        var btnGroupID = '<%= btnGroupID.ClientID%>';
+
+        var isPageResize = true;
+        ContentForm.CalendarImageURL = "../../image/calendar.png";
+
+
+
+
+        var ReportViewPageLink = '<%=this.ReportViewPageLink%>';
+        var ReportViewPDFPageLink = '<%=this.ReportViewPDFPageLink%>';
+        var ReportPrintPageLink = '<%=this.ReportPrintPageLink%>';
+        var ReportPDFPageLink = '<%=this.ReportPDFPageLink%>';
+
+        var ItemListServiceLink = '<%=this.ItemListServiceLink%>';
+        var ItemListServiceLinkd = '<%=this.ItemListServiceLinkd%>';
+        var MachineListServiceLink = '<%= this.MachineListServiceLink%>';
+        var ItemListServiceLink = '<%=this.ItemListServiceLink%>';
+        var BatteryCategoryList = '<%=this.BatteryCategoryList%>';
+
+        var ifPrintButton = '<%=ifPrintButton.ClientID%>';
+
+        var txtFromDateID = '<%=txtFromDate.ClientID%>';
+        var txtToDateID = '<%=txtToDate.ClientID%>';
+
+
+        var btnItemLoad = '<%= btnItemLoad.ClientID%>';
+        var btnUSED_ITEM = '<%= btnUSED_ITEM.ClientID%>';
+        var txtUSED_ITEM = '<%= txtUSED_ITEM.ClientID%>';
+        var ddlFromDepartment = '<%= ddlFromDepartment.ClientID%>';
+        var hdnItemIdForFilter = '<%= hdnItemIdForFilter.ClientID%>';
+        var hdnUsedItemForFilter = '<%= hdnUsedItemForFilter.ClientID%>';
+
+        var txtMachineLineOP = '<%=txtMachineLineOP.ClientID%>';
+
+        var btnMachineLineOP = '<%=btnMachineLineOP.ClientID%>';
+        var hdnMachineLineID = '<%=hdnMachineLineID.ClientID%>';
+        var ddlStorageLocation = '<%=ddlStorageLocation.ClientID%>';
+
+        var ddlStorageLocation = '<%=ddlStorageLocation.ClientID%>';
+
+        var hdnBatteryCatID = '<%=hdnBatteryCatID.ClientID%>';
+        var txtBatteryCategory = '<%=txtBatteryCategory.ClientID%>';
+        var btnBatteryCategory = '<%=btnBatteryCategory.ClientID%>';
+
+
+
+        var txtItemName = '<%= txtItemName.ClientID%>';
+
+
+
+        function PageResizeCompleted(pg, cntMain) {
+            resizeContentInner(cntMain);
+        }
+
+        function resizeContentInner(cntMain) {
+            var contHeight = $("#dvContentMainInner").height();
+
+            var topHeight = $("#dvTop").height();
+
+            var middleHeight = contHeight - topHeight;
+
+            $("#dvMiddle").height(middleHeight);
+            $("#tblMiddle").height(middleHeight);
+
+            $("#dvReportList").height(middleHeight);
+            $("#dvParam").height(middleHeight);
+
+        }
+        function tbopen(key, isPrint, isPDFAutoPrint, showWait) {
+            key = key || '';
+            isPrint = isPrint || false;
+            showWait = showWait || true;
+            var now = new Date();
+            var strTime = now.getTime().toString();
+            var url = ReportViewPageLink + "?rk=" + key + "&_tt=" + strTime;
+            //var url = ReportViewPageLink + "?rk=" + key;
+
+            //if (pageInTab == 1)
+            if (TabVar.PageMode == Enums.PageMode.InTab) {
+
+                var tdata = new xtabdata();
+                tdata.linktype = Enums.LinkType.Direct;
+                tdata.id = 7999;
+                tdata.name = "Report view";
+                //tdata.label = "User: " + userid;
+                tdata.label = "Report view";
+                tdata.type = 0;
+                tdata.url = url;
+                tdata.tabaction = Enums.TabAction.InNewTab;
+                tdata.selecttab = 1;
+                tdata.reload = 0;
+                tdata.param = "";
+                tdata.showWait = showWait;
+
+                try {
+                    //window.parent.OpenMenuByData(tdata);
+                    window.parent.TabMenu.OpenMenuByData(tdata);
+                }
+                catch (err) {
+                    alert("error in page");
+                }
+            }
+            else {
+                //on new window/tab
+                //window.open(url,'_blank');   
+
+                window.location = url;
+            }
+        }
+
+        $(document).ready(function () {
+            str = document.body.innerHTML
+
+
+            //    $('#tblParam tr').each(function () {
+            //        if ($(this).find('td:empty').length) $(this).remove();
+            //    });
+
+            $("#tblParam tr.rowParam").each(function () {
+                var cell = $.trim($(this).find('td').text());
+                if (cell.length == 0) {
+                    //console.log('empty');
+                    //$(this).addClass('nodisplay');
+                    $(this).hide();
+                }
+            });
+
+            $("#btnOpenReportWindow").click(function () {
+                window.open(reportURL, '_blank');
+                hideOverlayReport();
+            });
+
+            $("#btnCacnelReportWindow").click(function () {
+                hideOverlayReport();
+            });
+
+            hideOverlay();
+
+        });
+
+        $(document).ready(function () {
+
+            if ($('#' + txtItemName).is(':visible')) {
+                bindItemList();
+            }
+
+            if ($('#' + txtUSED_ITEM).is(':visible')) {
+                bindUsedItemList();
+            }
+
+            if ($('#' + txtGroupName).is(':visible')) {
+                bindGroupList();
+            }
+            if ($('#' + txtMachineLineOP).is(':visible')) {
+                bindMShiftOperatorMLineList();
+            }
+
+            if ($('#' + txtBatteryCategory).is(':visible')) {
+                bindBatteryCategoryList();
+            }
+
+
+
+            $("#" + txtUSED_ITEM).prop('disabled', 'disabled');
+            $("#" + txtUSED_ITEM).val('');
+            $("#" + hdnUsedItemForFilter).val('0');
+            $("#" + btnUSED_ITEM).prop('disabled', 'disabled');
+
+        });
+
+        $(document).on('change', '.rmEnable', function () {
+
+            if ($(this).val() == "Finished-Item") {
+                $("#" + txtItemName).removeAttr("disabled");
+                $("#" + btnItemLoad).removeAttr("disabled");
+                $("#" + txtUSED_ITEM).prop('disabled', 'disabled');
+                $("#" + txtUSED_ITEM).val('');
+                $("#" + hdnUsedItemForFilter).val('0');
+                $("#" + btnUSED_ITEM).prop('disabled', 'disabled');
+            }
+            if ($(this).val() == "Raw-Materials") {
+                $("#" + txtItemName).prop('disabled', 'disabled');
+                $("#" + txtItemName).val('');
+                $("#" + hdnItemIdForFilter).val('0');
+                $("#" + btnItemLoad).prop('disabled', 'disabled');
+                $("#" + txtUSED_ITEM).removeAttr("disabled");
+                $("#" + btnUSED_ITEM).removeAttr("disabled")
+            }
+        });
+
+
+        function bindMShiftOperatorMLineList() {
+
+            var cgColumns = [
+                               { 'columnName': 'machinename', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Machine Name' }
+                             , { 'columnName': 'machinedescription', 'width': '200', 'align': 'left', 'highlight': 4, 'label': 'Machine Description' }
+
+            ];
+            var serviceURL = MachineListServiceLink + "?isterm=1&includeempty=0&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+            serviceURL += "&ispaging=0";
+            var groupIDElem = $('#' + txtMachineLineOP);
+
+
+
+            $('#' + btnMachineLineOP).click(function (e) {
+                $(groupIDElem).combogrid("dropdownClick");
+            });
+
+
+
+            $(groupIDElem).combogrid({
+                debug: true,
+                searchButton: false,
+                resetButton: false,
+                alternate: true,
+                munit: 'px',
+                scrollBar: true,
+                showPager: true,
+                colModel: cgColumns,
+                autoFocus: true,
+                showError: true,
+                width: 450,
+                url: serviceURL,
+                search: function (event, ui) {
+
+                    //var DeptID = $('[id*=ddlFromDepartment] option:selected').val();
+                    var DeptID = $('#' + ddlFromDepartment).val();
+                    var stlid = $('#' + ddlStorageLocation).val();
+                    var name = $('#' + txtMachineLineOP).val();
+                    var newServiceURL = serviceURL + "&deptid=" + DeptID + "&stlid=" + stlid + "&machinename=" + name;
+
+                    $(this).combogrid("option", "url", newServiceURL);
+                },
+                select: function (event, ui) {
+                    if (!ui.item) {
+                        event.preventDefault();
+                        return false;
+                    }
+
+
+                    if (ui.item.machineid == '') {
+                        event.preventDefault();
+                        return false;
+                    }
+                    else {
+
+                        $('#' + hdnMachineLineID).val(ui.item.machineid);
+                        $('#' + txtMachineLineOP).val(ui.item.machinename);
+
+
+                    }
+                    return false;
+                },
+
+                lc: ''
+            });
+
+
+            $(groupIDElem).blur(function () {
+                var self = this;
+
+                var serviceURL = MachineListServiceLink + "?isterm=1&includeempty=0&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+                var DeptID = $('#' + ddlFromDepartment).val();
+                var stlid = $('#' + ddlStorageLocation).val();
+                var eCode = $('#' + txtMachineLineOP).val();
+                serviceURL += "&ispaging=0&deptid=" + DeptID + "&stlid=" + stlid + "";
+
+                var prcNo = "A";
+
+                if (prcNo == null) {
+                    $('#' + hdnMachineLineID).val('0');
+                    $('#' + txtMachineLineOP).val('');
+                }
+                else {
+                    $('#' + hdnMachineLineID).val(ui.item.machineid);
+                    $('#' + txtMachineLineOP).val(ui.item.machinename);
+                }
+
+
+
+                var groupID = $(groupIDElem).val();
+                if (groupID == '') {
+
+
+                    $('#' + hdnMachineLineID).val('0');
+                    $('#' + txtMachineLineOP).val('');
+
+                }
+            });
+        }
+
+
+
+
+        function bindGroupList() {
+            var cgColumns = [
+                             //{ 'columnName': 'itemgroupid', 'width': '80', 'align': 'left', 'highlight': 2, 'label': 'Group ID' }
+                             { 'columnName': 'itemgroupcode', 'width': '80', 'align': 'left', 'highlight': 4, 'label': 'Code' }
+                            , { 'columnName': 'itemgroupdesc', 'width': '150', 'align': 'left', 'highlight': 4, 'label': 'Name' }
+                            , { 'columnName': 'itemgroupnameparent', 'width': '150', 'align': 'left', 'highlight': 4, 'label': 'Group Parent' }
+
+
+            ];
+            var serviceURL = ItemGroupListServiceLink + "?isterm=1&includeempty=0&hasitem=1&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+
+            serviceURL += "&ispaging=1";
+            var groupIDElem = $('#' + txtGroupName);
+
+            $('#' + btnGroupID).click(function (e) {
+                $(groupIDElem).combogrid("dropdownClick");
+            });
+
+            $(groupIDElem).combogrid({
+                debug: true,
+                searchButton: false,
+                resetButton: false,
+                alternate: true,
+                munit: 'px',
+                scrollBar: true,
+                showPager: true,
+                colModel: cgColumns,
+                autoFocus: true,
+                showError: true,
+                width: 600,
+                url: serviceURL,
+                search: function (event, ui) {
+
+
+                    var newServiceURL = serviceURL;
+                    $(this).combogrid("option", "url", newServiceURL);
+
+
+                },
+                select: function (event, ui) {
+                    if (!ui.item) {
+                        event.preventDefault();
+
+                        // $('#' + hdnDealerID).val('0');
+                        //$('#' + txtDealerID).val('');
+                        return false;
+                        //ClearGLAccountData(elemID);
+                    }
+
+
+                    if (ui.item.dealerid == '') {
+                        event.preventDefault();
+                        return false;
+                        //ClearGLAccountData(elemID);
+                    }
+                    else {
+                        // $('#' + hdnDealerID).val(ui.item.dealerid);
+                        $('#' + hdnGroupID).val(ui.item.itemgroupid);
+                        $('#' + txtGroupName).val(ui.item.itemgroupdesc);
+                        //$('#' + txtGroupCode).val(ui.item.itemgroupcode);
+
+                    }
+                    return false;
+                },
+
+                lc: ''
+            });
+
+
+            $(groupIDElem).blur(function () {
+                var self = this;
+
+                var groupID = $(groupIDElem).val();
+                if (groupID == '') {
+                    // $('#' + hdnDealerID).val('0');
+                    $('#' + txtGroupName).val('');
+                    //$('#' + txtGroupCode).val('');
+                }
+            });
+        }
+
+        function bindUsedItemList() {
+
+            var cgColumns = [{ 'columnName': 'itemname', 'width': '150', 'align': 'left', 'highlight': 4, 'label': 'Name' }
+                             , { 'columnName': 'uomname', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Uom Name' }
+                             , { 'columnName': 'itemcode', 'width': '80', 'align': 'left', 'highlight': 4, 'label': 'Code' }
+                             , { 'columnName': 'itemgroupdesc', 'width': '150', 'align': 'left', 'highlight': 4, 'label': 'Group Name' }
+                             , { 'columnName': 'class_name', 'width': '120', 'align': 'left', 'highlight': 4, 'label': 'Class Name' }
+                             , { 'columnName': 'item_type', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Item Type' }
+
+
+
+            ];
+
+            var DEPT_ID = $('#' + ddlFromDepartment).val();
+            var serviceURL = ItemListServiceLinkd + "?isterm=1&includeempty=0&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+            serviceURL += "&ispaging=1&isFinished=N";
+
+
+            serviceURL += "&ispaging=1";
+            var groupIDElem = $('#' + txtUSED_ITEM);
+
+            $('#' + btnUSED_ITEM).click(function (e) {
+                $(groupIDElem).combogrid("dropdownClick");
+            });
+
+            $(groupIDElem).combogrid({
+                debug: true,
+                searchButton: false,
+                resetButton: false,
+                alternate: true,
+                munit: 'px',
+                scrollBar: true,
+                showPager: true,
+                colModel: cgColumns,
+                autoFocus: true,
+                showError: true,
+                width: 750,
+                url: serviceURL,
+                search: function (event, ui) {
+
+                    var vgroupid = 0;
+                    var groupName = $('#' + txtGroupName).val();
+                    if (groupName != "") {
+                        vgroupid = $('#' + hdnGroupID).val();
+                        if (vgroupid == "0" || vgroupid == "") {
+                            vgroupid = 0;
+                        }
+                    } else {
+                        $('#' + hdnGroupID).val('0');
+
+                    }
+                    var vDEPT_ID = $('#' + ddlFromDepartment).val();
+                    var newServiceURL = serviceURL + "&groupid=" + vgroupid + "&deptid=" + vDEPT_ID;
+                    newServiceURL = JSUtility.AddTimeToQueryString(newServiceURL);
+                    // var newServiceURL = serviceURL;
+                    $(this).combogrid("option", "url", newServiceURL);
+
+
+                },
+                select: function (event, ui) {
+                    if (!ui.item) {
+                        event.preventDefault();
+
+                        // $('#' + hdnDealerID).val('0');
+                        //$('#' + txtDealerID).val('');
+                        return false;
+                        //ClearGLAccountData(elemID);
+                    }
+
+
+                    if (ui.item.dealerid == '') {
+                        event.preventDefault();
+                        return false;
+                        //ClearGLAccountData(elemID);
+                    }
+                    else {
+                        $('#' + hdnUsedItemForFilter).val('0');
+                        // $('#' + hdnDealerID).val(ui.item.dealerid);
+                        $('#' + hdnUsedItemForFilter).val(ui.item.itemid);
+                        $('#' + txtUSED_ITEM).val(ui.item.itemname);
+                        //$('#' + txtGroupCode).val(ui.item.itemgroupcode);
+
+                    }
+                    return false;
+                },
+
+                lc: ''
+            });
+
+
+            $(groupIDElem).blur(function () {
+                var self = this;
+
+                var groupID = $(groupIDElem).val();
+                if (groupID == '') {
+                    // $('#' + hdnDealerID).val('0');
+                    $('#' + txtUSED_ITEM).val('');
+                    $('#' + hdnUsedItemForFilter).val('');
+                    //$('#' + txtGroupCode).val('');
+                }
+            });
+        }
+
+
+        function bindItemList() {
+
+            var cgColumns = [{ 'columnName': 'itemname', 'width': '200', 'align': 'left', 'highlight': 4, 'label': 'Name' }
+                             , { 'columnName': 'uomname', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Uom Name' }
+                             , { 'columnName': 'itemcode', 'width': '80', 'align': 'left', 'highlight': 4, 'label': 'Code' }
+                             , { 'columnName': 'itemgroupdesc', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Group Name' }
+                             , { 'columnName': 'class_name', 'width': '150', 'align': 'left', 'highlight': 4, 'label': 'Class Name' }
+                             //, { 'columnName': 'item_type', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Item Type' }
+
+
+
+            ];
+            var serviceURL = ItemListServiceLink + "?isterm=1&includeempty=0&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+
+
+            serviceURL += "&ispaging=1";
+            var groupIDElem = $('#' + txtItemName);
+
+            $('#' + btnItemLoad).click(function (e) {
+                $(groupIDElem).combogrid("dropdownClick");
+            });
+
+            $(groupIDElem).combogrid({
+                debug: true,
+                searchButton: false,
+                resetButton: false,
+                alternate: true,
+                munit: 'px',
+                scrollBar: true,
+                showPager: true,
+                colModel: cgColumns,
+                autoFocus: true,
+                showError: true,
+                width: 750,
+                url: serviceURL,
+                search: function (event, ui) {
+
+                    var vgroupid = 0;
+                    var groupName = $('#' + txtGroupName).val();
+                    if (groupName != "") {
+                        vgroupid = $('#' + hdnGroupID).val();
+                        if (vgroupid == "0" || vgroupid == "") {
+                            vgroupid = 0;
+                        }
+                    } else {
+                        $('#' + hdnGroupID).val('0');
+
+                    }
+                    var newServiceURL = serviceURL + "&groupid=" + vgroupid;
+                    newServiceURL = JSUtility.AddTimeToQueryString(newServiceURL);
+                    // var newServiceURL = serviceURL;
+                    $(this).combogrid("option", "url", newServiceURL);
+
+
+                },
+                select: function (event, ui) {
+                    if (!ui.item) {
+                        event.preventDefault();
+
+                        // $('#' + hdnDealerID).val('0');
+                        //$('#' + txtDealerID).val('');
+                        return false;
+                        //ClearGLAccountData(elemID);
+                    }
+
+
+                    if (ui.item.dealerid == '') {
+                        event.preventDefault();
+                        return false;
+                        //ClearGLAccountData(elemID);
+                    }
+                    else {
+                        $('#' + hdnItemIdForFilter).val('0');
+                        // $('#' + hdnDealerID).val(ui.item.dealerid);
+                        $('#' + hdnItemIdForFilter).val(ui.item.itemid);
+                        $('#' + txtItemName).val(ui.item.itemname);
+                        //$('#' + txtGroupCode).val(ui.item.itemgroupcode);
+
+                    }
+                    return false;
+                },
+
+                lc: ''
+            });
+
+
+            $(groupIDElem).blur(function () {
+                var self = this;
+
+                var groupID = $(groupIDElem).val();
+                if (groupID == '') {
+                    // $('#' + hdnDealerID).val('0');
+                    $('#' + txtItemName).val('');
+                    //$('#' + txtGroupCode).val('');
+                }
+            });
+        }
+
+
+        function bindBatteryCategoryList() {
+
+            var cgColumns = [{ 'columnName': 'batcatdecs', 'width': '150', 'align': 'left', 'highlight': 4, 'label': 'Name' }
+                             , { 'columnName': 'batcatid', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Cat ID' }
+
+
+
+
+            ];
+            var serviceURL = BatteryCategoryList + "?isterm=1&includeempty=0&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+
+
+            serviceURL += "&ispaging=1";
+            var categoryIDElem = $('#' + txtBatteryCategory);
+
+            $('#' + btnBatteryCategory).click(function (e) {
+                $(categoryIDElem).combogrid("dropdownClick");
+            });
+
+            $(categoryIDElem).combogrid({
+                debug: true,
+                searchButton: false,
+                resetButton: false,
+                alternate: true,
+                munit: 'px',
+                scrollBar: true,
+                showPager: true,
+                colModel: cgColumns,
+                autoFocus: true,
+                showError: true,
+                width: 450,
+                url: serviceURL,
+                search: function (event, ui) {
+
+                    var vgroupid = 0;
+                    var groupName = $('#' + txtBatteryCategory).val();
+
+                    var newServiceURL = serviceURL;
+                    newServiceURL = JSUtility.AddTimeToQueryString(newServiceURL);
+                    // var newServiceURL = serviceURL;
+                    $(this).combogrid("option", "url", newServiceURL);
+
+
+                },
+                select: function (event, ui) {
+                    if (!ui.item) {
+                        event.preventDefault();
+
+
+                        return false;
+                        //ClearGLAccountData(elemID);
+                    }
+
+
+                    if (ui.item.batcatid == '') {
+                        event.preventDefault();
+                        return false;
+                        //ClearGLAccountData(elemID);
+                    }
+                    else {
+
+                        $('#' + hdnBatteryCatID).val(ui.item.batcatid);
+                        $('#' + txtBatteryCategory).val(ui.item.batcatdecs);
+
+
+                    }
+                    return false;
+                },
+
+                lc: ''
+            });
+
+
+            $(categoryIDElem).blur(function () {
+                var self = this;
+
+                var groupID = $(categoryIDElem).val();
+                if (groupID == '') {
+                    $('#' + hdnBatteryCatID).val('');
+                    $('#' + txtBatteryCategory).val('');
+                    //$('#' + txtGroupCode).val('');
+                }
+            });
+        }
+
+
+        function showOverlay() {
+            document.getElementById("overlay").style.display = "block";
+        }
+
+        function hideOverlay() {
+            document.getElementById("overlay").style.display = "none";
+        }
+        function showOverlayReport() {
+            document.getElementById("overlayReport").style.display = "block";
+        }
+
+
+        function hideOverlayReport() {
+            document.getElementById("overlayReport").style.display = "none";
+        }
+
+        function reportInNewWindow(url) {
+            var rWin = window.open(url, '_blank');
+            if (rWin == null) {
+                reportURL = url;
+                showOverlayReport();
+            }
+        }
+
+
+        function ReportPrint(key, isPDFAutoPrint) {
+            var rptPageLink = ReportViewPageLink;
+            if (isPDFAutoPrint) {
+                //rptPageLink = ReportPDFPageLink;
+                rptPageLink = ReportViewPDFPageLink;
+            }
+
+            //var url = "./Report/ReportView.aspx?rk=" + key
+            var now = new Date();
+            var strTime = now.getTime().toString();
+            var url = ReportViewPageLink + "?rk=" + key + "&_tt=" + strTime;
+
+            //var url = rptPageLink + "?rk=" + key;
+
+            iframe = document.getElementById(ifPrintButton);
+            if (iframe === null) {
+                iframe = document.createElement('iframe');
+                iframe.id = hiddenIFrameID;
+                //        iframe.style.display = 'none';
+                //        iframe.style = 'none';
+                document.body.appendChild(iframe);
+            }
+            iframe.src = url;
+        }
+        // ]]>
+    </script>
+    <style type="text/css">
+        .dvGroup
+        {
+            width: 182px;
+            height: 20px;
+            border: 1px solid lightgrey;
+        }
+        
+        
+        .dvGroupListPopup
+        {
+            display: none;
+            height: 0px;
+            width: 0px;
+        }
+        
+        
+        .textPopup
+        {
+            font-family: Verdana, Arial, Helvetica, sans-serif;
+            border: 1px #1B68B8 solid;
+            background-color: #FFFFFF;
+            color: #000000;
+            font-size: 11px;
+            width: 160px;
+            height: 16px;
+            padding-left: 2px;
+        }
+        
+        .btnPopup
+        {
+            height: 20px;
+            width: 16px;
+            background-image: url(/image/dropdown.gif);
+            background-repeat: no-repeat;
+            background-position: center bottom;
+            cursor: pointer;
+        }
+        
+        .btnPopup:hover
+        {
+            background-image: url(/image/dropdown_over.gif);
+        }
+        
+        .dvSpacer
+        {
+            height: 10px;
+            width: 100%;
+        }
+        
+        
+        .dvReportList
+        {
+            height: 100%;
+            width: 100%;
+            overflow: auto;
+        }
+        .dvParam
+        {
+            height: 100%;
+            width: 100%;
+            overflow: auto;
+        }
+        
+        
+        .tblParam
+        {
+            /* border-collapse: collapse;    */
+            height: auto;
+        }
+        
+        
+
+        
+        .tblParam td
+        {
+            height: auto;
+        }
+        
+        
+        .cboYesNo
+        {
+            width: 50px;
+        }
+        
+        .tdSpacer
+        {
+            width: 10px;
+        }
+        
+        .rowParam
+        {
+        }
+        
+        .rowSpacer
+        {
+            height:20px;
+        }
+        
+        
+        .dvPrintIFrame
+        {
+            height: 0px;
+            width: 0px;
+        }
+
+        .overlay {
+        background-color: #000;
+        cursor: wait;
+        display: none;
+        height: 100%;
+        left: 0;
+        opacity: 0.4;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 9999998;
+    }
+
+    </style>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div id="dvPageContent" style="width: 100%; height: 100%;">
+        <div id="dvContentHeader" class="dvContentHeader">
+            <div id="dvHeader" class="dvHeader">
+                Report - Production
+            </div>
+            <div id="dvMessage" class="dvMessage">
+                <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
+            </div>
+            <div id="dvHeaderControl" class="dvHeaderControl">
+            </div>
+        </div>
+        <div id="dvContentMain" class="dvContentMain">
+            <div id="dvContentMainInner" class="dvContentMainInner" style="height: 100%;">
+                <div id="dvTop" style="height: auto; width: 100%;">
+                    <table cellspacing="0" cellpadding="0" style="height: auto; width: 100%;">
+                        <tr>
+                            <td>
+                            </td>
+                            <td valign="top" style="width: 200px;">
+                                Select Reports:
+                            </td>
+                            <td style="border-left: 1px solid grey;">
+                            </td>
+                            <td valign="top" style="">
+                                <div id="dvParamHeader" class="dvParamHeader" style="height: auto; width: 100%;">
+                                    <table cellspacing="0" cellpadding="0" border="0" style="height: auto; width: 100%;">
+                                        <tr>
+                                            <td style="border-bottom: 1px solid grey;">
+                                                <asp:Label ID="lblReportName" runat="server" Text="Daily Sales Details Reports" Font-Bold="True"
+                                                    Font-Size="10pt"></asp:Label>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="dvMiddle" style="height: auto; width: 100%">
+                    <table id="tblMiddle" cellspacing="0" cellpadding="0" style="height: 100%; width: 100%;
+                        min-width: 700px;">
+                        <tr style="height: 100%">
+                            <td>
+                            </td>
+                            <td valign="top" style="width: 200px;">
+                                <div id="dvReportList" class="dvReportList">
+                                    <table cellspacing="2" cellpadding="1">
+                                        <tr>
+                                            <td>
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                            </td>
+                                            <td>
+                                                <asp:TreeView ID="tvwReport" runat="server" OnSelectedNodeChanged="tvwReport_SelectedNodeChanged"
+                                                    NodeIndent="10">
+                                                    <HoverNodeStyle BackColor="#CCCCFF" />
+                                                    <Nodes>
+                                                        <asp:TreeNode Text="Production Report" Value="Department_Production_Report" Expanded="True" SelectAction="Expand">
+                                                            <asp:TreeNode Text="Department Production Report" Value="2001" Selected="True"></asp:TreeNode>
+                                                             <asp:TreeNode Text="Production Summary Report" Value="2006" ></asp:TreeNode>
+                                                           
+                                                        </asp:TreeNode>
+                                                      
+                                                        
+                                                    </Nodes>
+                                                    <NodeStyle ForeColor="Black" />
+                                                    <SelectedNodeStyle BackColor="#CCCCFF" ForeColor="White" Font-Bold="True" />
+                                                </asp:TreeView>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                            <td style="border-left: 1px solid grey;">
+                            </td>
+                            <td valign="top" style="height: 100%;">
+                                <div id="dvParam" class="dvParam">
+                                    <table id="tblParam" cellspacing="4" cellpadding="2" border="0" class="tblParam">
+                                          <tr>
+                                        <td>
+                                            <asp:HiddenField ID="hdnItemIdForFilter" runat="server" />
+                                              <asp:HiddenField ID="hdnUsedItemForFilter" runat="server" />
+                                             <asp:HiddenField ID="hdnMachineLineID" runat="server" />
+                                             <asp:HiddenField ID="hdnGroupID" runat="server" />
+                                            <asp:HiddenField ID="hdnBatteryCatID" runat="server" />
+                                        </td>
+
+
+                                    </tr>
+
+
+                                    <tr>
+                                        <td></td>
+
+                                        <td style="" align="right">
+                                            <asp:Label ID="lblItemType" runat="server" Text="Item Type :"></asp:Label>
+                                        </td>
+                                        <td style="" align="left">
+                                            <asp:DropDownList ID="ddlItemType" runat="server" Width="255px"  CssClass="dropDownList enableIsDirty rmEnable">
+                                                <asp:ListItem Value="Finished-Item">Finished Product</asp:ListItem>
+                                                <asp:ListItem Value="Raw-Materials">Raw Materials</asp:ListItem>
+                                            </asp:DropDownList>
+                                        </td>
+                                        <td style="display:none;" align="center">
+                                            <asp:Label ID="lblAutho" Text="Un-Authorized"  runat="server" Visible="false"></asp:Label>
+                                        </td>
+                                        <td style="" align="left"></td>
+
+                                        <td></td>
+                                    </tr>
+
+
+
+                                    <tr>
+                                        <td></td>
+                                        <td style="" align="right">
+                                            <asp:Label ID="lblReportType" runat="server" Text="Report Type :"></asp:Label>
+                                        </td>
+                                        <td style="" align="left">
+                                            <asp:DropDownList ID="ddlReportType" runat="server" Width="255px" CssClass="dropDownList enableIsDirty">
+                                                <asp:ListItem Value="Item-Wise">Item Wise</asp:ListItem>
+                                                <asp:ListItem Value="Date-Wise">Date Wise</asp:ListItem>
+
+                                            </asp:DropDownList>
+                                        </td>
+                                        <td style="" align="left"></td>
+                                        <td style="" align="left"></td>
+
+                                        <td></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td></td>
+                                        <td style="" align="right">
+                                            <asp:Label ID="lblDeptName" runat="server" Text="Department :"></asp:Label>
+                                        </td>
+                                        <td style="" align="left">
+                                            <asp:DropDownList ID="ddlFromDepartment" runat="server" Width="255px" OnSelectedIndexChanged="ddlFromDepartment_SelectedIndexChanged" CssClass="dropDownList enableIsDirty" AutoPostBack="true"></asp:DropDownList>
+                                        </td>
+                                        <td style="" align="left"></td>
+                                        <td style="" align="left"></td>
+
+                                        <td></td>
+                                    </tr>
+
+                                    
+                                    <tr class="rowParam">
+                                        <td></td>
+                                            <td style="" align="right">
+                                                <asp:Label ID="lblStorageLocation" runat="server" Text="Storage Location:" Visible="True"></asp:Label>
+                                            </td>
+                                            <td>
+                                                <asp:DropDownList ID="ddlStorageLocation" runat="server" Width="180px" CssClass="dropDownList" Visible="True">
+                                                </asp:DropDownList>
+
+                                            </td>
+                                            <td>
+                                                
+                                            </td>
+                                            <td style="" align="right">
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                    
+                                    <tr>
+                                        <td></td>
+                                        <td align="right">
+                         <asp:Label ID="lblLineOP" runat="server" Text="Machine/Line" Font-Bold="true" ></asp:Label>
+                     </td>
+                     <td>
+                         <asp:TextBox ID="txtMachineLineOP" runat="server" CssClass="textBox"></asp:TextBox>
+                         <input id="btnMachineLineOP" type="button" value="" runat="server" class="buttonDropdown" style="width: 15px" tabindex="-1" />
+                         
+                     </td>
+                     <td>
+                         
+                        
+                     </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td align="right">
+                                            <asp:Label ID="lblShift" runat="server" Text="Shift :"></asp:Label>
+                                        </td>
+                                        <td style="" align="left">
+                                            <asp:DropDownList ID="ddlShift" runat="server" Width="180px" CssClass="dropDownList enableIsDirty"></asp:DropDownList>
+                                        </td>
+                                        <td style="" align="left"></td>
+                                        <td style="" align="left"></td>
+
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td style="" align="right">
+                                         <asp:Label ID="lblItemClass" runat="server" Text="Item Class:" Visible="True"></asp:Label>
+                                        </td>
+                                        <td>
+                                           <asp:DropDownList ID="ddlItemClass" runat="server" Width="180px" CssClass="dropDownList" Visible="True">
+                                            </asp:DropDownList>
+
+                                        </td>
+                                        <td style="" align="left"></td>
+                                        <td style="" align="left"></td>
+
+                                        <td></td>
+                                    </tr>
+                                    <tr style="">
+                                        <td></td>
+                                        <td style="" align="right">
+                                            <asp:Label ID="lblGroupName" runat="server" Text="Group :"></asp:Label>
+                                        </td>
+                                        <td style="" align="left">
+
+                                            <asp:TextBox ID="txtGroupName" runat="server" CssClass="textBox required" Width="235px" Enabled="true"></asp:TextBox><input id="btnGroupID" type="button" value="" runat="server" class="buttonDropdown" tabindex="-1" />
+                                           
+
+                                        </td>
+                                        <td style="" align="right"></td>
+                                        <td style="" align="left"></td>
+                                        <td></td>
+                                    </tr>
+
+                                    <tr >
+                                        <td></td>
+                                        <td style="" align="right">
+                                            <asp:Label ID="lblBatteryCategory" runat="server" Text="Battery Category :"></asp:Label>
+                                        </td>
+                                        <td style="" align="left">
+
+                                            <asp:TextBox ID="txtBatteryCategory" runat="server" CssClass="textBox required" Width="235px" Enabled="true"> </asp:TextBox>
+                                            <input id="btnBatteryCategory" type="button" value="" runat="server" class="buttonDropdown" tabindex="-1" />
+                                           
+
+                                        </td>
+                                        <td style="" align="left"> <asp:Label ID="lbldes" runat="server" Text="NB: Only Finished Battery Use" ForeColor="Red"></asp:Label></td>
+                                        <td style="" align="left"></td>
+                                        <td></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td></td>
+                                        <td style="" align="right">
+                                            <asp:Label ID="lblItemName" runat="server" Text="Item :"></asp:Label>
+                                        </td>
+                                        <td style="" align="left">
+
+                                            <asp:TextBox ID="txtItemName" Width="235px" runat="server" CssClass="textBox required" Enabled="true"></asp:TextBox><input id="btnItemLoad" type="button" value="" runat="server" class="buttonDropdown" tabindex="-1" />
+
+                                        </td>
+                                        <td style="" align="right"></td>
+                                        <td style="" align="left"></td>
+                                        <td></td>
+                                    </tr>
+
+                                       <tr>
+                                        <td></td>
+                                        <td style="" align="right">
+                                            <asp:Label ID="lblUsedItem" runat="server" Text="RM Item :"></asp:Label>
+                                        </td>
+                                        <td style="" align="left">
+
+                                            <asp:TextBox ID="txtUSED_ITEM" Width="235px" runat="server" CssClass="textBox required" Enabled="true"></asp:TextBox><input id="btnUSED_ITEM" type="button" value="" runat="server" class="buttonDropdown" tabindex="-1" />
+
+                                        </td>
+                                        <td style="" align="right"></td>
+                                        <td style="" align="left"></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr class="rowParam">
+                                        <td></td>
+                                            <td style="" align="right">
+                                                <asp:Label ID="lblchargetype" runat="server" Text="Charge Type:" Visible="True"></asp:Label>
+                                            </td>
+                                            <td>
+                                                <asp:DropDownList ID="ddlChargeType" runat="server" Width="180px" CssClass="dropDownList" Visible="True">
+                                                    <asp:ListItem Selected="True" Text="All" Value=""></asp:ListItem>
+                                                    <asp:ListItem  Text="Dry" Value="Dry"></asp:ListItem>
+                                                     <asp:ListItem  Text="Wet" Value="Wet"></asp:ListItem>
+                                                     <asp:ListItem  Text="Wet-Dry" Value="Wet-Dry"></asp:ListItem>
+                                                </asp:DropDownList>
+
+                                            </td>
+                                            <td>
+                                                
+                                            </td>
+                                            <td style="" align="right">
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                    <tr class="rowParam">
+                                        <td></td>
+                                        <td align="right">
+                                            <asp:Label ID="lblFromDate" runat="server" Text="Date From:"></asp:Label>
+                                        </td>
+                                        <td>
+                                            <table cellpadding="0" cellspacing="0">
+                                                <tr>
+                                                    <td>
+                                                        <asp:TextBox ID="txtFromDate" runat="server" Width="75px" CssClass="textBox textDate dateParse"></asp:TextBox>
+                                                    </td>
+                                                    <td style="width: 4px;"></td>
+                                                    <td>
+                                                        <asp:Label ID="lblToDate" runat="server" Text="Date To:"></asp:Label>
+                                                    </td>
+                                                    <td style="width: 2px;"></td>
+                                                    <td>
+                                                        <asp:TextBox ID="txtToDate" runat="server" Width="75px" CssClass="textBox textDate dateParse"></asp:TextBox>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td align="right" class="">&nbsp;
+                                        </td>
+                                        <td>&nbsp;
+                                        </td>
+                                    </tr>
+                                    <tr>
+
+                                        <td style="" align="left"></td>
+
+                                        <td style="" align="right"></td>
+                                        <td>
+                                            <asp:Button ID="btnLoadData" runat="server" CssClass="buttoncommon buttonPrint"
+                                                Text="Load Data" OnClick="btnIRRPreview_Click" />
+                                            &nbsp;&nbsp;&nbsp;
+
+                                             <asp:Button ID="btnExportExcel" runat="server" Text="Get Excel" Width="100px" CssClass="buttoncommon buttonExcel"
+                                         OnClick="btnExportExcel_Click" />
+                                        </td>
+                                        <td>
+                                   
+                                </td>
+                                        <td style="" align="left">&nbsp;</td>
+
+                                        <td></td>
+                                    </tr>
+
+                                       
+
+                                        
+
+                           
+                                        <tr>
+                                            <td>
+                                            </td>
+                                            <td>
+                                            </td>
+                                            <td>
+                                            </td>
+                                            <td>
+                                            </td>
+                                            <td>
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div id="dvContentFooter" class="dvContentFooter">
+            <div id="dvContentFooterInner" class="dvContentFooterInner">
+                <div style="width: 100%; height: 100%; margin-bottom: 0px;">
+                    <div style="width: auto; min-width: 300px; height: auto; text-align: left;">
+                        <table border="0">
+                            <tr>
+                                <td style="width: 100px;">
+                                
+                                </td>
+                                <td>
+                                    <asp:Label ID="Label2" runat="server" Text="Report View"></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:DropDownList ID="ddlReportViewMode" runat="server" CssClass="dropDownList">
+                                        <asp:ListItem Value="0">In This Tab</asp:ListItem>
+                                        <asp:ListItem Value="1">In New Tab</asp:ListItem>
+                                        <asp:ListItem Selected="True" Value="2">In New Window</asp:ListItem>
+                                    </asp:DropDownList>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    <asp:Label ID="Label1" runat="server" Text="Type:"></asp:Label>
+                                </td>
+                                <td>
+                                <asp:DropDownList ID="ddlReportViewType" runat="server" CssClass="dropDownList">
+                                        <asp:ListItem Value="0">Screen</asp:ListItem>
+                                        <asp:ListItem Selected="True" Value="1">PDF</asp:ListItem>
+                                    </asp:DropDownList>
+                                </td>
+                                <td>
+                                </td>
+                                <%--<td>
+                                    <asp:Button ID="btnView" runat="server" Text="View Report" Width="100px" CssClass="buttoncommon buttonPrintPreview"
+                                        OnClick="btnView_Click" OnClientClick="showOverlay();" />
+                                </td>
+                                <td>
+                                    <asp:Button ID="btnPrint" runat="server" Text="Print Report" Width="100px" CssClass="buttoncommon buttonPrint"
+                                        OnClick="btnPrint_Click" OnClientClick="showOverlay();" Visible="False" />
+                                </td>
+                                <td style="width: 20px;">
+                                </td>
+                                <td>
+                                    <asp:Label ID="Label3" runat="server" Text="Get Report As:"></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:DropDownList ID="ddlExport" runat="server" Width="70" CssClass="dropDownList">
+                                        <asp:ListItem Selected="True" Value="0">PDF</asp:ListItem>
+                                        <asp:ListItem Value="1">Excel</asp:ListItem>
+                                        <asp:ListItem Value="2">Word</asp:ListItem>
+                                    </asp:DropDownList>
+                                </td>
+                                <td>
+                                    <asp:Button ID="btnExport" runat="server" Text="Get Report" Width="100px" CssClass="buttoncommon buttonExport"
+                                        OnClick="btnExport_Click" OnClientClick="showOverlay();" />
+                                </td>
+                                <td style="width: 10px;">
+                                </td>--%>
+                                <td>
+                                    <div id="dvPrintIFrame" class="dvPrintIFrame">
+                                        <iframe id="ifPrintButton" runat="server" width="0" height="0"></iframe>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="overlay" class="overlay">
+         <div style="margin:auto;width:200px;height:400px;background-color:black;border:solid 1px black;
+                  text-align:center; vertical-align:middle;"> 
+           <span style="color:white; font-size:medium;" >Please Wait...</span>
+             <br />
+             <img alt="" src="../../image/progress.gif" />
+         </div>
+    </div>
+
+     <div id="overlayReport" class="overlay" style="opacity: 0.8;">
+         <div style="margin:auto;width:450px;height:80px; position: relative;background-color: blue;
+                  text-align:center; vertical-align:middle; cursor:auto; z-index: 9999999;">
+           <table width="100%">
+           <tr>
+               <td>
+                   <span style="color:white; font-size:medium;" >Click Open Report to view Report.</span>
+               </td>
+           </tr>
+           <tr></tr>
+           <tr>
+             <td>         
+                <input id="btnOpenReportWindow" type="button" value="Open Report" class="buttoncommon" />
+                <input id="btnCacnelReportWindow" type="button" value="Cancel" class="buttoncommon"  />  
+             </td>
+           </tr>            
+            </table>
+         </div>
+    </div>
+
+</asp:Content>

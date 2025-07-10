@@ -1,0 +1,265 @@
+﻿/*
+Version: 2.2.0
+Date: June 02, 2014 
+*/
+
+
+.dvMainWrapper 
+{
+	height:600px;
+	width:835px;
+}
+
+.dvPageContent
+{
+	height:100%;
+	width:100%;
+}
+
+
+.dvContentHeader
+{
+	width:100%;
+	height:auto;
+	border-bottom-style: solid;
+	border-bottom-color: #C0C0C0;
+	border-bottom-width: 1px; 
+}
+
+.dvHeader 
+{
+	height:20px;
+	width:100%;
+	vertical-align:middle;
+	/*background-color: #B5C7DE;
+	background-color:#547AC6;
+	background-color: #98B1D1; */
+	
+	background: #80ade5 url('../image/header03.png') 0 50% repeat-x;
+	
+}
+
+.dvHeader_Prod
+{
+	height:22px;
+	width:100%;
+	vertical-align:middle;
+	/*background-color: #B5C7DE;
+	background-color:#547AC6;
+	background-color: #98B1D1; */
+	font-size : 14px;
+	background: #80ade5 url('../image/header20.png') 0 50% repeat-x;
+	
+}
+
+.dvHeaderControl
+{
+	width:100%;
+	height:auto;
+	padding: 0px 0px 0px 0px;
+	margin: 0px 0px 0px 0px;
+	border: none;
+	border-width: 0px;
+	
+}
+ 
+
+.dvContentMain
+{
+	width:100%;
+	height:100%;
+	padding: 0px 0px 0px 0px;
+	margin: 0px 0px 0px 0px;
+	border: none;
+	border-width: 0px;
+	overflow:auto;
+	/*background-image: url('../image/bg_greydot.gif');*/
+   /*background-image: linear-gradient(to bottom, gray,black, gray,black);*/
+	background-image: url('../image/bg_greendot.gif');
+	
+	/*
+	background-image:url('/image/side_background.gif');
+	background-image:url('/image/bg003.png');
+	*/
+	
+}
+
+.dvContentMainInner
+{
+	width:auto;
+	height:auto;
+	padding: 0px 0px 0px 0px;
+	margin: 0px 0px 0px 0px;
+	border: none;
+	border-width: 0px;
+}
+
+.dvContentFooter
+{
+	width:100%;
+	height:auto;
+
+	border-top-style: solid;
+	border-top-color: #C0C0C0;
+	border-top-width: 1px; 
+	padding-top : 2px;
+}
+
+.dvContentFooterInner
+{
+	width:100%;
+	height:100%; 
+	overflow: auto;
+}
+
+
+.dvMessage 
+{
+	width:100%;
+	text-align:center;
+	height:auto;
+	min-height: 10px;
+}
+
+.lblHeader
+{
+   color: #FFFFFF;
+   font-weight:bold;
+   padding-left:2px;
+   vertical-align:middle;
+}
+
+.dvCommandButtons
+{
+	width:100%; 
+	height:30px;
+}
+
+
+
+	.groupBoxContainer
+	{
+		height:100%;
+		width: 575px;
+		overflow:auto;
+		margin-left: 5px; 
+		margin-top: 5px; 
+	}
+	
+	 
+	.groupHeader
+	{
+		height:auto;
+		background-image: url('../image/header13.png'); 
+		
+		color:White;  
+		font-weight:bold;
+	}
+
+    .groupHeader_prod
+	{
+		height:auto;
+		background-image: url('../image/header20.png');  
+		background-repeat:repeat-x;
+		color:White;  
+		font-weight:bold;
+	}
+	
+	.groupHeader span
+	{
+		margin-left:2px;
+		margin-top:4px;
+	}
+	
+	
+	.groupFooter
+	{
+		height:auto;
+		width: 100%;
+		border-top: solid 1px blue;
+
+		vertical-align:middle;
+		font-weight:bold;
+	}
+	
+	.groupFooter span
+	{
+		margin-left:2px; 
+	}
+
+	
+	.groupContent
+	{
+		
+	}
+	
+	
+	.groupBox 
+	{
+	  background-image: url('../image/bg_greendot.gif');
+	  height:auto;
+	  width:100%;
+	  display:inline-block;
+	  text-align:center;  
+	  vertical-align:middle; 
+	}
+
+	
+	
+	.subHeader
+	{
+		height:20px;
+		width: 100%;
+		background-image: url('../image/header13.png'); 
+		background-repeat:repeat-x;
+
+		color:White;
+		   
+		vertical-align:middle;
+		font-weight:bold;
+	}
+
+    .subHeader_Prod
+	{
+		height:25px;
+		width: 100%;
+		background-image: url('../image/header21.png'); 
+		background-repeat:repeat-x;
+		color:White;
+		vertical-align:middle;
+		font-weight:bold;
+	}
+	   
+	   
+	.subHeader span
+	{
+		margin-left:2px; 
+	}
+	
+	
+	.subFooter
+	{
+		height:auto;
+		width: 100%;
+		border-top: solid 1px blue;
+
+		vertical-align:middle;
+		font-weight:bold;
+	}
+	   
+    /*------------Grid View-----------*/
+.gv_numColumn{ text-align:right;}
+.gridView { width: 100%; background-color: #fff; margin: 5px 0 10px 0; border: solid 1px #DDDDDD; border-collapse:collapse; }
+    .gridView td { padding: 5px; border: solid 1px #BDDFE7; color: #000000; font-size:12px;}
+    .gridView th { padding: 5px 10px; color: #fff; background-color: #29A9E1 ; border-left: solid 1px #DDDDDD; font-size: 12px; }
+	.gridView th a{color:#FFFFFF;}
+	.gridView th a:hover{color:#004080;}
+.gridView .gv_altRow { background-color:#DDF7FD; }
+.gridView .gv_footer { background-color:#FFFFCC; font-weight:bold;}
+.gridView .gv_pager {background-color: #29A9E1; }
+    .gridView .gv_pager table { margin: 5px 0; }
+    .gridView .gv_pager td { border-width: 0; padding: 0 6px; border-left: solid 1px #DDDDDD; font-weight: bold; color: #2E2E2E; line-height: 12px; }   
+    .gridView .gv_pager a { color: #FFFFFF; text-decoration: none; }
+    .gridView .gv_pager a:hover { color: #004080; text-decoration: none; }
+.gridView tr:hover td {background-color:#F5F5B5;} /*adds grid row hover color*/
+	

@@ -1,0 +1,36 @@
+﻿<HTML>
+	<BODY onload="Print()">
+		<OBJECT
+				id="RSClientPrint"
+				TYPE="application/x-itst-activex"
+				WIDTH="300" HEIGHT="300"
+				clsid="CLSID:5554DCB0-700B-498D-9B58-4E40E5814405">
+		</OBJECT>
+
+        <script language="javascript">
+        function Print()
+        [
+        if (typeof RSClientPrint.Print == "undefined")
+        [
+        alert("Unable to load client print control.");
+        return;
+        ]
+                
+        RSClientPrint.MarginLeft = {0};
+        RSClientPrint.MarginTop = {1};
+        RSClientPrint.MarginRight = {2};
+        RSClientPrint.MarginBottom = {3};
+                
+        RSClientPrint.PageHeight = {4};
+        RSClientPrint.PageWidth = {5};
+            
+        RSClientPrint.Culture = 1033;
+        RSClientPrint.UICulture = 9;
+                
+        RSClientPrint.UseEmfPlus = true;
+                
+        RSClientPrint.Print("{6}", "{7}", "{8}")
+        ]
+        </script>                 
+   </BODY>
+</HTML>

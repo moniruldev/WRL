@@ -1,0 +1,410 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2A21074E-22DB-432E-BA24-1C2EA95F0C6A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PG.Report</RootNamespace>
+    <AssemblyName>PG.Report</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EPPlus">
+      <HintPath>..\..\PG.Web\PG.Web\bin\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp">
+      <HintPath>..\..\SharedLibrary\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\SPB_SND_MIS_SERVICE\PG.Web\PG.Web\bin\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.ReportViewer.11.0.3366.16\lib\Microsoft.ReportViewer.DataVisualization.DLL</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Design, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.ReportViewer.11.0.3366.16\lib\Microsoft.ReportViewer.Design.DLL</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.ReportViewer.11.0.3366.16\lib\Microsoft.ReportViewer.ProcessingObjectModel.DLL</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebDesign, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.ReportViewer.11.0.3366.16\lib\Microsoft.ReportViewer.WebDesign.DLL</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.ReportViewer.11.0.3366.16\lib\Microsoft.ReportViewer.WebForms.DLL</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.ReportViewer.11.0.3366.16\lib\Microsoft.ReportViewer.WinForms.DLL</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.SqlServer.Types.11.0.1\lib\net20\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess">
+      <HintPath>..\..\PG.Web\PG.Web\bin\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AppReport.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportClass\AccountingRC\rcAccRefDetails.cs" />
+    <Compile Include="ReportClass\AccountingRC\rcAccRefSummary.cs" />
+    <Compile Include="ReportClass\AccountingRC\rcBalanceSheet.cs" />
+    <Compile Include="ReportClass\AccountingRC\rcCashSummary.cs" />
+    <Compile Include="ReportClass\AccountingRC\rcGLReportHeader.cs" />
+    <Compile Include="ReportClass\AccountingRC\rcGLReportItem.cs" />
+    <Compile Include="ReportClass\AccountingRC\rcIncomeStatement.cs" />
+    <Compile Include="ReportClass\AccountingRC\rcJournal.cs" />
+    <Compile Include="ReportClass\AccountingRC\rcLedger.cs" />
+    <Compile Include="ReportClass\AccountingRC\rcLedgerSummary.cs" />
+    <Compile Include="ReportClass\AccountingRC\rcReceiptPayment.cs" />
+    <Compile Include="ReportClass\AccountingRC\rcTrialBalance.cs" />
+    <Compile Include="ReportClass\InventoryRC\rcINV_ITEM_GROUP.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ReportClass\InventoryRC\rcItemGroupReport.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ReportClass\InventoryRC\rcItemStockDetails.cs" />
+    <Compile Include="ReportClass\InventoryRC\rcLcCosting.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ReportClass\InventoryRC\rcMaterialStock.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ReportClass\InventoryRC\rcProduction.cs" />
+    <Compile Include="ReportClass\ProductionRC\rcAssemblyFinishedStock.cs" />
+    <Compile Include="ReportClass\ProductionRC\rcBomVsProduction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ReportClass\ProductionRC\rcFGF.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ReportClass\ProductionRC\rcFormationProductionSummary.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ReportClass\ProductionRC\rcItemTransfermation.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ReportClass\ProductionRC\rcProduction.cs" />
+    <Compile Include="ReportClass\ProductionRC\rcbom.cs" />
+    <Compile Include="ReportEnums\ReportEnums.cs" />
+    <Compile Include="ReportEnums\ReportIDEnums.cs" />
+    <Compile Include="ReportGen\AccountingRGN\AccRefRGN.cs" />
+    <Compile Include="ReportGen\AccountingRGN\BalanceSheetRGN.cs" />
+    <Compile Include="ReportGen\AccountingRGN\CashRGN.cs" />
+    <Compile Include="ReportGen\AccountingRGN\ChartOfAccountsRGN.cs" />
+    <Compile Include="ReportGen\AccountingRGN\IncomeStatementRGN.cs" />
+    <Compile Include="ReportGen\AccountingRGN\JournalRGN.cs" />
+    <Compile Include="ReportGen\AccountingRGN\LedgerRGN.cs" />
+    <Compile Include="ReportGen\AccountingRGN\ReceiptPaymentRGN.cs" />
+    <Compile Include="ReportGen\AccountingRGN\TrialBalanceRGN.cs" />
+    <Compile Include="ReportGen\InventoryRGN\ItemReportRGN.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ReportGen\ProductionRGN\ProductionRGN.cs" />
+    <Compile Include="ReportGlobals.cs" />
+    <Compile Include="ReportOptions.cs" />
+    <Compile Include="ReportRBL\AccountingRBL\AccountingRBLHelper.cs" />
+    <Compile Include="ReportRBL\AccountingRBL\AccRefRBL.cs" />
+    <Compile Include="ReportRBL\AccountingRBL\BalanceSheetRBL.cs" />
+    <Compile Include="ReportRBL\AccountingRBL\CashRBL.cs" />
+    <Compile Include="ReportRBL\AccountingRBL\GLAccountListRBL.cs" />
+    <Compile Include="ReportRBL\AccountingRBL\GLReportRBL.cs" />
+    <Compile Include="ReportRBL\AccountingRBL\IncomeStatementRBL.cs" />
+    <Compile Include="ReportRBL\AccountingRBL\JournalRBL.cs" />
+    <Compile Include="ReportRBL\AccountingRBL\LedgerRBL.cs" />
+    <Compile Include="ReportRBL\AccountingRBL\ReceiptPaymentRBL.cs" />
+    <Compile Include="ReportRBL\AccountingRBL\TrialBalanceRBL.cs" />
+    <Compile Include="ReportRBL\InventoryRBL\INV_Item_GroupRBL.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ReportRBL\InventoryRBL\ItemReportRBL.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ReportRBL\InventoryRBL\MaterialStockRBL.cs" />
+    <Compile Include="ReportRBL\ProductionRBL\ProductionRBL.cs" />
+    <Compile Include="SqlServerTypes\Loader.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ReportDef\AccountingDef\rptLedger.rdlc" />
+    <EmbeddedResource Include="ReportDef\InventoryDef\rptItemReport.rdlc" />
+    <EmbeddedResource Include="ReportDef\InventoryDef\rptMaterialStockReport.rdlc" />
+    <EmbeddedResource Include="ReportDef\ProductionDef\rptDepartmentProduction.rdlc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\packages\Microsoft.SqlServer.Types.11.0.1\nativeBinaries\x64\msvcr100.dll">
+      <Link>SqlServerTypes\x64\msvcr100.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Microsoft.SqlServer.Types.11.0.1\nativeBinaries\x64\SqlServerSpatial110.dll">
+      <Link>SqlServerTypes\x64\SqlServerSpatial110.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Microsoft.SqlServer.Types.11.0.1\nativeBinaries\x86\msvcr100.dll">
+      <Link>SqlServerTypes\x86\msvcr100.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Microsoft.SqlServer.Types.11.0.1\nativeBinaries\x86\SqlServerSpatial110.dll">
+      <Link>SqlServerTypes\x86\SqlServerSpatial110.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\readme.htm" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.clsPrmInventory.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcACCOUNT_HOLDER.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcACCOUNT_HOLDER_DTL.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcADJUSTMENT_TYPE.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcBANK_BRANCH_MST.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcBANK_MST.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcBATERY_CATEGORY.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcBATTERY_TYPE_MST.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcBRANCH_INFO.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcBRAND.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcCASH_MEDIA_MST.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcCATEGORY_MST.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcCNF_MASTER.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcCOMPANY_INFO.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcCOUNTRY_MASTER.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcCUSTOMER_ADJUSTMENT.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcCUSTOMER_INFO.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcCUSTOMER_MST.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcCUSTOMER_OPENNING_BALANCE.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcCUSTOMER_PAYMENT_MST.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcDC_DETAILS.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcDC_MASTER.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcDeliveryChallanReport.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcDEPARTMENT_INFO.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcDEPARTMENT_INFO_MVW.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcDEPARTMENT_ITEM.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcEMP_INFO.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcGatePassItemDetailsReport.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcGatePassPrepairedChAuBy.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcGatePassReport.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcIMP_PURCHASE_DETAILS.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcIMP_PURCHASE_MASTER.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcINDT_COMMENT_DTL.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcINDT_STATUS.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcINDT_STATUS_DTL.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcINSURANCE_COM_MASTER.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcInternalReceiveItemDetailsReport.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcInternalReceiveReport.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcINVOICE_DETAILS.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcINVOICE_MASTER.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcInvSettings.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcINV_ADJUST_DETAILS.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcINV_ADJUST_DETAILS_DEPT.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcINV_ADJUST_MASTER.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcINV_ADJUST_MASTER_DEPT.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcINV_BIN.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcINV_BRAND.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcINV_DEPARTMENT_PERMISSION.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcINV_ITEM_CATEGORY.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcINV_ITEM_CLASS.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcINV_ITEM_COLOR.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcINV_ITEM_DTL.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcINV_ITEM_GENERATION.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcINV_ITEM_GROP_WISE_ATTRIBUTE.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcINV_ITEM_GROUP.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcINV_ITEM_MASTER.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcINV_ITEM_SIZE.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcINV_ITEM_SNS_MST.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcINV_ITEM_SUB_CATEGORY.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcINV_ITEM_TYPE.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcINV_MSR_UNIT.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcINV_RACK.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcINV_WORKING_MONTH.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcISSUE_RECEIVE_DETAILS.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcISSUE_RECEIVE_MASTER.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcITEM_MASTER_PRICE_UPDATE_LOG.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcITEM_SPECIFICATION_TYPE.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcITEM_STOCK_DETAILS.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcLC_BANK_BRANCH.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcLC_BANK_MASTER.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcLC_CURRENCY.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcLC_DETAILS.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcLC_MASTER.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcLC_MOD_OF_PAY_MASTER.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcLC_TYPE_MASTER.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcLEAD_VALIDATION_MONTHLY.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcLP_DEL_CHALL_DTL.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcLP_DEL_CHALL_MST.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcLP_INDT_DETAILS.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcLP_INDT_MASTER.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcLP_INDT_PURCHASE_DETAILS.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcLP_INVOICE_LIST.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcLP_PURCHASE_DETAILS.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcLP_PURCHASE_MASTER.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcMaterialReceiveItemDetailsReport.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcMaterialReceiveReport.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcMRN_INVOICE_RCV_DTL.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcMRN_INVOICE_RCV_MST.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcMRP_DETAILS.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcMRP_MASTER.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcMRP_REQUISITION.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcMRR_DETAILS.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcMRR_MASTER.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcMR_ADJUSTMENT_TYPE.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcOpeningBlanceItemInfo.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcOPENING_BALANCE.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcPRICE_VIEW_PERMISSION.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcPRICE_VIEW_PERM_DEPT_RESTRICT.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcPurchaseAgainstIndentReport.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcRECEIVE_ACC_HOLDER.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcRECEIVE_CHEQUE.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcRECEIVE_MR_MST.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcRECEIVE_STORE_DETAILS.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcReOrderLebel_InfoView.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcREQ_COMMENT_DTL.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcREQ_DETAILS.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcREQ_ISSUE_DETAILS.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcREQ_ISSUE_MASTER.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcREQ_ISSUE_STATUS.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcREQ_ISSUE_STATUS_DTL.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcREQ_MASTER.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcREQ_RECEIVE_DETAILS.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcREQ_RECEIVE_MASTER.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcREQ_RETURN_DETAILS.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcREQ_RETURN_MASTER.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcSALES_RETURN_DETAILS.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcSALES_RETURN_MASTER.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcSTORE_INFO.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcSUPPLIER_INFO.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcSUPPLIER_ITEM.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcTBLCOMPANY.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcTBLUSER.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcTBLUSERDEPARTMENT.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcTRANSPORT_TYPE_MASTER.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcUOM_INFO.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.dcUOM_TYPE_INFO.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.InvoicePrepairedChAuBy.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.IPSInvoiceItem.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.PurchaseIndentInfo.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.ReportParameterClass.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.SalesRequisitionDetails.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.StorePurchaseIndent.datasource" />
+    <None Include="Properties\DataSources\PG.DBClass.InventoryDC.StoreRequisitionInfo.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.AccountingRC.rcGLReportItem.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.AccountingRC.rcJournal.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.AccountingRC.rcJournalTrans.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.InventoryRC.rcCustomerAdjustment.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.InventoryRC.rcCustomerLedger.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.InventoryRC.rcDeliveryChallanAuthorizedBy.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.InventoryRC.rcDeliveryChallanPreparedBy.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.InventoryRC.rcDeliveryChallanReport.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.InventoryRC.rcForeignPurchase.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.InventoryRC.rcGatePassItemDetailsReport.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.InventoryRC.rcGatePassReport.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.InventoryRC.rcIgrItcIrrClass.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.InventoryRC.rcIGRReportDetails.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.InventoryRC.rcIGRReportMaster.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.InventoryRC.rcInvoiceDO.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.InventoryRC.rcINV_ITEM_GROUP.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.InventoryRC.rcITCbyStoreWithItem.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.InventoryRC.rcITCReportDetails.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.InventoryRC.rcITCReportMaster.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.InventoryRC.rcITCReportMaster1.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.InventoryRC.rcItemGroupReport.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.InventoryRC.rcItemStockDetails.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.InventoryRC.rcLcCosting.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.InventoryRC.rcLCDetails.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.InventoryRC.rcLeadUsedBalance.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.InventoryRC.rcLocalPurchase.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.InventoryRC.rcMaterialReceiveItemDetailsReport.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.InventoryRC.rcMaterialReceiveReport.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.InventoryRC.rcMaterialReceiveReport1.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.InventoryRC.rcMaterialStock.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.InventoryRC.rcMR.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.InventoryRC.rcProduction.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.InventoryRC.rcPurchaseAgainstIndent.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.InventoryRC.rcPurchaseIndent.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.InventoryRC.rcQCPass.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.InventoryRC.rcQuotation.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.InventoryRC.rcSalesReturn.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.InventoryRC.ReOrderLebel_InfoView1.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.ProductionRC.rcAssemblyFinishedStock.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.ProductionRC.rcbom.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.ProductionRC.rcBomVsProduction.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.ProductionRC.rcFGF.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.ProductionRC.rcFormationProductionSummary.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.ProductionRC.rcItemTransfermation.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.ProductionRC.rcProcesswiseprod.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.ProductionRC.rcProdRejectionTransferDetails.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.ProductionRC.rcProdRejectTransferMaster.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.ProductionRC.rcProduction.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.ProductionRC.rcRejectionTransferDtl.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportClass.ProductionRC.rcRMF.datasource" />
+    <None Include="Properties\DataSources\PG.Report.ReportGen.ProductionRGN.ProductionRGN.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\PG.BLLibrary\PG.BLLibrary\PG.BLLibrary.csproj">
+      <Project>{d6df363e-16ed-489d-a5b5-63ae7008ba7f}</Project>
+      <Name>PG.BLLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\PG.Core\PG.Core\PG.Core.csproj">
+      <Project>{9c92ff86-7065-46d6-909b-3f25d011a693}</Project>
+      <Name>PG.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\PG.DBClass\PG.DBClass\PG.DBClass.csproj">
+      <Project>{fd5a644b-c3af-4479-b46a-f7540d411273}</Project>
+      <Name>PG.DBClass</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

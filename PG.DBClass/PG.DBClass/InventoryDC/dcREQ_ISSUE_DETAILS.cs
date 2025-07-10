@@ -1,0 +1,420 @@
+﻿using PG.Core.DBBase;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+
+namespace PG.DBClass.InventoryDC
+{
+    [Serializable]
+    [DBTable(Name = "REQ_ISSUE_DETAILS")]
+    public partial class dcREQ_ISSUE_DETAILS : DBBaseClass, INotifyPropertyChanged
+    {
+        #region private members
+
+        private Int64 m_REQ_ISSUE_DET_ID = 0;
+        private int m_REQ_ISSUE_DET_SLNO = 0;
+        private Int64 m_REQ_ISSUE_ID = 0;
+        private int m_ITEM_ID = 0;
+        private int m_UOM_ID = 0;
+        private decimal m_ISSUE_QNTY = 0;
+        private decimal m_UNIT_PRICE = 0;
+        private decimal m_TOTAL_COST = 0;
+        private string m_REQ_ISSUE_NOTE = string.Empty;
+        private Int64 m_REQ_DET_ID = 0;
+        private decimal m_RCV_QNTY = 0;
+        private int m_CREATE_BY = 0;
+        private DateTime? m_CREATE_DATE = null;
+        private int? m_UPDATE_BY = 0;
+        private DateTime? m_UPDATE_DATE = null;
+        private int m_BTY_TYPE_ID = 0;
+        private string m_IS_REPAIR = string.Empty;
+        private string m_BATCH_NO = string.Empty;
+        private int? m_ITEM_SPECIFICATION_ID = 0;
+        private int? m_ITEM_TYPE_ID = 0;
+
+
+
+        #endregion  //private members
+
+        #region public events
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged(string info)
+        {
+            _UpdateChangedList(info);
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(info));
+            }
+        }
+
+        #endregion //public events
+
+        #region properties
+
+
+        [DBColumn(Name = "REQ_ISSUE_DET_ID", Storage = "m_REQ_ISSUE_DET_ID", DbType = "Int NOT NULL IDENTITY", IsDbGenerated = true, SyncOnInsert = true, IsPrimaryKey = true, IsIdentity = true)]
+        public Int64 REQ_ISSUE_DET_ID
+        {
+            get { return this.m_REQ_ISSUE_DET_ID; }
+            set
+            {
+                this.m_REQ_ISSUE_DET_ID = value;
+                this.NotifyPropertyChanged("REQ_ISSUE_DET_ID");
+            }
+        }
+
+        [DBColumn(Name = "REQ_ISSUE_DET_SLNO", Storage = "m_REQ_ISSUE_DET_SLNO", DbType = "107")]
+        public int REQ_ISSUE_DET_SLNO
+        {
+            get { return this.m_REQ_ISSUE_DET_SLNO; }
+            set
+            {
+                this.m_REQ_ISSUE_DET_SLNO = value;
+                this.NotifyPropertyChanged("REQ_ISSUE_DET_SLNO");
+            }
+        }
+
+        [DBColumn(Name = "REQ_ISSUE_ID", Storage = "m_REQ_ISSUE_ID", DbType = "107")]
+        public Int64 REQ_ISSUE_ID
+        {
+            get { return this.m_REQ_ISSUE_ID; }
+            set
+            {
+                this.m_REQ_ISSUE_ID = value;
+                this.NotifyPropertyChanged("REQ_ISSUE_ID");
+            }
+        }
+
+        [DBColumn(Name = "ITEM_ID", Storage = "m_ITEM_ID", DbType = "107")]
+        public int ITEM_ID
+        {
+            get { return this.m_ITEM_ID; }
+            set
+            {
+                this.m_ITEM_ID = value;
+                this.NotifyPropertyChanged("ITEM_ID");
+            }
+        }
+
+        [DBColumn(Name = "UOM_ID", Storage = "m_UOM_ID", DbType = "107")]
+        public int UOM_ID
+        {
+            get { return this.m_UOM_ID; }
+            set
+            {
+                this.m_UOM_ID = value;
+                this.NotifyPropertyChanged("UOM_ID");
+            }
+        }
+
+        [DBColumn(Name = "ISSUE_QNTY", Storage = "m_ISSUE_QNTY", DbType = "107")]
+        public decimal ISSUE_QNTY
+        {
+            get { return this.m_ISSUE_QNTY; }
+            set
+            {
+                this.m_ISSUE_QNTY = value;
+                this.NotifyPropertyChanged("ISSUE_QNTY");
+            }
+        }
+
+        [DBColumn(Name = "UNIT_PRICE", Storage = "m_UNIT_PRICE", DbType = "107")]
+        public decimal UNIT_PRICE
+        {
+            get { return this.m_UNIT_PRICE; }
+            set
+            {
+                this.m_UNIT_PRICE = value;
+                this.NotifyPropertyChanged("UNIT_PRICE");
+            }
+        }
+
+
+        [DBColumn(Name = "TOTAL_COST", Storage = "m_TOTAL_COST", DbType = "107")]
+        public decimal TOTAL_COST
+        {
+            get { return this.m_TOTAL_COST; }
+            set
+            {
+                this.m_TOTAL_COST = value;
+                this.NotifyPropertyChanged("TOTAL_COST");
+            }
+        }
+
+        [DBColumn(Name = "REQ_ISSUE_NOTE", Storage = "m_REQ_ISSUE_NOTE", DbType = "126")]
+        public string REQ_ISSUE_NOTE
+        {
+            get { return this.m_REQ_ISSUE_NOTE; }
+            set
+            {
+                this.m_REQ_ISSUE_NOTE = value;
+                this.NotifyPropertyChanged("REQ_ISSUE_NOTE");
+            }
+        }
+
+        [DBColumn(Name = "REQ_DET_ID", Storage = "m_REQ_DET_ID", DbType = "107")]
+        public Int64 REQ_DET_ID
+        {
+            get { return this.m_REQ_DET_ID; }
+            set
+            {
+                this.m_REQ_DET_ID = value;
+                this.NotifyPropertyChanged("REQ_DET_ID");
+            }
+        }
+
+        [DBColumn(Name = "RCV_QNTY", Storage = "m_RCV_QNTY", DbType = "107")]
+        public decimal RCV_QNTY
+        {
+            get { return this.m_RCV_QNTY; }
+            set
+            {
+                this.m_RCV_QNTY = value;
+                this.NotifyPropertyChanged("RCV_QNTY");
+            }
+        }
+
+        [DBColumn(Name = "CREATE_BY", Storage = "m_CREATE_BY", DbType = "107")]
+        public int CREATE_BY
+        {
+            get { return this.m_CREATE_BY; }
+            set
+            {
+                this.m_CREATE_BY = value;
+                this.NotifyPropertyChanged("CREATE_BY");
+            }
+        }
+
+        [DBColumn(Name = "CREATE_DATE", Storage = "m_CREATE_DATE", DbType = "106")]
+        public DateTime? CREATE_DATE
+        {
+            get { return this.m_CREATE_DATE; }
+            set
+            {
+                this.m_CREATE_DATE = value;
+                this.NotifyPropertyChanged("CREATE_DATE");
+            }
+        }
+
+        [DBColumn(Name = "UPDATE_BY", Storage = "m_UPDATE_BY", DbType = "107")]
+        public int? UPDATE_BY
+        {
+            get { return this.m_UPDATE_BY; }
+            set
+            {
+                this.m_UPDATE_BY = value;
+                this.NotifyPropertyChanged("UPDATE_BY");
+            }
+        }
+
+        [DBColumn(Name = "UPDATE_DATE", Storage = "m_UPDATE_DATE", DbType = "106")]
+        public DateTime? UPDATE_DATE
+        {
+            get { return this.m_UPDATE_DATE; }
+            set
+            {
+                this.m_UPDATE_DATE = value;
+                this.NotifyPropertyChanged("UPDATE_DATE");
+            }
+        }
+
+        [DBColumn(Name = "BTY_TYPE_ID", Storage = "m_BTY_TYPE_ID", DbType = "107")]
+        public int BTY_TYPE_ID
+        {
+            get { return this.m_BTY_TYPE_ID; }
+            set
+            {
+                this.m_BTY_TYPE_ID = value;
+                this.NotifyPropertyChanged("BTY_TYPE_ID");
+            }
+
+        }
+
+        [DBColumn(Name = "IS_REPAIR", Storage = "m_IS_REPAIR", DbType = "126")]
+        public string IS_REPAIR
+        {
+            get { return this.m_IS_REPAIR; }
+            set
+            {
+                this.m_IS_REPAIR = value;
+                this.NotifyPropertyChanged("IS_REPAIR");
+            }
+
+        }
+
+        [DBColumn(Name = "BATCH_NO", Storage = "m_BATCH_NO", DbType = "126")]
+        public string BATCH_NO
+        {
+            get { return this.m_BATCH_NO; }
+            set
+            {
+                this.m_BATCH_NO = value;
+                this.NotifyPropertyChanged("BATCH_NO");
+            }
+
+        }
+
+        [DBColumn(Name = "ITEM_SPECIFICATION_ID", Storage = "m_ITEM_SPECIFICATION_ID", DbType = "107")]
+        public int? ITEM_SPECIFICATION_ID
+        {
+            get { return this.m_ITEM_SPECIFICATION_ID; }
+            set
+            {
+                this.m_ITEM_SPECIFICATION_ID = value;
+                this.NotifyPropertyChanged("ITEM_SPECIFICATION_ID");
+            }
+
+        }
+
+        [DBColumn(Name = "ITEM_TYPE_ID", Storage = "m_ITEM_TYPE_ID", DbType = "107")]
+        public int? ITEM_TYPE_ID
+        {
+            get { return this.m_ITEM_TYPE_ID; }
+            set
+            {
+                this.m_ITEM_TYPE_ID = value;
+                this.NotifyPropertyChanged("ITEM_TYPE_ID");
+            }
+        }
+
+        #endregion //properties
+    }
+
+    public partial class dcREQ_ISSUE_DETAILS
+    {
+
+        private decimal m_CLOSING_QTY = 0;
+        private string m_item_description = string.Empty;
+        private string m_item_name = string.Empty;
+        private string m_uom_name = string.Empty;
+        private string m_uom_code = string.Empty;
+
+        private decimal? m_p_rcv_qnty = null;
+        private string m_item_code = string.Empty;
+        public string item_description
+        {
+            get { return m_item_description; }
+            set { this.m_item_description = value; }
+        }
+
+        public string uom_name
+        {
+            get { return m_uom_name; }
+            set { this.m_uom_name = value; }
+        }
+
+        public string uom_code
+        {
+            get { return m_uom_code; }
+            set { this.m_uom_code = value; }
+        }
+        public string item_name
+        {
+            get { return m_item_name; }
+            set { this.m_item_name = value; }
+        }
+        public decimal? p_rcv_qnty
+        {
+            get { return m_p_rcv_qnty; }
+            set { this.m_p_rcv_qnty = value; }
+        }
+
+        public string item_code
+        {
+            get { return m_item_code; }
+            set { this.m_item_code = value; }
+        }
+
+
+        private int m_item_group_id = 0;
+        public int item_group_id
+        {
+            get { return m_item_group_id; }
+            set { m_item_group_id = value; }
+        }
+
+        private string m_item_group_desc = string.Empty;
+        public string item_group_desc
+        {
+            get { return m_item_group_desc; }
+            set { m_item_group_desc = value; }
+        }
+
+        private string m_item_group_name = string.Empty;
+        public string item_group_name
+        {
+            get { return m_item_group_name; }
+            set { m_item_group_name = value; }
+        }
+
+
+        private string m_REQ_NOTE = string.Empty;
+        public string REQ_NOTE
+        {
+            get { return m_REQ_NOTE; }
+            set { m_REQ_NOTE = value; }
+        }
+
+        private string m_IS_BATCH = string.Empty;
+        public string IS_BATCH
+        {
+            get { return m_IS_BATCH; }
+            set { m_IS_BATCH = value; }
+        }
+
+        
+
+        public decimal CLOSING_QTY
+        {
+            get { return m_CLOSING_QTY; }
+            set { m_CLOSING_QTY = value; }
+        }
+
+        public decimal m_ALREADRY_ISSUED_QTY = 0;
+        public decimal ALREADRY_ISSUED_QTY
+        {
+            get { return m_ALREADRY_ISSUED_QTY; }
+            set { m_ALREADRY_ISSUED_QTY = value; }
+        }
+        public decimal m_BALANCE_QTY = 0;
+        public decimal BALANCE_QTY
+        {
+            get { return m_REQ_APRV_QNTY - m_ALREADRY_ISSUED_QTY; }
+        }
+
+        public decimal m_REQ_APRV_QNTY = 0;
+        public decimal REQ_APRV_QNTY
+        {
+            get { return m_REQ_APRV_QNTY; }
+            set { m_REQ_APRV_QNTY = value; }
+
+        }
+        public string SPECIFICATION_TYPE { get; set; }
+
+        private string m_ITEM_TYPE_CODE = string.Empty;
+        public string ITEM_TYPE_CODE
+        {
+            get { return m_ITEM_TYPE_CODE; }
+            set { m_ITEM_TYPE_CODE = value; }
+        }
+
+        private bool m_IsITCDtlComplete = false;
+        public bool IsITCDtlComplete
+        {
+            get { return this.m_IsITCDtlComplete; }
+            set { this.m_IsITCDtlComplete = value; }
+        }
+
+        private decimal m_REQ_QNTY = 0;
+        public decimal REQ_QNTY
+        {
+            get { return m_REQ_QNTY; }
+            set { this.m_REQ_QNTY = value; }
+        }
+        
+       
+    }
+}

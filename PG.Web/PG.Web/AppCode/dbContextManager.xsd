@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dbContextManagerSchema"
+    targetNamespace="http://tempuri.org/dbContextManager.xsd"
+    elementFormDefault="qualified"
+    xmlns="http://tempuri.org/dbContextManager.xsd"
+    xmlns:mstns="http://tempuri.org/dbContextManager.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+  <xs:element name="dbContextManager" type="mstns:dbContextManagerType">
+    
+  </xs:element>
+
+  <xs:complexType name="dbContextManagerType">
+    <xs:sequence>
+      <xs:element name="dbContext" type="mstns:dbContextType" minOccurs="1"></xs:element>
+    </xs:sequence>
+    <xs:attribute name="defaultDBContext" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="dbContextType">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string"></xs:element>
+      <xs:element name="dataBaseType" type="xs:string" default="SQLServer">
+      </xs:element>
+      <xs:element name="dataBaseVersion" type="xs:string"></xs:element>
+      <xs:element name="connectionStringName" type="xs:string"></xs:element>
+      <xs:element name="dbSchemaName" type="xs:string"></xs:element>
+      <xs:element name="alterDBSchema" type="xs:boolean"></xs:element>
+      <xs:element name="convertBoolData" type="xs:boolean"></xs:element>
+      <xs:element name="boolDataType" type="xs:string"></xs:element>
+      <xs:element name="boolTrueValue" type="xs:string"></xs:element>
+      <xs:element name="boolFalseValue" type="xs:string"></xs:element>
+      <xs:element name="nullToDefault" type="xs:boolean"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType id="dbType" name="dbType">
+    <xs:choice minOccurs="0">
+      <xs:element name="SQLSerever" type="xs:string"/>
+      <xs:element name="Oracle" type="xs:string"/>
+    </xs:choice>
+  </xs:complexType>
+
+  
+</xs:schema>

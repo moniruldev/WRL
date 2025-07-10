@@ -1,0 +1,50 @@
+D:\SPB_INV\PG.BLLibrary\PG.BLLibrary\bin\Debug\PG.BLLibrary.dll
+D:\SPB_INV\PG.BLLibrary\PG.BLLibrary\bin\Debug\PG.BLLibrary.pdb
+D:\SPB_INV\PG.BLLibrary\PG.BLLibrary\bin\Debug\Oracle.ManagedDataAccess.dll
+D:\SPB_INV\PG.BLLibrary\PG.BLLibrary\bin\Debug\PG.Core.dll
+D:\SPB_INV\PG.BLLibrary\PG.BLLibrary\bin\Debug\PG.DBClass.dll
+D:\SPB_INV\PG.BLLibrary\PG.BLLibrary\bin\Debug\PG.Core.pdb
+D:\SPB_INV\PG.BLLibrary\PG.BLLibrary\bin\Debug\PG.DBClass.pdb
+D:\SPB_INV\PG.BLLibrary\PG.BLLibrary\obj\Debug\PG.BLLibrary.csprojResolveAssemblyReference.cache
+D:\SPB_INV\PG.BLLibrary\PG.BLLibrary\obj\Debug\PG.BLLibrary.dll
+D:\SPB_INV\PG.BLLibrary\PG.BLLibrary\obj\Debug\PG.BLLibrary.pdb
+E:\Mamun Project\SPB_INV\PG.BLLibrary\PG.BLLibrary\bin\Debug\PG.BLLibrary.dll
+E:\Mamun Project\SPB_INV\PG.BLLibrary\PG.BLLibrary\bin\Debug\PG.BLLibrary.pdb
+E:\Mamun Project\SPB_INV\PG.BLLibrary\PG.BLLibrary\bin\Debug\Oracle.ManagedDataAccess.dll
+E:\Mamun Project\SPB_INV\PG.BLLibrary\PG.BLLibrary\bin\Debug\PG.Core.dll
+E:\Mamun Project\SPB_INV\PG.BLLibrary\PG.BLLibrary\bin\Debug\PG.DBClass.dll
+E:\Mamun Project\SPB_INV\PG.BLLibrary\PG.BLLibrary\bin\Debug\PG.Core.pdb
+E:\Mamun Project\SPB_INV\PG.BLLibrary\PG.BLLibrary\bin\Debug\PG.DBClass.pdb
+E:\Mamun Project\SPB_INV\PG.BLLibrary\PG.BLLibrary\obj\Debug\PG.BLLibrary.csprojResolveAssemblyReference.cache
+E:\Mamun Project\SPB_INV\PG.BLLibrary\PG.BLLibrary\obj\Debug\PG.BLLibrary.dll
+E:\Mamun Project\SPB_INV\PG.BLLibrary\PG.BLLibrary\obj\Debug\PG.BLLibrary.pdb
+E:\Mamun Project\HMS\PG.BLLibrary\PG.BLLibrary\bin\Debug\PG.BLLibrary.dll
+E:\Mamun Project\HMS\PG.BLLibrary\PG.BLLibrary\bin\Debug\PG.BLLibrary.pdb
+E:\Mamun Project\HMS\PG.BLLibrary\PG.BLLibrary\bin\Debug\Oracle.ManagedDataAccess.dll
+E:\Mamun Project\HMS\PG.BLLibrary\PG.BLLibrary\bin\Debug\PG.Core.dll
+E:\Mamun Project\HMS\PG.BLLibrary\PG.BLLibrary\bin\Debug\PG.DBClass.dll
+E:\Mamun Project\HMS\PG.BLLibrary\PG.BLLibrary\bin\Debug\PG.Core.pdb
+E:\Mamun Project\HMS\PG.BLLibrary\PG.BLLibrary\bin\Debug\PG.DBClass.pdb
+E:\Mamun Project\HMS\PG.BLLibrary\PG.BLLibrary\obj\Debug\PG.BLLibrary.csprojResolveAssemblyReference.cache
+E:\Mamun Project\HMS\PG.BLLibrary\PG.BLLibrary\obj\Debug\PG.BLLibrary.dll
+E:\Mamun Project\HMS\PG.BLLibrary\PG.BLLibrary\obj\Debug\PG.BLLibrary.pdb
+D:\HotelManagement\HMS\PG.BLLibrary\PG.BLLibrary\bin\Debug\PG.BLLibrary.dll
+D:\HotelManagement\HMS\PG.BLLibrary\PG.BLLibrary\bin\Debug\PG.BLLibrary.pdb
+D:\HotelManagement\HMS\PG.BLLibrary\PG.BLLibrary\bin\Debug\Oracle.ManagedDataAccess.dll
+D:\HotelManagement\HMS\PG.BLLibrary\PG.BLLibrary\bin\Debug\PG.Core.dll
+D:\HotelManagement\HMS\PG.BLLibrary\PG.BLLibrary\bin\Debug\PG.DBClass.dll
+D:\HotelManagement\HMS\PG.BLLibrary\PG.BLLibrary\bin\Debug\PG.Core.pdb
+D:\HotelManagement\HMS\PG.BLLibrary\PG.BLLibrary\bin\Debug\PG.DBClass.pdb
+D:\HotelManagement\HMS\PG.BLLibrary\PG.BLLibrary\obj\Debug\PG.BLLibrary.csprojResolveAssemblyReference.cache
+D:\HotelManagement\HMS\PG.BLLibrary\PG.BLLibrary\obj\Debug\PG.BLLibrary.dll
+D:\HotelManagement\HMS\PG.BLLibrary\PG.BLLibrary\obj\Debug\PG.BLLibrary.pdb
+D:\WRL_Source\WRL\PG.BLLibrary\PG.BLLibrary\bin\Debug\PG.BLLibrary.dll
+D:\WRL_Source\WRL\PG.BLLibrary\PG.BLLibrary\bin\Debug\PG.BLLibrary.pdb
+D:\WRL_Source\WRL\PG.BLLibrary\PG.BLLibrary\bin\Debug\Oracle.ManagedDataAccess.dll
+D:\WRL_Source\WRL\PG.BLLibrary\PG.BLLibrary\bin\Debug\PG.Core.dll
+D:\WRL_Source\WRL\PG.BLLibrary\PG.BLLibrary\bin\Debug\PG.DBClass.dll
+D:\WRL_Source\WRL\PG.BLLibrary\PG.BLLibrary\bin\Debug\PG.Core.pdb
+D:\WRL_Source\WRL\PG.BLLibrary\PG.BLLibrary\bin\Debug\PG.DBClass.pdb
+D:\WRL_Source\WRL\PG.BLLibrary\PG.BLLibrary\obj\Debug\PG.BLLibrary.csprojResolveAssemblyReference.cache
+D:\WRL_Source\WRL\PG.BLLibrary\PG.BLLibrary\obj\Debug\PG.BLLibrary.dll
+D:\WRL_Source\WRL\PG.BLLibrary\PG.BLLibrary\obj\Debug\PG.BLLibrary.pdb

@@ -1,0 +1,63 @@
+D:\SPB_INV\PG.Core\PG.Core\obj\Debug\PG.Core.Windows.ExControls.DateRangeEx.DateRangeCombobox.resources
+D:\SPB_INV\PG.Core\PG.Core\obj\Debug\PG.Core.Windows.ExControls.ListBar.ButtonListBar.resources
+D:\SPB_INV\PG.Core\PG.Core\obj\Debug\PG.Core.Windows.Forms.frmFilter.resources
+D:\SPB_INV\PG.Core\PG.Core\obj\Debug\PG.Core.Windows.Forms.frmFilterSelect.resources
+D:\SPB_INV\PG.Core\PG.Core\obj\Debug\PG.Core.Windows.Forms.frmProgressBar.resources
+D:\SPB_INV\PG.Core\PG.Core\obj\Debug\PG.Core.Windows.Forms.frmWait.resources
+D:\SPB_INV\PG.Core\PG.Core\obj\Debug\PG.Core.csproj.GenerateResource.Cache
+D:\SPB_INV\PG.Core\PG.Core\bin\Debug\PG.Core.dll
+D:\SPB_INV\PG.Core\PG.Core\bin\Debug\PG.Core.pdb
+D:\SPB_INV\PG.Core\PG.Core\bin\Debug\Oracle.ManagedDataAccess.dll
+D:\SPB_INV\PG.Core\PG.Core\obj\Debug\PG.Core.dll
+D:\SPB_INV\PG.Core\PG.Core\obj\Debug\PG.Core.pdb
+D:\SPB_INV\PG.Core\PG.Core\obj\Debug\PG.Core.csprojResolveAssemblyReference.cache
+E:\Mamun Project\SPB_INV\PG.Core\PG.Core\bin\Debug\PG.Core.dll
+E:\Mamun Project\SPB_INV\PG.Core\PG.Core\bin\Debug\PG.Core.pdb
+E:\Mamun Project\SPB_INV\PG.Core\PG.Core\bin\Debug\Oracle.ManagedDataAccess.dll
+E:\Mamun Project\SPB_INV\PG.Core\PG.Core\obj\Debug\PG.Core.Windows.ExControls.DateRangeEx.DateRangeCombobox.resources
+E:\Mamun Project\SPB_INV\PG.Core\PG.Core\obj\Debug\PG.Core.Windows.ExControls.ListBar.ButtonListBar.resources
+E:\Mamun Project\SPB_INV\PG.Core\PG.Core\obj\Debug\PG.Core.Windows.Forms.frmFilter.resources
+E:\Mamun Project\SPB_INV\PG.Core\PG.Core\obj\Debug\PG.Core.Windows.Forms.frmFilterSelect.resources
+E:\Mamun Project\SPB_INV\PG.Core\PG.Core\obj\Debug\PG.Core.Windows.Forms.frmProgressBar.resources
+E:\Mamun Project\SPB_INV\PG.Core\PG.Core\obj\Debug\PG.Core.Windows.Forms.frmWait.resources
+E:\Mamun Project\SPB_INV\PG.Core\PG.Core\obj\Debug\PG.Core.csproj.GenerateResource.Cache
+E:\Mamun Project\SPB_INV\PG.Core\PG.Core\obj\Debug\PG.Core.dll
+E:\Mamun Project\SPB_INV\PG.Core\PG.Core\obj\Debug\PG.Core.pdb
+E:\Mamun Project\SPB_INV\PG.Core\PG.Core\obj\Debug\PG.Core.csprojResolveAssemblyReference.cache
+E:\Mamun Project\HMS\PG.Core\PG.Core\bin\Debug\PG.Core.dll
+E:\Mamun Project\HMS\PG.Core\PG.Core\bin\Debug\PG.Core.pdb
+E:\Mamun Project\HMS\PG.Core\PG.Core\bin\Debug\Oracle.ManagedDataAccess.dll
+E:\Mamun Project\HMS\PG.Core\PG.Core\obj\Debug\PG.Core.Windows.ExControls.DateRangeEx.DateRangeCombobox.resources
+E:\Mamun Project\HMS\PG.Core\PG.Core\obj\Debug\PG.Core.Windows.ExControls.ListBar.ButtonListBar.resources
+E:\Mamun Project\HMS\PG.Core\PG.Core\obj\Debug\PG.Core.Windows.Forms.frmFilter.resources
+E:\Mamun Project\HMS\PG.Core\PG.Core\obj\Debug\PG.Core.Windows.Forms.frmFilterSelect.resources
+E:\Mamun Project\HMS\PG.Core\PG.Core\obj\Debug\PG.Core.Windows.Forms.frmProgressBar.resources
+E:\Mamun Project\HMS\PG.Core\PG.Core\obj\Debug\PG.Core.Windows.Forms.frmWait.resources
+E:\Mamun Project\HMS\PG.Core\PG.Core\obj\Debug\PG.Core.csproj.GenerateResource.Cache
+E:\Mamun Project\HMS\PG.Core\PG.Core\obj\Debug\PG.Core.dll
+E:\Mamun Project\HMS\PG.Core\PG.Core\obj\Debug\PG.Core.pdb
+E:\Mamun Project\HMS\PG.Core\PG.Core\obj\Debug\PG.Core.csprojResolveAssemblyReference.cache
+D:\HotelManagement\HMS\PG.Core\PG.Core\bin\Debug\PG.Core.dll
+D:\HotelManagement\HMS\PG.Core\PG.Core\bin\Debug\PG.Core.pdb
+D:\HotelManagement\HMS\PG.Core\PG.Core\bin\Debug\Oracle.ManagedDataAccess.dll
+D:\HotelManagement\HMS\PG.Core\PG.Core\obj\Debug\PG.Core.Windows.ExControls.DateRangeEx.DateRangeCombobox.resources
+D:\HotelManagement\HMS\PG.Core\PG.Core\obj\Debug\PG.Core.Windows.ExControls.ListBar.ButtonListBar.resources
+D:\HotelManagement\HMS\PG.Core\PG.Core\obj\Debug\PG.Core.Windows.Forms.frmFilter.resources
+D:\HotelManagement\HMS\PG.Core\PG.Core\obj\Debug\PG.Core.Windows.Forms.frmFilterSelect.resources
+D:\HotelManagement\HMS\PG.Core\PG.Core\obj\Debug\PG.Core.Windows.Forms.frmProgressBar.resources
+D:\HotelManagement\HMS\PG.Core\PG.Core\obj\Debug\PG.Core.Windows.Forms.frmWait.resources
+D:\HotelManagement\HMS\PG.Core\PG.Core\obj\Debug\PG.Core.csproj.GenerateResource.Cache
+D:\HotelManagement\HMS\PG.Core\PG.Core\obj\Debug\PG.Core.dll
+D:\HotelManagement\HMS\PG.Core\PG.Core\obj\Debug\PG.Core.pdb
+D:\WRL_Source\WRL\PG.Core\PG.Core\bin\Debug\PG.Core.dll
+D:\WRL_Source\WRL\PG.Core\PG.Core\bin\Debug\PG.Core.pdb
+D:\WRL_Source\WRL\PG.Core\PG.Core\bin\Debug\Oracle.ManagedDataAccess.dll
+D:\WRL_Source\WRL\PG.Core\PG.Core\obj\Debug\PG.Core.Windows.ExControls.DateRangeEx.DateRangeCombobox.resources
+D:\WRL_Source\WRL\PG.Core\PG.Core\obj\Debug\PG.Core.Windows.ExControls.ListBar.ButtonListBar.resources
+D:\WRL_Source\WRL\PG.Core\PG.Core\obj\Debug\PG.Core.Windows.Forms.frmFilter.resources
+D:\WRL_Source\WRL\PG.Core\PG.Core\obj\Debug\PG.Core.Windows.Forms.frmFilterSelect.resources
+D:\WRL_Source\WRL\PG.Core\PG.Core\obj\Debug\PG.Core.Windows.Forms.frmProgressBar.resources
+D:\WRL_Source\WRL\PG.Core\PG.Core\obj\Debug\PG.Core.Windows.Forms.frmWait.resources
+D:\WRL_Source\WRL\PG.Core\PG.Core\obj\Debug\PG.Core.csproj.GenerateResource.Cache
+D:\WRL_Source\WRL\PG.Core\PG.Core\obj\Debug\PG.Core.dll
+D:\WRL_Source\WRL\PG.Core\PG.Core\obj\Debug\PG.Core.pdb
