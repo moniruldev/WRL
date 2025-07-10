@@ -191,8 +191,17 @@
     <Compile Include="SystemsBL\AppMenuBL.cs" />
     <Compile Include="SystemsBL\LongTaskBL.cs" />
     <Compile Include="SystemsBL\SentMailBL.cs" />
+    <Compile Include="WRElBL\AGENT_MSTBL.cs" />
+    <Compile Include="WRElBL\AGENT_THANA_ASSIGNINGBL.cs" />
+    <Compile Include="WRElBL\AGREEMENT_DETAILLBL.cs" />
+    <Compile Include="WRElBL\AGREEMENT_MSTBL.cs" />
+    <Compile Include="WRElBL\CARGO_CREATION_DETAILBL.cs" />
+    <Compile Include="WRElBL\CARGO_CREATOION_MSTBL.cs" />
+    <Compile Include="WRElBL\CARGO_TRACKINGBL.cs" />
     <Compile Include="WRElBL\CLIENT_MSTBL.cs" />
     <Compile Include="WRElBL\CLIENT_TYPE_MSTBL.cs" />
+    <Compile Include="WRElBL\CN_CREATION_MSTBL.cs" />
+    <Compile Include="WRElBL\CN_TRACKINGBL.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="General\" />

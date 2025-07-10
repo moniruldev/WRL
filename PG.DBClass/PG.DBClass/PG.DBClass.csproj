@@ -248,6 +248,13 @@
     <Compile Include="InventoryDC\SalesRequisitionDetails.cs" />
     <Compile Include="InventoryDC\StorePurchaseIndent.cs" />
     <Compile Include="InventoryDC\StoreRequisitionInfo.cs" />
+    <Compile Include="WRELDC\dcAGENT_MST.cs" />
+    <Compile Include="WRELDC\dcAGENT_THANA_ASSIGNING.cs" />
+    <Compile Include="WRELDC\dcAGREEMENT_DETAILL.cs" />
+    <Compile Include="WRELDC\dcAGREEMENT_MST.cs" />
+    <Compile Include="WRELDC\dcCARGO_CREATION_DETAIL.cs" />
+    <Compile Include="WRELDC\dcCARGO_CREATOION_MST.cs" />
+    <Compile Include="WRELDC\dcCARGO_TRACKING.cs" />
     <Compile Include="WRELDC\dcCLIENT_MST.cs" />
     <Compile Include="WRELDC\dcCLIENT_TYPE_MST.cs" />
     <Compile Include="OrganiztionDC\dcGeoLocation.cs" />
@@ -414,6 +421,8 @@
     <Compile Include="SystemDC\dcAppMenu.cs" />
     <Compile Include="SystemDC\dcLongTask.cs" />
     <Compile Include="SystemDC\dcSysOption.cs" />
+    <Compile Include="WRELDC\dcCN_CREATION_MST.cs" />
+    <Compile Include="WRELDC\dcCN_TRACKING.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
