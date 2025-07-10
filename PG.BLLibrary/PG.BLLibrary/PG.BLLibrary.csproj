@@ -202,6 +202,13 @@
     <Compile Include="WRElBL\CLIENT_TYPE_MSTBL.cs" />
     <Compile Include="WRElBL\CN_CREATION_MSTBL.cs" />
     <Compile Include="WRElBL\CN_TRACKINGBL.cs" />
+    <Compile Include="WRElBL\DELIVERY_MAN_MSTBL.cs" />
+    <Compile Include="WRElBL\DEPARTMENT_MSTBL.cs" />
+    <Compile Include="WRElBL\DISTANCE_TYPE_MSTBL.cs" />
+    <Compile Include="WRElBL\DISTRICT_MSTBL.cs" />
+    <Compile Include="WRElBL\EMPLOYEE_MSTBL.cs" />
+    <Compile Include="WRElBL\HUB_MSTBL.cs" />
+    <Compile Include="WRElBL\HUB_TYPE_MSTBL.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="General\" />

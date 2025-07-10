@@ -423,6 +423,13 @@
     <Compile Include="SystemDC\dcSysOption.cs" />
     <Compile Include="WRELDC\dcCN_CREATION_MST.cs" />
     <Compile Include="WRELDC\dcCN_TRACKING.cs" />
+    <Compile Include="WRELDC\dcDELIVERY_MAN_MST.cs" />
+    <Compile Include="WRELDC\dcDEPARTMENT_MST.cs" />
+    <Compile Include="WRELDC\dcDISTANCE_TYPE_MST.cs" />
+    <Compile Include="WRELDC\dcDISTRICT_MST.cs" />
+    <Compile Include="WRELDC\dcEMPLOYEE_MST.cs" />
+    <Compile Include="WRELDC\dcHUB_MST.cs" />
+    <Compile Include="WRELDC\dcHUB_TYPE_MST.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
