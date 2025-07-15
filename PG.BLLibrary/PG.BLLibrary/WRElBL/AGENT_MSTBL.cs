@@ -2,6 +2,7 @@
 using PG.DBClass.WRELDC;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Linq;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,31 @@ namespace PG.BLLibrary.WRElBL
             DataLoadOptions dlo = new DataLoadOptions();
             //dlo.LoadWith<DBClass.dcAGENT_MST>(obj => obj.relatedclassname);
             return dlo;
+        }
+
+        public static string GetAgentSQLString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(" SELECT * ");
+            sb.Append(" FROM AGENT_MST  ");
+
+            sb.Append(" WHERE 1=1 ");
+
+            return sb.ToString();
+        }
+
+        public static string GetAgentListString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(" SELECT AGENT_ID,AGENT_COMPANY_NAME,OWNER_NAME,OWNER_MOBILE_NO,CONTACT_PERSON,CONTACT_MOBILE_NO,BANK_NAME,BRANCH,ACCOUNT_NO,IS_ACTIVE ");
+            sb.Append(" FROM AGENT_MST  ");
+
+            sb.Append(" WHERE IS_ACTIVE='Y' ");
+
+
+            return sb.ToString();
         }
         public static List<dcAGENT_MST> GetAGENT_MSTList()
         {
@@ -72,6 +98,73 @@ namespace PG.BLLibrary.WRElBL
             finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
             return cObj;
         }
+
+        public static dcAGENT_MST GetAgentInfoById(int pAgent_ID)
+        {
+            return GetAgentInfoById(pAgent_ID, null).FirstOrDefault();
+        }
+        public static List<dcAGENT_MST> GetAgentInfoById(int pAgent_ID, DBContext dc)
+        {
+            List<dcAGENT_MST> cObjList = new List<dcAGENT_MST>();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetAgentSQLString());
+                if (pAgent_ID > 0)
+                {
+                    sb.Append(" AND AGENT_ID= @pAgent_ID ");
+                    cmdInfo.DBParametersInfo.Add("@pAgent_ID", pAgent_ID);
+                }
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcAGENT_MST>(dbq, dc);
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
+        }
+
+        public static List<dcAGENT_MST> GetAgentList(dcAGENT_MST prmHms, DBContext dc)
+        {
+            List<dcAGENT_MST> cObjList = new List<dcAGENT_MST>();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetAgentSQLString());
+
+
+
+
+                if (prmHms.IS_ACTIVE != "0")
+                {
+                    sb.Append(" AND IS_ACTIVE= @IS_ACTIVE ");
+                    cmdInfo.DBParametersInfo.Add("@IS_ACTIVE", prmHms.IS_ACTIVE);
+                }
+
+
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcAGENT_MST>(dbq, dc);
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
+        }
+
 
         public static int Insert(dcAGENT_MST cObj)
         {

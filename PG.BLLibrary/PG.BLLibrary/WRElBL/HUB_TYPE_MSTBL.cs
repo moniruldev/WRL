@@ -2,6 +2,7 @@
 using PG.DBClass.WRELDC;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Linq;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,31 @@ namespace PG.BLLibrary.WRElBL
             DataLoadOptions dlo = new DataLoadOptions();
             //dlo.LoadWith<DBClass.dcHUB_TYPE_MST>(obj => obj.relatedclassname);
             return dlo;
+        }
+
+        public static string GetHUB_TYPESQLString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(" SELECT * ");
+            sb.Append(" FROM HUB_TYPE_MST  ");
+
+            sb.Append(" WHERE 1=1 ");
+
+            return sb.ToString();
+        }
+
+        public static string GetHUB_TYPEListString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(" SELECT HUB_TYPE_ID,HUB_TYPE_NAME,DESCRIPTION,IS_ACTIVE ");
+            sb.Append(" FROM HUB_TYPE_MST  ");
+
+            sb.Append(" WHERE IS_ACTIVE='Y' ");
+
+
+            return sb.ToString();
         }
         public static List<dcHUB_TYPE_MST> GetHUB_TYPE_MSTList()
         {
@@ -72,6 +98,109 @@ namespace PG.BLLibrary.WRElBL
             finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
             return cObj;
         }
+        public static List<dcHUB_TYPE_MST> GetHUB_TYPEComboList()
+        {
+            return GetHUB_TYPEInfoById(0,null);
+        }
+        public static dcHUB_TYPE_MST GetHUB_TYPEInfoById(int pHub_TYPE_ID)
+        {
+            return GetHUB_TYPEInfoById(pHub_TYPE_ID, null).FirstOrDefault();
+        }
+        public static List<dcHUB_TYPE_MST> GetHUB_TYPEInfoById(int pHub_TYPE_ID, DBContext dc)
+        {
+            List<dcHUB_TYPE_MST> cObjList = new List<dcHUB_TYPE_MST>();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetHUB_TYPESQLString());
+                if (pHub_TYPE_ID > 0)
+                {
+                    sb.Append(" AND HUB_TYPE_ID= @pHub_TYPE_ID ");
+                    cmdInfo.DBParametersInfo.Add("@pHub_TYPE_ID", pHub_TYPE_ID);
+                }
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcHUB_TYPE_MST>(dbq, dc);
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
+        }
+
+        public static List<dcHUB_TYPE_MST> GetHUB_TYPEList(dcHUB_TYPE_MST prmHms, DBContext dc)
+        {
+            List<dcHUB_TYPE_MST> cObjList = new List<dcHUB_TYPE_MST>();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetHUB_TYPESQLString());
+
+
+
+
+                if (prmHms.IS_ACTIVE != "0")
+                {
+                    sb.Append(" AND IS_ACTIVE= @IS_ACTIVE ");
+                    cmdInfo.DBParametersInfo.Add("@IS_ACTIVE", prmHms.IS_ACTIVE);
+                }
+
+
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcHUB_TYPE_MST>(dbq, dc);
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
+        }
+
+        public static List<dcHUB_TYPE_MST> GetHUB_TYPEComboList( DBContext dc)
+        {
+            List<dcHUB_TYPE_MST> cObjList = new List<dcHUB_TYPE_MST>();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetHUB_TYPESQLString());
+
+
+
+
+               
+                    sb.Append(" AND IS_ACTIVE= 'Y' ");
+                    
+               
+
+
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcHUB_TYPE_MST>(dbq, dc);
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
+        }
+
 
         public static int Insert(dcHUB_TYPE_MST cObj)
         {
@@ -100,7 +229,7 @@ namespace PG.BLLibrary.WRElBL
         public static bool Update(dcHUB_TYPE_MST cObj, DBContext dc)
         {
             bool isDCInit = false;
-            int cnt = 0;
+            int cnt = 0; 
             isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
             using (DataContext dataContext = dc.NewDataContext())
             {
