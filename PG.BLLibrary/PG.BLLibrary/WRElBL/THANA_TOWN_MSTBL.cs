@@ -9,25 +9,35 @@ using System.Threading.Tasks;
 
 namespace PG.BLLibrary.WRElBL
 {
-    public class CARGO_CREATOION_MSTBL
+    public class THANA_TOWN_MSTBL
     {
-        public static DataLoadOptions CARGO_CREATOION_MSTLoadOptions()
+        public static DataLoadOptions THANA_TOWN_MSTLoadOptions()
         {
             DataLoadOptions dlo = new DataLoadOptions();
-            //dlo.LoadWith<DBClass.dcCARGO_CREATOION_MST>(obj => obj.relatedclassname);
+            //dlo.LoadWith<DBClass.dcTHANA_TOWN_MST>(obj => obj.relatedclassname);
             return dlo;
         }
-        public static List<dcCARGO_CREATOION_MST> GetCARGO_CREATOION_MSTList()
+        public static string GetTownSQLString()
         {
-            return GetCARGO_CREATOION_MSTList(null, null);
+            StringBuilder sb = new StringBuilder();
+            sb.Append(" SELECT T.*,D.DIST_NAME  ");
+            sb.Append(" FROM THANA_TOWN_MST T ");
+            sb.Append(" INNER JOIN DISTRICT_MST D ON T.DIST_ID=D.DIST_ID ");
+            sb.Append(" WHERE 1=1 ");
+
+            return sb.ToString();
         }
-        public static List<dcCARGO_CREATOION_MST> GetCARGO_CREATOION_MSTList(DBContext dc)
+        public static List<dcTHANA_TOWN_MST> GetTHANA_TOWN_MSTList()
         {
-            return GetCARGO_CREATOION_MSTList(null, dc);
+            return GetTHANA_TOWN_MSTList(null, null);
         }
-        public static List<dcCARGO_CREATOION_MST> GetCARGO_CREATOION_MSTList(DBQuery dbq, DBContext dc)
+        public static List<dcTHANA_TOWN_MST> GetTHANA_TOWN_MSTList(DBContext dc)
         {
-            List<dcCARGO_CREATOION_MST> cObjList = new List<dcCARGO_CREATOION_MST>();
+            return GetTHANA_TOWN_MSTList(null, dc);
+        }
+        public static List<dcTHANA_TOWN_MST> GetTHANA_TOWN_MSTList(DBQuery dbq, DBContext dc)
+        {
+            List<dcTHANA_TOWN_MST> cObjList = new List<dcTHANA_TOWN_MST>();
             bool isDCInit = false;
             try
             {
@@ -39,28 +49,28 @@ namespace PG.BLLibrary.WRElBL
                         dbq = new DBQuery();
                         //dbq.OrderBy = "YearStartDate Desc";
                     }
-                    cObjList = DBQuery.ExecuteDBQuery<dcCARGO_CREATOION_MST>(dbq, dc);
+                    cObjList = DBQuery.ExecuteDBQuery<dcTHANA_TOWN_MST>(dbq, dc);
                 }
             }
             catch { throw; }
             finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
             return cObjList;
         }
-        public static dcCARGO_CREATOION_MST GetCARGO_CREATOION_MSTByID(int pCARGO_CREATOION_MSTID)
+        public static dcTHANA_TOWN_MST GetTHANA_TOWN_MSTByID(int pTHANA_TOWN_MSTID)
         {
-            return GetCARGO_CREATOION_MSTByID(pCARGO_CREATOION_MSTID, null);
+            return GetTHANA_TOWN_MSTByID(pTHANA_TOWN_MSTID, null);
         }
-        public static dcCARGO_CREATOION_MST GetCARGO_CREATOION_MSTByID(int pCARGO_CREATOION_MSTID, DBContext dc)
+        public static dcTHANA_TOWN_MST GetTHANA_TOWN_MSTByID(int pTHANA_TOWN_MSTID, DBContext dc)
         {
-            dcCARGO_CREATOION_MST cObj = null;
+            dcTHANA_TOWN_MST cObj = null;
             bool isDCInit = false;
             try
             {
                 isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
                 using (DataContext dataContext = dc.NewDataContext())
                 {
-                    var result = (from c in dataContext.GetTable<dcCARGO_CREATOION_MST>()
-                                  where c.CARGO_ID == pCARGO_CREATOION_MSTID
+                    var result = (from c in dataContext.GetTable<dcTHANA_TOWN_MST>()
+                                  where c.TOWN_ID == pTHANA_TOWN_MSTID
                                   select c).ToList();
                     if (result.Count() > 0)
                     {
@@ -73,79 +83,79 @@ namespace PG.BLLibrary.WRElBL
             return cObj;
         }
 
-        public static int Insert(dcCARGO_CREATOION_MST cObj)
+        public static int Insert(dcTHANA_TOWN_MST cObj)
         {
             return Insert(cObj, null);
         }
 
-        public static int Insert(dcCARGO_CREATOION_MST cObj, DBContext dc)
+        public static int Insert(dcTHANA_TOWN_MST cObj, DBContext dc)
         {
             bool isDCInit = false;
             int id = 0;
             isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
             using (DataContext dataContext = dc.NewDataContext())
             {
-                id = dc.DoInsert<dcCARGO_CREATOION_MST>(cObj, true);
-                if (id > 0) { cObj.CARGO_ID = id; }
+                id = dc.DoInsert<dcTHANA_TOWN_MST>(cObj, true);
+                if (id > 0) { cObj.TOWN_ID = id; }
             }
             DBContextManager.ReleaseDBContext(ref dc, isDCInit);
             return id;
         }
 
-        public static bool Update(dcCARGO_CREATOION_MST cObj)
+        public static bool Update(dcTHANA_TOWN_MST cObj)
         {
             return Update(cObj, null);
         }
 
-        public static bool Update(dcCARGO_CREATOION_MST cObj, DBContext dc)
+        public static bool Update(dcTHANA_TOWN_MST cObj, DBContext dc)
         {
             bool isDCInit = false;
             int cnt = 0;
             isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
             using (DataContext dataContext = dc.NewDataContext())
             {
-                cnt = dc.DoUpdate<dcCARGO_CREATOION_MST>(cObj);
+                cnt = dc.DoUpdate<dcTHANA_TOWN_MST>(cObj);
             }
             DBContextManager.ReleaseDBContext(ref dc, isDCInit);
             return cnt > 0;
         }
 
-        public static bool Delete(int pCARGO_CREATOION_MSTID)
+        public static bool Delete(int pTHANA_TOWN_MSTID)
         {
-            return Delete(pCARGO_CREATOION_MSTID, null);
+            return Delete(pTHANA_TOWN_MSTID, null);
         }
-        public static bool Delete(int pCARGO_CREATOION_MSTID, DBContext dc)
+        public static bool Delete(int pTHANA_TOWN_MSTID, DBContext dc)
         {
-            dcCARGO_CREATOION_MST cObj = new dcCARGO_CREATOION_MST();
-            cObj.CARGO_ID = pCARGO_CREATOION_MSTID;
+            dcTHANA_TOWN_MST cObj = new dcTHANA_TOWN_MST();
+            cObj.TOWN_ID = pTHANA_TOWN_MSTID;
             bool isDCInit = false;
             int cnt = 0;
             isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
             using (DataContext dataContext = dc.NewDataContext())
             {
-                cnt = dc.DoDelete<dcCARGO_CREATOION_MST>(cObj);
+                cnt = dc.DoDelete<dcTHANA_TOWN_MST>(cObj);
             }
             DBContextManager.ReleaseDBContext(ref dc, isDCInit);
             return cnt > 0;
         }
 
-        public static int Save(dcCARGO_CREATOION_MST cObj, bool isAdd)
+        public static int Save(dcTHANA_TOWN_MST cObj, bool isAdd)
         {
             return Save(cObj, isAdd, null);
         }
 
-        public static int Save(dcCARGO_CREATOION_MST cObj, bool isAdd, DBContext dc)
+        public static int Save(dcTHANA_TOWN_MST cObj, bool isAdd, DBContext dc)
         {
             cObj._RecordState = isAdd ? RecordStateEnum.Added : RecordStateEnum.Edited;
             return Save(cObj, dc);
         }
 
-        public static int Save(dcCARGO_CREATOION_MST cObj)
+        public static int Save(dcTHANA_TOWN_MST cObj)
         {
             return Save(cObj, null);
         }
 
-        public static int Save(dcCARGO_CREATOION_MST cObj, DBContext dc)
+        public static int Save(dcTHANA_TOWN_MST cObj, DBContext dc)
         {
             int newID = 0;
             bool isDCInit = false;
@@ -165,11 +175,11 @@ namespace PG.BLLibrary.WRElBL
                         case RecordStateEnum.Edited:
                             if (Update(cObj, dc))
                             {
-                                newID = cObj.CARGO_ID;
+                                newID = cObj.TOWN_ID;
                             }
                             break;
                         case RecordStateEnum.Deleted:
-                            if (Delete(cObj.CARGO_ID, dc))
+                            if (Delete(cObj.TOWN_ID, dc))
                             {
                                 newID = 1;
                             }
@@ -204,31 +214,31 @@ namespace PG.BLLibrary.WRElBL
             return newID;
         }
 
-        public static bool SaveList(List<dcCARGO_CREATOION_MST> detList)
+        public static bool SaveList(List<dcTHANA_TOWN_MST> detList)
         {
             return SaveList(detList, null);
         }
 
-        public static bool SaveList(List<dcCARGO_CREATOION_MST> detList, DBContext dc)
+        public static bool SaveList(List<dcTHANA_TOWN_MST> detList, DBContext dc)
         {
             bool bStatus = false;
             bool isDCInit = false;
             bool isTransInit = false;
             isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
             isTransInit = dc.StartTransaction();
-            foreach (dcCARGO_CREATOION_MST oDet in detList)
+            foreach (dcTHANA_TOWN_MST oDet in detList)
             {
                 switch (oDet._RecordState)
                 {
-                    //case Interwave.Core.DBClass.RecordStateEnum.Added:
-                    //    int a = Insert(oDet, dc);
-                    //    break;
-                    //case Interwave.Core.DBClass.RecordStateEnum.Edited:
-                    //    bool e = Update(oDet, dc);
-                    //    break;
-                    //case Interwave.Core.DBClass.RecordStateEnum.Deleted:
-                    //    bool d = Delete(oDet.CARGO_CREATOION_MSTID, dc);
-                    //    break;
+                    case RecordStateEnum.Added:
+                        int a = Insert(oDet, dc);
+                        break;
+                    case RecordStateEnum.Edited:
+                        bool e = Update(oDet, dc);
+                        break;
+                    case RecordStateEnum.Deleted:
+                        bool d = Delete(oDet.TOWN_ID, dc);
+                        break;
                     default:
                         break;
                 }

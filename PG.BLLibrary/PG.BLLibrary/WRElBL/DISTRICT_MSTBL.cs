@@ -17,6 +17,15 @@ namespace PG.BLLibrary.WRElBL
             //dlo.LoadWith<DBClass.dcDISTRICT_MST>(obj => obj.relatedclassname);
             return dlo;
         }
+
+        public static string GetDistrictSQLString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(" SELECT * FROM DISTRICT_MST ");
+            sb.Append(" WHERE 1=1 ");
+       
+            return sb.ToString();
+        }
         public static List<dcDISTRICT_MST> GetDISTRICT_MSTList()
         {
             return GetDISTRICT_MSTList(null, null);

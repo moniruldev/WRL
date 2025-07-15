@@ -161,6 +161,19 @@ namespace PG.Web.PageLinks
             get { return WebUtility.GetAbsoluteUrl("~/Service/HMS/GetCountryList.ashx"); }
         }
 
+        public static string GetLink_DistrictList
+        {
+            get { return WebUtility.GetAbsoluteUrl("~/Service/WREL/GetDistrictList.ashx"); }
+        }
+        public static string GetLink_TownList
+        {
+            get { return WebUtility.GetAbsoluteUrl("~/Service/WREL/GetTownList.ashx"); }
+        }
+        public static string GetLink_RouteList
+        {
+            get { return WebUtility.GetAbsoluteUrl("~/Service/WREL/GetRouteList.ashx"); }
+        }
+
         
         
     }

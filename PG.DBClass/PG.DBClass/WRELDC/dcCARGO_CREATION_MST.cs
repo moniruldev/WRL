@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace PG.DBClass.WRELDC
 {
-    [DBTable(Name = "CARGO_CREATOION_MST")]
-    public partial class dcCARGO_CREATOION_MST : DBBaseClass, INotifyPropertyChanged
+    [DBTable(Name = "CARGO_CREATION_MST")]
+    public partial class dcCARGO_CREATION_MST : DBBaseClass, INotifyPropertyChanged
     {
         #region private members
 
@@ -202,5 +202,10 @@ namespace PG.DBClass.WRELDC
         }
 
         #endregion //properties
+    }
+
+    public partial class dcCARGO_CREATION_MST
+    {
+       public List<dcCARGO_CREATION_DETAIL> cargoDetails = new List<dcCARGO_CREATION_DETAIL>();
     }
 }

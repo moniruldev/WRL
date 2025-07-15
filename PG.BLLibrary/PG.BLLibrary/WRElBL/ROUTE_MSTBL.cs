@@ -17,6 +17,15 @@ namespace PG.BLLibrary.WRElBL
             //dlo.LoadWith<DBClass.dcROUTE_MST>(obj => obj.relatedclassname);
             return dlo;
         }
+
+        public static string GetRouteMstSQLString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(" SELECT * FROM ROUTE_MST mst ");
+            sb.Append(" WHERE 1=1 ");
+
+            return sb.ToString();
+        }
         public static List<dcROUTE_MST> GetROUTE_MSTList()
         {
             return GetROUTE_MSTList(null, null);

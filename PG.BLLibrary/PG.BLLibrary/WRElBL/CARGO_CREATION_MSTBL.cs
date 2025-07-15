@@ -10,50 +10,76 @@ using System.Threading.Tasks;
 
 namespace PG.BLLibrary.WRElBL
 {
-    public class CLIENT_MSTBL
+    public class CARGO_CREATION_MSTBL
     {
-        public static DataLoadOptions CLIENT_MSTLoadOptions()
+        public static DataLoadOptions CARGO_CREATOION_MSTLoadOptions()
         {
             DataLoadOptions dlo = new DataLoadOptions();
-            //dlo.LoadWith<DBClass.dcCLIENT_MST>(obj => obj.relatedclassname);
+            //dlo.LoadWith<DBClass.dcCARGO_CREATION_MST>(obj => obj.relatedclassname);
             return dlo;
         }
 
-        public static string GetCLIENTMstSQLString()
+        public static string GetGuestListString()
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append(" SELECT C.*,ct.type_name CLIENT_TYPE_NAME ");
-            sb.Append(" FROM CLIENT_MST c ");
-            sb.Append(" INNER JOIN client_type_mst CT ON c.client_type_id=CT.client_type_id ");
+            sb.Append(" SELECT G.*,R.CHECK_IN,R.CHECK_OUT,R.RESERVATION_ID,R.NOTE,C.COUNTRY_NAME ");
+            sb.Append(" FROM HMGUEST_MST G ");
+            sb.Append(" INNER JOIN HMRESERVATION_MST R ON G.GUEST_ID=R.GUEST_ID ");
+            sb.Append(" INNER JOIN HMCOUNTRY_MST C ON G.COUNTRY_ID=C.COUNTRY_ID ");
             sb.Append(" WHERE 1=1 ");
 
             return sb.ToString();
         }
 
-        public static string GetCLIENTMstListString()
+        public static dcCARGO_CREATION_MST GetCargoMstInfoById(int pGuestId)
         {
-            StringBuilder sb = new StringBuilder();
-
-            sb.Append(" SELECT CLIENT_ID,CLIENT_NAME,CLIENT_MST_ID,CLIENT_ADDRESS,MOBILE_NO,REMARKS ");
-            sb.Append(" FROM CLIENT_MST  ");
-
-            sb.Append(" WHERE IS_ACTIVE='Y' ");
-
-
-            return sb.ToString();
+            return GetCargoMstList(pGuestId, null).FirstOrDefault();
         }
-        public static List<dcCLIENT_MST> GetCLIENT_MSTList()
+
+        public static List<dcCARGO_CREATION_MST> GetCargoMstList()
         {
-            return GetCLIENT_MSTList(null, null);
+            return GetCargoMstList(0, null);
         }
-        public static List<dcCLIENT_MST> GetCLIENT_MSTList(DBContext dc)
+
+        public static List<dcCARGO_CREATION_MST> GetCargoMstList(int pGuestId, DBContext dc)
         {
-            return GetCLIENT_MSTList(null, dc);
+            List<dcCARGO_CREATION_MST> cObjList = new List<dcCARGO_CREATION_MST>();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetGuestListString());
+                if (pGuestId > 0)
+                {
+                    sb.Append(" AND G.GUEST_ID= @pGuestId ");
+                    cmdInfo.DBParametersInfo.Add("@pGuestId", pGuestId);
+                }
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcCARGO_CREATION_MST>(dbq, dc);
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
         }
-        public static List<dcCLIENT_MST> GetCLIENT_MSTList(DBQuery dbq, DBContext dc)
+        public static List<dcCARGO_CREATION_MST> GetCARGO_CREATOION_MSTList()
         {
-            List<dcCLIENT_MST> cObjList = new List<dcCLIENT_MST>();
+            return GetCARGO_CREATOION_MSTList(null, null);
+        }
+        public static List<dcCARGO_CREATION_MST> GetCARGO_CREATOION_MSTList(DBContext dc)
+        {
+            return GetCARGO_CREATOION_MSTList(null, dc);
+        }
+        public static List<dcCARGO_CREATION_MST> GetCARGO_CREATOION_MSTList(DBQuery dbq, DBContext dc)
+        {
+            List<dcCARGO_CREATION_MST> cObjList = new List<dcCARGO_CREATION_MST>();
             bool isDCInit = false;
             try
             {
@@ -65,28 +91,28 @@ namespace PG.BLLibrary.WRElBL
                         dbq = new DBQuery();
                         //dbq.OrderBy = "YearStartDate Desc";
                     }
-                    cObjList = DBQuery.ExecuteDBQuery<dcCLIENT_MST>(dbq, dc);
+                    cObjList = DBQuery.ExecuteDBQuery<dcCARGO_CREATION_MST>(dbq, dc);
                 }
             }
             catch { throw; }
             finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
             return cObjList;
         }
-        public static dcCLIENT_MST GetCLIENT_MSTByID(int pCLIENT_MSTID)
+        public static dcCARGO_CREATION_MST GetCARGO_CREATOION_MSTByID(int pCARGO_CREATOION_MSTID)
         {
-            return GetCLIENT_MSTByID(pCLIENT_MSTID, null);
+            return GetCARGO_CREATOION_MSTByID(pCARGO_CREATOION_MSTID, null);
         }
-        public static dcCLIENT_MST GetCLIENT_MSTByID(int pCLIENT_MSTID, DBContext dc)
+        public static dcCARGO_CREATION_MST GetCARGO_CREATOION_MSTByID(int pCARGO_CREATOION_MSTID, DBContext dc)
         {
-            dcCLIENT_MST cObj = null;
+            dcCARGO_CREATION_MST cObj = null;
             bool isDCInit = false;
             try
             {
                 isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
                 using (DataContext dataContext = dc.NewDataContext())
                 {
-                    var result = (from c in dataContext.GetTable<dcCLIENT_MST>()
-                                  where c.CLIENT_ID == pCLIENT_MSTID
+                    var result = (from c in dataContext.GetTable<dcCARGO_CREATION_MST>()
+                                  where c.CARGO_ID == pCARGO_CREATOION_MSTID
                                   select c).ToList();
                     if (result.Count() > 0)
                     {
@@ -99,146 +125,79 @@ namespace PG.BLLibrary.WRElBL
             return cObj;
         }
 
-        public static dcCLIENT_MST GetCLIENT_MSTInfoById(int pCLIENT_ID)
-        {
-            return GetCLIENT_MSTInfoListById(pCLIENT_ID, null).FirstOrDefault();
-        }
-        public static List<dcCLIENT_MST> GetCLIENT_MSTInfoListById(int pCLIENT_ID, DBContext dc)
-        {
-            List<dcCLIENT_MST> cObjList = new List<dcCLIENT_MST>();
-            bool isDCInit = false;
-            try
-            {
-                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
-
-                DBCommandInfo cmdInfo = new DBCommandInfo();
-                StringBuilder sb = new StringBuilder(GetCLIENTMstSQLString());
-                if (pCLIENT_ID > 0)
-                {
-                    sb.Append(" AND c.CLIENT_ID= @pCLIENT_ID ");
-                    cmdInfo.DBParametersInfo.Add("@pCLIENT_ID", pCLIENT_ID);
-                }
-                DBQuery dbq = new DBQuery();
-                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
-                cmdInfo.CommandText = sb.ToString();
-                cmdInfo.CommandType = CommandType.Text;
-                dbq.DBCommandInfo = cmdInfo;
-
-                cObjList = DBQuery.ExecuteDBQuery<dcCLIENT_MST>(dbq, dc);
-            }
-            catch { throw; }
-            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
-            return cObjList;
-        }
-
-        public static List<dcCLIENT_MST> GetCLIENT_MSTListInfo(dcCLIENT_MST prmHms, DBContext dc)
-        {
-            List<dcCLIENT_MST> cObjList = new List<dcCLIENT_MST>();
-            bool isDCInit = false;
-            try
-            {
-                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
-
-                DBCommandInfo cmdInfo = new DBCommandInfo();
-                StringBuilder sb = new StringBuilder(GetCLIENTMstSQLString());
-
-
-
-
-                if (prmHms.IS_ACTIVE != "0")
-                {
-                    sb.Append(" AND c.IS_ACTIVE= @IS_ACTIVE ");
-                    cmdInfo.DBParametersInfo.Add("@IS_ACTIVE", prmHms.IS_ACTIVE);
-                }
-
-
-                DBQuery dbq = new DBQuery();
-                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
-                cmdInfo.CommandText = sb.ToString();
-                cmdInfo.CommandType = CommandType.Text;
-                dbq.DBCommandInfo = cmdInfo;
-
-                cObjList = DBQuery.ExecuteDBQuery<dcCLIENT_MST>(dbq, dc);
-            }
-            catch { throw; }
-            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
-            return cObjList;
-        }
-
-
-        public static int Insert(dcCLIENT_MST cObj)
+        public static int Insert(dcCARGO_CREATION_MST cObj)
         {
             return Insert(cObj, null);
         }
 
-        public static int Insert(dcCLIENT_MST cObj, DBContext dc)
+        public static int Insert(dcCARGO_CREATION_MST cObj, DBContext dc)
         {
             bool isDCInit = false;
             int id = 0;
             isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
             using (DataContext dataContext = dc.NewDataContext())
             {
-                id = dc.DoInsert<dcCLIENT_MST>(cObj, true);
-                if (id > 0) { cObj.CLIENT_ID = id; }
+                id = dc.DoInsert<dcCARGO_CREATION_MST>(cObj, true);
+                if (id > 0) { cObj.CARGO_ID = id; }
             }
             DBContextManager.ReleaseDBContext(ref dc, isDCInit);
             return id;
         }
 
-        public static bool Update(dcCLIENT_MST cObj)
+        public static bool Update(dcCARGO_CREATION_MST cObj)
         {
             return Update(cObj, null);
         }
 
-        public static bool Update(dcCLIENT_MST cObj, DBContext dc)
+        public static bool Update(dcCARGO_CREATION_MST cObj, DBContext dc)
         {
             bool isDCInit = false;
             int cnt = 0;
             isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
             using (DataContext dataContext = dc.NewDataContext())
             {
-                cnt = dc.DoUpdate<dcCLIENT_MST>(cObj);
+                cnt = dc.DoUpdate<dcCARGO_CREATION_MST>(cObj);
             }
             DBContextManager.ReleaseDBContext(ref dc, isDCInit);
             return cnt > 0;
         }
 
-        public static bool Delete(int pCLIENT_MSTID)
+        public static bool Delete(int pCARGO_CREATOION_MSTID)
         {
-            return Delete(pCLIENT_MSTID, null);
+            return Delete(pCARGO_CREATOION_MSTID, null);
         }
-        public static bool Delete(int pCLIENT_MSTID, DBContext dc)
+        public static bool Delete(int pCARGO_CREATOION_MSTID, DBContext dc)
         {
-            dcCLIENT_MST cObj = new dcCLIENT_MST();
-            cObj.CLIENT_ID = pCLIENT_MSTID;
+            dcCARGO_CREATION_MST cObj = new dcCARGO_CREATION_MST();
+            cObj.CARGO_ID = pCARGO_CREATOION_MSTID;
             bool isDCInit = false;
             int cnt = 0;
             isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
             using (DataContext dataContext = dc.NewDataContext())
             {
-                cnt = dc.DoDelete<dcCLIENT_MST>(cObj);
+                cnt = dc.DoDelete<dcCARGO_CREATION_MST>(cObj);
             }
             DBContextManager.ReleaseDBContext(ref dc, isDCInit);
             return cnt > 0;
         }
 
-        public static int Save(dcCLIENT_MST cObj, bool isAdd)
+        public static int Save(dcCARGO_CREATION_MST cObj, bool isAdd)
         {
             return Save(cObj, isAdd, null);
         }
 
-        public static int Save(dcCLIENT_MST cObj, bool isAdd, DBContext dc)
+        public static int Save(dcCARGO_CREATION_MST cObj, bool isAdd, DBContext dc)
         {
             cObj._RecordState = isAdd ? RecordStateEnum.Added : RecordStateEnum.Edited;
             return Save(cObj, dc);
         }
 
-        public static int Save(dcCLIENT_MST cObj)
+        public static int Save(dcCARGO_CREATION_MST cObj)
         {
             return Save(cObj, null);
         }
 
-        public static int Save(dcCLIENT_MST cObj, DBContext dc)
+        public static int Save(dcCARGO_CREATION_MST cObj, DBContext dc)
         {
             int newID = 0;
             bool isDCInit = false;
@@ -258,11 +217,11 @@ namespace PG.BLLibrary.WRElBL
                         case RecordStateEnum.Edited:
                             if (Update(cObj, dc))
                             {
-                                newID = cObj.CLIENT_ID;
+                                newID = cObj.CARGO_ID;
                             }
                             break;
                         case RecordStateEnum.Deleted:
-                            if (Delete(cObj.CLIENT_ID, dc))
+                            if (Delete(cObj.CARGO_ID, dc))
                             {
                                 newID = 1;
                             }
@@ -297,19 +256,19 @@ namespace PG.BLLibrary.WRElBL
             return newID;
         }
 
-        public static bool SaveList(List<dcCLIENT_MST> detList)
+        public static bool SaveList(List<dcCARGO_CREATION_MST> detList)
         {
             return SaveList(detList, null);
         }
 
-        public static bool SaveList(List<dcCLIENT_MST> detList, DBContext dc)
+        public static bool SaveList(List<dcCARGO_CREATION_MST> detList, DBContext dc)
         {
             bool bStatus = false;
             bool isDCInit = false;
             bool isTransInit = false;
             isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
             isTransInit = dc.StartTransaction();
-            foreach (dcCLIENT_MST oDet in detList)
+            foreach (dcCARGO_CREATION_MST oDet in detList)
             {
                 switch (oDet._RecordState)
                 {
@@ -320,7 +279,7 @@ namespace PG.BLLibrary.WRElBL
                     //    bool e = Update(oDet, dc);
                     //    break;
                     //case Interwave.Core.DBClass.RecordStateEnum.Deleted:
-                    //    bool d = Delete(oDet.CLIENT_MSTID, dc);
+                    //    bool d = Delete(oDet.CARGO_CREATOION_MSTID, dc);
                     //    break;
                     default:
                         break;

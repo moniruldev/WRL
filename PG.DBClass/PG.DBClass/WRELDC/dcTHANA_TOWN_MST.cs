@@ -8,17 +8,15 @@ using System.Threading.Tasks;
 
 namespace PG.DBClass.WRELDC
 {
-    [DBTable(Name = "CLIENT_MST")]
-    public partial class dcCLIENT_MST : DBBaseClass, INotifyPropertyChanged
+    [DBTable(Name = "THANA_TOWN_MST")]
+    public partial class dcTHANA_TOWN_MST : DBBaseClass, INotifyPropertyChanged
     {
         #region private members
 
-        private int m_CLIENT_ID = 0;
-        private string m_CLIENT_NAME = string.Empty;
-        private int m_CLIENT_TYPE_ID = 0;
-        private string m_CLIENT_ADDRESS = string.Empty;
-        private string m_MOBILE_NO = string.Empty;
-        private string m_REMARKS = string.Empty;
+        private int m_TOWN_ID = 0;
+        private string m_TOWN_NAME = string.Empty;
+        private int m_DIST_ID = 0;
+        private string m_IS_DEFAULT_TOWN = string.Empty;
         private string m_IS_ACTIVE = string.Empty;
         private string m_CREATE_BY = string.Empty;
         private DateTime? m_CREATE_DATE = null;
@@ -44,69 +42,47 @@ namespace PG.DBClass.WRELDC
         #region properties
 
 
-        [DBColumn(Name = "CLIENT_ID", Storage = "m_CLIENT_ID", DbType = "107", IsDbGenerated = true, SyncOnInsert = true, IsPrimaryKey = true, IsIdentity = true)]
-        public int CLIENT_ID
+        [DBColumn(Name = "TOWN_ID", Storage = "m_TOWN_ID", DbType = "107", IsDbGenerated = true, SyncOnInsert = true, IsPrimaryKey = true, IsIdentity = true)]
+        public int TOWN_ID
         {
-            get { return this.m_CLIENT_ID; }
+            get { return this.m_TOWN_ID; }
             set
             {
-                this.m_CLIENT_ID = value;
-                this.NotifyPropertyChanged("CLIENT_ID");
+                this.m_TOWN_ID = value;
+                this.NotifyPropertyChanged("TOWN_ID");
             }
         }
 
-        [DBColumn(Name = "CLIENT_NAME", Storage = "m_CLIENT_NAME", DbType = "126")]
-        public string CLIENT_NAME
+        [DBColumn(Name = "TOWN_NAME", Storage = "m_TOWN_NAME", DbType = "126")]
+        public string TOWN_NAME
         {
-            get { return this.m_CLIENT_NAME; }
+            get { return this.m_TOWN_NAME; }
             set
             {
-                this.m_CLIENT_NAME = value;
-                this.NotifyPropertyChanged("CLIENT_NAME");
+                this.m_TOWN_NAME = value;
+                this.NotifyPropertyChanged("TOWN_NAME");
             }
         }
 
-        [DBColumn(Name = "CLIENT_TYPE_ID", Storage = "m_CLIENT_TYPE_ID", DbType = "107")]
-        public int CLIENT_TYPE_ID
+        [DBColumn(Name = "DIST_ID", Storage = "m_DIST_ID", DbType = "107")]
+        public int DIST_ID
         {
-            get { return this.m_CLIENT_TYPE_ID; }
+            get { return this.m_DIST_ID; }
             set
             {
-                this.m_CLIENT_TYPE_ID = value;
-                this.NotifyPropertyChanged("CLIENT_TYPE_ID");
+                this.m_DIST_ID = value;
+                this.NotifyPropertyChanged("DIST_ID");
             }
         }
 
-        [DBColumn(Name = "CLIENT_ADDRESS", Storage = "m_CLIENT_ADDRESS", DbType = "126")]
-        public string CLIENT_ADDRESS
+        [DBColumn(Name = "IS_DEFAULT_TOWN", Storage = "m_IS_DEFAULT_TOWN", DbType = "126")]
+        public string IS_DEFAULT_TOWN
         {
-            get { return this.m_CLIENT_ADDRESS; }
+            get { return this.m_IS_DEFAULT_TOWN; }
             set
             {
-                this.m_CLIENT_ADDRESS = value;
-                this.NotifyPropertyChanged("CLIENT_ADDRESS");
-            }
-        }
-
-        [DBColumn(Name = "MOBILE_NO", Storage = "m_MOBILE_NO", DbType = "126")]
-        public string MOBILE_NO
-        {
-            get { return this.m_MOBILE_NO; }
-            set
-            {
-                this.m_MOBILE_NO = value;
-                this.NotifyPropertyChanged("MOBILE_NO");
-            }
-        }
-
-        [DBColumn(Name = "REMARKS", Storage = "m_REMARKS", DbType = "126")]
-        public string REMARKS
-        {
-            get { return this.m_REMARKS; }
-            set
-            {
-                this.m_REMARKS = value;
-                this.NotifyPropertyChanged("REMARKS");
+                this.m_IS_DEFAULT_TOWN = value;
+                this.NotifyPropertyChanged("IS_DEFAULT_TOWN");
             }
         }
 
@@ -168,8 +144,8 @@ namespace PG.DBClass.WRELDC
         #endregion //properties
     }
 
-    public partial class dcCLIENT_MST
-    {
-        public string CLIENT_TYPE_NAME { get; set; }
-    }
+     public partial class dcTHANA_TOWN_MST
+     {
+         public string DIST_NAME { get; set; }
+     }
 }
