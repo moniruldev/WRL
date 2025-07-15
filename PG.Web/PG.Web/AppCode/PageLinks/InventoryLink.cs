@@ -174,6 +174,12 @@ namespace PG.Web.PageLinks
             get { return WebUtility.GetAbsoluteUrl("~/Service/WREL/GetRouteList.ashx"); }
         }
 
+         public static string GetLink_CNMasterList
+        {
+            get { return WebUtility.GetAbsoluteUrl("~/Service/WREL/GetCNMasterList.ashx"); }
+        }
+        
+
         
         
     }

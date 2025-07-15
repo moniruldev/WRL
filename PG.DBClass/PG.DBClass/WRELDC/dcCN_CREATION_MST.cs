@@ -14,7 +14,7 @@ namespace PG.DBClass.WRELDC
         #region private members
 
         private int m_CN_ID = 0;
-        private decimal m_CN_NUMBER = 0;
+        private string m_CN_NUMBER = string.Empty;
         private int m_CLIENT_ID = 0;
         private int m_AGR_DETAIL_ID = 0;
         private int m_ITEM_ID = 0;
@@ -73,7 +73,7 @@ namespace PG.DBClass.WRELDC
         }
 
         [DBColumn(Name = "CN_NUMBER", Storage = "m_CN_NUMBER", DbType = "107")]
-        public decimal CN_NUMBER
+        public string CN_NUMBER
         {
             get { return this.m_CN_NUMBER; }
             set

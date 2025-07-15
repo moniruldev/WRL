@@ -17,6 +17,16 @@ namespace PG.BLLibrary.WRElBL
             //dlo.LoadWith<DBClass.dcCN_CREATION_MST>(obj => obj.relatedclassname);
             return dlo;
         }
+
+        public static string GetCNListSQLString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(" SELECT mst.* FROM CN_CREATION_MST mst ");
+            sb.Append(" WHERE 1=1 ");
+
+            return sb.ToString();
+        }
         public static List<dcCN_CREATION_MST> GetCN_CREATION_MSTList()
         {
             return GetCN_CREATION_MSTList(null, null);

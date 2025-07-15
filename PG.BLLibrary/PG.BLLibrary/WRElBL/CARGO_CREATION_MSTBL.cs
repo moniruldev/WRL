@@ -19,22 +19,19 @@ namespace PG.BLLibrary.WRElBL
             return dlo;
         }
 
-        public static string GetGuestListString()
+        public static string GetCargoMstListString()
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append(" SELECT G.*,R.CHECK_IN,R.CHECK_OUT,R.RESERVATION_ID,R.NOTE,C.COUNTRY_NAME ");
-            sb.Append(" FROM HMGUEST_MST G ");
-            sb.Append(" INNER JOIN HMRESERVATION_MST R ON G.GUEST_ID=R.GUEST_ID ");
-            sb.Append(" INNER JOIN HMCOUNTRY_MST C ON G.COUNTRY_ID=C.COUNTRY_ID ");
+            sb.Append(" SELECT mst.* FROM CARGO_CREATION_MST mst ");
             sb.Append(" WHERE 1=1 ");
 
             return sb.ToString();
         }
 
-        public static dcCARGO_CREATION_MST GetCargoMstInfoById(int pGuestId)
+        public static dcCARGO_CREATION_MST GetCargoMstInfoById(int pCargoMstId)
         {
-            return GetCargoMstList(pGuestId, null).FirstOrDefault();
+            return GetCargoMstList(pCargoMstId, null).FirstOrDefault();
         }
 
         public static List<dcCARGO_CREATION_MST> GetCargoMstList()
@@ -42,7 +39,7 @@ namespace PG.BLLibrary.WRElBL
             return GetCargoMstList(0, null);
         }
 
-        public static List<dcCARGO_CREATION_MST> GetCargoMstList(int pGuestId, DBContext dc)
+        public static List<dcCARGO_CREATION_MST> GetCargoMstList(int pCargoMstId, DBContext dc)
         {
             List<dcCARGO_CREATION_MST> cObjList = new List<dcCARGO_CREATION_MST>();
             bool isDCInit = false;
@@ -51,11 +48,11 @@ namespace PG.BLLibrary.WRElBL
                 isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
 
                 DBCommandInfo cmdInfo = new DBCommandInfo();
-                StringBuilder sb = new StringBuilder(GetGuestListString());
-                if (pGuestId > 0)
+                StringBuilder sb = new StringBuilder(GetCargoMstListString());
+                if (pCargoMstId > 0)
                 {
-                    sb.Append(" AND G.GUEST_ID= @pGuestId ");
-                    cmdInfo.DBParametersInfo.Add("@pGuestId", pGuestId);
+                    sb.Append(" AND mst.CARGO_ID= @pCargoMstId ");
+                    cmdInfo.DBParametersInfo.Add("@pCargoMstId", pCargoMstId);
                 }
                 DBQuery dbq = new DBQuery();
                 dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
@@ -234,9 +231,14 @@ namespace PG.BLLibrary.WRElBL
                     {
                         bool bStatus = false;
 
-                        ///code list save logic here
-
-                        bStatus = true;
+                        if (cObj.cargoDetails != null)
+                        {
+                            foreach (dcCARGO_CREATION_DETAIL det in cObj.cargoDetails)
+                            {
+                                det.CARGO_ID = newID;
+                            }
+                            bStatus = CARGO_CREATION_DETAILBL.SaveList(cObj.cargoDetails, dc);
+                        }
                         if (bStatus)
                         {
                             dc.CommitTransaction(isTransInit);

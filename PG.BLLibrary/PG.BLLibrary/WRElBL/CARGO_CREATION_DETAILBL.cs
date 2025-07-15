@@ -2,6 +2,7 @@
 using PG.DBClass.WRELDC;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Linq;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,57 @@ namespace PG.BLLibrary.WRElBL
             DataLoadOptions dlo = new DataLoadOptions();
             //dlo.LoadWith<DBClass.dcCARGO_CREATION_DETAIL>(obj => obj.relatedclassname);
             return dlo;
+        }
+
+        public static string GetCargoDtlListString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(" SELECT DTL.*,CN.CN_NUMBER  ");
+            sb.Append(" FROM CARGO_CREATION_DETAIL DTL ");
+            sb.Append(" INNER JOIN CARGO_CREATION_MST MST ON DTL.CARGO_ID=MST.CARGO_ID ");
+            sb.Append(" INNER JOIN CN_CREATION_MST CN ON DTL.CN_ID=CN.CN_ID ");
+            sb.Append(" WHERE 1=1 ");
+
+            return sb.ToString();
+        }
+
+        public static dcCARGO_CREATION_DETAIL GetCargoDtlInfoByCargoId(int pCargoMstId)
+        {
+            return GetCargoDtlListByCargoId(pCargoMstId, null).FirstOrDefault();
+        }
+
+        public static List<dcCARGO_CREATION_DETAIL> GetCargoDtlList()
+        {
+            return GetCargoDtlListByCargoId(0, null);
+        }
+
+        public static List<dcCARGO_CREATION_DETAIL> GetCargoDtlListByCargoId(int pCargoMstId, DBContext dc)
+        {
+            List<dcCARGO_CREATION_DETAIL> cObjList = new List<dcCARGO_CREATION_DETAIL>();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetCargoDtlListString());
+                if (pCargoMstId > 0)
+                {
+                    sb.Append(" AND mst.CARGO_ID= @pCargoMstId ");
+                    cmdInfo.DBParametersInfo.Add("@pCargoMstId", pCargoMstId);
+                }
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcCARGO_CREATION_DETAIL>(dbq, dc);
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
         }
         public static List<dcCARGO_CREATION_DETAIL> GetCARGO_CREATION_DETAILList()
         {
@@ -220,15 +272,15 @@ namespace PG.BLLibrary.WRElBL
             {
                 switch (oDet._RecordState)
                 {
-                    //case Interwave.Core.DBClass.RecordStateEnum.Added:
-                    //    int a = Insert(oDet, dc);
-                    //    break;
-                    //case Interwave.Core.DBClass.RecordStateEnum.Edited:
-                    //    bool e = Update(oDet, dc);
-                    //    break;
-                    //case Interwave.Core.DBClass.RecordStateEnum.Deleted:
-                    //    bool d = Delete(oDet.CARGO_CREATION_DETAILID, dc);
-                    //    break;
+                    case RecordStateEnum.Added:
+                        int a = Insert(oDet, dc);
+                        break;
+                    case RecordStateEnum.Edited:
+                        bool e = Update(oDet, dc);
+                        break;
+                    case RecordStateEnum.Deleted:
+                        bool d = Delete(oDet.CARGO_DETAIL_ID, dc);
+                        break;
                     default:
                         break;
                 }

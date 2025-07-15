@@ -71,4 +71,9 @@ namespace PG.DBClass.WRELDC
 
         #endregion //properties
     }
+
+     public partial class dcCARGO_CREATION_DETAIL
+     {
+         public string CN_NUMBER { get; set; }
+     }
 }

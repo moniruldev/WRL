@@ -21,6 +21,8 @@
         var DistrictListServiceLink = '<%=this.DistrictListServiceLink%>';
         var TownListServiceLink = '<%=this.TownListServiceLink%>';
         var RouteListServiceLink = '<%=this.RouteListServiceLink%>';
+        var CNListServiceLink = '<%=this.CNListServiceLink%>';
+        
         
       
         var gridUpdatePanelIDDet = '<%=UpdatePanel1.ClientID%>';
@@ -43,19 +45,19 @@
 
         $(document).ready(function () {
 
-            //var pageInstance = Sys.WebForms.PageRequestManager.getInstance();
+            var pageInstance = Sys.WebForms.PageRequestManager.getInstance();
 
-            //pageInstance.add_pageLoaded(function (sender, args) {
-            //    var panels = args.get_panelsUpdated();
-            //    for (i = 0; i < panels.length; i++) {
+            pageInstance.add_pageLoaded(function (sender, args) {
+                var panels = args.get_panelsUpdated();
+                for (i = 0; i < panels.length; i++) {
 
-            //        if (panels[i].id == gridUpdatePanelIDDet) {
-            //            bindItemList(gridViewIDDet);
-            //        }
+                    if (panels[i].id == gridUpdatePanelIDDet) {
+                        bindItemList(gridViewIDDet);
+                    }
 
-            //    }
+                }
 
-            //});
+            });
 
 
             if ($('#' + txtStartingDist).is(':visible')) {
@@ -82,7 +84,7 @@
 
             }
 
-
+            bindItemList(gridViewIDDet);
 
 
 
@@ -354,6 +356,123 @@
                     $('#' + hdnRouteId).val('0');
                 }
             });
+        }
+
+        function bindItemList(gridViewID) {
+            var cgColumns = [{ 'columnName': 'cnnumber', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'CN Number' }
+                             , { 'columnName': 'billno', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Bill No' }
+                             , { 'columnName': 'invoiceno', 'width': '150', 'align': 'left', 'highlight': 4, 'label': 'InvoiceNo' }
+                             //, { 'columnName': 'itemgroupdesc', 'width': '150', 'align': 'left', 'highlight': 4, 'label': 'Group Name' }
+                             //, { 'columnName': 'closing_qty', 'width': '80', 'align': 'left', 'highlight': 4, 'label': 'Cls Qty' }
+                             //, { 'columnName': 'class_name', 'width': '120', 'align': 'left', 'highlight': 4, 'label': 'Class Name' }
+                             //, { 'columnName': 'item_type', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Item Type' }
+
+            ];
+
+           
+            var serviceURL = CNListServiceLink + "?isterm=1&includeempty=0&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+            serviceURL += "&ispaging=1";
+
+            var gridSelector = "#" + gridViewID;
+
+            $(gridSelector).find('input[id$="txtCNName"]').each(function (index, elem) {
+
+                var elemRow = $(elem).closest('tr.gridRow');
+
+                var hdnItemIDElem = $(elemRow).find('input[id$="txtCNName"]');
+
+                $(elem).closest('tr').find('input[id$="txtCNName"]').click(function (e) {
+                    elmID = $(elem).attr('id');
+                    $(elem).combogrid("dropdownClick");
+                });
+
+                $(elem).data("selectedItem", null);
+                $(elem).combogrid({
+                    debug: true,
+                    searchButton: false,
+                    resetButton: false,
+                    alternate: true,
+                    munit: 'px',
+                    scrollBar: true,
+                    showPager: true,
+                    colModel: cgColumns,
+                    autoFocus: true,
+                    showError: true,
+                    width: 400,
+                    url: serviceURL,
+                    search: function (event, ui) {
+                        debugger;
+                        var vgroupid = 0;
+                        var elemRowCur = $(elem).closest('tr.gridRow');
+                        var itemName = $(elemRowCur).find('input[id$="txtCNName"]').val();
+                       // vgroupid = $(elemRowCur).find('input[id$="hdngroupId"]').val();
+
+                        var newServiceURL = serviceURL;//+ "&groupid=" + vgroupid
+                        newServiceURL = JSUtility.AddTimeToQueryString(newServiceURL);
+                        $(this).combogrid("option", "url", newServiceURL);
+
+                    },
+
+                    select: function (event, ui) {
+                     
+                        elemID = $(elem).attr('id');
+                     
+                        if (!ui.item) {
+                            debugger;
+                            event.preventDefault();
+                            ClearItemData(elemID);
+                            return false;
+                        }
+
+                        if (ui.item.id == 0) {
+                            alert('item clear');
+                            debugger;
+                            event.preventDefault();
+                            return false;
+                        }
+                        else {
+                            $(elem).data("selectedItem", ui.item);
+                            SetItemData(elemID, ui.item);
+                        }
+                        return false;
+                    }
+
+                });
+
+                $(elem).blur(function () {
+                    var self = this;
+                    elemID = $(elem).attr('id');
+                    eCode = $(elem).val();
+
+                    isComboGridOpen = $(self).combogrid('isOpened');
+                    var selectedData = $(self).data("selectedItem");
+
+                    if (eCode === '') {
+                        ClearItemData(elemID);
+                    } else if (selectedData) {
+                       // SetItemData(elemID, selectedData);
+                    } else {
+                        ClearItemData(elemID);
+                    }
+
+                });
+
+            });
+
+        }
+
+        function ClearItemData(txtItemID) {
+            var detRow = $('#' + txtItemID).closest('tr.gridRow');
+            $(detRow).find('input[id$="hdnCNID"]').val('0');
+            $(detRow).find('input[id$="txtCNName"]').val('');
+        }
+      
+        function SetItemData(txtItemCodeID, data) {
+            $('#' + txtItemCodeID).val(data.cnnumber);
+            var detRow = $('#' + txtItemCodeID).closest('tr.gridRow');
+            $(detRow).find('input[id$="hdnCNID"]').val(data.cnid);
+            $(detRow).find('input[id$="txtCNName"]').val(data.cnnumber);
+
         }
       
 
@@ -667,7 +786,7 @@
                     <label for="name" class="col-sm-5 col-form-label-sm">Manager :</label>
                     <div class="col-sm-7">
                       <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtManagerName" placeholder="Enter Manager Name" ></asp:TextBox> 
-                       <asp:HiddenField runat="server" ID="txtManagerId" Value="0" /> 
+                       <asp:HiddenField runat="server" ID="hdnManagerId" Value="0" /> 
                     </div>
                   </div>
                 </div>
@@ -711,30 +830,44 @@
              <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" ShowHeader="true"
     CssClass="table table-sm table-striped table-bordered w-auto"  
     DataKeyNames="CARGO_ID" EnableModelValidation="True" ClientIDMode="AutoID"
-    OnRowDataBound="GridView1_RowDataBound" OnRowCommand="GridView1_RowCommand" OnRowDeleting="GridView1_RowDeleting">
+    OnRowDataBound="GridView1_RowDataBound" OnRowCommand="GridView1_RowCommand" OnRowDeleting="GridView1_RowDeleting" OnRowCreated="GridView1_RowCreated" >
     
     <HeaderStyle CssClass="table-info" Font-Size="Smaller" />
 
     <Columns>
-        <asp:TemplateField HeaderText="CN">
-            <ItemTemplate>
-                <div class="d-flex">
-                    <asp:TextBox ID="txtCNName" runat="server" CssClass="form-control form-control-sm" 
-                        Text='<%# Bind("CN_ID") %>' Style="width: 250px;"></asp:TextBox>
-                    <asp:HiddenField ID="hdnCNID" runat="server" Value='<%# Bind("CN_ID") %>' />
-                    <asp:HiddenField ID="hdnCargoDtlId" runat="server" Value='<%# Bind("CARGO_DETAIL_ID") %>' />
-                </div>
-            </ItemTemplate>
-        </asp:TemplateField>
+       <asp:TemplateField HeaderText="CN">
+    <ItemTemplate>
+        <div class="d-flex align-items-center">
+            <table>
+                <tr>
+                    <td class="p-0">
+                        <asp:TextBox ID="txtCNName" runat="server"
+                            CssClass="form-control form-control-sm"
+                            Style="width: 250px;"
+                            Text='<%# Bind("CN_NUMBER") %>'></asp:TextBox>
 
-        <asp:TemplateField HeaderText="Delete" ShowHeader="false">
-            <ItemTemplate>
-                <asp:LinkButton ID="btnDeleteRow" runat="server" CommandName="delete"
-                    CssClass="btn btn-sm btn-outline-danger ms-2" ToolTip="Delete">
-                    <i class="fa fa-trash"></i>
-                </asp:LinkButton>
-            </ItemTemplate>
-        </asp:TemplateField>
+                        <asp:HiddenField ID="hdnCNID" runat="server" Value='<%# Bind("CN_ID") %>' />
+                        <asp:HiddenField ID="hdnCargoDtlId" runat="server" Value='<%# Bind("CARGO_DETAIL_ID") %>' />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </ItemTemplate>
+</asp:TemplateField>
+
+<asp:TemplateField HeaderText="Delete" ShowHeader="false">
+    <ItemTemplate>
+        <div class="d-flex align-items-center justify-content-center">
+            <asp:LinkButton ID="btnDeleteRow" runat="server" CommandName="delete"
+                CssClass="btn btn-sm btn-outline-danger"
+                ToolTip="Delete">
+                <i class="fa fa-trash"></i>
+            </asp:LinkButton>
+        </div>
+    </ItemTemplate>
+    <ItemStyle VerticalAlign="Middle" HorizontalAlign="Center" />
+</asp:TemplateField>
+
     </Columns>
 </asp:GridView>
 
@@ -767,7 +900,7 @@
      <div class="row">
       <div class="col-md-12">
        <asp:LinkButton runat="server" ID="btnAddNew"  CssClass="btn btn-primary" Text="<i class='fa fa-plus'></i> Add New"></asp:LinkButton>
-       <asp:LinkButton runat="server" ID="btnSave" OnClick="btnSave_Click" CssClass="btn btn-primary" Text="<i class='fas fa-save'></i> Save"></asp:LinkButton>
+       <asp:LinkButton runat="server" ID="btnSave" OnClick="btnSave_Click" CssClass="btn btn-success" Text="<i class='fas fa-save'></i> Save"></asp:LinkButton>
        <asp:LinkButton runat="server" ID="btnEdit" OnClick="btnEdit_Click" CssClass="btn btn-primary" Text="<i class='fas fa-edit'></i> Edit"></asp:LinkButton>
      
       

@@ -30,12 +30,12 @@ namespace PG.Web.WREL
         string ViewStateKeyPrev = "CARGO_ID_PREV";
         ReportOpenTypeEnum ReportOpenType = ReportOpenTypeEnum.Preview;
         // int CompanyID = 0;
-       
+
         int CARGO_ID = 0;
         string saveMsg = string.Empty;
         string errMsg = string.Empty;
 
-        private  dcUser loggedinUser = null;
+        private dcUser loggedinUser = null;
         public string ReportViewPageLink = PageLinks.ReportLinks.GetLink_ReportView;
         public string ReportViewPDFPageLink = PageLinks.ReportLinks.GetLink_ReportViewPDF;
         public string ReportPrintPageLink = PageLinks.ReportLinks.GetLink_ReportPrint;
@@ -46,6 +46,7 @@ namespace PG.Web.WREL
         public string DistrictListServiceLink = PageLinks.InventoryLink.GetLink_DistrictList;
         public string TownListServiceLink = PageLinks.InventoryLink.GetLink_TownList;
         public string RouteListServiceLink = PageLinks.InventoryLink.GetLink_RouteList;
+        public string CNListServiceLink = PageLinks.InventoryLink.GetLink_CNMasterList;
 
         List<dcCARGO_CREATION_DETAIL> listDetails = new List<dcCARGO_CREATION_DETAIL>();
 
@@ -74,20 +75,20 @@ namespace PG.Web.WREL
             if (!IsPostBack) //first Time
             {
 
-              
+
                 hdnLoggedInUser.Value = loggedinUser.UserID.ToString();
                 //FillCombo();
 
 
-             
-              
+
+
 
                 if (this.CARGO_ID == 0) //not query string
                 {
                     //List<dcCARGO_CREATION_DETAIL> roomList = HMRESERVATION_DTLBL.GetRoomInfoList();
                     //GridView1.DataSource = roomList;
                     //GridView1.DataBind();
-                   
+
                     SetDate();
                     AddTask();
                     this.EditMode = FormDataMode.Add;
@@ -104,7 +105,7 @@ namespace PG.Web.WREL
                     {
                         ReadTask();
                     }
-                 
+
                 }
 
             }
@@ -116,7 +117,7 @@ namespace PG.Web.WREL
 
             SetHyperLink();
 
-          
+
             //this.ShowPageMessage(this.lblMessage);
             // Response.Write("UserID : " + this.UserID.ToString());
 
@@ -184,7 +185,7 @@ namespace PG.Web.WREL
             this.listDetails.Clear();
             CheckAndAddGridBlankRow();
             BindDataToGrid(this.listDetails);
-           //add
+            //add
             SetControl(FormDataMode.Add);
         }
         private void EditTask()
@@ -203,39 +204,19 @@ namespace PG.Web.WREL
             dcCARGO_CREATION_MST cObj = CARGO_CREATION_MSTBL.GetCargoMstInfoById(id);
             if (cObj != null)
             {
-                
-                //hdnCARGO_ID.Value = cObj.GUEST_ID.ToString();
-                //txtName.Text = cObj.GUEST_NAME;
-                //txtMobileNo.Text = cObj.MOBILE_NO;
-                //txtAddress.Text = cObj.ADDRESS;
-                //txtEmail.Text = cObj.EMAIL;
-                //txtPhoneNo.Text = cObj.PABX_NO;
-                //txtPassportNo.Text = cObj.PASSPORT_NO;
-                //txtBirthDate.Text = Convert.ToDateTime(cObj.DATE_OF_BIRTH).ToString("dd-MMM-yyyy");
-                //txtCheckInDate.Text = cObj.CHECK_IN.ToString("dd-MMM-yyyy");
-                //txtCheckOutDate.Text = cObj.CHECK_OUT.ToString("dd-MMM-yyyy");
-                //txtNote.Text = cObj.NOTE;
-                //rblGender.SelectedValue = cObj.GENDER;
-                //hdnCountryId.Value = cObj.COUNTRY_ID.ToString();
-                //txtCountry.Text = cObj.COUNTRY_NAME;
-                //hdnReservationId.Value = cObj.RESERVATION_ID.ToString();
-                //dcHMRESERVATION_MST objRMst = HMRESERVATION_MSTBL.GetResarvationMstById(cObj.RESERVATION_ID);
-                //if(objRMst.CONFIRMED_NOTE != "")
-                //{
-                //    btnConfirm.Enabled = false;
-                //    btnEdit.Enabled = false;
-                //    btnConfirm.CssClass="btn btn-primary disabled";
-                //    btnEdit.CssClass = "btn btn-primary disabled";
-                //}
-                //if (objRMst.CANCEL_NOTE != "")
-                //{
-                //    btnCancel.Enabled = false;
-                //    btnEdit.Enabled = false;
-                //    btnCancel.CssClass = "btn btn-danger disabled";
-                //    btnEdit.CssClass = "btn btn-primary disabled";
-                //}
 
-                //this.listDetails = HMRESERVATION_DTLBL.GetResarvationInfoListById(cObj.RESERVATION_ID);
+                hdnCARGO_ID.Value = cObj.CARGO_ID.ToString();
+                txtCargoNo.Text = cObj.CARGO_NUMBER;
+                txtCargoDate.Text = cObj.CARGO_DATE.ToString();
+                hdnStartingDistId.Value = cObj.CARGO_STARTING_DIS_ID.ToString();
+                hdnDestDistId.Value = cObj.CARGO_DESTINATION_DIST_ID.ToString();
+                hdnDestTownId.Value = cObj.CARGO_DESTINATION_TOWN_ID.ToString();
+                hdnRouteId.Value = cObj.ROUTE_ID.ToString();
+                hdnManagerId.Value = cObj.MANAGER_ID;
+                txtWeight.Text = cObj.WEIGHT_IN_KG.ToString("0.##");
+                txtRemarks.Text = cObj.REMARKS;
+
+                this.listDetails = CARGO_CREATION_DETAILBL.GetCargoDtlListByCargoId(cObj.CARGO_ID,null);
                 BindDataToGrid(listDetails);
 
                 bStatus = true;
@@ -265,7 +246,7 @@ namespace PG.Web.WREL
             //txtBirthDate.Enabled = isEnabled;
             //txtCountry.Enabled = isEnabled;
             //rblGender.Enabled = isEnabled;
-            
+
             //buttons
             btnAddNew.Visible = !isEnabled;
             btnEdit.Visible = !isEnabled;
@@ -285,18 +266,18 @@ namespace PG.Web.WREL
                 case DataControlRowType.DataRow:
                     e.Row.CssClass += " gridRow";
                     break;
-                case DataControlRowType.Header:
-                    e.Row.CssClass += " headerRow";
-                    break;
-                case DataControlRowType.Footer:
-                    e.Row.CssClass += " footerRow";
-                    break;
-                case DataControlRowType.Pager:
-                    e.Row.CssClass += " pagerRow";
-                    break;
-                case DataControlRowType.EmptyDataRow:
-                    e.Row.CssClass += " gridRow";
-                    break;
+                //case DataControlRowType.Header:
+                //    e.Row.CssClass += " headerRow";
+                //    break;
+                //case DataControlRowType.Footer:
+                //    e.Row.CssClass += " footerRow";
+                //    break;
+                //case DataControlRowType.Pager:
+                //    e.Row.CssClass += " pagerRow";
+                //    break;
+                //case DataControlRowType.EmptyDataRow:
+                //    e.Row.CssClass += " gridRow";
+                //    break;
             }
         }
 
@@ -312,24 +293,24 @@ namespace PG.Web.WREL
                 //for (int i = 0; i <= Convert.ToInt32(hdnNoOfRoom.Value); i++)
                 //{
                 //    ddlNoOfRoom.Items.Add(i.ToString());
-                    
+
                 //}
 
                 //foreach (dcCARGO_CREATION_DETAIL item in this.listDetails)
                 //{
                 //    hdnReservationDtlId.Value = item.CARGO_DETAIL_ID.ToString();
-                 
-                    
+
+
                 //}
 
 
                 string rowID = e.Row.ClientID;
                 string js = string.Format("return ShowDetailsPopup('{0}');", rowID);
-               
+
             }
 
 
-           
+
         }
 
 
@@ -383,7 +364,7 @@ namespace PG.Web.WREL
 
         }
 
-      
+
 
         private void SetControlGrid(FormDataMode dataMode)
         {
@@ -456,6 +437,9 @@ namespace PG.Web.WREL
             strD = ((HiddenField)gvR.FindControl("hdnCNID")).Value;
             cObj.CN_ID = Conversion.StringToInt(strD);
 
+            strD = ((TextBox)gvR.FindControl("txtCNName")).Text;
+            cObj.CN_NUMBER = strD;
+
 
             if (!gvR.Visible)
             {
@@ -486,11 +470,11 @@ namespace PG.Web.WREL
                 if (bStatus)
                 {
                     ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Data Saved Successfully');", true);
-                   
+
                 }
                 else
                 {
-                    
+
                     ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Error !! Data not Saved');", true);
                 }
 
@@ -517,7 +501,7 @@ namespace PG.Web.WREL
                 //    y = false;
 
                 //}
-                
+
             }
 
             return y;
@@ -526,7 +510,7 @@ namespace PG.Web.WREL
         private bool CheckData()
         {
             errMsg = string.Empty;
-          
+
             //if(txtCheckInDate.Text == "")
             //{
             //    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Enter Check In Date !!');", true);
@@ -583,8 +567,8 @@ namespace PG.Web.WREL
             }
             else
             {
-                
-                
+
+
                 ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('" + errMsg + "');", true);
                 this.SetPageMessage(errMsg, MessageTypeEnum.InvalidData);
                 return false;
@@ -619,52 +603,60 @@ namespace PG.Web.WREL
             bool bStatus = false;
             bool isAdd = false;
             int newCARGO_ID = 0;
-            dcCARGO_CREATION_MST cargoMst = new dcCARGO_CREATION_MST();
-            if(this.CARGO_ID > 0)
+            dcCARGO_CREATION_MST cObj = new dcCARGO_CREATION_MST();
+            if (this.CARGO_ID > 0)
             {
-                
-                cargoMst.CARGO_ID = this.CARGO_ID;
-                cargoMst._RecordState = RecordStateEnum.Edited;
+
+                cObj.CARGO_ID = this.CARGO_ID;
+                cObj._RecordState = RecordStateEnum.Edited;
             }
             else
             {
-                cargoMst._RecordState = RecordStateEnum.Added;
+                cObj._RecordState = RecordStateEnum.Added;
                 isAdd = true;
+            }
+
+            cObj.CARGO_NUMBER = txtCargoNo.Text.Trim();
+            cObj.CARGO_DATE = Conversion.StringToDate(txtCargoDate.Text);
+            cObj.CARGO_STARTING_DIS_ID = Conversion.StringToInt(hdnStartingDistId.Value);
+            cObj.CARGO_DESTINATION_DIST_ID = Conversion.StringToInt(hdnStartingDistId.Value);
+            cObj.CARGO_DESTINATION_TOWN_ID = Conversion.StringToInt(hdnStartingDistId.Value);
+            cObj.ROUTE_ID = Conversion.StringToInt(hdnStartingDistId.Value);
+            cObj.MANAGER_ID = hdnManagerId.Value;
+            cObj.WEIGHT_IN_KG = Conversion.StringToDecimal(txtWeight.Text);
+            cObj.REMARKS = txtRemarks.Text.Trim();
+
+
+            if (isAdd)
+            {
+                cObj.CREATE_BY = loggedinUser.UserName;
+                cObj.CREATE_DATE = DateTime.Now;
+
+            }
+            else
+            {
+                cObj.EDIT_BY = loggedinUser.UserName;
+                cObj.EDIT_DATE = DateTime.Now;
+
             }
 
 
 
-             
-                if(isAdd)
-                {
-                    cargoMst.CREATE_BY = loggedinUser.UserName;
-                    cargoMst.CREATE_DATE = DateTime.Now;
-                   
-                }
-                else
-                {
-                    //cargoMst.UPDATE_BY = loggedinUser.UserName;
-                    //cargoMst.UPDATE_DATE = DateTime.Now;
+            cObj.cargoDetails = this.listDetails;
 
-                }
-
-             
-
-                cargoMst.cargoDetails = this.listDetails;
-
-                newCARGO_ID = CARGO_CREATION_MSTBL.Save(cargoMst);
-                if(newCARGO_ID > 0)
-                {
-                    this.CARGO_ID = newCARGO_ID;
-                    ReadTask();
-                    bStatus = true;
-                    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Data saved successfully !!');", true);
-                }
+            newCARGO_ID = CARGO_CREATION_MSTBL.Save(cObj);
+            if (newCARGO_ID > 0)
+            {
+                this.CARGO_ID = newCARGO_ID;
+                ReadTask();
+                bStatus = true;
+                ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Data saved successfully !!');", true);
+            }
 
 
 
-           
-           
+
+
             return bStatus;
         }
 
@@ -676,7 +668,7 @@ namespace PG.Web.WREL
         }
 
 
-      
+
 
         #region Report
 
