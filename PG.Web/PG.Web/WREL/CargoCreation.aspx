@@ -52,7 +52,7 @@
                 for (i = 0; i < panels.length; i++) {
 
                     if (panels[i].id == gridUpdatePanelIDDet) {
-                        bindItemList(gridViewIDDet);
+                        //bindCNList(gridViewIDDet);
                     }
 
                 }
@@ -84,7 +84,7 @@
 
             }
 
-            bindItemList(gridViewIDDet);
+            //bindCNList(gridViewIDDet);
 
 
 
@@ -358,7 +358,7 @@
             });
         }
 
-        function bindItemList(gridViewID) {
+        function bindCNList(gridViewID) {
             var cgColumns = [{ 'columnName': 'cnnumber', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'CN Number' }
                              , { 'columnName': 'billno', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Bill No' }
                              , { 'columnName': 'invoiceno', 'width': '150', 'align': 'left', 'highlight': 4, 'label': 'InvoiceNo' }
@@ -835,6 +835,13 @@
     <HeaderStyle CssClass="table-info" Font-Size="Smaller" />
 
     <Columns>
+     <asp:TemplateField HeaderText="SL" HeaderStyle-HorizontalAlign="Center">
+        <ItemTemplate>
+            <asp:Label ID="lblSerialNo" runat="server" Text=""></asp:Label>
+        </ItemTemplate>
+        <ItemStyle HorizontalAlign="Center" Width="40px" />
+    </asp:TemplateField>
+
        <asp:TemplateField HeaderText="CN">
     <ItemTemplate>
         <div class="d-flex align-items-center">
@@ -844,7 +851,7 @@
                         <asp:TextBox ID="txtCNName" runat="server"
                             CssClass="form-control form-control-sm"
                             Style="width: 250px;"
-                            Text='<%# Bind("CN_NUMBER") %>'></asp:TextBox>
+                            Text='<%# Bind("CN_NUMBER") %>' OnTextChanged="txtCNName_TextChanged" AutoPostBack="true"></asp:TextBox>
 
                         <asp:HiddenField ID="hdnCNID" runat="server" Value='<%# Bind("CN_ID") %>' />
                         <asp:HiddenField ID="hdnCargoDtlId" runat="server" Value='<%# Bind("CARGO_DETAIL_ID") %>' />

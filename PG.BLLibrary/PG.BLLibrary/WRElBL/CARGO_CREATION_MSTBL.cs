@@ -23,7 +23,12 @@ namespace PG.BLLibrary.WRElBL
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append(" SELECT mst.* FROM CARGO_CREATION_MST mst ");
+            sb.Append(" SELECT MST.*,STD.DIST_NAME STARTING_DIST_NAME ,DTD.DIST_NAME DESTINATION_DIST_NAME,TWN.TOWN_NAME,R.ROUTE_NAME ");
+            sb.Append(" FROM CARGO_CREATION_MST mst ");
+            sb.Append(" LEFT JOIN district_mst STD ON mst.cargo_starting_dis_id=std.dist_id ");
+            sb.Append(" LEFT JOIN district_mst DTD ON mst.cargo_starting_dis_id=DTD.dist_id ");
+            sb.Append(" LEFT JOIN thana_town_mst TWN ON mst.cargo_destination_town_id=twn.town_id ");
+            sb.Append(" LEFT JOIN route_mst R ON mst.route_id=r.route_id ");
             sb.Append(" WHERE 1=1 ");
 
             return sb.ToString();

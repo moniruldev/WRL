@@ -207,5 +207,10 @@ namespace PG.DBClass.WRELDC
     public partial class dcCARGO_CREATION_MST
     {
        public List<dcCARGO_CREATION_DETAIL> cargoDetails = new List<dcCARGO_CREATION_DETAIL>();
+       public string STARTING_DIST_NAME { get; set; }
+       public string DESTINATION_DIST_NAME { get; set; }
+       public string TOWN_NAME { get; set; }
+       public string ROUTE_NAME { get; set; }
+       public string MANAGER_NAME { get; set; }
     }
 }

@@ -20,6 +20,7 @@ using PG.DBClass.HMSDC;
 using PG.BLLibrary.HMSBL;
 using PG.DBClass.WRELDC;
 using PG.BLLibrary.WRElBL;
+using System.Collections;
 
 namespace PG.Web.WREL
 {
@@ -32,6 +33,7 @@ namespace PG.Web.WREL
         // int CompanyID = 0;
 
         int CARGO_ID = 0;
+        private int totalRowCount = 0;
         string saveMsg = string.Empty;
         string errMsg = string.Empty;
 
@@ -124,6 +126,7 @@ namespace PG.Web.WREL
         }
         protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
+            
 
         }
         protected void btnEdit_Click(object sender, EventArgs e)
@@ -207,7 +210,7 @@ namespace PG.Web.WREL
 
                 hdnCARGO_ID.Value = cObj.CARGO_ID.ToString();
                 txtCargoNo.Text = cObj.CARGO_NUMBER;
-                txtCargoDate.Text = cObj.CARGO_DATE.ToString();
+                txtCargoDate.Text = Convert.ToDateTime(cObj.CARGO_DATE).ToString("dd-MMM-yyyy");
                 hdnStartingDistId.Value = cObj.CARGO_STARTING_DIS_ID.ToString();
                 hdnDestDistId.Value = cObj.CARGO_DESTINATION_DIST_ID.ToString();
                 hdnDestTownId.Value = cObj.CARGO_DESTINATION_TOWN_ID.ToString();
@@ -215,7 +218,11 @@ namespace PG.Web.WREL
                 hdnManagerId.Value = cObj.MANAGER_ID;
                 txtWeight.Text = cObj.WEIGHT_IN_KG.ToString("0.##");
                 txtRemarks.Text = cObj.REMARKS;
-
+                txtStartingDist.Text = cObj.STARTING_DIST_NAME;
+                txtDestinationDist.Text = cObj.DESTINATION_DIST_NAME;
+                txtDestinationTown.Text = cObj.TOWN_NAME;
+                txtManagerName.Text = cObj.MANAGER_NAME;
+                txtRoute.Text = cObj.ROUTE_NAME;
                 this.listDetails = CARGO_CREATION_DETAILBL.GetCargoDtlListByCargoId(cObj.CARGO_ID,null);
                 BindDataToGrid(listDetails);
 
@@ -227,34 +234,64 @@ namespace PG.Web.WREL
 
         private void SetControl(FormDataMode dataMode)
         {
-            bool isEnabled = false;
+            //bool isEnabled = false;
 
-            if (dataMode == FormDataMode.Add | dataMode == FormDataMode.Edit)
-            {
-                isEnabled = true;
-            }
+            //if (dataMode == FormDataMode.Add | dataMode == FormDataMode.Edit)
+            //{
+            //    isEnabled = true;
+            //}
 
-            //txtCheckInDate.Enabled = isEnabled;
-            //txtCheckOutDate.Enabled = isEnabled;
-            //txtMobileNo.Enabled = isEnabled;
-            //txtName.Enabled = isEnabled;
-            //txtNote.Enabled = isEnabled;
-            //txtPassportNo.Enabled = isEnabled;
-            //txtPhoneNo.Enabled = isEnabled;
-            //txtEmail.Enabled = isEnabled;
-            //txtAddress.Enabled = isEnabled;
-            //txtBirthDate.Enabled = isEnabled;
-            //txtCountry.Enabled = isEnabled;
-            //rblGender.Enabled = isEnabled;
+            //txtCargoNo.Enabled = isEnabled;
+            //txtCargoDate.Enabled = isEnabled;
+            //txtWeight.Enabled = isEnabled;
+            //txtRemarks.Enabled = isEnabled;
+            //txtStartingDist.Enabled = isEnabled;
+            //txtDestinationDist.Enabled = isEnabled;
+            //txtDestinationTown.Enabled = isEnabled;
+            //txtManagerName.Enabled = isEnabled;
+            ////buttons
+            //btnAddNew.Visible = !isEnabled;
+            //btnEdit.Visible = !isEnabled;
+            //btnSave.Visible = isEnabled;
+            ////btnUpdate.Visible = !isEnabled;
 
-            //buttons
+            //SetControlGrid(dataMode);
+
+            bool isEnabled = (dataMode == FormDataMode.Add || dataMode == FormDataMode.Edit);
+
+            // Apply disabled/enabled logic without losing Bootstrap styling
+            SetTextBoxState(txtCargoNo, isEnabled);
+            //SetTextBoxState(txtCargoDate, isEnabled);
+            SetTextBoxState(txtWeight, isEnabled);
+            SetTextBoxState(txtRemarks, isEnabled);
+            SetTextBoxState(txtStartingDist, isEnabled);
+            SetTextBoxState(txtDestinationDist, isEnabled);
+            SetTextBoxState(txtDestinationTown, isEnabled);
+            SetTextBoxState(txtManagerName, isEnabled);
+            SetTextBoxState(txtRoute, isEnabled);
+
+            txtCargoDate.Enabled = isEnabled;
+            // buttons
             btnAddNew.Visible = !isEnabled;
             btnEdit.Visible = !isEnabled;
             btnSave.Visible = isEnabled;
-            //btnUpdate.Visible = !isEnabled;
 
             SetControlGrid(dataMode);
 
+        }
+
+        private void SetTextBoxState(TextBox txtBox, bool isEnabled)
+        {
+            if (isEnabled)
+            {
+                txtBox.Attributes.Remove("disabled");
+                txtBox.CssClass = "form-control form-control-sm";
+            }
+            else
+            {
+                txtBox.Attributes["disabled"] = "disabled";
+                txtBox.CssClass = "form-control form-control-sm"; 
+            }
         }
 
 
@@ -285,23 +322,14 @@ namespace PG.Web.WREL
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                //HiddenField hdnNoOfRoom = (e.Row.FindControl("hdnNoOfRoom") as HiddenField);
-                //HiddenField hdnRoomTypeId = (e.Row.FindControl("hdnRoomTypeId") as HiddenField);
-                //HiddenField hdnReservationDtlId = (e.Row.FindControl("hdnReservationDtlId") as HiddenField);
-                //HiddenField hdnRoomQty = (e.Row.FindControl("hdnRoomQty") as HiddenField);
-                //DropDownList ddlNoOfRoom = (e.Row.FindControl("ddlNoOfRoom") as DropDownList);
-                //for (int i = 0; i <= Convert.ToInt32(hdnNoOfRoom.Value); i++)
-                //{
-                //    ddlNoOfRoom.Items.Add(i.ToString());
+                int currentRowIndex = e.Row.RowIndex;
+                int serialNo = totalRowCount - currentRowIndex;
 
-                //}
-
-                //foreach (dcCARGO_CREATION_DETAIL item in this.listDetails)
-                //{
-                //    hdnReservationDtlId.Value = item.CARGO_DETAIL_ID.ToString();
-
-
-                //}
+                Label lblSerial = (Label)e.Row.FindControl("lblSerialNo");
+                if (lblSerial != null)
+                {
+                    lblSerial.Text = serialNo.ToString();
+                }
 
 
                 string rowID = e.Row.ClientID;
@@ -333,6 +361,8 @@ namespace PG.Web.WREL
 
             //}
         }
+      
+
 
         //protected void DisplayRoomDetails(int roomTypeId)
         //{
@@ -353,6 +383,7 @@ namespace PG.Web.WREL
         private void BindDataToGrid(List<dcCARGO_CREATION_DETAIL> listData)
         {
             int rowCount = listData.Count;
+            this.totalRowCount = listData.Count;
             if (rowCount == 0)
             {
                 listData.Add(new dcCARGO_CREATION_DETAIL());
@@ -379,10 +410,18 @@ namespace PG.Web.WREL
             {
                 if (gvR.RowType == DataControlRowType.DataRow)
                 {
-                    //((DropDownList)gvR.FindControl("ddlNoOfRoom")).Enabled = isEnabled;
+                    ((TextBox)gvR.FindControl("txtCNName")).Enabled = isEnabled;
+                    LinkButton lnkDelete = (LinkButton)gvR.FindControl("btnDeleteRow");
+                    lnkDelete.Enabled = isEnabled;
+                    if (!isEnabled)
+                    {
+                        lnkDelete.OnClientClick = "";
+                    }
 
                 }
             }
+
+            btnNewRow.Enabled = isEnabled;
 
         }
 
@@ -801,6 +840,15 @@ namespace PG.Web.WREL
             AddBlankRowToGridList();
 
             BindDataToGrid(this.listDetails);
+
+            if (GridView1.Rows.Count > 0)
+            {
+                TextBox txtTopCN = GridView1.Rows[0].FindControl("txtCNName") as TextBox;
+                if (txtTopCN != null)
+                {
+                    ScriptManager.GetCurrent(this).SetFocus(txtTopCN);
+                }
+            }
             SetControlGrid(FormDataMode.Add);
 
         }
@@ -830,7 +878,26 @@ namespace PG.Web.WREL
         {
             dcCARGO_CREATION_DETAIL cObj = new dcCARGO_CREATION_DETAIL();
             cObj._RecordState = RecordStateEnum.Added;
-            this.listDetails.Add(cObj);
+            //this.listDetails.Add(cObj);
+            this.listDetails.Insert(0, cObj);
+        }
+
+        protected void txtCNName_TextChanged(object sender, EventArgs e)
+        {
+            btnNewRow_Click(sender, e);
+            //SetFocusToLastTxtCNName();
+        }
+        private void SetFocusToLastTxtCNName()
+        {
+            int lastIndex = GridView1.Rows.Count - 1;
+            if (lastIndex >= 0)
+            {
+                TextBox lastTxtCN = GridView1.Rows[0].FindControl("txtCNName") as TextBox;
+                if (lastTxtCN != null)
+                {
+                    ScriptManager.GetCurrent(this).SetFocus(lastTxtCN);
+                }
+            }
         }
     }
 }
