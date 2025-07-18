@@ -178,6 +178,11 @@ namespace PG.Web.PageLinks
         {
             get { return WebUtility.GetAbsoluteUrl("~/Service/WREL/GetCNMasterList.ashx"); }
         }
+
+         public static string GetLink_ClientList
+         {
+             get { return WebUtility.GetAbsoluteUrl("~/Service/WREL/GetClientMstList.ashx"); }
+         }
         
 
         

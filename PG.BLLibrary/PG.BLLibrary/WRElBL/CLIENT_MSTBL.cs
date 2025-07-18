@@ -35,7 +35,7 @@ namespace PG.BLLibrary.WRElBL
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append(" SELECT CLIENT_ID,CLIENT_NAME,CLIENT_MST_ID,CLIENT_ADDRESS,MOBILE_NO,REMARKS ");
+            sb.Append(" SELECT CLIENT_ID,CLIENT_NAME,CLIENT_ADDRESS,MOBILE_NO,REMARKS ");
             sb.Append(" FROM CLIENT_MST  ");
 
             sb.Append(" WHERE IS_ACTIVE='Y' ");

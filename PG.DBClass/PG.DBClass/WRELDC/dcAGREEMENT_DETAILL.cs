@@ -19,6 +19,8 @@ namespace PG.DBClass.WRELDC
         private int m_DISTANCE_TYPE_ID = 0;
         private decimal m_SERVICE_AMOUNT = 0;
         private string m_REMARKS = string.Empty;
+        private decimal m_RETURN_PRICE = 0;
+        
 
         #endregion  //private members
 
@@ -105,6 +107,23 @@ namespace PG.DBClass.WRELDC
             }
         }
 
+         [DBColumn(Name = "RETURN_PRICE", Storage = "m_RETURN_PRICE", DbType = "107")]
+        public decimal RETURN_PRICE
+        {
+            get { return this.m_RETURN_PRICE; }
+            set
+            {
+                this.m_RETURN_PRICE = value;
+                this.NotifyPropertyChanged("RETURN_PRICE");
+            }
+        }
+        
+
         #endregion //properties
+    }
+
+    public partial class dcAGREEMENT_DETAILL
+    {
+        public string ITEM_NAME { get; set; }
     }
 }

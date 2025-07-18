@@ -25,6 +25,8 @@ namespace PG.DBClass.WRELDC
         private DateTime? m_CREATE_DATE = null;
         private string m_EDIT_BY = string.Empty;
         private DateTime? m_EDIT_DATE = null;
+        private string m_AGREEMENT_NAME = string.Empty;
+        
 
         #endregion  //private members
 
@@ -177,6 +179,23 @@ namespace PG.DBClass.WRELDC
             }
         }
 
+         [DBColumn(Name = "AGREEMENT_NAME", Storage = "m_AGREEMENT_NAME", DbType = "126")]
+        public string AGREEMENT_NAME
+        {
+            get { return this.m_AGREEMENT_NAME; }
+            set
+            {
+                this.m_AGREEMENT_NAME = value;
+                this.NotifyPropertyChanged("AGREEMENT_NAME");
+            }
+        }
+        
+
         #endregion //properties
+    }
+
+    public partial class dcAGREEMENT_MST
+    {
+        public List<dcAGREEMENT_DETAILL> agreementDetails = new List<dcAGREEMENT_DETAILL>();
     }
 }

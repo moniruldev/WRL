@@ -167,4 +167,9 @@ namespace PG.DBClass.WRELDC
 
         #endregion //properties
     }
+
+    public partial class dcDEPARTMENT_MST
+    {
+        public string CLIENT_NAME { get; set; }
+    }
 }
