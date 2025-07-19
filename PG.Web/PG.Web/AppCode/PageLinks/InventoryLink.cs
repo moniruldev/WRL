@@ -183,9 +183,22 @@ namespace PG.Web.PageLinks
          {
              get { return WebUtility.GetAbsoluteUrl("~/Service/WREL/GetClientMstList.ashx"); }
          }
-        
 
-        
+
+         public static string GetLink_DepartmentList
+         {
+             get { return WebUtility.GetAbsoluteUrl("~/Service/WREL/getDepartmentMstList.ashx"); }
+         }
+
+        public static string GetLink_ItemListCourier
+         {
+             get { return WebUtility.GetAbsoluteUrl("~/Service/WREL/GetItemMstList.ashx"); }
+         }
+
+        public static string GetLink_DistanceTypeList
+        {
+            get { return WebUtility.GetAbsoluteUrl("~/Service/WREL/GetDistantTypeMstList.ashx"); }
+        }
         
     }
 

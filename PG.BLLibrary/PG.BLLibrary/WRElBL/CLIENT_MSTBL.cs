@@ -43,6 +43,18 @@ namespace PG.BLLibrary.WRElBL
 
             return sb.ToString();
         }
+        public static string GetCLIENTMstListforServiceString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(" SELECT cl.CLIENT_ID,cl.CLIENT_NAME,cl.CLIENT_ADDRESS,cl.MOBILE_NO,cl.REMARKS,dm.DEPT_ID,dm.DEPT_NAME ");
+            sb.Append(" FROM CLIENT_MST cl LEFT JOIN DEPARTMENT_MST  dm ON cl.CLIENT_ID=dm.CLIENT_ID ");
+
+            sb.Append(" WHERE cl.IS_ACTIVE='Y' ");
+
+
+            return sb.ToString();
+        }
         public static List<dcCLIENT_MST> GetCLIENT_MSTList()
         {
             return GetCLIENT_MSTList(null, null);

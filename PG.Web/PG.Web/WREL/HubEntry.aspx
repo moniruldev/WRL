@@ -18,11 +18,15 @@
         var ReportPDFPageLink = '<%=this.ReportPDFPageLink%>';
 
         var CountryListServiceLink = '<%=this.CountryListServiceLink%>';
-       
+        var DistrictListServiceLink = '<%=this.DistrictListServiceLink%>';
+        var TownListServiceLink = '<%=this.TownListServiceLink%>';
         <%--   var txtCountry = '<%=txtCountry.ClientID%>';
         var hdnCountryId = '<%=hdnCountryId.ClientID%>';--%>
 
-       
+        var txtDistrict = '<%=txtDistrict.ClientID%>';
+        var hdnDistId = '<%=hdnDistId.ClientID%>';
+        var txtTown = '<%=txtTown.ClientID%>';
+        var hdnTownId = '<%=hdnTownId.ClientID%>';
 
         $(document).ready(function () {
 
@@ -40,6 +44,18 @@
 
             //});
 
+            if ($('#' + txtDistrict).is(':visible')) {
+
+                bindDistrictList();
+
+            }
+
+            if ($('#' + txtTown).is(':visible')) {
+
+                bindTownList();
+
+            }
+
 
             if ($('#' + txtCountry).is(':visible')) {
 
@@ -52,6 +68,140 @@
 
 
         });
+
+        function bindDistrictList() {
+            var cgColumns = [
+                             { 'columnName': 'distcode', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Code' }
+                            , { 'columnName': 'distname', 'width': '200', 'align': 'left', 'highlight': 4, 'label': 'Name' }
+
+            ];
+            var serviceURL = DistrictListServiceLink + "?isterm=1&includeempty=0&hasitem=1&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+
+            serviceURL += "&ispaging=0";
+            var groupIDElem = $('#' + txtDistrict);
+
+            $('#' + txtDistrict).click(function (e) {
+                $(groupIDElem).combogrid("dropdownClick");
+            });
+
+            $(groupIDElem).combogrid({
+                debug: true,
+                searchButton: false,
+                resetButton: false,
+                alternate: true,
+                munit: 'px',
+                scrollBar: true,
+                showPager: true,
+                colModel: cgColumns,
+                autoFocus: true,
+                showError: true,
+                width: 350,
+                url: serviceURL,
+                search: function (event, ui) {
+
+                    var newServiceURL = serviceURL;
+                    $(this).combogrid("option", "url", newServiceURL);
+
+
+                },
+                select: function (event, ui) {
+                    if (!ui.item) {
+                        event.preventDefault();
+                        return false;
+                    }
+
+                    if (ui.item.dealerid == '') {
+                        event.preventDefault();
+                        return false;
+                    }
+                    else {
+                        $('#' + hdnDistId).val(ui.item.distid);
+                        $('#' + txtDistrict).val(ui.item.distname);
+                    }
+                    return false;
+                },
+
+                lc: ''
+            });
+
+
+            $(groupIDElem).blur(function () {
+                var self = this;
+
+                var groupID = $(groupIDElem).val();
+                if (groupID == '') {
+                    $('#' + txtDistrict).val('');
+                    $('#' + hdnDistId).val('0');
+                }
+            });
+        }
+
+        function bindTownList() {
+            var cgColumns = [
+                             { 'columnName': 'townname', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Code' }
+                            , { 'columnName': 'distname', 'width': '200', 'align': 'left', 'highlight': 4, 'label': 'Name' }
+
+            ];
+            var serviceURL = TownListServiceLink + "?isterm=1&includeempty=0&hasitem=1&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+
+            serviceURL += "&ispaging=0";
+            var groupIDElem = $('#' + txtTown);
+
+            $('#' + txtTown).click(function (e) {
+                $(groupIDElem).combogrid("dropdownClick");
+            });
+
+            $(groupIDElem).combogrid({
+                debug: true,
+                searchButton: false,
+                resetButton: false,
+                alternate: true,
+                munit: 'px',
+                scrollBar: true,
+                showPager: true,
+                colModel: cgColumns,
+                autoFocus: true,
+                showError: true,
+                width: 350,
+                url: serviceURL,
+                search: function (event, ui) {
+                    var distid = $('#' + hdnDistId).val();
+                    var newServiceURL = serviceURL + "&distid=" + distid;
+                    $(this).combogrid("option", "url", newServiceURL);
+
+
+                },
+                select: function (event, ui) {
+                    if (!ui.item) {
+                        event.preventDefault();
+                        return false;
+                    }
+
+                    if (ui.item.dealerid == '') {
+                        event.preventDefault();
+                        return false;
+                    }
+                    else {
+                        $('#' + hdnTownId).val(ui.item.townid);
+                        $('#' + txtTown).val(ui.item.townname);
+                    }
+                    return false;
+                },
+
+                lc: ''
+            });
+
+
+            $(groupIDElem).blur(function () {
+                var self = this;
+
+                var groupID = $(groupIDElem).val();
+                if (groupID == '') {
+                    $('#' + txtTown).val('');
+                    $('#' + hdnTownId).val('0');
+                }
+            });
+        }
      
         function bindCountryList() {
             var cgColumns = [
@@ -419,6 +569,56 @@
                      </asp:DropDownList>
                     </div>
                   </div>
+                </div>
+
+                 <div class="col-md-2">
+                 
+                </div>
+
+             </div>
+          <div class="row mb-0">
+                 
+                <div class="col-md-2">
+                 
+                </div>
+
+                
+
+
+             <div class="col-md-6">
+                  <div class="form-group row mb-0">
+                    <label for="name" class="col-sm-3 col-form-label-sm">District :</label>
+                    <div class="col-sm-9">
+                      <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtDistrict" placeholder="Select" ></asp:TextBox> 
+                           <asp:HiddenField runat="server" ID="hdnDistId" Value="0" /> 
+                    </div>
+                  </div>
+
+                </div>
+
+                 <div class="col-md-2">
+                 
+                </div>
+
+             </div>
+          <div class="row mb-0">
+                 
+                <div class="col-md-2">
+                 
+                </div>
+
+                
+
+
+                <div class="col-md-6">
+                  <div class="form-group row mb-0">
+                    <label for="name" class="col-sm-3 col-form-label-sm">Thana :</label>
+                    <div class="col-sm-9">
+                      <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtTown" placeholder="Select" ></asp:TextBox> 
+                           <asp:HiddenField runat="server" ID="hdnTownId" Value="0" /> 
+                    </div>
+                  </div>
+
                 </div>
 
                  <div class="col-md-2">

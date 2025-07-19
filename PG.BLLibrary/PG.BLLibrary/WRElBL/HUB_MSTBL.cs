@@ -35,10 +35,11 @@ namespace PG.BLLibrary.WRElBL
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append(" SELECT HUB_ID,HUB_NAME,HUB_TYPE_ID,ADDRESS,PHONE_NO,RESPONSIBLE_PERSON,RP_MOBILE_NO,DESCRIPTION,IS_ACTIVE ");
-            sb.Append(" FROM HUB_MST  ");
+            sb.Append(" SELECT a.HUB_ID,a.HUB_NAME,a.HUB_TYPE_ID,a.ADDRESS,a.PHONE_NO,a.RESPONSIBLE_PERSON,a.RP_MOBILE_NO,a.DESCRIPTION,a.IS_ACTIVE,a.DIST_ID,a.TOWN_ID,b.DIST_NAME,c.TOWN_NAME ");
+            sb.Append(" FROM HUB_MST a INNER JOIN DISTRICT_MST b ON a.DIST_ID=b.DIST_ID ");
+            sb.Append(" INNER JOIN THANA_TOWN_MST c ON a.TOWN_ID=b.TOWN_ID ");
 
-            sb.Append(" WHERE IS_ACTIVE='Y' ");
+           // sb.Append(" WHERE a.IS_ACTIVE='Y' ");
 
 
             return sb.ToString();
@@ -112,10 +113,10 @@ namespace PG.BLLibrary.WRElBL
                 isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
 
                 DBCommandInfo cmdInfo = new DBCommandInfo();
-                StringBuilder sb = new StringBuilder(GetHUB_MSTSQLString());
+                StringBuilder sb = new StringBuilder(GetHUB_MSTListString());
                 if (pHub_ID > 0)
                 {
-                    sb.Append(" AND HUB_ID= @pHub_ID ");
+                    sb.Append(" AND a.HUB_ID= @pHub_ID ");
                     cmdInfo.DBParametersInfo.Add("@pHub_ID", pHub_ID);
                 }
                 DBQuery dbq = new DBQuery();

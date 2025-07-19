@@ -20,6 +20,7 @@ namespace PG.DBClass.WRELDC
         private decimal m_SERVICE_AMOUNT = 0;
         private string m_REMARKS = string.Empty;
         private decimal m_RETURN_PRICE = 0;
+        private string m_IS_OTP_SERVICE = string.Empty;
         
 
         #endregion  //private members
@@ -117,7 +118,17 @@ namespace PG.DBClass.WRELDC
                 this.NotifyPropertyChanged("RETURN_PRICE");
             }
         }
-        
+
+         [DBColumn(Name = "IS_OTP_SERVICE", Storage = "m_IS_OTP_SERVICE", DbType = "126")]
+         public string IS_OTP_SERVICE
+         {
+             get { return this.m_IS_OTP_SERVICE; }
+             set
+             {
+                 this.m_IS_OTP_SERVICE = value;
+                 this.NotifyPropertyChanged("IS_OTP_SERVICE");
+             }
+         }
 
         #endregion //properties
     }
@@ -125,5 +136,7 @@ namespace PG.DBClass.WRELDC
     public partial class dcAGREEMENT_DETAILL
     {
         public string ITEM_NAME { get; set; }
+        public string TYPE_NAME { get; set; }
+        
     }
 }

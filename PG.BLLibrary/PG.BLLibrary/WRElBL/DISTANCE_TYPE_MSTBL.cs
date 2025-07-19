@@ -17,6 +17,18 @@ namespace PG.BLLibrary.WRElBL
             //dlo.LoadWith<DBClass.dcDISTANCE_TYPE_MST>(obj => obj.relatedclassname);
             return dlo;
         }
+        public static string GetDistanceTypeMstListString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(" SELECT DISTANCE_TYPE_ID,TYPE_NAME,DESCRIPTION ");
+            sb.Append(" FROM DISTANCE_TYPE_MST  ");
+
+            sb.Append(" WHERE IS_ACTIVE='Y' ");
+
+
+            return sb.ToString();
+        }
         public static List<dcDISTANCE_TYPE_MST> GetDISTANCE_TYPE_MSTList()
         {
             return GetDISTANCE_TYPE_MSTList(null, null);

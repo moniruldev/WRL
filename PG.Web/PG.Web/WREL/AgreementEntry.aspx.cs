@@ -46,7 +46,11 @@ namespace PG.Web.WREL
         public string DistrictListServiceLink = PageLinks.InventoryLink.GetLink_DistrictList;
         public string TownListServiceLink = PageLinks.InventoryLink.GetLink_TownList;
         public string RouteListServiceLink = PageLinks.InventoryLink.GetLink_RouteList;
-
+        public string ClientListServiceLink = PageLinks.InventoryLink.GetLink_ClientList;
+        public string DepartmentListServiceLink = PageLinks.InventoryLink.GetLink_DepartmentList;
+        public string ItemListServiceLink = PageLinks.InventoryLink.GetLink_ItemListCourier;
+        public string DistanceTypeListServiceLink = PageLinks.InventoryLink.GetLink_DistanceTypeList;
+        
         List<dcAGREEMENT_DETAILL> listDetails = new List<dcAGREEMENT_DETAILL>();
 
         protected override void OnPreInit(EventArgs e)
@@ -429,7 +433,7 @@ namespace PG.Web.WREL
                     }
                     else
                     {
-                        //if(cObj.ROOM_QTY > 0)
+                        
                         this.listDetails.Add(cObj);
                     }
 
@@ -444,6 +448,30 @@ namespace PG.Web.WREL
 
             strD = ((HiddenField)gvR.FindControl("hdnAGR_DETAIL_ID")).Value;
             cObj.AGR_DETAIL_ID = Conversion.StringToInt(strD);
+
+            strD = ((HiddenField)gvR.FindControl("hdnItemID")).Value;
+            cObj.ITEM_ID = Conversion.StringToInt(strD);
+            strD = ((HiddenField)gvR.FindControl("txtItemName")).Value;
+            cObj.ITEM_NAME = strD;
+            strD = ((HiddenField)gvR.FindControl("hdnDistanceTypeID")).Value;
+            cObj.DISTANCE_TYPE_ID = Conversion.StringToInt(strD);
+            strD = ((HiddenField)gvR.FindControl("txtDistanceType")).Value;
+            cObj.TYPE_NAME = strD;
+
+            strD = ((HiddenField)gvR.FindControl("txtServiceAmt")).Value;
+            cObj.SERVICE_AMOUNT =Conversion.StringToDecimal (strD);
+
+            strD = ((HiddenField)gvR.FindControl("txtReturnPrice")).Value;
+            cObj.RETURN_PRICE = Conversion.StringToDecimal(strD);
+
+            strD = ((HiddenField)gvR.FindControl("txtREMARKS")).Value;
+            cObj.REMARKS = strD;
+
+            
+                
+
+                
+
             if (cObj.AGR_DETAIL_ID > 0)
             {
                 cObj._RecordState = RecordStateEnum.Edited;
@@ -453,8 +481,8 @@ namespace PG.Web.WREL
                 cObj._RecordState = RecordStateEnum.Added;
             }
 
-            strD = ((HiddenField)gvR.FindControl("hdnItemID")).Value;
-            //cObj.CN_ID = Conversion.StringToInt(strD);
+            
+            
 
 
             if (!gvR.Visible)
@@ -618,7 +646,7 @@ namespace PG.Web.WREL
 
             bool bStatus = false;
             bool isAdd = false;
-            int newCARGO_ID = 0;
+            int newAGR_ID = 0;
             dcAGREEMENT_MST agreementMst = new dcAGREEMENT_MST();
             if (this.AGR_ID > 0)
             {
@@ -632,6 +660,14 @@ namespace PG.Web.WREL
                 isAdd = true;
             }
 
+            agreementMst.CLIENT_ID = Conversion.StringToInt(hdnClientId.Value);
+            agreementMst.DEPT_ID = Conversion.StringToInt(hdnDepartmentId.Value);
+            agreementMst.AGREEMENT_NAME = txtAgreementName.Text.Trim();
+            agreementMst.AGREEMENT_DATE = Conversion.StringToDate(txtAgreementStDate.Text.Trim());
+            agreementMst.AGREEMENT_START_DATE = Conversion.StringToDate(txtAgreementStDate.Text.Trim());
+            agreementMst.AGREEMENT_END_DATE = Conversion.StringToDate(txtAgrEndDate.Text.Trim());
+            agreementMst.DESCRIPTION = txtDescription.Text.Trim();
+            agreementMst.IS_ACTIVE = ddlStatus.SelectedValue;
 
 
              
@@ -643,8 +679,8 @@ namespace PG.Web.WREL
                 }
                 else
                 {
-                    //cargoMst.UPDATE_BY = loggedinUser.UserName;
-                    //cargoMst.UPDATE_DATE = DateTime.Now;
+                    agreementMst.EDIT_BY = loggedinUser.UserName;
+                    agreementMst.EDIT_DATE = DateTime.Now;
 
                 }
 
@@ -652,10 +688,10 @@ namespace PG.Web.WREL
 
                 agreementMst.agreementDetails = this.listDetails;
 
-                newCARGO_ID = AGREEMENT_MSTBL.Save(agreementMst);
-                if(newCARGO_ID > 0)
+                newAGR_ID = AGREEMENT_MSTBL.Save(agreementMst);
+                if (newAGR_ID > 0)
                 {
-                    this.AGR_ID = newCARGO_ID;
+                    this.AGR_ID = newAGR_ID;
                     ReadTask();
                     bStatus = true;
                     ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Data saved successfully !!');", true);

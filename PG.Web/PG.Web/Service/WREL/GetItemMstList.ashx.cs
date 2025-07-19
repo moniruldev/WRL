@@ -13,9 +13,9 @@ using System.Web.Script.Serialization;
 namespace PG.Web.Service.WREL
 {
     /// <summary>
-    /// Summary description for GetClientMstList
+    /// Summary description for GetItemMstList
     /// </summary>
-    public class GetClientMstList : IHttpHandler
+    public class GetItemMstList : IHttpHandler
     {
 
         public void ProcessRequest(HttpContext context)
@@ -56,7 +56,7 @@ namespace PG.Web.Service.WREL
 
             System.Text.StringBuilder sbStatment = new System.Text.StringBuilder();
 
-            sbStatment.Append(CLIENT_MSTBL.GetCLIENTMstListString());
+            sbStatment.Append(ITEM_MSTBL.GetItemMstListString());
 
             DBQuery dbq = new DBQuery();
             List<DBFilter> filterList = new List<DBFilter>();
@@ -87,12 +87,12 @@ namespace PG.Web.Service.WREL
                 }
                 if (isCodeName == 1)
                 {
-                    filterListCN.Add(new DBFilter("UPPER(CLIENT_MST.CLIENT_NAME)", dealerName.ToUpper(), DBFilterDataTypeEnum.String, compTypeAccName, DBFilterCombineTypeEnum.OR));
+                    filterListCN.Add(new DBFilter("UPPER(ITEM_MST.ITEM_NAME)", dealerName.ToUpper(), DBFilterDataTypeEnum.String, compTypeAccName, DBFilterCombineTypeEnum.OR));
                     //filterListCN.Add(new DBFilter("HMCOUNTRY_MST.COUNTRY_NAME", dealerName, DBFilterDataTypeEnum.String, compTypeAccName, DBFilterCombineTypeEnum.OR));
                 }
                 else
                 {
-                    filterListCN.Add(new DBFilter("UPPER(CLIENT_MST.CLIENT_NAME)", dealerName.ToUpper(), DBFilterDataTypeEnum.String, compTypeAccName));
+                    filterListCN.Add(new DBFilter("UPPER(ITEM_MST.ITEM_NAME)", dealerName.ToUpper(), DBFilterDataTypeEnum.String, compTypeAccName));
                     //filterListCN.Add(new DBFilter("HMCOUNTRY_MST.COUNTRY_NAME", dealerName, DBFilterDataTypeEnum.String, compTypeAccName));
                 }
                 isCodeNameFilter = true;
@@ -122,7 +122,7 @@ namespace PG.Web.Service.WREL
 
             if (Selected != "")
             {
-                filterList.Add(new DBFilter(" TRIM(Upper( CLIENT_MST.CLIENT_NAME)) ", Selected.Trim(), DBFilterDataTypeEnum.String));
+                filterList.Add(new DBFilter(" TRIM(Upper( ITEM_MST.ITEM_NAME)) ", Selected.Trim(), DBFilterDataTypeEnum.String));
             }
 
 
@@ -133,14 +133,14 @@ namespace PG.Web.Service.WREL
                 dbq.RowCount = rows;
             }
 
-            dbq.OrderBy = "CLIENT_MST.CLIENT_NAME";
+            dbq.OrderBy = "ITEM_MST.ITEM_NAME";
 
             dbq.DBQueryMode = DBQueryModeEnum.SQLStatement;
             dbq.SQLStatement = sbStatment.ToString();
             dbq.DBFilterList = filterList;
 
 
-            List<dcCLIENT_MST> listData = CLIENT_MSTBL.GetCLIENT_MSTList(dbq, null);
+            List<dcITEM_MST> listData = ITEM_MSTBL.GetITEM_MSTList(dbq, null);
             int totRec = listData.Count;
             string comma = string.Empty;
 
@@ -148,10 +148,10 @@ namespace PG.Web.Service.WREL
             var jsonList = from c in listData
                            select new
                            {
-                               clientid = c.CLIENT_ID,
-                               clientname = c.CLIENT_NAME,
-                               mobile = c.MOBILE_NO,
-                               
+                               itemid = c.ITEM_ID,
+                               itemname = c.ITEM_NAME,
+
+
                                enable = true
                            };
 

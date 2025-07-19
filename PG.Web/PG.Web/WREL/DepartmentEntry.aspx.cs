@@ -204,8 +204,7 @@ namespace PG.Web.WREL
             {
 
                 txtDepartmentName.Text = cObj.DEPT_NAME;
-                hdnClientId.Value = cObj.CLIENT_ID.ToString();
-                txtClientName.Text = cObj.CLIENT_NAME;
+                
                 txtContactPerson.Text = cObj.CONTACT_PERSON;
                 txtMobileNo.Text = cObj.CONTACT_NO;
                 txtRemarks.Text = cObj.REMARKS;
@@ -230,7 +229,7 @@ namespace PG.Web.WREL
 
 
             txtDepartmentName.Enabled = isEnabled;
-            txtClientName.Enabled = isEnabled;
+            
             txtContactPerson.Enabled = isEnabled;
             txtMobileNo.Enabled = isEnabled;
             txtRemarks.Enabled = isEnabled;
@@ -349,7 +348,7 @@ namespace PG.Web.WREL
 
 
             cObj.DEPT_NAME = txtDepartmentName.Text.Trim();
-            cObj.CLIENT_ID = Conversion.StringToInt(hdnClientId.Value);
+           
             cObj.CONTACT_PERSON = txtContactPerson.Text.Trim();
             cObj.CONTACT_NO = txtMobileNo.Text.Trim();
             cObj.REMARKS = txtRemarks.Text.Trim();

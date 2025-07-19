@@ -9,38 +9,25 @@ using System.Threading.Tasks;
 
 namespace PG.BLLibrary.WRElBL
 {
-    public class ITEM_MSTBL
+    public class CN_ASSIGNMENTBL
     {
-        public static DataLoadOptions ITEM_MSTLoadOptions()
+        public static DataLoadOptions CN_ASSIGNMENTLoadOptions()
         {
             DataLoadOptions dlo = new DataLoadOptions();
-            //dlo.LoadWith<DBClass.dcITEM_MST>(obj => obj.relatedclassname);
+            //dlo.LoadWith<DBClass.dcCN_ASSIGNMENT>(obj => obj.relatedclassname);
             return dlo;
         }
-        public static string GetItemMstListString()
+        public static List<dcCN_ASSIGNMENT> GetCN_ASSIGNMENTList()
         {
-            StringBuilder sb = new StringBuilder();
-
-            sb.Append(" SELECT ITEM_ID,ITEM_NAME,SERVICE_CHARGE_AMT_DEFAULT ");
-            sb.Append(" FROM ITEM_MST  ");
-
-            sb.Append(" WHERE IS_ACTIVE='Y' ");
-
-
-            return sb.ToString();
+            return GetCN_ASSIGNMENTList(null, null);
         }
-
-        public static List<dcITEM_MST> GetITEM_MSTList()
+        public static List<dcCN_ASSIGNMENT> GetCN_ASSIGNMENTList(DBContext dc)
         {
-            return GetITEM_MSTList(null, null);
+            return GetCN_ASSIGNMENTList(null, dc);
         }
-        public static List<dcITEM_MST> GetITEM_MSTList(DBContext dc)
+        public static List<dcCN_ASSIGNMENT> GetCN_ASSIGNMENTList(DBQuery dbq, DBContext dc)
         {
-            return GetITEM_MSTList(null, dc);
-        }
-        public static List<dcITEM_MST> GetITEM_MSTList(DBQuery dbq, DBContext dc)
-        {
-            List<dcITEM_MST> cObjList = new List<dcITEM_MST>();
+            List<dcCN_ASSIGNMENT> cObjList = new List<dcCN_ASSIGNMENT>();
             bool isDCInit = false;
             try
             {
@@ -52,28 +39,28 @@ namespace PG.BLLibrary.WRElBL
                         dbq = new DBQuery();
                         //dbq.OrderBy = "YearStartDate Desc";
                     }
-                    cObjList = DBQuery.ExecuteDBQuery<dcITEM_MST>(dbq, dc);
+                    cObjList = DBQuery.ExecuteDBQuery<dcCN_ASSIGNMENT>(dbq, dc);
                 }
             }
             catch { throw; }
             finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
             return cObjList;
         }
-        public static dcITEM_MST GetITEM_MSTByID(int pITEM_MSTID)
+        public static dcCN_ASSIGNMENT GetCN_ASSIGNMENTByID(int pCN_ASSIGNMENTID)
         {
-            return GetITEM_MSTByID(pITEM_MSTID, null);
+            return GetCN_ASSIGNMENTByID(pCN_ASSIGNMENTID, null);
         }
-        public static dcITEM_MST GetITEM_MSTByID(int pITEM_MSTID, DBContext dc)
+        public static dcCN_ASSIGNMENT GetCN_ASSIGNMENTByID(int pCN_ASSIGNMENTID, DBContext dc)
         {
-            dcITEM_MST cObj = null;
+            dcCN_ASSIGNMENT cObj = null;
             bool isDCInit = false;
             try
             {
                 isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
                 using (DataContext dataContext = dc.NewDataContext())
                 {
-                    var result = (from c in dataContext.GetTable<dcITEM_MST>()
-                                  where c.ITEM_ID == pITEM_MSTID
+                    var result = (from c in dataContext.GetTable<dcCN_ASSIGNMENT>()
+                                  where c.CN_ASSIGN_ID == pCN_ASSIGNMENTID
                                   select c).ToList();
                     if (result.Count() > 0)
                     {
@@ -86,79 +73,79 @@ namespace PG.BLLibrary.WRElBL
             return cObj;
         }
 
-        public static int Insert(dcITEM_MST cObj)
+        public static int Insert(dcCN_ASSIGNMENT cObj)
         {
             return Insert(cObj, null);
         }
 
-        public static int Insert(dcITEM_MST cObj, DBContext dc)
+        public static int Insert(dcCN_ASSIGNMENT cObj, DBContext dc)
         {
             bool isDCInit = false;
             int id = 0;
             isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
             using (DataContext dataContext = dc.NewDataContext())
             {
-                id = dc.DoInsert<dcITEM_MST>(cObj, true);
-                if (id > 0) { cObj.ITEM_ID = id; }
+                id = dc.DoInsert<dcCN_ASSIGNMENT>(cObj, true);
+                if (id > 0) { cObj.CN_ASSIGN_ID = id; }
             }
             DBContextManager.ReleaseDBContext(ref dc, isDCInit);
             return id;
         }
 
-        public static bool Update(dcITEM_MST cObj)
+        public static bool Update(dcCN_ASSIGNMENT cObj)
         {
             return Update(cObj, null);
         }
 
-        public static bool Update(dcITEM_MST cObj, DBContext dc)
+        public static bool Update(dcCN_ASSIGNMENT cObj, DBContext dc)
         {
             bool isDCInit = false;
             int cnt = 0;
             isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
             using (DataContext dataContext = dc.NewDataContext())
             {
-                cnt = dc.DoUpdate<dcITEM_MST>(cObj);
+                cnt = dc.DoUpdate<dcCN_ASSIGNMENT>(cObj);
             }
             DBContextManager.ReleaseDBContext(ref dc, isDCInit);
             return cnt > 0;
         }
 
-        public static bool Delete(int pITEM_MSTID)
+        public static bool Delete(int pCN_ASSIGNMENTID)
         {
-            return Delete(pITEM_MSTID, null);
+            return Delete(pCN_ASSIGNMENTID, null);
         }
-        public static bool Delete(int pITEM_MSTID, DBContext dc)
+        public static bool Delete(int pCN_ASSIGNMENTID, DBContext dc)
         {
-            dcITEM_MST cObj = new dcITEM_MST();
-            cObj.ITEM_ID = pITEM_MSTID;
+            dcCN_ASSIGNMENT cObj = new dcCN_ASSIGNMENT();
+            cObj.CN_ASSIGN_ID = pCN_ASSIGNMENTID;
             bool isDCInit = false;
             int cnt = 0;
             isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
             using (DataContext dataContext = dc.NewDataContext())
             {
-                cnt = dc.DoDelete<dcITEM_MST>(cObj);
+                cnt = dc.DoDelete<dcCN_ASSIGNMENT>(cObj);
             }
             DBContextManager.ReleaseDBContext(ref dc, isDCInit);
             return cnt > 0;
         }
 
-        public static int Save(dcITEM_MST cObj, bool isAdd)
+        public static int Save(dcCN_ASSIGNMENT cObj, bool isAdd)
         {
             return Save(cObj, isAdd, null);
         }
 
-        public static int Save(dcITEM_MST cObj, bool isAdd, DBContext dc)
+        public static int Save(dcCN_ASSIGNMENT cObj, bool isAdd, DBContext dc)
         {
             cObj._RecordState = isAdd ? RecordStateEnum.Added : RecordStateEnum.Edited;
             return Save(cObj, dc);
         }
 
-        public static int Save(dcITEM_MST cObj)
+        public static int Save(dcCN_ASSIGNMENT cObj)
         {
             return Save(cObj, null);
         }
 
-        public static int Save(dcITEM_MST cObj, DBContext dc)
+        public static int Save(dcCN_ASSIGNMENT cObj, DBContext dc)
         {
             int newID = 0;
             bool isDCInit = false;
@@ -178,11 +165,11 @@ namespace PG.BLLibrary.WRElBL
                         case RecordStateEnum.Edited:
                             if (Update(cObj, dc))
                             {
-                                newID = cObj.ITEM_ID;
+                                newID = cObj.CN_ASSIGN_ID;
                             }
                             break;
                         case RecordStateEnum.Deleted:
-                            if (Delete(cObj.ITEM_ID, dc))
+                            if (Delete(cObj.CN_ASSIGN_ID, dc))
                             {
                                 newID = 1;
                             }
@@ -217,19 +204,19 @@ namespace PG.BLLibrary.WRElBL
             return newID;
         }
 
-        public static bool SaveList(List<dcITEM_MST> detList)
+        public static bool SaveList(List<dcCN_ASSIGNMENT> detList)
         {
             return SaveList(detList, null);
         }
 
-        public static bool SaveList(List<dcITEM_MST> detList, DBContext dc)
+        public static bool SaveList(List<dcCN_ASSIGNMENT> detList, DBContext dc)
         {
             bool bStatus = false;
             bool isDCInit = false;
             bool isTransInit = false;
             isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
             isTransInit = dc.StartTransaction();
-            foreach (dcITEM_MST oDet in detList)
+            foreach (dcCN_ASSIGNMENT oDet in detList)
             {
                 switch (oDet._RecordState)
                 {
@@ -240,7 +227,7 @@ namespace PG.BLLibrary.WRElBL
                     //    bool e = Update(oDet, dc);
                     //    break;
                     //case Interwave.Core.DBClass.RecordStateEnum.Deleted:
-                    //    bool d = Delete(oDet.ITEM_MSTID, dc);
+                    //    bool d = Delete(oDet.CN_ASSIGNMENTID, dc);
                     //    break;
                     default:
                         break;

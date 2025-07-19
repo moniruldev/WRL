@@ -46,7 +46,8 @@ namespace PG.Web.WREL
         public string ReportPrintPageLink = PageLinks.ReportLinks.GetLink_ReportPrint;
         public string ReportPDFPageLink = PageLinks.ReportLinks.GetLink_ReportPDF;
 
-
+        public string DistrictListServiceLink = PageLinks.InventoryLink.GetLink_DistrictList;
+        public string TownListServiceLink = PageLinks.InventoryLink.GetLink_TownList;
 
         public string CountryListServiceLink = PageLinks.InventoryLink.GetLink_CountryList;
 
@@ -195,6 +196,10 @@ namespace PG.Web.WREL
             txtRPContact.Text = string.Empty;
             txtDescription.Text = string.Empty;
             ddlStatus.SelectedValue = string.Empty;
+            hdnTownId.Value = string.Empty;
+            hdnDistId.Value = string.Empty;
+            txtTown.Text = string.Empty;
+            txtDistrict.Text = string.Empty;
             this.HUB_ID = 0;
            // ddlStatus.SelectedValue = "";
         }
@@ -215,7 +220,10 @@ namespace PG.Web.WREL
                 txtRPContact.Text = cObj.RP_MOBILE_NO;
                 txtDescription.Text = cObj.DESCRIPTION;
                 ddlStatus.SelectedValue = cObj.IS_ACTIVE;
-                
+                hdnDistId.Value = cObj.DIST_ID.ToString();
+                hdnTownId.Value = cObj.TOWN_ID.ToString();
+                txtDistrict.Text = cObj.DIST_NAME;
+                txtTown.Text=cObj.TOWN_NAME;
                 
             
 
@@ -243,6 +251,8 @@ namespace PG.Web.WREL
             txtRP.Enabled = isEnabled;
             txtRPContact.Enabled = isEnabled;
             txtDescription.Enabled = isEnabled;
+            txtDistrict.Enabled = isEnabled;
+            txtTown.Enabled = isEnabled;
             
             //buttons
             btnAddNew.Visible = !isEnabled;
@@ -362,6 +372,9 @@ namespace PG.Web.WREL
             cObj.RP_MOBILE_NO = txtRPContact.Text.Trim();
             cObj.DESCRIPTION = txtDescription.Text.Trim();
             cObj.IS_ACTIVE = ddlStatus.SelectedValue;
+            cObj.DIST_ID = Conversion.StringToInt(hdnDistId.Value);
+            cObj.TOWN_ID = Conversion.StringToInt(hdnTownId.Value);
+
             
 
             if (isAdd)

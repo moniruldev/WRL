@@ -26,6 +26,10 @@ namespace PG.DBClass.WRELDC
         private DateTime? m_CREATE_DATE = null;
         private string m_EDIT_BY = string.Empty;
         private DateTime? m_EDIT_DATE = null;
+        private int m_DIST_ID = 0;
+        private int m_TOWN_ID = 0;
+        
+
 
         #endregion  //private members
 
@@ -189,6 +193,36 @@ namespace PG.DBClass.WRELDC
             }
         }
 
+        [DBColumn(Name = "DIST_ID", Storage = "m_DIST_ID", DbType = "107")]
+        public int DIST_ID
+        {
+            get { return this.m_DIST_ID; }
+            set
+            {
+                this.m_DIST_ID = value;
+                this.NotifyPropertyChanged("DIST_ID");
+            }
+        }
+
+        [DBColumn(Name = "TOWN_ID", Storage = "m_TOWN_ID", DbType = "107")]
+        public int TOWN_ID
+        {
+            get { return this.m_TOWN_ID; }
+            set
+            {
+                this.m_TOWN_ID = value;
+                this.NotifyPropertyChanged("TOWN_ID");
+            }
+        }
+
         #endregion //properties
+    }
+
+    public partial class dcHUB_MST
+    {
+        public string DIST_NAME { get; set; }
+        public string TOWN_NAME { get; set; }
+
+
     }
 }

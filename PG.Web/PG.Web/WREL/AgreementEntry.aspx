@@ -21,73 +21,197 @@
         var DistrictListServiceLink = '<%=this.DistrictListServiceLink%>';
         var TownListServiceLink = '<%=this.TownListServiceLink%>';
         var RouteListServiceLink = '<%=this.RouteListServiceLink%>';
+        var ClientListServiceLink = '<%=this.ClientListServiceLink%>';
+        var DepartmentListServiceLink = '<%=this.DepartmentListServiceLink%>';
+        var ItemListServiceLink = '<%=this.ItemListServiceLink%>';
+        var DistanceTypeListServiceLink = '<%=this.DistanceTypeListServiceLink%>';
         
-      
+        
         var gridUpdatePanelIDDet = '<%=UpdatePanel1.ClientID%>';
         var gridViewIDDet = '<%=GridView1.ClientID%>';
-        <%--var txtStartingDist = '<%=txtStartingDist.ClientID%>';
-        var hdnStartingDistId = '<%=hdnStartingDistId.ClientID%>';
-        var txtDestinationDist = '<%=txtDestinationDist.ClientID%>';
-        var hdnDestDistId = '<%=hdnDestDistId.ClientID%>';
+        var txtClientName = '<%=txtClientName.ClientID%>';
+        var hdnClientId = '<%=hdnClientId.ClientID%>';
 
-        var txtDestinationTown = '<%=txtDestinationTown.ClientID%>';
-        var hdnDestTownId = '<%=hdnDestTownId.ClientID%>';
-
-        var txtRoute = '<%=txtRoute.ClientID%>';
-        var hdnRouteId = '<%=hdnRouteId.ClientID%>';
-
-        var txtManagerName = '<%=txtManagerName.ClientID%>';--%>
+        var txtDepartment = '<%=txtDepartment.ClientID%>';
+        var hdnDepartmentId = '<%=hdnDepartmentId.ClientID%>';
+        
+        
+       
       
         
         
 
         $(document).ready(function () {
 
-            //var pageInstance = Sys.WebForms.PageRequestManager.getInstance();
+            var pageInstance = Sys.WebForms.PageRequestManager.getInstance();
 
-            //pageInstance.add_pageLoaded(function (sender, args) {
-            //    var panels = args.get_panelsUpdated();
-            //    for (i = 0; i < panels.length; i++) {
+            pageInstance.add_pageLoaded(function (sender, args) {
+                var panels = args.get_panelsUpdated();
+                for (i = 0; i < panels.length; i++) {
 
-            //        if (panels[i].id == gridUpdatePanelIDDet) {
-            //            bindItemList(gridViewIDDet);
-            //        }
+                    if (panels[i].id == gridUpdatePanelIDDet) {
 
-            //    }
+                        bindItemList(gridViewIDDet);
+                        bindDistanceTypeList(gridViewIDDet);
+                    }
 
-            //});
+                }
 
+            });
 
-            if ($('#' + txtStartingDist).is(':visible')) {
+            if ($('#' + txtClientName).is(':visible')) {
 
-                bindStartingDistrictList();
-
-            }
-
-            if ($('#' + txtDestinationDist).is(':visible')) {
-
-                bindDestinationDistrictList();
+                bindClientList();
 
             }
 
-            if ($('#' + txtDestinationTown).is(':visible')) {
+            if ($('#' + txtDepartment).is(':visible')) {
 
-                bindDestinationTownList();
-
-            }
-
-            if ($('#' + txtRoute).is(':visible')) {
-
-                bindRouteList();
+                bindDepartmentList();
 
             }
 
 
-
+            bindItemList(gridViewIDDet);
+            bindDistanceTypeList(gridViewIDDet);
 
 
         });
      
+        function bindClientList() {
+            var cgColumns = [
+                             { 'columnName': 'clientname', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Name' }
+                            , { 'columnName': 'mobile', 'width': '200', 'align': 'left', 'highlight': 4, 'label': 'Mobile' }
+
+            ];
+            var serviceURL = ClientListServiceLink + "?isterm=1&includeempty=0&hasitem=1&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+
+            serviceURL += "&ispaging=0";
+            var groupIDElem = $('#' + txtClientName);
+
+            $('#' + txtClientName).click(function (e) {
+                $(groupIDElem).combogrid("dropdownClick");
+            });
+
+            $(groupIDElem).combogrid({
+                debug: true,
+                searchButton: false,
+                resetButton: false,
+                alternate: true,
+                munit: 'px',
+                scrollBar: true,
+                showPager: true,
+                colModel: cgColumns,
+                autoFocus: true,
+                showError: true,
+                width: 350,
+                url: serviceURL,
+                search: function (event, ui) {
+
+                    var newServiceURL = serviceURL;
+                    $(this).combogrid("option", "url", newServiceURL);
+
+
+                },
+                select: function (event, ui) {
+                    if (!ui.item) {
+                        event.preventDefault();
+                        return false;
+                    }
+
+                    if (ui.item.dealerid == '') {
+                        event.preventDefault();
+                        return false;
+                    }
+                    else {
+                        $('#' + hdnClientId).val(ui.item.clientid);
+                        $('#' + txtClientName).val(ui.item.clientname);
+                    }
+                    return false;
+                },
+
+                lc: ''
+            });
+
+
+            $(groupIDElem).blur(function () {
+                var self = this;
+
+                var groupID = $(groupIDElem).val();
+                if (groupID == '') {
+                    $('#' + hdnClientId).val('');
+                    $('#' + txtClientName).val('0');
+                }
+            });
+        }
+
+        function bindDepartmentList() {
+            var cgColumns = [
+                             { 'columnName': 'deptname', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Name' }
+                            
+
+            ];
+            var serviceURL = DepartmentListServiceLink + "?isterm=1&includeempty=0&hasitem=1&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+
+            serviceURL += "&ispaging=0";
+            var groupIDElem = $('#' + txtDepartment);
+
+            $('#' + txtDepartment).click(function (e) {
+                $(groupIDElem).combogrid("dropdownClick");
+            });
+
+            $(groupIDElem).combogrid({
+                debug: true,
+                searchButton: false,
+                resetButton: false,
+                alternate: true,
+                munit: 'px',
+                scrollBar: true,
+                showPager: true,
+                colModel: cgColumns,
+                autoFocus: true,
+                showError: true,
+                width: 350,
+                url: serviceURL,
+                search: function (event, ui) {
+
+                    var newServiceURL = serviceURL;
+                    $(this).combogrid("option", "url", newServiceURL);
+
+
+                },
+                select: function (event, ui) {
+                    if (!ui.item) {
+                        event.preventDefault();
+                        return false;
+                    }
+
+                    if (ui.item.dealerid == '') {
+                        event.preventDefault();
+                        return false;
+                    }
+                    else {
+                        $('#' + hdnDepartmentId).val(ui.item.deptid);
+                        $('#' + txtDepartment).val(ui.item.deptname);
+                    }
+                    return false;
+                },
+
+                lc: ''
+            });
+
+
+            $(groupIDElem).blur(function () {
+                var self = this;
+
+                var groupID = $(groupIDElem).val();
+                if (groupID == '') {
+                    $('#' + hdnDepartmentId).val('');
+                    $('#' + txtDepartment).val('0');
+                }
+            });
+        }
+
         function bindStartingDistrictList() {
             var cgColumns = [
                              { 'columnName': 'distcode', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Code' }
@@ -356,6 +480,229 @@
             });
         }
       
+        function bindItemList(gridViewID) {
+            var cgColumns = [{ 'columnName': 'itemname', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Name' }
+                            
+
+            ];
+
+
+            var serviceURL = ItemListServiceLink + "?isterm=1&includeempty=0&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+            serviceURL += "&ispaging=1";
+
+            var gridSelector = "#" + gridViewID;
+
+            $(gridSelector).find('input[id$="txtItemName"]').each(function (index, elem) {
+
+                var elemRow = $(elem).closest('tr.gridRow');
+
+                var hdnItemIDElem = $(elemRow).find('input[id$="txtItemName"]');
+
+                $(elem).closest('tr').find('input[id$="txtItemName"]').click(function (e) {
+                    elmID = $(elem).attr('id');
+                    $(elem).combogrid("dropdownClick");
+                });
+
+                $(elem).data("selectedItem", null);
+                $(elem).combogrid({
+                    debug: true,
+                    searchButton: false,
+                    resetButton: false,
+                    alternate: true,
+                    munit: 'px',
+                    scrollBar: true,
+                    showPager: true,
+                    colModel: cgColumns,
+                    autoFocus: true,
+                    showError: true,
+                    width: 400,
+                    url: serviceURL,
+                    search: function (event, ui) {
+                        debugger;
+                        var vgroupid = 0;
+                        var elemRowCur = $(elem).closest('tr.gridRow');
+                        var itemName = $(elemRowCur).find('input[id$="txtItemName"]').val();
+                        // vgroupid = $(elemRowCur).find('input[id$="hdngroupId"]').val();
+
+                        var newServiceURL = serviceURL;//+ "&groupid=" + vgroupid
+                        newServiceURL = JSUtility.AddTimeToQueryString(newServiceURL);
+                        $(this).combogrid("option", "url", newServiceURL);
+
+                    },
+
+                    select: function (event, ui) {
+
+                        elemID = $(elem).attr('id');
+
+                        if (!ui.item) {
+                            debugger;
+                            event.preventDefault();
+                            ClearItemData(elemID);
+                            return false;
+                        }
+
+                        if (ui.item.id == 0) {
+                            alert('item clear');
+                            debugger;
+                            event.preventDefault();
+                            return false;
+                        }
+                        else {
+                            $(elem).data("selectedItem", ui.item);
+                            SetItemData(elemID, ui.item);
+                        }
+                        return false;
+                    }
+
+                });
+
+                $(elem).blur(function () {
+                    var self = this;
+                    elemID = $(elem).attr('id');
+                    eCode = $(elem).val();
+
+                    isComboGridOpen = $(self).combogrid('isOpened');
+                    var selectedData = $(self).data("selectedItem");
+
+                    if (eCode === '') {
+                        ClearItemData(elemID);
+                    } else if (selectedData) {
+                         SetItemData(elemID, selectedData);
+                    } else {
+                        ClearItemData(elemID);
+                    }
+
+                });
+
+            });
+
+        }
+
+        function ClearItemData(txtItemID) {
+            var detRow = $('#' + txtItemID).closest('tr.gridRow');
+            $(detRow).find('input[id$="hdnItemID"]').val('0');
+            $(detRow).find('input[id$="txtItemName"]').val('');
+        }
+
+        function SetItemData(txtItemCodeID, data) {
+            $('#' + txtItemCodeID).val(data.itemname);
+            var detRow = $('#' + txtItemCodeID).closest('tr.gridRow');
+            $(detRow).find('input[id$="hdnItemID"]').val(data.itemid);
+            $(detRow).find('input[id$="txtItemName"]').val(data.itemname);
+
+        }
+
+        function bindDistanceTypeList(gridViewID) {
+            var cgColumns = [{ 'columnName': 'distancetypename', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Name' }
+
+
+            ];
+
+
+            var serviceURL = DistanceTypeListServiceLink + "?isterm=1&includeempty=0&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+            serviceURL += "&ispaging=1";
+
+            var gridSelector = "#" + gridViewID;
+
+            $(gridSelector).find('input[id$="txtDistanceType"]').each(function (index, elem) {
+
+                var elemRow = $(elem).closest('tr.gridRow');
+
+                var hdnItemIDElem = $(elemRow).find('input[id$="txtDistanceType"]');
+
+                $(elem).closest('tr').find('input[id$="txtDistanceType"]').click(function (e) {
+                    elmID = $(elem).attr('id');
+                    $(elem).combogrid("dropdownClick");
+                });
+
+                $(elem).data("selectedItem", null);
+                $(elem).combogrid({
+                    debug: true,
+                    searchButton: false,
+                    resetButton: false,
+                    alternate: true,
+                    munit: 'px',
+                    scrollBar: true,
+                    showPager: true,
+                    colModel: cgColumns,
+                    autoFocus: true,
+                    showError: true,
+                    width: 400,
+                    url: serviceURL,
+                    search: function (event, ui) {
+                        debugger;
+                        var vgroupid = 0;
+                        var elemRowCur = $(elem).closest('tr.gridRow');
+                        var itemName = $(elemRowCur).find('input[id$="txtDistanceType"]').val();
+                        // vgroupid = $(elemRowCur).find('input[id$="hdngroupId"]').val();
+
+                        var newServiceURL = serviceURL;//+ "&groupid=" + vgroupid
+                        newServiceURL = JSUtility.AddTimeToQueryString(newServiceURL);
+                        $(this).combogrid("option", "url", newServiceURL);
+
+                    },
+
+                    select: function (event, ui) {
+
+                        elemID = $(elem).attr('id');
+
+                        if (!ui.item) {
+                            debugger;
+                            event.preventDefault();
+                            ClearDistanceTypeData(elemID);
+                            return false;
+                        }
+
+                        if (ui.item.id == 0) {
+                            alert('item clear');
+                            debugger;
+                            event.preventDefault();
+                            return false;
+                        }
+                        else {
+                            $(elem).data("selectedItem", ui.item);
+                            SetDistanceTypeData(elemID, ui.item);
+                        }
+                        return false;
+                    }
+
+                });
+
+                $(elem).blur(function () {
+                    var self = this;
+                    elemID = $(elem).attr('id');
+                    eCode = $(elem).val();
+
+                    isComboGridOpen = $(self).combogrid('isOpened');
+                    var selectedData = $(self).data("selectedItem");
+
+                    if (eCode === '') {
+                        ClearDistanceTypeData(elemID);
+                    } else if (selectedData) {
+                        SetDistanceTypeData(elemID, selectedData);
+                    } else {
+                        ClearDistanceTypeData(elemID);
+                    }
+
+                });
+
+            });
+
+        }
+
+        function ClearDistanceTypeData(txtItemID) {
+            var detRow = $('#' + txtItemID).closest('tr.gridRow');
+            $(detRow).find('input[id$="hdnDistanceTypeID"]').val('0');
+            $(detRow).find('input[id$="txtDistanceType"]').val('');
+        }
+
+        function SetDistanceTypeData(txtItemCodeID, data) {
+            $('#' + txtItemCodeID).val(data.distancetypename);
+            var detRow = $('#' + txtItemCodeID).closest('tr.gridRow');
+            $(detRow).find('input[id$="hdnDistanceTypeID"]').val(data.distancetypeid);
+            $(detRow).find('input[id$="txtDistanceType"]').val(data.distancetypename);
+
+        }
 
         function checkDt(fld) {
             var mo, day, yr;
@@ -615,12 +962,12 @@
 
             <div class="row mb-0">
 
-                <div class="col-md-4">
+               <div class="col-md-4">
                   <div class="form-group row mb-0">
-                    <label for="name" class="col-sm-6 col-form-label-sm">Client :</label>
+                    <label for="name" class="col-sm-6 col-form-label-sm">Client Name :</label>
                     <div class="col-sm-6">
                       <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtClientName" placeholder="Select" ></asp:TextBox> 
-                       <asp:HiddenField runat="server" ID="hdnClientId" Value="0" /> 
+                           <asp:HiddenField runat="server" ID="hdnClientId" Value="0" /> 
                     </div>
                   </div>
 
@@ -745,12 +1092,22 @@
             <ItemTemplate>
                 <div class="d-flex">
                     <asp:TextBox ID="txtDistanceType" runat="server" CssClass="form-control form-control-sm" 
-                        Text='<%# Bind("DISTANCE_TYPE_ID") %>' Style="width: 150px;"></asp:TextBox>
+                        Text='<%# Bind("TYPE_NAME") %>' Style="width: 150px;"></asp:TextBox>
+                    <asp:HiddenField ID="hdnDistanceTypeID" runat="server" Value='<%# Bind("DISTANCE_TYPE_ID") %>' />
                     
                 </div>
             </ItemTemplate>
         </asp:TemplateField>
-        <asp:TemplateField HeaderText="Service Amount">
+         <asp:TemplateField HeaderText="Is OTP">
+            <ItemTemplate>
+                <div class="d-flex">
+                    <asp:DropDownList ID="ddlIsOTP" runat="server">
+                        <asp:ListItem 
+                    </asp:DropDownList><%-- <asp:TextBox ID="txtDistanceType" runat="server" CssClass="form-control form-control-sm" 
+                        Text='<%# Bind("IS_OTP_SERVICE") %>' Style="width: 150px;"></asp:TextBox>--%></div>
+            </ItemTemplate>
+        </asp:TemplateField>
+        <asp:TemplateField HeaderText="Service Price">
             <ItemTemplate>
                 <div class="d-flex">
                     <asp:TextBox ID="txtServiceAmt" runat="server" CssClass="form-control form-control-sm" 

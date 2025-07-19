@@ -1,4 +1,5 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/AppMaster.Master" AutoEventWireup="true" CodeBehind="DepartmentList.aspx.cs" Inherits="PG.Web.WREL.DepartmentList" %>
+﻿
+<%@ Page Language="C#" MasterPageFile="~/AppMaster.Master" AutoEventWireup="true" CodeBehind="DepartmentList.aspx.cs" Inherits="PG.Web.WREL.DepartmentList" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">

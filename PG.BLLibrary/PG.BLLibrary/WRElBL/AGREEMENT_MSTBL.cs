@@ -182,9 +182,16 @@ namespace PG.BLLibrary.WRElBL
                     {
                         bool bStatus = false;
 
-                        ///code list save logic here
+                        if (cObj.agreementDetails != null)
+                        {
+                            foreach (dcAGREEMENT_DETAILL det in cObj.agreementDetails)
+                            {
+                                det.AGR_ID = newID;
+                            }
+                            bStatus = AGREEMENT_DETAILLBL.SaveList(cObj.agreementDetails, dc);
+                        }
 
-                        bStatus = true;
+                        //bStatus = true;
                         if (bStatus)
                         {
                             dc.CommitTransaction(isTransInit);

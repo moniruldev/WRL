@@ -32,12 +32,13 @@ namespace PG.Web.Service.WREL
             string searchTerm = WebUtility.GetQueryString("searchTerm", context);
             string dealerCode = WebUtility.GetQueryString("code", context);
             int codeCompType = WebUtility.GetQueryStringInteger("codecomptype", context);
-
+            
             string dealerName = WebUtility.GetQueryString("name", context);
             int nameCompType = WebUtility.GetQueryStringInteger("namecomptype", context);
 
             string Selected = WebUtility.GetQueryString("selectedId", context).ToUpper();
             int typeid = WebUtility.GetQueryStringInteger("typeid", context);
+             int distid = WebUtility.GetQueryStringInteger("distid", context);
 
             string sortBy = WebUtility.GetQueryString("sidx", context); //colname
             string sortOrder = WebUtility.GetQueryString("sord", context);  //asc,desc
@@ -112,10 +113,10 @@ namespace PG.Web.Service.WREL
             }
 
 
-            //if (typeid > 0)
-            //{
-            //    filterList.Add(new DBFilter("INV_ITEM_MASTER.ITEM_TYPE_ID", typeid));
-            //}
+            if (distid > 0)
+            {
+                filterList.Add(new DBFilter("T.DIST_ID", distid));
+            }
 
 
 

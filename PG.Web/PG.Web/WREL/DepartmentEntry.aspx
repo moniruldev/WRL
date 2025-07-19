@@ -21,8 +21,8 @@
         var ClientListServiceLink = '<%=this.ClientListServiceLink%>';
         <%--   var txtCountry = '<%=txtCountry.ClientID%>';
         var hdnCountryId = '<%=hdnCountryId.ClientID%>';--%>
-        var txtClientName = '<%=txtClientName.ClientID%>';
-        var hdnClientId = '<%=hdnClientId.ClientID%>';
+       <%-- var txtClientName = '<%=txtClientName.ClientID%>';
+        var hdnClientId = '<%=hdnClientId.ClientID%>';--%>
        
 
         $(document).ready(function () {
@@ -40,17 +40,17 @@
             //    }
 
             //});
-            if ($('#' + txtClientName).is(':visible')) {
+            //if ($('#' + txtClientName).is(':visible')) {
 
-                bindClientList();
+            //    bindClientList();
 
-            }
+            //}
 
-            if ($('#' + txtCountry).is(':visible')) {
+            //if ($('#' + txtCountry).is(':visible')) {
 
-                bindCountryList();
+            //    bindCountryList();
 
-            }
+            //}
 
 
 
@@ -468,33 +468,7 @@
 
              </div>
 
-              <div class="row mb-0">
-                 
-                <div class="col-md-2">
-                 
-                </div>
-
-
-                  <div class="col-md-4">
-                  <div class="form-group row mb-0">
-                    <label for="name" class="col-sm-5 col-form-label-sm">Client Name :</label>
-                    <div class="col-sm-7">
-                      <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtClientName" placeholder="Select" ></asp:TextBox> 
-                           <asp:HiddenField runat="server" ID="hdnClientId" Value="0" /> 
-                    </div>
-                  </div>
-
-                </div>
-
-
-                
-
-
-                 <div class="col-md-2">
-                 
-                </div>
-
-             </div>
+              
 
              <div class="row mb-0">
                  
