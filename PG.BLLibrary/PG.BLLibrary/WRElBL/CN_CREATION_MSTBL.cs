@@ -2,6 +2,7 @@
 using PG.DBClass.WRELDC;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Linq;
 using System.Linq;
 using System.Text;
@@ -26,6 +27,112 @@ namespace PG.BLLibrary.WRElBL
             sb.Append(" WHERE 1=1 ");
 
             return sb.ToString();
+        }
+
+        public static string GetCNInfoListSQLString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(" SELECT mst.*, ");
+            sb.Append(" cl.client_name, ");
+            sb.Append(" agm.description AS AGREEMENT_DESCRIPTION, ");
+            sb.Append(" im.item_name, ");
+            sb.Append(" r.route_name, ");
+            sb.Append(" dis.dist_name AS DESTINATION_DIST_NAME, ");
+            sb.Append(" th.town_name AS DESTINATION_TOWN_NAME ");
+            sb.Append(" FROM CN_CREATION_MST mst ");
+            sb.Append(" LEFT JOIN client_mst cl ON mst.client_id = cl.client_id ");
+            sb.Append(" LEFT JOIN agreement_detaill ag ON mst.agr_detail_id = ag.agr_detail_id ");
+            sb.Append(" LEFT JOIN agreement_mst agm ON ag.agr_id = agm.agr_id ");
+            sb.Append(" LEFT JOIN item_mst im ON mst.item_id = im.item_id ");
+            sb.Append(" LEFT JOIN route_mst r ON mst.route_id = r.route_id ");
+            sb.Append(" LEFT JOIN district_mst dis ON mst.destination_dist_id = dis.dist_id ");
+            sb.Append(" LEFT JOIN thana_town_mst th ON mst.destination_town_id = th.town_id ");
+            sb.Append(" WHERE 1=1 ");
+
+            return sb.ToString();
+        }
+
+        public static dcCN_CREATION_MST GetCNInfoByCNNumber(string pCNNumber, DBContext dc)
+        {
+            dcCN_CREATION_MST cObjList = new dcCN_CREATION_MST();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetCNListSQLString());
+                if (pCNNumber != "")
+                {
+                    sb.Append(" AND mst.CN_NUMBER= @pCNNumber ");
+                    cmdInfo.DBParametersInfo.Add("@pCNNumber", pCNNumber);
+                }
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcCN_CREATION_MST>(dbq, dc).FirstOrDefault();
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
+        }
+        public static List<dcCN_CREATION_MST> GetCNInfoList()
+        {
+            return GetCNInfoListById(0, null);
+        }
+        public static List<dcCN_CREATION_MST> GetCNInfoListById(int pCNId, DBContext dc)
+        {
+            List<dcCN_CREATION_MST> cObjList = new List<dcCN_CREATION_MST>();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetCNInfoListSQLString());
+                if (pCNId  > 0)
+                {
+                    sb.Append(" AND mst.CN_ID= @pCNId ");
+                    cmdInfo.DBParametersInfo.Add("@pCNId", pCNId);
+                }
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcCN_CREATION_MST>(dbq, dc);
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
+        }
+
+        public static string Get_New_CN_No(string pdate, DBContext dc)
+        {
+            bool isDCInit = false;
+            string _CN_No = string.Empty;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                string abbr = " SELECT FN_NEW_CN_NUMBER(@pdate) A from Dual ";
+                cmdInfo.DBParametersInfo.Add("@pdate", pdate);
+
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = abbr;
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+                _CN_No = Convert.ToString(DBQuery.ExecuteDBScalar(dbq, dc));
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return _CN_No;
         }
         public static List<dcCN_CREATION_MST> GetCN_CREATION_MSTList()
         {

@@ -20,8 +20,7 @@ namespace PG.DBClass.WRELDC
         private int m_ITEM_ID = 0;
         private decimal m_SERVICE_AMOUNT = 0;
         private int m_ROUTE_ID = 0;
-        private string m_SHIPPER_ADDRESS = string.Empty;
-        private string m_SHIPPER_MOBILE_NO = string.Empty;
+        private string m_CONSIGNEE_NAME = string.Empty;
         private string m_CONSIGNEE_ADDRESS = string.Empty;
         private string m_CONSIGNEE_MOBILE_NO = string.Empty;
         private decimal m_DESTINATION_DIST_ID = 0;
@@ -41,6 +40,12 @@ namespace PG.DBClass.WRELDC
         private DateTime? m_CREATE_DATE = null;
         private string m_EDIT_BY = string.Empty;
         private DateTime? m_EDIT_DATE = null;
+        private string m_OTP_SUCCESSFUL = string.Empty;
+        private decimal m_RETURN_SERVICE_AMOUNT = 0;
+        private string m_IS_DELIVERED = string.Empty;
+        private string m_POD = string.Empty;
+        private DateTime? m_DELIVERY_DATE = null;
+        private decimal m_SLA_DAYS = 0;
 
         #endregion  //private members
 
@@ -138,27 +143,18 @@ namespace PG.DBClass.WRELDC
             }
         }
 
-        [DBColumn(Name = "SHIPPER_ADDRESS", Storage = "m_SHIPPER_ADDRESS", DbType = "126")]
-        public string SHIPPER_ADDRESS
+        [DBColumn(Name = "CONSIGNEE_NAME", Storage = "m_CONSIGNEE_NAME", DbType = "126")]
+        public string CONSIGNEE_NAME
         {
-            get { return this.m_SHIPPER_ADDRESS; }
+            get { return this.m_CONSIGNEE_NAME; }
             set
             {
-                this.m_SHIPPER_ADDRESS = value;
-                this.NotifyPropertyChanged("SHIPPER_ADDRESS");
+                this.m_CONSIGNEE_NAME = value;
+                this.NotifyPropertyChanged("CONSIGNEE_NAME");
             }
         }
 
-        [DBColumn(Name = "SHIPPER_MOBILE_NO", Storage = "m_SHIPPER_MOBILE_NO", DbType = "126")]
-        public string SHIPPER_MOBILE_NO
-        {
-            get { return this.m_SHIPPER_MOBILE_NO; }
-            set
-            {
-                this.m_SHIPPER_MOBILE_NO = value;
-                this.NotifyPropertyChanged("SHIPPER_MOBILE_NO");
-            }
-        }
+     
 
         [DBColumn(Name = "CONSIGNEE_ADDRESS", Storage = "m_CONSIGNEE_ADDRESS", DbType = "126")]
         public string CONSIGNEE_ADDRESS
@@ -369,6 +365,127 @@ namespace PG.DBClass.WRELDC
             }
         }
 
+        [DBColumn(Name = "OTP_SUCCESSFUL", Storage = "m_OTP_SUCCESSFUL", DbType = "126")]
+        public string OTP_SUCCESSFUL
+        {
+            get { return this.m_OTP_SUCCESSFUL; }
+            set
+            {
+                this.m_OTP_SUCCESSFUL = value;
+                this.NotifyPropertyChanged("OTP_SUCCESSFUL");
+            }
+        }
+
+        [DBColumn(Name = "RETURN_SERVICE_AMOUNT", Storage = "m_RETURN_SERVICE_AMOUNT", DbType = "107")]
+        public decimal RETURN_SERVICE_AMOUNT
+        {
+            get { return this.m_RETURN_SERVICE_AMOUNT; }
+            set
+            {
+                this.m_RETURN_SERVICE_AMOUNT = value;
+                this.NotifyPropertyChanged("RETURN_SERVICE_AMOUNT");
+            }
+        }
+
+        [DBColumn(Name = "IS_DELIVERED", Storage = "m_IS_DELIVERED", DbType = "126")]
+        public string IS_DELIVERED
+        {
+            get { return this.m_IS_DELIVERED; }
+            set
+            {
+                this.m_IS_DELIVERED = value;
+                this.NotifyPropertyChanged("IS_DELIVERED");
+            }
+        }
+
+        [DBColumn(Name = "POD", Storage = "m_POD", DbType = "102")]
+        public string POD
+        {
+            get { return this.m_POD; }
+            set
+            {
+                this.m_POD = value;
+                this.NotifyPropertyChanged("POD");
+            }
+        }
+
+        [DBColumn(Name = "DELIVERY_DATE", Storage = "m_DELIVERY_DATE", DbType = "106")]
+        public DateTime? DELIVERY_DATE
+        {
+            get { return this.m_DELIVERY_DATE; }
+            set
+            {
+                this.m_DELIVERY_DATE = value;
+                this.NotifyPropertyChanged("DELIVERY_DATE");
+            }
+        }
+
+        [DBColumn(Name = "SLA_DAYS", Storage = "m_SLA_DAYS", DbType = "107")]
+        public decimal SLA_DAYS
+        {
+            get { return this.m_SLA_DAYS; }
+            set
+            {
+                this.m_SLA_DAYS = value;
+                this.NotifyPropertyChanged("SLA_DAYS");
+            }
+        }
+
         #endregion //properties
     }
+
+     public partial class dcCN_CREATION_MST
+     {
+         private string m_DESTINATION_DIST_NAME = "";
+         private string m_DESTINATION_TOWN_NAME = "";
+         private string m_CLIENT_NAME = "";
+         private string m_AGREEMENT_DESCRIPTION = "";
+         private string m_ITEM_NAME = "";
+         private string m_ROUTE_NAME = "";
+         private string m_HUB_NAME = "";
+
+         public string DESTINATION_DIST_NAME
+         {
+             get { return this.m_DESTINATION_DIST_NAME; }
+             set { this.m_DESTINATION_DIST_NAME = value; }
+         }
+
+         public string DESTINATION_TOWN_NAME
+         {
+             get { return this.m_DESTINATION_TOWN_NAME; }
+             set { this.m_DESTINATION_TOWN_NAME = value; }
+         }
+
+         public string CLIENT_NAME
+         {
+             get { return this.m_CLIENT_NAME; }
+             set { this.m_CLIENT_NAME = value; }
+         }
+
+         public string AGREEMENT_DESCRIPTION
+         {
+             get { return this.m_AGREEMENT_DESCRIPTION; }
+             set { this.m_AGREEMENT_DESCRIPTION = value; }
+         }
+
+         public string ITEM_NAME
+         {
+             get { return this.m_ITEM_NAME; }
+             set { this.m_ITEM_NAME = value; }
+         }
+
+         public string ROUTE_NAME
+         {
+             get { return this.m_ROUTE_NAME; }
+             set { this.m_ROUTE_NAME = value; }
+         }
+
+         public string HUB_NAME
+         {
+             get { return this.m_HUB_NAME; }
+             set { this.m_HUB_NAME = value; }
+         }
+
+
+     }
 }

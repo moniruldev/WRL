@@ -17,6 +17,18 @@ namespace PG.BLLibrary.WRElBL
             //dlo.LoadWith<DBClass.dcAGREEMENT_DETAILL>(obj => obj.relatedclassname);
             return dlo;
         }
+
+        public static string GetAgreementDtlSQLString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(" SELECT DTL.*,IM.ITEM_NAME,mst.description FROM AGREEMENT_DETAILL DTL ");
+            sb.Append(" INNER JOIN Agreement_mst MST ON dtl.agr_id=mst.agr_id ");
+            sb.Append(" INNER JOIN ITEM_MST IM ON DTL.ITEM_ID=IM.ITEM_ID ");
+            sb.Append(" WHERE 1=1 ");
+
+            return sb.ToString();
+        }
         public static List<dcAGREEMENT_DETAILL> GetAGREEMENT_DETAILLList()
         {
             return GetAGREEMENT_DETAILLList(null, null);

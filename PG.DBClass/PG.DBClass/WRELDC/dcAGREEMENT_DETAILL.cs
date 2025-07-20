@@ -137,6 +137,7 @@ namespace PG.DBClass.WRELDC
     {
         public string ITEM_NAME { get; set; }
         public string TYPE_NAME { get; set; }
+        public string DESCRIPTION { get; set; }
         
     }
 }

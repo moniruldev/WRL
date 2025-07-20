@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/AppMaster.Master" AutoEventWireup="true" CodeBehind="CargoCreation.aspx.cs" Inherits="PG.Web.WREL.CargoCreation" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/AppMaster.Master" AutoEventWireup="true" CodeBehind="ParcelCreation.aspx.cs" Inherits="PG.Web.WREL.ParcelCreation" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -23,23 +23,30 @@
         var TownListServiceLink = '<%=this.TownListServiceLink%>';
         var RouteListServiceLink = '<%=this.RouteListServiceLink%>';
         var CNListServiceLink = '<%=this.CNListServiceLink%>';
+        var ClientListServiceLink = '<%=this.ClientListServiceLink%>';
+        var AgreementDetailsListServiceLink = '<%=this.AgreementDetailsListServiceLink%>';
+        var HubListServiceLink = '<%=this.HubListServiceLink%>';
+        
         
         
       
         var gridUpdatePanelIDDet = '<%=UpdatePanel1.ClientID%>';
         var gridViewIDDet = '<%=GridView1.ClientID%>';
-        var txtStartingDist = '<%=txtStartingDist.ClientID%>';
-        var hdnStartingDistId = '<%=hdnStartingDistId.ClientID%>';
-        var txtDestinationDist = '<%=txtDestinationDist.ClientID%>';
-        var hdnDestDistId = '<%=hdnDestDistId.ClientID%>';
 
-        var txtDestinationTown = '<%=txtDestinationTown.ClientID%>';
-        var hdnDestTownId = '<%=hdnDestTownId.ClientID%>';
+        var txtAggrementDtl = '<%=txtAggrementDtl.ClientID%>';
+        var hdnAggrementDtlId = '<%=hdnAggrementDtlId.ClientID%>';
+        var txtItemName = '<%=txtItemName.ClientID%>';
+        var hdnItemId = '<%=hdnItemId.ClientID%>';
+        var txtServiceAmt = '<%=txtServiceAmt.ClientID%>';
+
+        var txtClientName = '<%=txtClientName.ClientID%>';
+        var hdnClientId = '<%=hdnClientId.ClientID%>';
 
         var txtRoute = '<%=txtRoute.ClientID%>';
         var hdnRouteId = '<%=hdnRouteId.ClientID%>';
 
-        var txtManagerName = '<%=txtManagerName.ClientID%>';
+        var txtHubName = '<%=txtHubName.ClientID%>';
+        var hdnHubId = '<%=hdnHubId.ClientID%>';
       
 
         
@@ -53,7 +60,8 @@
                 for (i = 0; i < panels.length; i++) {
 
                     if (panels[i].id == gridUpdatePanelIDDet) {
-                        //bindCNList(gridViewIDDet);
+                        bindDestinationDistList(gridViewIDDet);
+                        bindDestinationTownList(gridViewIDDet);
                     }
 
                 }
@@ -61,21 +69,21 @@
             });
 
 
-            if ($('#' + txtStartingDist).is(':visible')) {
+            if ($('#' + txtClientName).is(':visible')) {
 
-                bindStartingDistrictList();
-
-            }
-
-            if ($('#' + txtDestinationDist).is(':visible')) {
-
-                bindDestinationDistrictList();
+                bindClientNameList();
 
             }
 
-            if ($('#' + txtDestinationTown).is(':visible')) {
+            if ($('#' + txtAggrementDtl).is(':visible')) {
 
-                bindDestinationTownList();
+                bindAgreementDetailsList();
+
+            }
+
+            if ($('#' + txtHubName).is(':visible')) {
+
+                bindHubList();
 
             }
 
@@ -85,24 +93,25 @@
 
             }
 
-            //bindCNList(gridViewIDDet);
+            bindDestinationDistList(gridViewIDDet);
+            bindDestinationTownList(gridViewIDDet);
 
 
 
         });
      
-        function bindStartingDistrictList() {
+        function bindClientNameList() {
             var cgColumns = [
-                             { 'columnName': 'distcode', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Code' }
-                            , { 'columnName': 'distname', 'width': '200', 'align': 'left', 'highlight': 4, 'label': 'Name' }
+                             { 'columnName': 'clientname', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Client Name' }
+                            , { 'columnName': 'mobile', 'width': '200', 'align': 'left', 'highlight': 4, 'label': 'Mobile' }
 
             ];
-            var serviceURL = DistrictListServiceLink + "?isterm=1&includeempty=0&hasitem=1&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+            var serviceURL = ClientListServiceLink + "?isterm=1&includeempty=0&hasitem=1&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
 
             serviceURL += "&ispaging=0";
-            var groupIDElem = $('#' + txtStartingDist);
+            var groupIDElem = $('#' + txtClientName);
 
-            $('#' + txtStartingDist).click(function (e) {
+            $('#' + txtClientName).click(function (e) {
                 $(groupIDElem).combogrid("dropdownClick");
             });
 
@@ -137,8 +146,8 @@
                         return false;
                     }
                     else {
-                        $('#' + hdnStartingDistId).val(ui.item.distid);
-                        $('#' + txtStartingDist).val(ui.item.distname);
+                        $('#' + hdnClientId).val(ui.item.clientid);
+                        $('#' + txtClientName).val(ui.item.clientname);
                     }
                     return false;
                 },
@@ -152,24 +161,24 @@
 
                 var groupID = $(groupIDElem).val();
                 if (groupID == '') {
-                    $('#' + txtStartingDist).val('');
-                    $('#' + hdnStartingDistId).val('0');
+                    $('#' + txtClientName).val('');
+                    $('#' + hdnClientId).val('0');
                 }
             });
         }
 
-        function bindDestinationDistrictList() {
+        function bindAgreementDetailsList() {
             var cgColumns = [
-                             { 'columnName': 'distcode', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Code' }
-                            , { 'columnName': 'distname', 'width': '200', 'align': 'left', 'highlight': 4, 'label': 'Name' }
+                             { 'columnName': 'description', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Agrement' }
+                            , { 'columnName': 'itemname', 'width': '200', 'align': 'left', 'highlight': 4, 'label': 'Item' }
 
             ];
-            var serviceURL = DistrictListServiceLink + "?isterm=1&includeempty=0&hasitem=1&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+            var serviceURL = AgreementDetailsListServiceLink + "?isterm=1&includeempty=0&hasitem=1&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
 
             serviceURL += "&ispaging=0";
-            var groupIDElem = $('#' + txtDestinationDist);
+            var groupIDElem = $('#' + txtAggrementDtl);
 
-            $('#' + txtDestinationDist).click(function (e) {
+            $('#' + txtAggrementDtl).click(function (e) {
                 $(groupIDElem).combogrid("dropdownClick");
             });
 
@@ -204,8 +213,11 @@
                         return false;
                     }
                     else {
-                        $('#' + hdnDestDistId).val(ui.item.distid);
-                        $('#' + txtDestinationDist).val(ui.item.distname);
+                        $('#' + hdnAggrementDtlId).val(ui.item.agrdtlid);
+                        $('#' + txtAggrementDtl).val(ui.item.description);
+                        $('#' + txtItemName).val(ui.item.itemname);
+                        $('#' + hdnItemId).val(ui.item.itemid);
+                        $('#' + txtServiceAmt).val(ui.item.serviceamt);
                     }
                     return false;
                 },
@@ -219,24 +231,24 @@
 
                 var groupID = $(groupIDElem).val();
                 if (groupID == '') {
-                    $('#' + txtDestinationDist).val('');
-                    $('#' + hdnDestDistId).val('0');
+                    $('#' + txtAggrementDtl).val('');
+                    $('#' + hdnAggrementDtlId).val('0');
                 }
             });
         }
 
-        function bindDestinationTownList() {
+        function bindHubList() {
             var cgColumns = [
-                             { 'columnName': 'townname', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Code' }
-                            , { 'columnName': 'distname', 'width': '200', 'align': 'left', 'highlight': 4, 'label': 'Name' }
+                             { 'columnName': 'hubname', 'width': '200', 'align': 'left', 'highlight': 4, 'label': 'Name' }
+                            //, { 'columnName': 'distname', 'width': '200', 'align': 'left', 'highlight': 4, 'label': 'Name' }
 
             ];
-            var serviceURL = TownListServiceLink + "?isterm=1&includeempty=0&hasitem=1&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+            var serviceURL = HubListServiceLink + "?isterm=1&includeempty=0&hasitem=1&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
 
             serviceURL += "&ispaging=0";
-            var groupIDElem = $('#' + txtDestinationTown);
+            var groupIDElem = $('#' + txtHubName);
 
-            $('#' + txtDestinationTown).click(function (e) {
+            $('#' + txtHubName).click(function (e) {
                 $(groupIDElem).combogrid("dropdownClick");
             });
 
@@ -271,8 +283,8 @@
                         return false;
                     }
                     else {
-                        $('#' + hdnDestTownId).val(ui.item.townid);
-                        $('#' + txtDestinationTown).val(ui.item.townname);
+                        $('#' + hdnHubId).val(ui.item.hubid);
+                        $('#' + txtHubName).val(ui.item.hubname);
                     }
                     return false;
                 },
@@ -286,8 +298,8 @@
 
                 var groupID = $(groupIDElem).val();
                 if (groupID == '') {
-                    $('#' + txtDestinationTown).val('');
-                    $('#' + hdnDestTownId).val('0');
+                    $('#' + txtHubName).val('');
+                    $('#' + hdnHubId).val('0');
                 }
             });
         }
@@ -359,30 +371,25 @@
             });
         }
 
-        function bindCNList(gridViewID) {
-            var cgColumns = [{ 'columnName': 'cnnumber', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'CN Number' }
-                             , { 'columnName': 'billno', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Bill No' }
-                             , { 'columnName': 'invoiceno', 'width': '150', 'align': 'left', 'highlight': 4, 'label': 'InvoiceNo' }
-                             //, { 'columnName': 'itemgroupdesc', 'width': '150', 'align': 'left', 'highlight': 4, 'label': 'Group Name' }
-                             //, { 'columnName': 'closing_qty', 'width': '80', 'align': 'left', 'highlight': 4, 'label': 'Cls Qty' }
-                             //, { 'columnName': 'class_name', 'width': '120', 'align': 'left', 'highlight': 4, 'label': 'Class Name' }
-                             //, { 'columnName': 'item_type', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Item Type' }
+        function bindDestinationDistList(gridViewID) {
+            var cgColumns = [{ 'columnName': 'distname', 'width': '200', 'align': 'left', 'highlight': 4, 'label': 'District Name' }
+                        
 
             ];
 
            
-            var serviceURL = CNListServiceLink + "?isterm=1&includeempty=0&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
-            serviceURL += "&ispaging=1";
+            var serviceURL = DistrictListServiceLink + "?isterm=1&includeempty=0&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+            serviceURL += "&ispaging=0";
 
             var gridSelector = "#" + gridViewID;
 
-            $(gridSelector).find('input[id$="txtCNName"]').each(function (index, elem) {
+            $(gridSelector).find('input[id$="txtDestinationDist"]').each(function (index, elem) {
 
                 var elemRow = $(elem).closest('tr.gridRow');
 
-                var hdnItemIDElem = $(elemRow).find('input[id$="txtCNName"]');
+                var hdnItemIDElem = $(elemRow).find('input[id$="txtDestinationDist"]');
 
-                $(elem).closest('tr').find('input[id$="txtCNName"]').click(function (e) {
+                $(elem).closest('tr').find('input[id$="txtDestinationDist"]').click(function (e) {
                     elmID = $(elem).attr('id');
                     $(elem).combogrid("dropdownClick");
                 });
@@ -405,7 +412,7 @@
                         debugger;
                         var vgroupid = 0;
                         var elemRowCur = $(elem).closest('tr.gridRow');
-                        var itemName = $(elemRowCur).find('input[id$="txtCNName"]').val();
+                        var itemName = $(elemRowCur).find('input[id$="txtDestinationDist"]').val();
                        // vgroupid = $(elemRowCur).find('input[id$="hdngroupId"]').val();
 
                         var newServiceURL = serviceURL;//+ "&groupid=" + vgroupid
@@ -464,15 +471,128 @@
 
         function ClearItemData(txtItemID) {
             var detRow = $('#' + txtItemID).closest('tr.gridRow');
-            $(detRow).find('input[id$="hdnCNID"]').val('0');
-            $(detRow).find('input[id$="txtCNName"]').val('');
+            $(detRow).find('input[id$="hdnDestinationDistId"]').val('0');
+            $(detRow).find('input[id$="txtDestinationDist"]').val('');
         }
       
         function SetItemData(txtItemCodeID, data) {
             $('#' + txtItemCodeID).val(data.cnnumber);
             var detRow = $('#' + txtItemCodeID).closest('tr.gridRow');
-            $(detRow).find('input[id$="hdnCNID"]').val(data.cnid);
-            $(detRow).find('input[id$="txtCNName"]').val(data.cnnumber);
+            $(detRow).find('input[id$="hdnDestinationDistId"]').val(data.distid);
+            $(detRow).find('input[id$="txtDestinationDist"]').val(data.distname);
+
+        }
+
+
+        function bindDestinationTownList(gridViewID) {
+            var cgColumns = [{ 'columnName': 'townname', 'width': '200', 'align': 'left', 'highlight': 4, 'label': 'Town Name' }
+
+
+            ];
+
+
+            var serviceURL = TownListServiceLink + "?isterm=1&includeempty=0&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+            serviceURL += "&ispaging=0";
+
+            var gridSelector = "#" + gridViewID;
+
+            $(gridSelector).find('input[id$="txtTownName"]').each(function (index, elem) {
+
+                var elemRow = $(elem).closest('tr.gridRow');
+
+                var hdnItemIDElem = $(elemRow).find('input[id$="txtTownName"]');
+
+                $(elem).closest('tr').find('input[id$="txtTownName"]').click(function (e) {
+                    elmID = $(elem).attr('id');
+                    $(elem).combogrid("dropdownClick");
+                });
+
+                $(elem).data("selectedItem", null);
+                $(elem).combogrid({
+                    debug: true,
+                    searchButton: false,
+                    resetButton: false,
+                    alternate: true,
+                    munit: 'px',
+                    scrollBar: true,
+                    showPager: true,
+                    colModel: cgColumns,
+                    autoFocus: true,
+                    showError: true,
+                    width: 400,
+                    url: serviceURL,
+                    search: function (event, ui) {
+                        debugger;
+                        var vgroupid = 0;
+                        var elemRowCur = $(elem).closest('tr.gridRow');
+                        var itemName = $(elemRowCur).find('input[id$="txtTownName"]').val();
+                        // vgroupid = $(elemRowCur).find('input[id$="hdngroupId"]').val();
+
+                        var newServiceURL = serviceURL;//+ "&groupid=" + vgroupid
+                        newServiceURL = JSUtility.AddTimeToQueryString(newServiceURL);
+                        $(this).combogrid("option", "url", newServiceURL);
+
+                    },
+
+                    select: function (event, ui) {
+
+                        elemID = $(elem).attr('id');
+
+                        if (!ui.item) {
+                            debugger;
+                            event.preventDefault();
+                            ClearTownData(elemID);
+                            return false;
+                        }
+
+                        if (ui.item.id == 0) {
+                            alert('item clear');
+                            debugger;
+                            event.preventDefault();
+                            return false;
+                        }
+                        else {
+                            $(elem).data("selectedItem", ui.item);
+                            SetTownData(elemID, ui.item);
+                        }
+                        return false;
+                    }
+
+                });
+
+                $(elem).blur(function () {
+                    var self = this;
+                    elemID = $(elem).attr('id');
+                    eCode = $(elem).val();
+
+                    isComboGridOpen = $(self).combogrid('isOpened');
+                    var selectedData = $(self).data("selectedItem");
+
+                    if (eCode === '') {
+                        ClearTownData(elemID);
+                    } else if (selectedData) {
+                        // SetItemData(elemID, selectedData);
+                    } else {
+                        ClearTownData(elemID);
+                    }
+
+                });
+
+            });
+
+        }
+
+        function ClearTownData(txtItemID) {
+            var detRow = $('#' + txtItemID).closest('tr.gridRow');
+            $(detRow).find('input[id$="hdnTownId"]').val('0');
+            $(detRow).find('input[id$="txtTownName"]').val('');
+        }
+
+        function SetTownData(txtItemCodeID, data) {
+            $('#' + txtItemCodeID).val(data.cnnumber);
+            var detRow = $('#' + txtItemCodeID).closest('tr.gridRow');
+            $(detRow).find('input[id$="hdnTownId"]').val(data.townid);
+            $(detRow).find('input[id$="txtTownName"]').val(data.townname);
 
         }
       
@@ -690,51 +810,55 @@
        <div class="card">
          <div class="card-header p-0">
            <div class="d-flex align-items-center justify-content-between p-1">
-             <h5 class="card-title">Cargo Entry</h5>
-             <a class="btn btn-primary p-1"> <i class="fas fa-list"></i> Cargo List </a>
+             <h5 class="card-title">Parcel Create</h5>
+             <a class="btn btn-primary p-1"> <i class="fas fa-list"></i> Parcel List </a>
          </div>
 
        </div>
       <div class="card-body">
-            <asp:HiddenField ID="hdnCARGO_ID" runat="server" Value="0" />
+            <asp:HiddenField ID="hdnCN_ID" runat="server" Value="0" />
             <asp:HiddenField ID="hdnReservationId" runat="server" Value="0" />
 
               <div class="row mb-0">
 
-                <div class="col-md-4">
+              <%--  <div class="col-md-4">
                   <div class="form-group row mb-0">
-                    <label for="name" class="col-sm-5 col-form-label-sm">Cargo No :</label>
+                    <label for="name" class="col-sm-5 col-form-label-sm">CN Number :</label>
                     <div class="col-sm-7">
                        
-                       <asp:TextBox ID="txtCargoNo" runat="server" CssClass="form-control form-control-sm" ></asp:TextBox>
+                       <asp:TextBox ID="txtCNNo" runat="server" CssClass="form-control form-control-sm" ></asp:TextBox>
 
                     </div>
                   </div>
-                </div>
-
-                  <div class="col-md-4">
+                </div>--%>
+               <div class="col-md-4">
                   <div class="form-group row mb-0">
-                    <label for="name" class="col-sm-5 col-form-label-sm">Cargo Date :</label>
+                    <label for="name" class="col-sm-5 col-form-label-sm">Client :</label>
                     <div class="col-sm-7">
-                        <table>
-                            <tr>
-                                <td>
-                                     <asp:TextBox ID="txtCargoDate" runat="server" CssClass="TextBoxnew textDate dateParse" ></asp:TextBox>
-
-                                </td>
-                            </tr>
-                        </table>
-                     
+                      <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtClientName" placeholder="Select" ></asp:TextBox> 
+                           <asp:HiddenField runat="server" ID="hdnClientId" Value="0" /> 
                     </div>
                   </div>
+
                 </div>
+               
 
                  <div class="col-md-4">
                   <div class="form-group row mb-0">
-                    <label for="name" class="col-sm-5 col-form-label-sm">Starting District :</label>
+                    <label for="name" class="col-sm-5 col-form-label-sm">Aggrement Details :</label>
                     <div class="col-sm-7">
-                      <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtStartingDist" placeholder="Select" ></asp:TextBox> 
-                           <asp:HiddenField runat="server" ID="hdnStartingDistId" Value="0" /> 
+                      <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtAggrementDtl" placeholder="Select" ></asp:TextBox> 
+                           <asp:HiddenField runat="server" ID="hdnAggrementDtlId" Value="0" /> 
+                    </div>
+                  </div>
+
+                </div>
+                    <div class="col-md-4">
+                  <div class="form-group row mb-0">
+                    <label for="name" class="col-sm-5 col-form-label-sm">Item :</label>
+                    <div class="col-sm-7">
+                      <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtItemName" placeholder="Select" ></asp:TextBox> 
+                       <asp:HiddenField runat="server" ID="hdnItemId" Value="0" /> 
                     </div>
                   </div>
 
@@ -744,23 +868,14 @@
 
             <div class="row mb-0">
 
-                <div class="col-md-4">
-                  <div class="form-group row mb-0">
-                    <label for="name" class="col-sm-5 col-form-label-sm">Destination District :</label>
-                    <div class="col-sm-7">
-                      <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtDestinationDist" placeholder="Select" ></asp:TextBox> 
-                       <asp:HiddenField runat="server" ID="hdnDestDistId" Value="0" /> 
-                    </div>
-                  </div>
-
-                </div>
+              
 
                  <div class="col-md-4">
                   <div class="form-group row mb-0">
-                    <label for="name" class="col-sm-5 col-form-label-sm">Destination Town :</label>
+                    <label for="name" class="col-sm-5 col-form-label-sm">Service Amount :</label>
                     <div class="col-sm-7">
-                      <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtDestinationTown" placeholder="Select"  ></asp:TextBox> 
-                         <asp:HiddenField runat="server" ID="hdnDestTownId" Value="0" /> 
+                      <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtServiceAmt" placeholder="Select"  ></asp:TextBox> 
+                       
                     </div>
                   </div>
 
@@ -776,53 +891,57 @@
                   </div>
 
                 </div>
+                  <div class="col-md-4">
+                  <div class="form-group row mb-0">
+                    <label for="name" class="col-sm-5 col-form-label-sm">Hub :</label>
+                    <div class="col-sm-7">
+                      <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtHubName" placeholder="Enter Hub Name" ></asp:TextBox> 
+                       <asp:HiddenField runat="server" ID="hdnHubId" Value="0" /> 
+                    </div>
+                  </div>
+                </div>
 
                 </div>
 
 
            <div class="row mb-0">
 
-                 <div class="col-md-4">
-                  <div class="form-group row mb-0">
-                    <label for="name" class="col-sm-5 col-form-label-sm">Manager :</label>
-                    <div class="col-sm-7">
-                      <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtManagerName" placeholder="Enter Manager Name" ></asp:TextBox> 
-                       <asp:HiddenField runat="server" ID="hdnManagerId" Value="0" /> 
-                    </div>
-                  </div>
-                </div>
+               
 
                   <div class="col-md-4">
-                  <div class="form-group row mb-0">
-                    <label for="name" class="col-sm-5 col-form-label-sm">Weight :</label>
-                    <div class="col-sm-7">
-                    
-                        <asp:TextBox ID="txtWeight" runat="server" CssClass="form-control form-control-sm" ></asp:TextBox>
-                     
+                    <div class="form-group row align-items-center mb-0">
+                        <label for="FileUpload1" class="col-sm-5 col-form-label-sm">Upload Details :</label>
+                        <div class="col-sm-7">
+                            <asp:FileUpload ID="FileUpload1" runat="server" CssClass="form-control form-control-sm p-0 m-0" />
+                        </div>
+                      
                     </div>
-                  </div>
+                
                 </div>
 
-                 <div class="col-md-4">
-                  <div class="form-group row mb-0">
-                    <label for="name" class="col-sm-5 col-form-label-sm">Remarks :</label>
-                    <div class="col-sm-7">
-                      <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtRemarks" placeholder="Enter Remarks" ></asp:TextBox> 
-                    </div>
-                  </div>
+          <div class="col-md-4">
+                <div class="form-group d-flex align-items-center mb-0 gap-2">
+                    <asp:Button ID="btnUpload" runat="server" Text="Upload Excel"
+                        CssClass="btn btn-sm btn-primary mr-2" OnClick="btnUpload_Click" />
+
+                    <asp:Button ID="btnDownloadSample" runat="server" Text="Download Sample"
+                        CssClass="btn btn-sm btn-primary" OnClick="btnDownloadSample_Click" />
                 </div>
+            </div>
+
+
+
+               
 
              </div>
 
-        
-      
 
       </div>
     <div class="row">
     <div class="col-md-12">
         <div class="card">
            <div class="card-header mb-0 p-1">
-              <strong>Cargo Details :</strong>
+              <strong>Recipient Details :</strong>
 
            </div>
 
@@ -830,7 +949,7 @@
               <ContentTemplate>
              <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" ShowHeader="true"
     CssClass="table table-sm table-striped table-bordered w-auto"  
-    DataKeyNames="CARGO_ID" EnableModelValidation="True" ClientIDMode="AutoID"
+    DataKeyNames="CN_ID" EnableModelValidation="True" ClientIDMode="AutoID"
     OnRowDataBound="GridView1_RowDataBound" OnRowCommand="GridView1_RowCommand" OnRowDeleting="GridView1_RowDeleting" OnRowCreated="GridView1_RowCreated" >
     
     <HeaderStyle CssClass="table-info" Font-Size="Smaller" />
@@ -839,23 +958,115 @@
      <asp:TemplateField HeaderText="SL" HeaderStyle-HorizontalAlign="Center">
         <ItemTemplate>
             <asp:Label ID="lblSerialNo" runat="server" Text=""></asp:Label>
+              <asp:HiddenField runat="server" ID="hdnCNId" Value='<%# Bind("CN_ID") %>' />
         </ItemTemplate>
         <ItemStyle HorizontalAlign="Center" Width="40px" />
     </asp:TemplateField>
 
-       <asp:TemplateField HeaderText="CN">
+   <%--      <asp:TemplateField HeaderText="CN Number">
     <ItemTemplate>
         <div class="d-flex align-items-center">
             <table>
                 <tr>
                     <td class="p-0">
-                        <asp:TextBox ID="txtCNName" runat="server"
+                        <asp:TextBox ID="txtCNNumber" runat="server"
+                            CssClass="form-control form-control-sm"
+                            Style="width: 100px;"
+                            Text='<%# Bind("CN_NUMBER") %>' ></asp:TextBox>
+                      
+
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </ItemTemplate>
+</asp:TemplateField>--%>
+    <asp:TemplateField HeaderText="Recipient Name">
+    <ItemTemplate>
+        <div class="d-flex align-items-center">
+            <table>
+                <tr>
+                    <td class="p-0">
+                        <asp:TextBox ID="txtRecipientName" runat="server"
+                            CssClass="form-control form-control-sm"
+                            Style="width: 200px;"
+                            Text='<%# Bind("CONSIGNEE_NAME") %>' ></asp:TextBox>
+
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </ItemTemplate>
+</asp:TemplateField>
+   <asp:TemplateField HeaderText="Recipient Address">
+    <ItemTemplate>
+        <div class="d-flex align-items-center">
+            <table>
+                <tr>
+                    <td class="p-0">
+                        <asp:TextBox ID="txtRecipientAddress" runat="server"
                             CssClass="form-control form-control-sm"
                             Style="width: 250px;"
-                            Text='<%# Bind("CN_NUMBER") %>' OnTextChanged="txtCNName_TextChanged" AutoPostBack="true"></asp:TextBox>
+                            Text='<%# Bind("CONSIGNEE_ADDRESS") %>' ></asp:TextBox>
 
-                        <asp:HiddenField ID="hdnCNID" runat="server" Value='<%# Bind("CN_ID") %>' />
-                        <asp:HiddenField ID="hdnCargoDtlId" runat="server" Value='<%# Bind("CARGO_DETAIL_ID") %>' />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </ItemTemplate>
+</asp:TemplateField>
+
+      <asp:TemplateField HeaderText="Recipient Mobile No">
+    <ItemTemplate>
+        <div class="d-flex align-items-center">
+            <table>
+                <tr>
+                    <td class="p-0">
+                        <asp:TextBox ID="txtRecipientMobileNo" runat="server"
+                            CssClass="form-control form-control-sm"
+                            Style="width: 200px;"
+                            Text='<%# Bind("CONSIGNEE_MOBILE_NO") %>' ></asp:TextBox>
+
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </ItemTemplate>
+</asp:TemplateField>
+
+            <asp:TemplateField HeaderText="Destination District">
+    <ItemTemplate>
+        <div class="d-flex align-items-center">
+            <table>
+                <tr>
+                    <td class="p-0">
+                        <asp:TextBox ID="txtDestinationDist" runat="server"
+                            CssClass="form-control form-control-sm"
+                            Style="width: 200px;"
+                            Text='<%# Bind("DESTINATION_DIST_NAME") %>' ></asp:TextBox>
+
+                        <asp:HiddenField ID="hdnDestinationDistId" runat="server" Value='<%# Bind("DESTINATION_DIST_ID") %>' />
+                     
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </ItemTemplate>
+</asp:TemplateField>
+        
+    <asp:TemplateField HeaderText="Destination Upozilla">
+    <ItemTemplate>
+        <div class="d-flex align-items-center">
+            <table>
+                <tr>
+                    <td class="p-0">
+                        <asp:TextBox ID="txtTownName" runat="server"
+                            CssClass="form-control form-control-sm"
+                            Style="width: 200px;"
+                            Text='<%# Bind("DESTINATION_TOWN_NAME") %>' ></asp:TextBox>
+
+                        <asp:HiddenField ID="hdnTownId" runat="server" Value='<%# Bind("DESTINATION_TOWN_ID") %>' />
+                     
                     </td>
                 </tr>
             </table>

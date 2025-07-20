@@ -199,6 +199,19 @@ namespace PG.Web.PageLinks
         {
             get { return WebUtility.GetAbsoluteUrl("~/Service/WREL/GetDistantTypeMstList.ashx"); }
         }
+
+        public static string GetLink_AgreementDtlList
+        {
+            get { return WebUtility.GetAbsoluteUrl("~/Service/WREL/GetAgreementDtlList.ashx"); }
+        }
+
+        public static string GetLink_HubList
+        {
+            get { return WebUtility.GetAbsoluteUrl("~/Service/WREL/GetHubList.ashx"); }
+        }
+
+        
+        
         
     }
 

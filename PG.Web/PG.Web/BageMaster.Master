@@ -16,7 +16,7 @@
     <link href="css/form.css" rel="stylesheet" type="text/css" />
     <link href="css/contentpage.css" rel="stylesheet" type="text/css" />
     <link href="css/grid.css" rel="stylesheet" type="text/css" />
-
+     <link href="css/toastr.css" rel="stylesheet" />
 
     <link href="<%# ResolveClientUrl("~/css/smoothness/jquery-ui.css") %>"   rel="stylesheet" type="text/css" />
     <link href="<%# ResolveClientUrl("~/css/jquery.treeview.css") %>"  type="text/css" rel="stylesheet"/>
@@ -53,12 +53,13 @@
     <script src="<%# ResolveClientUrl("~/javascript/pg.tabmenu.js?v=2.2.0") %>" type="text/javascript"></script>
     <script src="<%# ResolveClientUrl("~/javascript/pg.contentpage.js?v=2.2.0") %>" type="text/javascript"></script>
     <script src="<%# ResolveClientUrl("~/javascript/pg.contentform.js?v=2.2.27") %>" type="text/javascript"></script>
-
+     <script src="<%# ResolveClientUrl("~/javascript/toastr.js") %>" type="text/javascript"></script>
      <link href="<%# ResolveClientUrl("~/dist/css/bootstrap.min.css") %>"   rel="stylesheet" type="text/css" />
      <script src="<%# ResolveClientUrl("~/dist/js/bootstrap.min.js") %>" type="text/javascript"></script>
      <script src="<%# ResolveClientUrl("~/dist/js/bootstrap.bundle.min.js") %>" type="text/javascript"></script>
      <link href="<%# ResolveClientUrl("~/plugins/fontawesome-free/css/all.min.css") %>"   rel="stylesheet" type="text/css" />
       <link href="<%# ResolveClientUrl("~/dist/css/adminlte.css") %>"   rel="stylesheet" type="text/css" />
+
    <%--   <link type="text/css"  href="../dist/css/bootstrap.min.css" rel="stylesheet" />
     <script type="text/javascript" src="../dist/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../dist/js/bootstrap.bundle.min.js"></script>
@@ -80,6 +81,17 @@
 
         function doHourglass() {
             // document.body.style.cursor = 'wait';
+        }
+
+        function showToastr(type, message, title) {
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "positionClass": "toast-top-right",
+                "timeOut": "3000"
+            };
+
+            toastr[type](message);
         }
         // ]]>
     </script>
