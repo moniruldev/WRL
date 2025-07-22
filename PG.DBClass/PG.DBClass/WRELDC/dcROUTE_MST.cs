@@ -16,8 +16,8 @@ namespace PG.DBClass.WRELDC
         private int m_ROUTE_ID = 0;
         private string m_ROUTE_NAME = string.Empty;
         private string m_REMARKS = string.Empty;
-        private decimal m_STARTING_DIST_ID = 0;
-        private string m_DESTINATION_DIST_ID = string.Empty;
+        private int m_STARTING_DIST_ID = 0;
+        private int m_DESTINATION_DIST_ID = 0;
         private string m_IS_ACTIVE = string.Empty;
         private string m_CREATE_BY = string.Empty;
         private DateTime? m_CREATE_DATE = null;
@@ -77,7 +77,7 @@ namespace PG.DBClass.WRELDC
         }
 
         [DBColumn(Name = "STARTING_DIST_ID", Storage = "m_STARTING_DIST_ID", DbType = "107")]
-        public decimal STARTING_DIST_ID
+        public int STARTING_DIST_ID
         {
             get { return this.m_STARTING_DIST_ID; }
             set
@@ -88,7 +88,7 @@ namespace PG.DBClass.WRELDC
         }
 
         [DBColumn(Name = "DESTINATION_DIST_ID", Storage = "m_DESTINATION_DIST_ID", DbType = "126")]
-        public string DESTINATION_DIST_ID
+        public int DESTINATION_DIST_ID
         {
             get { return this.m_DESTINATION_DIST_ID; }
             set
@@ -154,5 +154,13 @@ namespace PG.DBClass.WRELDC
         }
 
         #endregion //properties
+    }
+
+    public partial class dcROUTE_MST
+    {
+       public List<dcROUTE_DETAIL> RouteDetailsList = new List<dcROUTE_DETAIL>();
+       public string STARTING_DIST_NAME { get; set; }
+       public string DESTINATION_DIST_NAME { get; set; }
+
     }
 }

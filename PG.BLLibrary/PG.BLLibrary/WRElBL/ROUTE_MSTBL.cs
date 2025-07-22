@@ -2,6 +2,7 @@
 using PG.DBClass.WRELDC;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Linq;
 using System.Linq;
 using System.Text;
@@ -25,6 +26,81 @@ namespace PG.BLLibrary.WRElBL
             sb.Append(" WHERE 1=1 ");
 
             return sb.ToString();
+        }
+
+        public static string GetRouteInfoSQLString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(" SELECT MST.*,stdist.dist_name STARTING_DIST_NAME,desdist.dist_name DESTINATION_DIST_NAME ");
+            sb.Append(" FROM ROUTE_MST mst ");
+            sb.Append(" LEFT JOIN district_mst STDIST ON mst.starting_dist_id=stdist.dist_id ");
+            sb.Append(" LEFT JOIN district_mst DESDIST ON mst.destination_dist_id=desdist.dist_id ");
+            sb.Append(" WHERE 1=1 ");
+
+            return sb.ToString();
+        }
+        public static dcROUTE_MST GetRouteInfoById(int pRouteId)
+        {
+            return GetRouteInfoListById(pRouteId, null).FirstOrDefault();
+        }
+        public static List<dcROUTE_MST> GetRouteInfoList()
+        {
+            return GetRouteInfoListById(0, null);
+        }
+        public static List<dcROUTE_MST> GetRouteInfoListById(int pRouteId, DBContext dc)
+        {
+            List<dcROUTE_MST> cObjList = new List<dcROUTE_MST>();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetRouteInfoSQLString());
+                if (pRouteId > 0)
+                {
+                    sb.Append(" AND mst.ROUTE_ID= @pRouteId ");
+                    cmdInfo.DBParametersInfo.Add("@pRouteId", pRouteId);
+                }
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcROUTE_MST>(dbq, dc);
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
+        }
+
+        public static List<dcROUTE_MST> GetRouteInfoList(clsPrmWREL prm, DBContext dc)
+        {
+            List<dcROUTE_MST> cObjList = new List<dcROUTE_MST>();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetRouteInfoSQLString());
+                if (prm.Status != string.Empty)
+                {
+                    sb.Append(" AND mst.IS_ACTIVE= @Status ");
+                    cmdInfo.DBParametersInfo.Add("@Status", prm.Status);
+                }
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcROUTE_MST>(dbq, dc);
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
         }
         public static List<dcROUTE_MST> GetROUTE_MSTList()
         {
@@ -191,9 +267,14 @@ namespace PG.BLLibrary.WRElBL
                     {
                         bool bStatus = false;
 
-                        ///code list save logic here
-
-                        bStatus = true;
+                        if (cObj.RouteDetailsList != null)
+                        {
+                            foreach (dcROUTE_DETAIL det in cObj.RouteDetailsList)
+                            {
+                                det.ROUTE_ID = newID;
+                            }
+                            bStatus = ROUTE_DETAILBL.SaveList(cObj.RouteDetailsList, dc);
+                        }
                         if (bStatus)
                         {
                             dc.CommitTransaction(isTransInit);

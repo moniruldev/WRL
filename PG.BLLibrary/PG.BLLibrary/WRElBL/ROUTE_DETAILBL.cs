@@ -2,6 +2,7 @@
 using PG.DBClass.WRELDC;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Linq;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,47 @@ namespace PG.BLLibrary.WRElBL
             DataLoadOptions dlo = new DataLoadOptions();
             //dlo.LoadWith<DBClass.dcROUTE_DETAIL>(obj => obj.relatedclassname);
             return dlo;
+        }
+
+        public static string GetRouteDetailsInfoSQLString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(" SELECT dtl.*,dist.dist_name,twn.town_name");
+            sb.Append(" FROM ROUTE_MST mst  ");
+            sb.Append(" INNER JOIN route_detail DTL ON mst.route_id=dtl.route_id ");
+            sb.Append(" left join district_mst dist on dtl.dist_id=dist.dist_id ");
+            sb.Append(" left join thana_town_mst twn on dtl.town_id=twn.town_id ");
+            sb.Append(" WHERE 1=1 ");
+
+            return sb.ToString();
+        }
+
+        public static List<dcROUTE_DETAIL> GetRouteDetailsListById(int pRouteId, DBContext dc)
+        {
+            List<dcROUTE_DETAIL> cObjList = new List<dcROUTE_DETAIL>();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetRouteDetailsInfoSQLString());
+                if (pRouteId > 0)
+                {
+                    sb.Append(" AND mst.ROUTE_ID= @pRouteId ");
+                    cmdInfo.DBParametersInfo.Add("@pRouteId", pRouteId);
+                }
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcROUTE_DETAIL>(dbq, dc);
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
         }
         public static List<dcROUTE_DETAIL> GetROUTE_DETAILList()
         {
@@ -220,15 +262,15 @@ namespace PG.BLLibrary.WRElBL
             {
                 switch (oDet._RecordState)
                 {
-                    //case Interwave.Core.DBClass.RecordStateEnum.Added:
-                    //    int a = Insert(oDet, dc);
-                    //    break;
-                    //case Interwave.Core.DBClass.RecordStateEnum.Edited:
-                    //    bool e = Update(oDet, dc);
-                    //    break;
-                    //case Interwave.Core.DBClass.RecordStateEnum.Deleted:
-                    //    bool d = Delete(oDet.ROUTE_DETAILID, dc);
-                    //    break;
+                    case RecordStateEnum.Added:
+                        int a = Insert(oDet, dc);
+                        break;
+                    case RecordStateEnum.Edited:
+                        bool e = Update(oDet, dc);
+                        break;
+                    case RecordStateEnum.Deleted:
+                        bool d = Delete(oDet.ROUTE_DETAIL_ID, dc);
+                        break;
                     default:
                         break;
                 }

@@ -107,4 +107,10 @@ namespace PG.DBClass.WRELDC
 
         #endregion //properties
     }
+
+     public partial class dcROUTE_DETAIL
+     {
+         public string DIST_NAME { get; set; }
+         public string TOWN_NAME { get; set; }
+     }
 }

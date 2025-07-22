@@ -29,15 +29,15 @@ using System.ComponentModel;
 
 namespace PG.Web.WREL
 {
-    public partial class ParcelCreation : BagePage
+    public partial class RouteCreation : BagePage
     {
         //this 
-        string ViewStateKey = "CN_ID";
-        string ViewStateKeyPrev = "CN_ID_PREV";
+        string ViewStateKey = "ROUTE_ID";
+        string ViewStateKeyPrev = "ROUTE_ID_PREV";
         ReportOpenTypeEnum ReportOpenType = ReportOpenTypeEnum.Preview;
         // int CompanyID = 0;
 
-        int CN_ID = 0;
+        int ROUTE_ID = 0;
         private int totalRowCount = 0;
         string saveMsg = string.Empty;
         string errMsg = string.Empty;
@@ -52,15 +52,8 @@ namespace PG.Web.WREL
 
         public string DistrictListServiceLink = PageLinks.InventoryLink.GetLink_DistrictList;
         public string TownListServiceLink = PageLinks.InventoryLink.GetLink_TownList;
-        public string RouteListServiceLink = PageLinks.InventoryLink.GetLink_RouteList;
-        public string CNListServiceLink = PageLinks.InventoryLink.GetLink_CNMasterList;
-        public string ClientListServiceLink = PageLinks.InventoryLink.GetLink_ClientList;
-        public string AgreementDetailsListServiceLink = PageLinks.InventoryLink.GetLink_AgreementDtlList;
-        public string HubListServiceLink = PageLinks.InventoryLink.GetLink_HubList;
-        
-        
 
-        List<dcCN_CREATION_MST> listDetails = new List<dcCN_CREATION_MST>();
+        List<dcROUTE_DETAIL> listDetails = new List<dcROUTE_DETAIL>();
 
         protected override void OnPreInit(EventArgs e)
         {
@@ -82,7 +75,7 @@ namespace PG.Web.WREL
 
             //ScriptManager.GetCurrent(this).RegisterAsyncPostBackControl(this.LinkButton1);
 
-            this.CN_ID = base.GetPageQueryInteger("id");
+            this.ROUTE_ID = base.GetPageQueryInteger("id");
 
             if (!IsPostBack) //first Time
             {
@@ -92,14 +85,8 @@ namespace PG.Web.WREL
                 //FillCombo();
 
 
-
-
-
-                if (this.CN_ID == 0) //not query string
+                if (this.ROUTE_ID == 0) //not query string
                 {
-                    //List<dcCN_CREATION_MST> roomList = HMRESERVATION_DTLBL.GetRoomInfoList();
-                    //GridView1.DataSource = roomList;
-                    //GridView1.DataBind();
 
                     SetDate();
                     AddTask();
@@ -124,7 +111,7 @@ namespace PG.Web.WREL
             else
             {
                 this.EditMode = base.GetEditModeFromViewState(base.EditModeViewStateKey);
-                this.CN_ID = int.Parse(ViewState[ViewStateKey].ToString());
+                this.ROUTE_ID = int.Parse(ViewState[ViewStateKey].ToString());
             }
 
             SetHyperLink();
@@ -143,7 +130,7 @@ namespace PG.Web.WREL
         {
             EditTask();
 
-            //List<dcCN_CREATION_MST> roomList = HMRESERVATION_DTLBL.GetRoomInfoList();
+            //List<dcROUTE_DETAIL> roomList = HMRESERVATION_DTLBL.GetRoomInfoList();
             //GridView1.DataSource = roomList;
             //GridView1.DataBind();
         }
@@ -181,19 +168,19 @@ namespace PG.Web.WREL
         private void ReadTask()
         {
             this.EditMode = FormDataMode.Read;
-            ReadData(this.CN_ID);
-            ViewState[ViewStateKey] = this.CN_ID.ToString();
+            ReadData(this.ROUTE_ID);
+            ViewState[ViewStateKey] = this.ROUTE_ID.ToString();
 
             SetControl(FormDataMode.Read);
 
         }
         private void AddTask()
         {
-            ViewState[ViewStateKeyPrev] = this.CN_ID.ToString();
+            ViewState[ViewStateKeyPrev] = this.ROUTE_ID.ToString();
 
             this.EditMode = FormDataMode.Add;
             this.IsDirty = false;
-            this.CN_ID = 0;
+            this.ROUTE_ID = 0;
             ViewState[ViewStateKey] = "0";
             this.listDetails.Clear();
             CheckAndAddGridBlankRow();
@@ -204,9 +191,9 @@ namespace PG.Web.WREL
         private void EditTask()
         {
             this.EditMode = FormDataMode.Edit;
-            ReadData(this.CN_ID);
+            ReadData(this.ROUTE_ID);
             this.EditMode = FormDataMode.Edit;
-            ViewState[ViewStateKey] = this.CN_ID.ToString();
+            ViewState[ViewStateKey] = this.ROUTE_ID.ToString();
             SetControl(FormDataMode.Edit);
         }
 
@@ -214,69 +201,37 @@ namespace PG.Web.WREL
         {
             bool bStatus = false;
 
-           List<dcCN_CREATION_MST> cObjList = CN_CREATION_MSTBL.GetCNInfoListById(id,null);
-           if (cObjList.Any())
-           {
-               var obj = cObjList.First();
+            dcROUTE_MST cObj = ROUTE_MSTBL.GetRouteInfoById(id);
 
-               hdnClientId.Value = obj.CLIENT_ID.ToString();
-               txtClientName.Text = obj.CLIENT_NAME.ToString();
-               txtAggrementDtl.Text = obj.AGREEMENT_DESCRIPTION;
-               hdnAggrementDtlId.Value = obj.AGR_DETAIL_ID.ToString();
-               txtItemName.Text = obj.ITEM_NAME;
-               hdnItemId.Value = obj.ITEM_ID.ToString();
-               txtRoute.Text = obj.ROUTE_NAME;
-               hdnRouteId.Value = obj.ROUTE_ID.ToString();
-               txtServiceAmt.Text = obj.SERVICE_AMOUNT.ToString();
-               txtHubName.Text = obj.HUB_NAME;
-               //hdnHubId.Value = obj.HUB_ID.ToString();
-
-               BindDataToGrid(cObjList);
-               bStatus = true;
-           }
+            txtRouteName.Text = cObj.ROUTE_NAME;
+            txtStartingDist.Text = cObj.STARTING_DIST_NAME;
+            txtDestinationDist.Text = cObj.DESTINATION_DIST_NAME;
+            hdnStartingDistId.Value = cObj.STARTING_DIST_ID.ToString();
+            hdnDestinationDistId.Value = cObj.DESTINATION_DIST_ID.ToString();
+            ddlStatus.SelectedValue = cObj.IS_ACTIVE;
+            txtRemarks.Text = cObj.REMARKS;
+            this.listDetails = ROUTE_DETAILBL.GetRouteDetailsListById(id, null);
+            BindDataToGrid(this.listDetails);
+            bStatus = true;
+           
             return bStatus;
 
         }
 
         private void SetControl(FormDataMode dataMode)
         {
-            //bool isEnabled = false;
-
-            //if (dataMode == FormDataMode.Add | dataMode == FormDataMode.Edit)
-            //{
-            //    isEnabled = true;
-            //}
-
-            //txtCargoNo.Enabled = isEnabled;
-            //txtCargoDate.Enabled = isEnabled;
-            //txtWeight.Enabled = isEnabled;
-            //txtRemarks.Enabled = isEnabled;
-            //txtStartingDist.Enabled = isEnabled;
-            //txtDestinationDist.Enabled = isEnabled;
-            //txtDestinationTown.Enabled = isEnabled;
-            //txtManagerName.Enabled = isEnabled;
-            ////buttons
-            //btnAddNew.Visible = !isEnabled;
-            //btnEdit.Visible = !isEnabled;
-            //btnSave.Visible = isEnabled;
-            ////btnUpdate.Visible = !isEnabled;
-
-            //SetControlGrid(dataMode);
 
             bool isEnabled = (dataMode == FormDataMode.Add || dataMode == FormDataMode.Edit);
 
             // Apply disabled/enabled logic without losing Bootstrap styling
-            //SetTextBoxState(txtCNNo, false);
-            ////SetTextBoxState(txtCargoDate, isEnabled);
-            //SetTextBoxState(txtWeight, isEnabled);
-            //SetTextBoxState(txtRemarks, isEnabled);
-            //SetTextBoxState(txtStartingDist, isEnabled);
-            //SetTextBoxState(txtDestinationDist, isEnabled);
-            //SetTextBoxState(txtDestinationTown, isEnabled);
-            //SetTextBoxState(txtManagerName, isEnabled);
-            SetTextBoxState(txtRoute, isEnabled);
+            SetTextBoxState(txtRouteName, isEnabled);
+            SetTextBoxState(txtDestinationDist, isEnabled);
+            SetTextBoxState(txtStartingDist, isEnabled);
+            SetTextBoxState(txtRemarks, isEnabled);
 
-            //txtCargoDate.Enabled = isEnabled;
+
+            ddlStatus.Enabled = isEnabled;
+            ddlStatus.CssClass = "form-control form-control-sm";
             // buttons
             btnAddNew.Visible = !isEnabled;
             btnEdit.Visible = !isEnabled;
@@ -388,29 +343,13 @@ namespace PG.Web.WREL
 
 
 
-        //protected void DisplayRoomDetails(int roomTypeId)
-        //{
-        //    byte[] bytes = null;
-        //    dcHMROOM_TYPE objRT = HMROOM_TYPEBL.GetRoomTypeInfoById(roomTypeId);
-        //    if (objRT.THUMBNAILS_IMAGE != null)
-        //    {
-        //        bytes = (byte[])objRT.THUMBNAILS_IMAGE;
-        //        string strBase64 = Convert.ToBase64String(bytes);
-        //        ImgRoomType.ImageUrl = "data:Image/png;base64," + strBase64;
-        //    }
-        //    lblRoomTitle.Text = "Room Type : " + objRT.TITLE;
-        //    lblRoomDescription.Text ="Room Type : " + objRT.TITLE +", Description: "+ objRT.DESCRIPTION + ", Max Person: " + objRT.MAX_PERSON + ", Normal Rate: " + objRT.NORMAL_RATE + ", Discounted Rate: " + objRT.DISCOUNTED_RATE;
-        //    ScriptManager.RegisterStartupScript(this.Page, Page.GetType(), "MyScript", "$('#modalRoomDetails').modal({backdrop: 'static', keyboard: false});", true);
-        //}
-
-
-        private void BindDataToGrid(List<dcCN_CREATION_MST> listData)
+        private void BindDataToGrid(List<dcROUTE_DETAIL> listData)
         {
             int rowCount = listData.Count;
             this.totalRowCount = listData.Count;
             if (rowCount == 0)
             {
-                listData.Add(new dcCN_CREATION_MST());
+                listData.Add(new dcROUTE_DETAIL());
             }
 
             GridView1.DataSource = listData.ToList();
@@ -434,8 +373,10 @@ namespace PG.Web.WREL
             {
                 if (gvR.RowType == DataControlRowType.DataRow)
                 {
-                    ((TextBox)gvR.FindControl("txtRecipientName")).Enabled = isEnabled;
-                    //((TextBox)gvR.FindControl("txtCNNumber")).Attributes.Add("readonly", "readonly");
+                    ((TextBox)gvR.FindControl("txtRemarks")).Enabled = isEnabled;
+                    ((DropDownList)gvR.FindControl("ddlStatus")).Enabled = isEnabled;
+                    ((TextBox)gvR.FindControl("txtDisttrict")).Enabled = isEnabled;
+                    ((TextBox)gvR.FindControl("txtTownName")).Enabled = isEnabled;
                     LinkButton lnkDelete = (LinkButton)gvR.FindControl("btnDeleteRow");
                     lnkDelete.Enabled = isEnabled;
                     if (!isEnabled)
@@ -462,12 +403,12 @@ namespace PG.Web.WREL
                 if (gvR.RowType == DataControlRowType.DataRow)
                 {
 
-                    dcCN_CREATION_MST cObj = new dcCN_CREATION_MST();
+                    dcROUTE_DETAIL cObj = new dcROUTE_DETAIL();
                     ReadGridRowToObject(gvR, this.GridView1.DataKeys, cObj);
 
                     if (cObj._RecordState == RecordStateEnum.Deleted)
                     {
-                        if (cObj.CN_ID > 0)
+                        if (cObj.ROUTE_ID > 0)
                         {
                             this.listDetails.Add(cObj);
                         }
@@ -482,15 +423,15 @@ namespace PG.Web.WREL
             }
         }
 
-        private void ReadGridRowToObject(GridViewRow gvR, DataKeyArray dataKeys, dcCN_CREATION_MST cObj)
+        private void ReadGridRowToObject(GridViewRow gvR, DataKeyArray dataKeys, dcROUTE_DETAIL cObj)
         {
             decimal d;
             string strD;
 
-          
-            strD = ((HiddenField)gvR.FindControl("hdnCNId")).Value;
-            cObj.CN_ID = Conversion.StringToInt(strD);
-            if (cObj.CN_ID > 0)
+
+            strD = ((HiddenField)gvR.FindControl("hdnRouteDtlId")).Value;
+            cObj.ROUTE_DETAIL_ID = Conversion.StringToInt(strD);
+            if (cObj.ROUTE_DETAIL_ID > 0)
             {
                 cObj._RecordState = RecordStateEnum.Edited;
             }
@@ -500,33 +441,24 @@ namespace PG.Web.WREL
             }
 
 
-            //cObj.CN_NUMBER = strD;
-            //cObj.CLIENT_ID = Conversion.StringToInt(hdnClientId.Value);
-            //cObj.AGR_DETAIL_ID = Conversion.StringToInt(hdnAggrementDtlId.Value);
-            //cObj.ITEM_ID = Conversion.StringToInt(hdnItemId.Value);
-            //cObj.ROUTE_ID = Conversion.StringToInt(hdnRouteId.Value);
-            //cObj.SERVICE_AMOUNT = Conversion.StringToDecimal(txtServiceAmt.Text);
 
-            strD = ((TextBox)gvR.FindControl("txtRecipientName")).Text;
-            cObj.CONSIGNEE_NAME = strD;
+            strD = ((TextBox)gvR.FindControl("txtRemarks")).Text;
+            cObj.REMARKS = strD;
 
-            strD = ((TextBox)gvR.FindControl("txtRecipientAddress")).Text;
-            cObj.CONSIGNEE_ADDRESS = strD;
+            strD = ((DropDownList)gvR.FindControl("ddlStatus")).SelectedValue;
+            cObj.IS_ACTIVE = strD;
 
-            strD = ((TextBox)gvR.FindControl("txtRecipientMobileNo")).Text;
-            cObj.CONSIGNEE_MOBILE_NO = strD;
+            strD = ((TextBox)gvR.FindControl("txtDisttrict")).Text;
+            cObj.DIST_NAME = strD;
 
-            strD = ((TextBox)gvR.FindControl("txtDestinationDist")).Text;
-            cObj.DESTINATION_DIST_NAME = strD;
-
-            strD = ((HiddenField)gvR.FindControl("hdnDestinationDistId")).Value;
-            cObj.DESTINATION_DIST_ID = Conversion.StringToInt(strD);
+            strD = ((HiddenField)gvR.FindControl("hdnDistId")).Value;
+            cObj.DIST_ID = Conversion.StringToInt(strD);
 
             strD = ((TextBox)gvR.FindControl("txtTownName")).Text;
-            cObj.DESTINATION_TOWN_NAME = strD;
+            cObj.TOWN_NAME = strD;
 
             strD = ((HiddenField)gvR.FindControl("hdnTownId")).Value;
-            cObj.DESTINATION_TOWN_ID = Conversion.StringToInt(strD);
+            cObj.TOWN_ID = Conversion.StringToInt(strD);
 
 
             if (!gvR.Visible)
@@ -580,7 +512,7 @@ namespace PG.Web.WREL
 
         }
 
-        private bool ValidateDetails(List<dcCN_CREATION_MST> list)
+        private bool ValidateDetails(List<dcROUTE_DETAIL> list)
         {
             bool y = true;
             foreach (var item in list)
@@ -601,13 +533,13 @@ namespace PG.Web.WREL
         {
             errMsg = string.Empty;
 
-            //if (txtManagerName.Text == "")
-            //{
-            //    ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', 'Enter Manager Name!', 'Error');", true);
-            //    txtManagerName.Focus();
-            //    return false;
+            if (txtRouteName.Text == "")
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', 'Enter Route Name!', 'Error');", true);
+                txtRouteName.Focus();
+                return false;
 
-            //}
+            }
 
             //if (txtCargoDate.Text == "")
             //{
@@ -625,29 +557,7 @@ namespace PG.Web.WREL
 
             //}
 
-            //if (txtAddress.Text == "")
-            //{
-            //    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Enter Address !!');", true);
-            //    txtAddress.Focus();
-            //    return false;
-
-            //}
-
-            //if (txtMobileNo.Text == "")
-            //{
-            //    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Enter Mobile No !!');", true);
-            //    txtMobileNo.Focus();
-            //    return false;
-
-            //}
-
-            //if (hdnCountryId.Value == "0")
-            //{
-            //    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Select Country !!');", true);
-            //    txtCountry.Focus();
-            //    return false;
-
-            //}
+          
 
             ReadDetailsFromGrid();
 
@@ -690,49 +600,52 @@ namespace PG.Web.WREL
         private bool SaveData()
         {
 
+
             bool bStatus = false;
             bool isAdd = false;
-            int newCN_ID = 0;
-            ReadDetailsFromGrid();
-            foreach(dcCN_CREATION_MST obj in this.listDetails)
+            int newRoute_Id = 0;
+            dcROUTE_MST cObj = new dcROUTE_MST();
+            if (this.ROUTE_ID > 0)
             {
-                dcCN_CREATION_MST cObj = new dcCN_CREATION_MST();
-                cObj._RecordState = obj._RecordState;
-                if(cObj._RecordState == RecordStateEnum.Added)
-                {
-                    cObj.CREATE_BY = loggedinUser.UserName;
-                    cObj.CREATE_DATE = DateTime.Now;
-                }
-                else
-                {
-                    cObj.EDIT_BY = loggedinUser.UserName;
-                    cObj.EDIT_DATE = DateTime.Now;
-                }
 
-                cObj.CN_NUMBER = CN_CREATION_MSTBL.Get_New_CN_No(DateTime.Now.ToString("dd-MMM-yy"), null);
-                cObj.CLIENT_ID = Conversion.StringToInt(hdnClientId.Value);
-                cObj.AGR_DETAIL_ID = Conversion.StringToInt(hdnAggrementDtlId.Value);
-                cObj.ITEM_ID = Conversion.StringToInt(hdnItemId.Value);
-                cObj.ROUTE_ID = Conversion.StringToInt(hdnRouteId.Value);
-                cObj.SERVICE_AMOUNT = Conversion.StringToDecimal(txtServiceAmt.Text);
-
-                cObj.CONSIGNEE_NAME = obj.CONSIGNEE_NAME;
-                cObj.CONSIGNEE_ADDRESS = obj.CONSIGNEE_ADDRESS;
-                cObj.CONSIGNEE_MOBILE_NO = obj.CONSIGNEE_MOBILE_NO;
-                cObj.DESTINATION_DIST_NAME = obj.DESTINATION_DIST_NAME;
-                cObj.DESTINATION_DIST_ID = obj.DESTINATION_DIST_ID;
-                cObj.DESTINATION_TOWN_NAME = obj.DESTINATION_TOWN_NAME;
-                cObj.DESTINATION_TOWN_ID = obj.DESTINATION_TOWN_ID;
-
-                newCN_ID = CN_CREATION_MSTBL.Save(cObj);
+                cObj.ROUTE_ID = this.ROUTE_ID;
+                cObj._RecordState = RecordStateEnum.Edited;
             }
-   
-
-          
-            if (newCN_ID > 0)
+            else
             {
-                this.CN_ID = newCN_ID;
-                //ReadTask();
+                cObj._RecordState = RecordStateEnum.Added;
+                isAdd = true;
+            }
+
+            cObj.ROUTE_NAME = txtRouteName.Text.Trim();
+            cObj.STARTING_DIST_ID = Conversion.StringToInt(hdnStartingDistId.Value);
+            cObj.DESTINATION_DIST_ID = Conversion.StringToInt(hdnDestinationDistId.Value);
+            cObj.IS_ACTIVE = ddlStatus.SelectedValue;
+            cObj.REMARKS = txtRemarks.Text.Trim();
+
+
+            if (isAdd)
+            {
+                cObj.CREATE_BY = loggedinUser.UserName;
+                cObj.CREATE_DATE = DateTime.Now;
+
+            }
+            else
+            {
+                cObj.EDIT_BY = loggedinUser.UserName;
+                cObj.EDIT_DATE = DateTime.Now;
+
+            }
+
+
+
+            cObj.RouteDetailsList = this.listDetails;
+
+            newRoute_Id = ROUTE_MSTBL.Save(cObj);
+            if (newRoute_Id > 0)
+            {
+                this.ROUTE_ID = newRoute_Id;
+                ReadTask();
                 bStatus = true;
             }
 
@@ -753,7 +666,7 @@ namespace PG.Web.WREL
 
         protected void btnMRRPrint_Click(object sender, EventArgs e)
         {
-            //int issueMasterId = Conversion.StringToInt(hdnCN_ID.Value);
+            //int issueMasterId = Conversion.StringToInt(hdnROUTE_ID.Value);
             //if (issueMasterId > 0)
             //{
             //    //   string mrrNo = txtIssueNo.Text.Trim();
@@ -880,16 +793,7 @@ namespace PG.Web.WREL
             AddBlankRowToGridList();
 
             BindDataToGrid(this.listDetails);
-            // to focusing the row
-            if (GridView1.Rows.Count > 0)
-            {
-                int lastRowIndex = GridView1.Rows.Count - 1;
-                TextBox txtLastCN = GridView1.Rows[lastRowIndex].FindControl("txtRecipientName") as TextBox;
-                if (txtLastCN != null)
-                {
-                    ScriptManager.GetCurrent(this).SetFocus(txtLastCN);
-                }
-            }
+           
 
             SetControlGrid(FormDataMode.Add);
 
@@ -918,134 +822,12 @@ namespace PG.Web.WREL
 
         private void AddBlankRowToGridList()
         {
-            dcCN_CREATION_MST cObj = new dcCN_CREATION_MST();
+            dcROUTE_DETAIL cObj = new dcROUTE_DETAIL();
             cObj._RecordState = RecordStateEnum.Added;
             this.listDetails.Add(cObj);
             //this.listDetails.Insert(0, cObj); // this is for row top order
         }
 
-        protected void txtRecipientName_TextChanged(object sender, EventArgs e)
-        {
-            //dcCN_CREATION_MST cnInfo = CN_CREATION_MSTBL.GetCNInfoByCNNumber(txtRecipientName.text);
-            btnNewRow_Click(sender, e);
-            //SetFocusToLasttxtRecipientName();
-        }
-        private void SetFocusToLasttxtRecipientName()
-        {
-            int lastIndex = GridView1.Rows.Count - 1;
-            if (lastIndex >= 0)
-            {
-                TextBox lastTxtCN = GridView1.Rows[0].FindControl("txtRecipientName") as TextBox;
-                if (lastTxtCN != null)
-                {
-                    ScriptManager.GetCurrent(this).SetFocus(lastTxtCN);
-                }
-            }
-        }
-
-        protected void btnUpload_Click(object sender, EventArgs e)
-        {
-            string ConStr = "";
-            string ext = Path.GetExtension(FileUpload1.FileName).ToLower();
-
-
-            if (!string.IsNullOrEmpty(ext))
-            {
-                string path = Server.MapPath("~/Uploads/" + FileUpload1.FileName);
-                if (!File.Exists(path))
-                {
-                    File.Delete(path);
-                }
-                FileUpload1.SaveAs(path);
-
-                if (ext.Trim() == ".xls")
-                {
-                    //connection string for that file which extantion is .xls  
-                    ConStr = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path + ";Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=2\"";
-                }
-                else if (ext.Trim() == ".xlsx")
-                {
-                    //connection string for that file which extantion is .xlsx  
-                    ConStr = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + path + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=2\"";
-                }
-
-                string query = "SELECT * FROM [Sheet1$]";
-
-                OleDbConnection conn = new OleDbConnection(ConStr);
-
-                if (conn.State == ConnectionState.Closed)
-                {
-                    conn.Open();
-                }
-                //create command object  
-                OleDbCommand cmd = new OleDbCommand(query, conn);
-
-                OleDbDataAdapter da = new OleDbDataAdapter(cmd);
-                DataSet ds = new DataSet();
-
-                da.Fill(ds);
-
-                conn.Close();
-
-                DataTable tbl = ds.Tables[0];
-                int count = tbl.Rows.Count;
-                string strSql = string.Empty;
-
-                this.listDetails.Clear();
-
-
-                foreach (DataRow Row in tbl.Rows)
-                {
-                    dcCN_CREATION_MST cObj = new dcCN_CREATION_MST();
-                    //cObj.item_code = Row["ITEM_CODE"].ToString();
-                    //dcINV_ITEM_MASTER objitem = new dcINV_ITEM_MASTER();
-                    //objitem = INV_ITEM_MASTERBL.GetItemByCode(cObj.item_code);
-
-                    //if (objitem != null)
-                    //{
-                    cObj.CONSIGNEE_NAME = (Row["CONSIGNEE_NAME"].ToString());
-                    cObj.CONSIGNEE_ADDRESS = (Row["CONSIGNEE_ADDRESS"].ToString());
-                    cObj.CONSIGNEE_MOBILE_NO = (Row["CONSIGNEE_MOBILE_NO"].ToString());
-                    cObj.DESTINATION_DIST_NAME = (Row["DESTINATION_DIST_NAME"].ToString());
-                    cObj.DESTINATION_TOWN_NAME = (Row["DESTINATION_TOWN_NAME"].ToString());
-
-                    //cObj.PRIORITY = Row["PRIORITY"].ToString();
-                    //cObj.UOM_ID = objitem.UOM_ID;
-                    //cObj.INDT_REMARKS = Row["INDENT_REMARKS"].ToString();
-
-                    //this.listDetails.Add(cObj);
-                    //}
-                }
-
-                GridView1.DataSource = listDetails;
-                GridView1.DataBind();
-                //SetControlGrid();
-
-                btnSave.Enabled = true;
-
-            }
-
-
-           
-        }
-
-        protected void btnDownloadSample_Click(object sender, EventArgs e)
-        {
-              string fileName = "sample_parcel_import.xlsx"; // Name of the file to download
-            string filePath = Server.MapPath("~/DownloadSample/" + fileName);
-
-            if (File.Exists(filePath))
-            {
-                Response.Clear();
-                Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                Response.AppendHeader("Content-Disposition", string.Format("attachment; filename={0}", fileName));
-                Response.TransmitFile(filePath);
-                Response.End();
-            }
-            else
-            {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', ' File not found!', 'Error');", true);
-            }
-        }
+    
     }
 }
