@@ -2,6 +2,7 @@
 using PG.DBClass.WRELDC;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Linq;
 using System.Linq;
 using System.Text;
@@ -17,35 +18,93 @@ namespace PG.BLLibrary.WRElBL
             //dlo.LoadWith<DBClass.dcAGREEMENT_MST>(obj => obj.relatedclassname);
             return dlo;
         }
-        public static List<dcAGREEMENT_MST> GetAGREEMENT_MSTList()
+
+        public static string GetAgreementMstListString()
         {
-            return GetAGREEMENT_MSTList(null, null);
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(" SELECT MST.*,cl.CLIENT_NAME ,DTD.DEPT_NAME,BD.DEPT_NAME BILLING_DEPT ");
+            sb.Append(" FROM AGREEMENT_MST mst " );
+            sb.Append(" INNER JOIN CLIENT_MST cl ON mst.CLIENT_ID=cl.CLIENT_ID " );
+            sb.Append(" INNER JOIN DEPARTMENT_MST DTD ON mst.DEPT_ID=DTD.DEPT_ID " );
+            sb.Append(" LEFT JOIN DEPARTMENT_MST BD ON mst.BILLINGDEPT_ID=BD.DEPT_ID " );
+            sb.Append(" WHERE 1=1 " );
+
+            return sb.ToString();
         }
-        public static List<dcAGREEMENT_MST> GetAGREEMENT_MSTList(DBContext dc)
+        public static dcAGREEMENT_MST GetAgreementMstInfoById(int pAGR_Id)
         {
-            return GetAGREEMENT_MSTList(null, dc);
+            return GetAgreementMstList(pAGR_Id, null).FirstOrDefault();
         }
-        public static List<dcAGREEMENT_MST> GetAGREEMENT_MSTList(DBQuery dbq, DBContext dc)
+
+        public static List<dcAGREEMENT_MST> GetAgreementMstList()
+        {
+            return GetAgreementMstList(0, null);
+        }
+
+        public static List<dcAGREEMENT_MST> GetAgreementMstList(int pAGR_Id, DBContext dc)
         {
             List<dcAGREEMENT_MST> cObjList = new List<dcAGREEMENT_MST>();
             bool isDCInit = false;
             try
             {
                 isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
-                using (DataContext dataContext = dc.NewDataContext())
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetAgreementMstListString());
+                if (pAGR_Id > 0)
                 {
-                    if (dbq == null)
-                    {
-                        dbq = new DBQuery();
-                        //dbq.OrderBy = "YearStartDate Desc";
-                    }
-                    cObjList = DBQuery.ExecuteDBQuery<dcAGREEMENT_MST>(dbq, dc);
+                    sb.Append(" AND mst.AGR_ID= @pAGR_Id ");
+                    cmdInfo.DBParametersInfo.Add("@pAGR_Id", pAGR_Id);
                 }
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcAGREEMENT_MST>(dbq, dc);
             }
             catch { throw; }
             finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
             return cObjList;
         }
+
+        public static List<dcAGREEMENT_MST> GetAgreementList(dcAGENT_MST prmHms, DBContext dc)
+        {
+            List<dcAGREEMENT_MST> cObjList = new List<dcAGREEMENT_MST>();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetAgreementMstListString());
+
+
+
+
+                if (prmHms.IS_ACTIVE != "0")
+                {
+                    sb.Append(" AND IS_ACTIVE= @IS_ACTIVE ");
+                    cmdInfo.DBParametersInfo.Add("@IS_ACTIVE", prmHms.IS_ACTIVE);
+                }
+
+
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcAGREEMENT_MST>(dbq, dc);
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
+        }
+
+
         public static dcAGREEMENT_MST GetAGREEMENT_MSTByID(int pAGREEMENT_MSTID)
         {
             return GetAGREEMENT_MSTByID(pAGREEMENT_MSTID, null);

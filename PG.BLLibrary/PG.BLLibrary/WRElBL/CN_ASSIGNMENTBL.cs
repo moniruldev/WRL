@@ -2,6 +2,7 @@
 using PG.DBClass.WRELDC;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Linq;
 using System.Linq;
 using System.Text;
@@ -237,6 +238,48 @@ namespace PG.BLLibrary.WRElBL
             DBContextManager.ReleaseDBContext(ref dc, isDCInit);
             bStatus = true;
             return bStatus;
+        }
+
+        public static string GetCNListinfoSQLString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(" SELECT mst.* FROM CN_CREATION_MST mst  ");
+            sb.Append(" WHERE 1=1 ");
+
+            return sb.ToString();
+        }
+
+        public static dcCN_ASSIGNMENT GetCNInfoByCNNumberassign(string pCN_NO)
+        {
+            return GetCNInfoByCNNumberassignList(pCN_NO, null).FirstOrDefault();
+        }
+        public static List<dcCN_ASSIGNMENT> GetCNInfoByCNNumberassignList(string pCN_NO, DBContext dc)
+        {
+            List<dcCN_ASSIGNMENT> cObjList = new List<dcCN_ASSIGNMENT>();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetCNListinfoSQLString());
+                if (pCN_NO != string.Empty)
+                {
+                    sb.Append(" AND mst.CN_NUMBER= @pCN_NO ");
+                    cmdInfo.DBParametersInfo.Add("@pCN_NO", pCN_NO);
+                }
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcCN_ASSIGNMENT>(dbq, dc);
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
         }
     }
 }

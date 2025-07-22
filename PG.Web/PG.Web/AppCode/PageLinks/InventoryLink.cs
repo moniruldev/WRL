@@ -210,7 +210,15 @@ namespace PG.Web.PageLinks
             get { return WebUtility.GetAbsoluteUrl("~/Service/WREL/GetHubList.ashx"); }
         }
 
-        
+        public static string GetLink_EmployeeList
+        {
+            get { return WebUtility.GetAbsoluteUrl("~/Service/WREL/GetEmployeeList.ashx"); }
+        }
+
+        public static string GetLink_DeliveryManList
+        {
+            get { return WebUtility.GetAbsoluteUrl("~/Service/WREL/GetDeliveryManList.ashx"); }
+        }
         
         
     }

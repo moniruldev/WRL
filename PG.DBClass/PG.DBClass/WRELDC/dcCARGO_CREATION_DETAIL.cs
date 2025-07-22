@@ -16,7 +16,7 @@ namespace PG.DBClass.WRELDC
         private int m_CARGO_DETAIL_ID = 0;
         private int m_CARGO_ID = 0;
         private int m_CN_ID = 0;
-
+        private string m_CN_NUMBER = string.Empty;
         #endregion  //private members
 
         #region public events
@@ -69,11 +69,28 @@ namespace PG.DBClass.WRELDC
             }
         }
 
+        [DBColumn(Name = "CN_NUMBER", Storage = "m_CN_NUMBER", DbType = "126")]
+        public string CN_NUMBER
+        {
+            get { return this.m_CN_NUMBER; }
+            set
+            {
+                this.m_CN_NUMBER = value;
+                this.NotifyPropertyChanged("CN_NUMBER");
+            }
+        }
+
         #endregion //properties
     }
 
      public partial class dcCARGO_CREATION_DETAIL
      {
-         public string CN_NUMBER { get; set; }
+       //  public string CN_NUMBER { get; set; }
+         public string CLIENT_NAME { get; set; }
+         public decimal SERVICE_AMOUNT { get; set; }
+
+         public string CONSIGNEE_NAME { get; set; }
+         
+         
      }
 }

@@ -19,8 +19,9 @@ namespace PG.DBClass.WRELDC
         private int m_DISTANCE_TYPE_ID = 0;
         private decimal m_SERVICE_AMOUNT = 0;
         private string m_REMARKS = string.Empty;
-        private decimal m_RETURN_PRICE = 0;
+        private decimal m_RETURN_SERVICE_AMOUNT = 0;
         private string m_IS_OTP_SERVICE = string.Empty;
+        private int m_SLA_DAYS = 0;
         
 
         #endregion  //private members
@@ -108,27 +109,38 @@ namespace PG.DBClass.WRELDC
             }
         }
 
-         [DBColumn(Name = "RETURN_PRICE", Storage = "m_RETURN_PRICE", DbType = "107")]
-        public decimal RETURN_PRICE
+        [DBColumn(Name = "RETURN_SERVICE_AMOUNT", Storage = "m_RETURN_SERVICE_AMOUNT", DbType = "107")]
+        public decimal RETURN_SERVICE_AMOUNT
         {
-            get { return this.m_RETURN_PRICE; }
+            get { return this.m_RETURN_SERVICE_AMOUNT; }
             set
             {
-                this.m_RETURN_PRICE = value;
-                this.NotifyPropertyChanged("RETURN_PRICE");
+                this.m_RETURN_SERVICE_AMOUNT = value;
+                this.NotifyPropertyChanged("RETURN_SERVICE_AMOUNT");
             }
         }
 
-         [DBColumn(Name = "IS_OTP_SERVICE", Storage = "m_IS_OTP_SERVICE", DbType = "126")]
-         public string IS_OTP_SERVICE
-         {
-             get { return this.m_IS_OTP_SERVICE; }
-             set
-             {
-                 this.m_IS_OTP_SERVICE = value;
-                 this.NotifyPropertyChanged("IS_OTP_SERVICE");
-             }
-         }
+        [DBColumn(Name = "IS_OTP_SERVICE", Storage = "m_IS_OTP_SERVICE", DbType = "126")]
+        public string IS_OTP_SERVICE
+        {
+            get { return this.m_IS_OTP_SERVICE; }
+            set
+            {
+                this.m_IS_OTP_SERVICE = value;
+                this.NotifyPropertyChanged("IS_OTP_SERVICE");
+            }
+        }
+
+        [DBColumn(Name = "SLA_DAYS", Storage = "m_SLA_DAYS", DbType = "107")]
+        public int SLA_DAYS
+        {
+            get { return this.m_SLA_DAYS; }
+            set
+            {
+                this.m_SLA_DAYS = value;
+                this.NotifyPropertyChanged("SLA_DAYS");
+            }
+        }
 
         #endregion //properties
     }

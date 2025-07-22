@@ -197,5 +197,9 @@ namespace PG.DBClass.WRELDC
     public partial class dcAGREEMENT_MST
     {
         public List<dcAGREEMENT_DETAILL> agreementDetails = new List<dcAGREEMENT_DETAILL>();
+
+        public string CLIENT_NAME { get; set; }
+        public string BILLING_DEPT { get; set; }
+        public string DEPT_NAME { get; set; }
     }
 }

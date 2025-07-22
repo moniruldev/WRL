@@ -2,6 +2,7 @@
 using PG.DBClass.WRELDC;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Linq;
 using System.Linq;
 using System.Text;
@@ -22,13 +23,48 @@ namespace PG.BLLibrary.WRElBL
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append(" SELECT DTL.*,IM.ITEM_NAME,mst.description FROM AGREEMENT_DETAILL DTL ");
+            sb.Append(" SELECT DTL.*,IM.ITEM_NAME,mst.description,dt.TYPE_NAME FROM AGREEMENT_DETAILL DTL ");
             sb.Append(" INNER JOIN Agreement_mst MST ON dtl.agr_id=mst.agr_id ");
             sb.Append(" INNER JOIN ITEM_MST IM ON DTL.ITEM_ID=IM.ITEM_ID ");
+            sb.Append(" INNER JOIN DISTANCE_TYPE_MST dt ON DTL.DISTANCE_TYPE_ID=dt.DISTANCE_TYPE_ID  ");
             sb.Append(" WHERE 1=1 ");
 
             return sb.ToString();
         }
+
+        public static List<dcAGREEMENT_DETAILL> GetAgreementInfoListById(int pAgrId)
+        {
+            return GetAgreementInfoListById(pAgrId, null);
+        }
+
+        public static List<dcAGREEMENT_DETAILL> GetAgreementInfoListById(int pAgrId, DBContext dc)
+        {
+            List<dcAGREEMENT_DETAILL> cObjList = new List<dcAGREEMENT_DETAILL>();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetAgreementDtlSQLString());
+                if (pAgrId > 0)
+                {
+                    sb.Append(" AND DTL.AGR_ID= @pAgrId ");
+                    cmdInfo.DBParametersInfo.Add("@pAgrId", pAgrId);
+                }
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcAGREEMENT_DETAILL>(dbq, dc);
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
+        }
+
         public static List<dcAGREEMENT_DETAILL> GetAGREEMENT_DETAILLList()
         {
             return GetAGREEMENT_DETAILLList(null, null);

@@ -20,22 +20,24 @@ using PG.DBClass.HMSDC;
 using PG.BLLibrary.HMSBL;
 using PG.DBClass.WRELDC;
 using PG.BLLibrary.WRElBL;
+using System.Collections;
 
 namespace PG.Web.WREL
 {
-    public partial class AgreementEntry : BagePage
+    public partial class CNAssignmentV2 : BagePage
     {
         //this 
-        string ViewStateKey = "AGR_ID";
-        string ViewStateKeyPrev = "AGR_ID_PREV";
+        string ViewStateKey = "CN_ASSIGN_ID";
+        string ViewStateKeyPrev = "CN_ASSIGN_ID_PREV";
         ReportOpenTypeEnum ReportOpenType = ReportOpenTypeEnum.Preview;
         // int CompanyID = 0;
 
-        int AGR_ID = 0;
+        int CN_ASSIGN_ID = 0;
+        private int totalRowCount = 0;
         string saveMsg = string.Empty;
         string errMsg = string.Empty;
 
-        private  dcUser loggedinUser = null;
+        private dcUser loggedinUser = null;
         public string ReportViewPageLink = PageLinks.ReportLinks.GetLink_ReportView;
         public string ReportViewPDFPageLink = PageLinks.ReportLinks.GetLink_ReportViewPDF;
         public string ReportPrintPageLink = PageLinks.ReportLinks.GetLink_ReportPrint;
@@ -46,12 +48,12 @@ namespace PG.Web.WREL
         public string DistrictListServiceLink = PageLinks.InventoryLink.GetLink_DistrictList;
         public string TownListServiceLink = PageLinks.InventoryLink.GetLink_TownList;
         public string RouteListServiceLink = PageLinks.InventoryLink.GetLink_RouteList;
-        public string ClientListServiceLink = PageLinks.InventoryLink.GetLink_ClientList;
-        public string DepartmentListServiceLink = PageLinks.InventoryLink.GetLink_DepartmentList;
-        public string ItemListServiceLink = PageLinks.InventoryLink.GetLink_ItemListCourier;
-        public string DistanceTypeListServiceLink = PageLinks.InventoryLink.GetLink_DistanceTypeList;
-        
-        List<dcAGREEMENT_DETAILL> listDetails = new List<dcAGREEMENT_DETAILL>();
+        public string CNListServiceLink = PageLinks.InventoryLink.GetLink_CNMasterList;
+
+        public string DeliveryManlistServiceLink = PageLinks.InventoryLink.GetLink_DeliveryManList;
+
+
+        List<dcCN_ASSIGNMENT> listDetails = new List<dcCN_ASSIGNMENT>();
 
         protected override void OnPreInit(EventArgs e)
         {
@@ -73,12 +75,12 @@ namespace PG.Web.WREL
 
             //ScriptManager.GetCurrent(this).RegisterAsyncPostBackControl(this.LinkButton1);
 
-            this.AGR_ID = base.GetPageQueryInteger("id");
+            this.CN_ASSIGN_ID = base.GetPageQueryInteger("id");
 
             if (!IsPostBack) //first Time
             {
 
-              
+
                 hdnLoggedInUser.Value = loggedinUser.UserID.ToString();
                 //FillCombo();
 
@@ -86,12 +88,12 @@ namespace PG.Web.WREL
 
 
 
-                if (this.AGR_ID == 0) //not query string
+                if (this.CN_ASSIGN_ID == 0) //not query string
                 {
                     //List<dcCARGO_CREATION_DETAIL> roomList = HMRESERVATION_DTLBL.GetRoomInfoList();
                     //GridView1.DataSource = roomList;
                     //GridView1.DataBind();
-                   
+
                     SetDate();
                     AddTask();
                     this.EditMode = FormDataMode.Add;
@@ -108,25 +110,26 @@ namespace PG.Web.WREL
                     {
                         ReadTask();
                     }
-                 
+
                 }
 
             }
             else
             {
                 this.EditMode = base.GetEditModeFromViewState(base.EditModeViewStateKey);
-                this.AGR_ID = int.Parse(ViewState[ViewStateKey].ToString());
+                this.CN_ASSIGN_ID = int.Parse(ViewState[ViewStateKey].ToString());
             }
 
             SetHyperLink();
 
-          
+
             //this.ShowPageMessage(this.lblMessage);
             // Response.Write("UserID : " + this.UserID.ToString());
 
         }
         protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
+            
 
         }
         protected void btnEdit_Click(object sender, EventArgs e)
@@ -171,32 +174,32 @@ namespace PG.Web.WREL
         private void ReadTask()
         {
             this.EditMode = FormDataMode.Read;
-            ReadData(this.AGR_ID);
-            ViewState[ViewStateKey] = this.AGR_ID.ToString();
+            ReadData(this.CN_ASSIGN_ID);
+            ViewState[ViewStateKey] = this.CN_ASSIGN_ID.ToString();
 
             SetControl(FormDataMode.Read);
 
         }
         private void AddTask()
         {
-            ViewState[ViewStateKeyPrev] = this.AGR_ID.ToString();
+            ViewState[ViewStateKeyPrev] = this.CN_ASSIGN_ID.ToString();
 
             this.EditMode = FormDataMode.Add;
             this.IsDirty = false;
-            this.AGR_ID = 0;
+            this.CN_ASSIGN_ID = 0;
             ViewState[ViewStateKey] = "0";
             this.listDetails.Clear();
             CheckAndAddGridBlankRow();
             BindDataToGrid(this.listDetails);
-           //add
+            //add
             SetControl(FormDataMode.Add);
         }
         private void EditTask()
         {
             this.EditMode = FormDataMode.Edit;
-            ReadData(this.AGR_ID);
+            ReadData(this.CN_ASSIGN_ID);
             this.EditMode = FormDataMode.Edit;
-            ViewState[ViewStateKey] = this.AGR_ID.ToString();
+            ViewState[ViewStateKey] = this.CN_ASSIGN_ID.ToString();
             SetControl(FormDataMode.Edit);
         }
 
@@ -204,58 +207,94 @@ namespace PG.Web.WREL
         {
             bool bStatus = false;
 
-            dcAGREEMENT_MST cObj = AGREEMENT_MSTBL.GetAgreementMstInfoById(id);
-            if (cObj != null)
-            {
+            //dcCN_ASSIGNMENT cObj = CARGO_CREATION_MSTBL.GetCargoMstInfoById(id);
+            //if (cObj != null)
+            //{
 
-                hdnAGR_ID.Value = cObj.AGR_ID.ToString();
-                txtAgreementName.Text = cObj.AGREEMENT_NAME;
-                txtAgreementdt.Text = Convert.ToDateTime(cObj.AGREEMENT_DATE).ToString("dd-MMM-yyyy"); ;
-                txtClientName.Text = cObj.CLIENT_NAME;
-                hdnClientId.Value = cObj.CLIENT_ID.ToString();
-                txtDepartment.Text = cObj.DEPT_NAME;
-                hdnDepartmentId.Value = cObj.DEPT_ID.ToString();
-                txtAgreementStDate.Text = Convert.ToDateTime(cObj.AGREEMENT_START_DATE).ToString("dd-MMM-yyyy");
-                txtAgrEndDate.Text = Convert.ToDateTime(cObj.AGREEMENT_END_DATE).ToString("dd-MMM-yyyy");
-                txtDescription.Text = cObj.DESCRIPTION;
-                ddlStatus.SelectedValue = cObj.IS_ACTIVE;
-
-
-                this.listDetails = AGREEMENT_DETAILLBL.GetAgreementInfoListById(cObj.AGR_ID);
-                BindDataToGrid(listDetails);
+                //hdnCN_ASSIGN_ID.Value = cObj.CN_ASSIGN_ID.ToString();
+                ////txtCargoNo.Text = cObj.CARGO_NUMBER;
+                //txtCargoDate.Text = Convert.ToDateTime(cObj.CARGO_DATE).ToString("dd-MMM-yyyy");
+                //hdnStartingDistId.Value = cObj.CARGO_STARTING_DIS_ID.ToString();
+                //hdnDestDistId.Value = cObj.CARGO_DESTINATION_DIST_ID.ToString();
+                //hdnDestTownId.Value = cObj.CARGO_DESTINATION_TOWN_ID.ToString();
+                //hdnRouteId.Value = cObj.ROUTE_ID.ToString();
+                //hdnManagerId.Value = cObj.MANAGER_ID;
+                //txtWeight.Text = cObj.WEIGHT_IN_KG.ToString("0.##");
+                //txtRemarks.Text = cObj.REMARKS;
+                //txtStartingDist.Text = cObj.STARTING_DIST_NAME;
+                //txtDestinationDist.Text = cObj.DESTINATION_DIST_NAME;
+                //txtDestinationTown.Text = cObj.TOWN_NAME;
+                //txtManagerName.Text = cObj.MANAGER_NAME;
+                //txtRoute.Text = cObj.ROUTE_NAME;
+                //this.listDetails = CARGO_CREATION_DETAILBL.GetCargoDtlListByCargoId(cObj.CN_ASSIGN_ID,null);
+                //BindDataToGrid(listDetails);
 
                 bStatus = true;
-            }
+            //}
             return bStatus;
 
         }
 
         private void SetControl(FormDataMode dataMode)
         {
-            bool isEnabled = false;
+            //bool isEnabled = false;
 
-            if (dataMode == FormDataMode.Add | dataMode == FormDataMode.Edit)
-            {
-                isEnabled = true;
-            }
+            //if (dataMode == FormDataMode.Add | dataMode == FormDataMode.Edit)
+            //{
+            //    isEnabled = true;
+            //}
 
-            txtAgreementName.Enabled = isEnabled;
-            txtAgreementdt.Enabled = isEnabled;
-            txtClientName.Enabled = isEnabled;
-            txtDepartment.Enabled = isEnabled;
-            txtAgreementStDate.Enabled = isEnabled;
-            txtAgrEndDate.Enabled = isEnabled;
-            txtDescription.Enabled = isEnabled;
-            ddlStatus.Enabled = isEnabled;
-           
-            //buttons
+            //txtCargoNo.Enabled = isEnabled;
+            //txtCargoDate.Enabled = isEnabled;
+            //txtWeight.Enabled = isEnabled;
+            //txtRemarks.Enabled = isEnabled;
+            //txtStartingDist.Enabled = isEnabled;
+            //txtDestinationDist.Enabled = isEnabled;
+            //txtDestinationTown.Enabled = isEnabled;
+            //txtManagerName.Enabled = isEnabled;
+            ////buttons
+            //btnAddNew.Visible = !isEnabled;
+            //btnEdit.Visible = !isEnabled;
+            //btnSave.Visible = isEnabled;
+            ////btnUpdate.Visible = !isEnabled;
+
+            //SetControlGrid(dataMode);
+
+            bool isEnabled = (dataMode == FormDataMode.Add || dataMode == FormDataMode.Edit);
+
+            // Apply disabled/enabled logic without losing Bootstrap styling
+            //SetTextBoxState(txtCargoNo, isEnabled);
+            //SetTextBoxState(txtCargoDate, isEnabled);
+            //SetTextBoxState(txtWeight, isEnabled);
+            //SetTextBoxState(txtRemarks, isEnabled);
+            //SetTextBoxState(txtStartingDist, isEnabled);
+            //SetTextBoxState(txtDestinationDist, isEnabled);
+            //SetTextBoxState(txtDestinationTown, isEnabled);
+            //SetTextBoxState(txtManagerName, isEnabled);
+            //SetTextBoxState(txtRoute, isEnabled);
+
+            //txtCargoDate.Enabled = isEnabled;
+            // buttons
             btnAddNew.Visible = !isEnabled;
             btnEdit.Visible = !isEnabled;
             btnSave.Visible = isEnabled;
-            //btnUpdate.Visible = !isEnabled;
 
             SetControlGrid(dataMode);
 
+        }
+
+        private void SetTextBoxState(TextBox txtBox, bool isEnabled)
+        {
+            if (isEnabled)
+            {
+                txtBox.Attributes.Remove("disabled");
+                txtBox.CssClass = "form-control form-control-sm";
+            }
+            else
+            {
+                txtBox.Attributes["disabled"] = "disabled";
+                txtBox.CssClass = "form-control form-control-sm"; 
+            }
         }
 
 
@@ -267,18 +306,18 @@ namespace PG.Web.WREL
                 case DataControlRowType.DataRow:
                     e.Row.CssClass += " gridRow";
                     break;
-                case DataControlRowType.Header:
-                    e.Row.CssClass += " headerRow";
-                    break;
-                case DataControlRowType.Footer:
-                    e.Row.CssClass += " footerRow";
-                    break;
-                case DataControlRowType.Pager:
-                    e.Row.CssClass += " pagerRow";
-                    break;
-                case DataControlRowType.EmptyDataRow:
-                    e.Row.CssClass += " gridRow";
-                    break;
+                //case DataControlRowType.Header:
+                //    e.Row.CssClass += " headerRow";
+                //    break;
+                //case DataControlRowType.Footer:
+                //    e.Row.CssClass += " footerRow";
+                //    break;
+                //case DataControlRowType.Pager:
+                //    e.Row.CssClass += " pagerRow";
+                //    break;
+                //case DataControlRowType.EmptyDataRow:
+                //    e.Row.CssClass += " gridRow";
+                //    break;
             }
         }
 
@@ -286,36 +325,23 @@ namespace PG.Web.WREL
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                string isOtpValue = "";
+                int currentRowIndex = e.Row.RowIndex;
+                int serialNo = totalRowCount - currentRowIndex;
 
-                object val = DataBinder.Eval(e.Row.DataItem, "IS_OTP_SERVICE");
-                if (val != null && val != DBNull.Value)
+                Label lblSerial = (Label)e.Row.FindControl("lblSerialNo");
+                if (lblSerial != null)
                 {
-                    isOtpValue = val.ToString().ToUpper().Trim();
-                }
-
-                DropDownList ddlIsOTP = (DropDownList)e.Row.FindControl("ddlIsOTP");
-                if (ddlIsOTP != null)
-                {
-                    // Only set SelectedValue if it exists in the items list
-                    if (!string.IsNullOrEmpty(isOtpValue) && ddlIsOTP.Items.FindByValue(isOtpValue) != null)
-                    {
-                        ddlIsOTP.SelectedValue = isOtpValue;
-                    }
-                    else
-                    {
-                        ddlIsOTP.SelectedValue = "N"; // default to "No"
-                    }
+                    lblSerial.Text = serialNo.ToString();
                 }
 
 
                 string rowID = e.Row.ClientID;
                 string js = string.Format("return ShowDetailsPopup('{0}');", rowID);
-               
+
             }
 
 
-           
+
         }
 
 
@@ -330,17 +356,40 @@ namespace PG.Web.WREL
 
             }
 
-            
+            //if (e.CommandName == "roomdetials")
+            //{
+            //    int roomTypeId = Convert.ToInt32(e.CommandArgument);
+            //    DisplayRoomDetails(roomTypeId);
+
+
+            //}
         }
+      
 
-       
 
-        private void BindDataToGrid(List<dcAGREEMENT_DETAILL> listData)
+        //protected void DisplayRoomDetails(int roomTypeId)
+        //{
+        //    byte[] bytes = null;
+        //    dcHMROOM_TYPE objRT = HMROOM_TYPEBL.GetRoomTypeInfoById(roomTypeId);
+        //    if (objRT.THUMBNAILS_IMAGE != null)
+        //    {
+        //        bytes = (byte[])objRT.THUMBNAILS_IMAGE;
+        //        string strBase64 = Convert.ToBase64String(bytes);
+        //        ImgRoomType.ImageUrl = "data:Image/png;base64," + strBase64;
+        //    }
+        //    lblRoomTitle.Text = "Room Type : " + objRT.TITLE;
+        //    lblRoomDescription.Text ="Room Type : " + objRT.TITLE +", Description: "+ objRT.DESCRIPTION + ", Max Person: " + objRT.MAX_PERSON + ", Normal Rate: " + objRT.NORMAL_RATE + ", Discounted Rate: " + objRT.DISCOUNTED_RATE;
+        //    ScriptManager.RegisterStartupScript(this.Page, Page.GetType(), "MyScript", "$('#modalRoomDetails').modal({backdrop: 'static', keyboard: false});", true);
+        //}
+
+
+        private void BindDataToGrid(List<dcCN_ASSIGNMENT> listData)
         {
             int rowCount = listData.Count;
+            this.totalRowCount = listData.Count;
             if (rowCount == 0)
             {
-                listData.Add(new dcAGREEMENT_DETAILL());
+                listData.Add(new dcCN_ASSIGNMENT());
             }
 
             GridView1.DataSource = listData.ToList();
@@ -349,7 +398,7 @@ namespace PG.Web.WREL
 
         }
 
-      
+
 
         private void SetControlGrid(FormDataMode dataMode)
         {
@@ -364,16 +413,18 @@ namespace PG.Web.WREL
             {
                 if (gvR.RowType == DataControlRowType.DataRow)
                 {
-                    ((TextBox)gvR.FindControl("txtItemName")).Enabled = isEnabled;
-                    ((TextBox)gvR.FindControl("txtDistanceType")).Enabled = isEnabled;
-                    ((DropDownList)gvR.FindControl("ddlIsOTP")).Enabled = isEnabled;
-                    ((TextBox)gvR.FindControl("txtServiceAmt")).Enabled = isEnabled;
-                    ((TextBox)gvR.FindControl("txtReturnPrice")).Enabled = isEnabled;
-                    ((TextBox)gvR.FindControl("txtSLA_DAYS")).Enabled = isEnabled;
-                    ((TextBox)gvR.FindControl("txtREMARKS")).Enabled = isEnabled;
-                    
+                    ((TextBox)gvR.FindControl("txtCNName")).Enabled = isEnabled;
+                    LinkButton lnkDelete = (LinkButton)gvR.FindControl("btnDeleteRow");
+                    lnkDelete.Enabled = isEnabled;
+                    if (!isEnabled)
+                    {
+                        lnkDelete.OnClientClick = "";
+                    }
+
                 }
             }
+
+            btnNewRow.Enabled = isEnabled;
 
         }
 
@@ -389,19 +440,19 @@ namespace PG.Web.WREL
                 if (gvR.RowType == DataControlRowType.DataRow)
                 {
 
-                    dcAGREEMENT_DETAILL cObj = new dcAGREEMENT_DETAILL();
+                    dcCN_ASSIGNMENT cObj = new dcCN_ASSIGNMENT();
                     ReadGridRowToObject(gvR, this.GridView1.DataKeys, cObj);
 
                     if (cObj._RecordState == RecordStateEnum.Deleted)
                     {
-                        if (cObj.AGR_DETAIL_ID > 0)
+                        if (cObj.CN_ASSIGN_ID > 0)
                         {
                             this.listDetails.Add(cObj);
                         }
                     }
                     else
                     {
-                        
+                        //if(cObj.ROOM_QTY > 0)
                         this.listDetails.Add(cObj);
                     }
 
@@ -409,58 +460,43 @@ namespace PG.Web.WREL
             }
         }
 
-        private void ReadGridRowToObject(GridViewRow gvR, DataKeyArray dataKeys, dcAGREEMENT_DETAILL cObj)
+        private void ReadGridRowToObject(GridViewRow gvR, DataKeyArray dataKeys, dcCN_ASSIGNMENT cObj)
         {
             decimal d;
             string strD;
 
-            strD = ((HiddenField)gvR.FindControl("hdnAGR_DETAIL_ID")).Value;
-            cObj.AGR_DETAIL_ID = Conversion.StringToInt(strD);
-
-            strD = ((HiddenField)gvR.FindControl("hdnItemID")).Value;
-            cObj.ITEM_ID = Conversion.StringToInt(strD);
-            strD = ((TextBox)gvR.FindControl("txtItemName")).Text;
-            cObj.ITEM_NAME = strD;
-            strD = ((HiddenField)gvR.FindControl("hdnDistanceTypeID")).Value;
-            cObj.DISTANCE_TYPE_ID = Conversion.StringToInt(strD);
-            strD = ((TextBox)gvR.FindControl("txtDistanceType")).Text;
-            cObj.TYPE_NAME = strD;
-            strD = ((DropDownList)gvR.FindControl("ddlIsOTP")).SelectedValue;
-            cObj.IS_OTP_SERVICE = strD;
-
-            strD = ((TextBox)gvR.FindControl("txtServiceAmt")).Text;
-            cObj.SERVICE_AMOUNT =Conversion.StringToDecimal (strD);
-
-            strD = ((TextBox)gvR.FindControl("txtReturnPrice")).Text;
-            cObj.RETURN_SERVICE_AMOUNT = Conversion.StringToDecimal(strD);
-            strD = ((TextBox)gvR.FindControl("txtSLA_DAYS")).Text;
-            cObj.SLA_DAYS = Conversion.StringToInt(strD);
-            
-            strD = ((TextBox)gvR.FindControl("txtREMARKS")).Text;
-            cObj.REMARKS = strD;
-
-            
-                
-
-                
-
-            if (cObj.AGR_DETAIL_ID > 0)
+            strD = ((HiddenField)gvR.FindControl("hdnCN_ASSIGN_IDGrid")).Value;
+            cObj.CN_ASSIGN_ID = Conversion.StringToInt(strD);
+            if (cObj.CN_ASSIGN_ID > 0)
             {
+                cObj.EDIT_BY = loggedinUser.UserName;
+                cObj.EDIT_DATE = DateTime.Now;
                 cObj._RecordState = RecordStateEnum.Edited;
             }
             else
             {
+                cObj.CREATE_BY = loggedinUser.UserName;
+                cObj.CREATE_DATE = DateTime.Now;
                 cObj._RecordState = RecordStateEnum.Added;
             }
 
-            
-            
+            strD = ((HiddenField)gvR.FindControl("hdnCNID")).Value;
+            cObj.CN_ID = Conversion.StringToInt(strD);
 
+            strD = ((TextBox)gvR.FindControl("txtCNName")).Text;
+            cObj.CN_NUMBER = strD;
+
+            strD = ((TextBox)gvR.FindControl("txtConsigneeName")).Text;
+            cObj.CONSIGNEE_NAME = strD;
+            cObj.DELIVERY_MAN_ID = Conversion.StringToInt(hdnDeliveryManID.Value);
+            cObj.ASSIGN_DATE = Conversion.StringToDate(txtAssignDate.Text.Trim());
+            cObj.REF_CARGO_ID = 0;//Look free time
 
             if (!gvR.Visible)
             {
                 cObj._RecordState = RecordStateEnum.Deleted;
             }
+
 
         }
 
@@ -485,28 +521,30 @@ namespace PG.Web.WREL
 
                 if (bStatus)
                 {
-                    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Data Saved Successfully');", true);
-                   
+                    //ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Data Saved Successfully');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('success', 'Data Saved Successfully!', 'Success');", true);
+
                 }
                 else
                 {
-                    
-                    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Error !! Data not Saved');", true);
+
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', ' Data not Saved!', 'Error');", true);
                 }
 
             }
             else
             {
 
-                ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Error !! Data not Saved');", true);
-                this.SetPageMessage(errMsg, MessageTypeEnum.InvalidData);
+                //ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Error !! Data not Saved');", true);
+                //this.SetPageMessage(errMsg, MessageTypeEnum.InvalidData);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', ' Data not Saved!', 'Error');", true);
             }
 
             return true;
 
         }
 
-        private bool ValidateDetails(List<dcAGREEMENT_DETAILL> list)
+        private bool ValidateDetails(List<dcCN_ASSIGNMENT> list)
         {
             bool y = true;
             foreach (var item in list)
@@ -517,7 +555,7 @@ namespace PG.Web.WREL
                 //    y = false;
 
                 //}
-                
+
             }
 
             return y;
@@ -527,37 +565,53 @@ namespace PG.Web.WREL
         {
             errMsg = string.Empty;
 
-            if (txtAgreementName.Text == "")
+            //if (txtManagerName.Text == "")
+            //{
+            //    ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', 'Enter Manager Name!', 'Error');", true);
+            //    txtManagerName.Focus();
+            //    return false;
+
+            //}
+
+            if (txtAssignDate.Text == "")
             {
-                ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Enter Agreement Name !!');", true);
-                txtAgreementName.Focus();
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', 'Enter Cargo Date!', 'Error');", true);
+                txtAssignDate.Focus();
                 return false;
 
             }
 
-            if (txtAgreementdt.Text == "")
-            {
-                ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Enter Agreement Date !!');", true);
-                txtAgreementdt.Focus();
-                return false;
+            //if (txtName.Text == "")
+            //{
+            //    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Enter Name !!');", true);
+            //    txtName.Focus();
+            //    return false;
 
-            }
+            //}
 
-            if (txtClientName.Text == "")
-            {
-                ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Enter Client !!');", true);
-                txtClientName.Focus();
-                return false;
+            //if (txtAddress.Text == "")
+            //{
+            //    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Enter Address !!');", true);
+            //    txtAddress.Focus();
+            //    return false;
 
-            }
+            //}
 
-            if (hdnClientId.Value == "0")
-            {
-                ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Enter Client !!');", true);
-                txtClientName.Focus();
-                return false;
+            //if (txtMobileNo.Text == "")
+            //{
+            //    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Enter Mobile No !!');", true);
+            //    txtMobileNo.Focus();
+            //    return false;
 
-            }
+            //}
+
+            //if (hdnCountryId.Value == "0")
+            //{
+            //    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Select Country !!');", true);
+            //    txtCountry.Focus();
+            //    return false;
+
+            //}
 
             ReadDetailsFromGrid();
 
@@ -567,8 +621,8 @@ namespace PG.Web.WREL
             }
             else
             {
-                
-                
+
+
                 ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('" + errMsg + "');", true);
                 this.SetPageMessage(errMsg, MessageTypeEnum.InvalidData);
                 return false;
@@ -602,61 +656,63 @@ namespace PG.Web.WREL
 
             bool bStatus = false;
             bool isAdd = false;
-            int newAGR_ID = 0;
-            dcAGREEMENT_MST agreementMst = new dcAGREEMENT_MST();
-            if (this.AGR_ID > 0)
+            int newCN_ASSIGN_ID = 0;
+            dcCN_ASSIGNMENT cObj = new dcCN_ASSIGNMENT();
+            if (this.CN_ASSIGN_ID > 0)
             {
 
-                agreementMst.AGR_ID = this.AGR_ID;
-                agreementMst._RecordState = RecordStateEnum.Edited;
+                //cObj.CN_ASSIGN_ID = this.CN_ASSIGN_ID;
+                cObj._RecordState = RecordStateEnum.Edited;
             }
             else
             {
-                agreementMst._RecordState = RecordStateEnum.Added;
+                cObj._RecordState = RecordStateEnum.Added;
                 isAdd = true;
             }
 
-            agreementMst.CLIENT_ID = Conversion.StringToInt(hdnClientId.Value);
-            agreementMst.DEPT_ID = Conversion.StringToInt(hdnDepartmentId.Value);
-            agreementMst.AGREEMENT_NAME = txtAgreementName.Text.Trim();
-            agreementMst.AGREEMENT_DATE = Conversion.StringToDate(txtAgreementStDate.Text.Trim());
-            agreementMst.AGREEMENT_START_DATE = Conversion.StringToDate(txtAgreementStDate.Text.Trim());
-            agreementMst.AGREEMENT_END_DATE = Conversion.StringToDate(txtAgrEndDate.Text.Trim());
-            agreementMst.DESCRIPTION = txtDescription.Text.Trim();
-            agreementMst.IS_ACTIVE = ddlStatus.SelectedValue;
+            //cObj.CARGO_NUMBER = txtCargoNo.Text.Trim();
+            cObj.ASSIGN_DATE = Conversion.StringToDate(txtAssignDate.Text);
+            //cObj.CARGO_STARTING_DIS_ID = Conversion.StringToInt(hdnStartingDistId.Value);
+            //cObj.CARGO_DESTINATION_DIST_ID = Conversion.StringToInt(hdnStartingDistId.Value);
+            //cObj.CARGO_DESTINATION_TOWN_ID = Conversion.StringToInt(hdnStartingDistId.Value);
+            //cObj.ROUTE_ID = Conversion.StringToInt(hdnStartingDistId.Value);
+            //cObj.MANAGER_ID = hdnManagerId.Value;
+            //cObj.WEIGHT_IN_KG = Conversion.StringToDecimal(txtWeight.Text);
+            //cObj.REMARKS = txtRemarks.Text.Trim();
 
 
-             
-                if(isAdd)
-                {
-                    agreementMst.CREATE_BY = loggedinUser.UserName;
-                    agreementMst.CREATE_DATE = DateTime.Now;
-                   
-                }
-                else
-                {
-                    agreementMst.EDIT_BY = loggedinUser.UserName;
-                    agreementMst.EDIT_DATE = DateTime.Now;
+            //if (isAdd)
+            //{
+            //    cObj.CREATE_BY = loggedinUser.UserName;
+            //    cObj.CREATE_DATE = DateTime.Now;
 
-                }
+            //}
+            //else
+            //{
+            //    cObj.EDIT_BY = loggedinUser.UserName;
+            //    cObj.EDIT_DATE = DateTime.Now;
 
+            //}
 
 
-                agreementMst.agreementDetails = this.listDetails;
+            foreach (var detail in listDetails)
+            {
+                CN_ASSIGNMENTBL.Insert(detail);
+            }
 
-                newAGR_ID = AGREEMENT_MSTBL.Save(agreementMst);
-                if (newAGR_ID > 0)
-                {
-                    this.AGR_ID = newAGR_ID;
-                    ReadTask();
-                    bStatus = true;
-                    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Data saved successfully !!');", true);
-                }
+            // CN_ASSIGNMENTBL.SaveList(this.listDetails);
+            //if (newCN_ASSIGN_ID > 0)
+            //{
+            //    this.CN_ASSIGN_ID = newCN_ASSIGN_ID;
+            //ReadTask();
+            bStatus = true;
+            ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Data saved successfully !!');", true);
+            //}
 
 
 
-           
-           
+
+
             return bStatus;
         }
 
@@ -668,13 +724,13 @@ namespace PG.Web.WREL
         }
 
 
-      
+
 
         #region Report
 
         protected void btnMRRPrint_Click(object sender, EventArgs e)
         {
-            //int issueMasterId = Conversion.StringToInt(hdnCARGO_ID.Value);
+            //int issueMasterId = Conversion.StringToInt(hdnCN_ASSIGN_ID.Value);
             //if (issueMasterId > 0)
             //{
             //    //   string mrrNo = txtIssueNo.Text.Trim();
@@ -801,6 +857,15 @@ namespace PG.Web.WREL
             AddBlankRowToGridList();
 
             BindDataToGrid(this.listDetails);
+
+            if (GridView1.Rows.Count > 0)
+            {
+                TextBox txtTopCN = GridView1.Rows[0].FindControl("txtCNName") as TextBox;
+                if (txtTopCN != null)
+                {
+                    ScriptManager.GetCurrent(this).SetFocus(txtTopCN);
+                }
+            }
             SetControlGrid(FormDataMode.Add);
 
         }
@@ -828,14 +893,29 @@ namespace PG.Web.WREL
 
         private void AddBlankRowToGridList()
         {
-            dcAGREEMENT_DETAILL cObj = new dcAGREEMENT_DETAILL();
+            dcCN_ASSIGNMENT cObj = new dcCN_ASSIGNMENT();
             cObj._RecordState = RecordStateEnum.Added;
-            this.listDetails.Add(cObj);
+            //this.listDetails.Add(cObj);
+            this.listDetails.Insert(0, cObj);
         }
 
-        protected void GridView1_RowCreated1(object sender, GridViewRowEventArgs e)
+        protected void txtCNName_TextChanged(object sender, EventArgs e)
         {
-
+            //dcCN_CREATION_MST cnInfo = CN_CREATION_MSTBL.GetCNInfoByCNNumber(txtCNName.text);
+            btnNewRow_Click(sender, e);
+            //SetFocusToLastTxtCNName();
+        }
+        private void SetFocusToLastTxtCNName()
+        {
+            int lastIndex = GridView1.Rows.Count - 1;
+            if (lastIndex >= 0)
+            {
+                TextBox lastTxtCN = GridView1.Rows[0].FindControl("txtCNName") as TextBox;
+                if (lastTxtCN != null)
+                {
+                    ScriptManager.GetCurrent(this).SetFocus(lastTxtCN);
+                }
+            }
         }
     }
 }

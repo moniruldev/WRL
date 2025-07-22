@@ -17,6 +17,18 @@ namespace PG.BLLibrary.WRElBL
             //dlo.LoadWith<DBClass.dcDELIVERY_MAN_MST>(obj => obj.relatedclassname);
             return dlo;
         }
+        public static string GetDeliveryManMstListString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(" SELECT DELIVERY_MAN_ID,MOBILE_NO,DELIVERY_MAN_NAME ");
+            sb.Append(" FROM DELIVERY_MAN_MST  ");
+
+            sb.Append(" WHERE IS_ACTIVE='Y' ");
+
+
+            return sb.ToString();
+        }
         public static List<dcDELIVERY_MAN_MST> GetDELIVERY_MAN_MSTList()
         {
             return GetDELIVERY_MAN_MSTList(null, null);

@@ -17,6 +17,19 @@ namespace PG.BLLibrary.WRElBL
             //dlo.LoadWith<DBClass.dcEMPLOYEE_MST>(obj => obj.relatedclassname);
             return dlo;
         }
+
+        public static string GetEmployeeMstListString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(" SELECT EMP_CODE,EMP_ID,EMP_NAME ");
+            sb.Append(" FROM EMPLOYEE_MST  ");
+
+            sb.Append(" WHERE IS_ACTIVE='Y' ");
+
+
+            return sb.ToString();
+        }
         public static List<dcEMPLOYEE_MST> GetEMPLOYEE_MSTList()
         {
             return GetEMPLOYEE_MSTList(null, null);

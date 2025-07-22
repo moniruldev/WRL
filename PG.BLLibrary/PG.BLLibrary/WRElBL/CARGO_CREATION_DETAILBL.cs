@@ -23,10 +23,11 @@ namespace PG.BLLibrary.WRElBL
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append(" SELECT DTL.*,CN.CN_NUMBER  ");
+            sb.Append(" SELECT DTL.*,CN.CN_NUMBER,cl.CLIENT_NAME  ");
             sb.Append(" FROM CARGO_CREATION_DETAIL DTL ");
             sb.Append(" INNER JOIN CARGO_CREATION_MST MST ON DTL.CARGO_ID=MST.CARGO_ID ");
             sb.Append(" INNER JOIN CN_CREATION_MST CN ON DTL.CN_ID=CN.CN_ID ");
+            sb.Append(" INNER JOIN CLIENT_MST cl ON CN.CLIENT_ID=cl.CLIENT_ID");
             sb.Append(" WHERE 1=1 ");
 
             return sb.ToString();
@@ -289,6 +290,47 @@ namespace PG.BLLibrary.WRElBL
             DBContextManager.ReleaseDBContext(ref dc, isDCInit);
             bStatus = true;
             return bStatus;
+        }
+        public static string GetCNListinfoSQLString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(" SELECT mst.*,cl.CLIENT_NAME FROM CN_CREATION_MST mst INNER JOIN CLIENT_MST cl ON mst.CLIENT_ID=cl.CLIENT_ID ");
+            sb.Append(" WHERE 1=1 ");
+
+            return sb.ToString();
+        }
+
+        public static dcCARGO_CREATION_DETAIL GetCNInfoByCNNumber(string pCN_NO)
+        {
+            return GetCNInfoByCNNumberList(pCN_NO, null).FirstOrDefault();
+        }
+        public static List<dcCARGO_CREATION_DETAIL> GetCNInfoByCNNumberList(string pCN_NO, DBContext dc)
+        {
+            List<dcCARGO_CREATION_DETAIL> cObjList = new List<dcCARGO_CREATION_DETAIL>();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetCNListinfoSQLString());
+                if (pCN_NO != string.Empty)
+                {
+                    sb.Append(" AND mst.CN_NUMBER= @pCN_NO ");
+                    cmdInfo.DBParametersInfo.Add("@pCN_NO", pCN_NO);
+                }
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcCARGO_CREATION_DETAIL>(dbq, dc);
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
         }
     }
 }

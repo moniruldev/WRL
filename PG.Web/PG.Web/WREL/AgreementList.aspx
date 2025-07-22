@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/AppMaster.Master" AutoEventWireup="true" CodeBehind="CargoCreationList.aspx.cs" Inherits="PG.Web.WREL.CargoCreationList" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/AppMaster.Master" AutoEventWireup="true" CodeBehind="AgreementList.aspx.cs" Inherits="PG.Web.WREL.AgreementList" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -13,7 +13,7 @@
     <script language="javascript" type="text/javascript">
         // <!CDATA[
 
-        <%--var ItemListServiceLink = '<%=this.ItemListServiceLink%>';--%>
+        var ItemListServiceLink = '<%=this.ItemListServiceLink%>';
 
         var btnGridPageGoTo = '<%=btnGridPageGoTo.ClientID %>';
         var txtGridPageNo = '<%=txtGridPageNo.ClientID %>';
@@ -62,15 +62,15 @@
                 key = '';
             }
 
-            var url = IForm.RootPath + "WREL/CargoCreation.aspx?id=" + key;
+            var url = IForm.RootPath + "WREL/AgreementEntry.aspx?id=" + key;
 
             if (IForm.PageMode == Enums.PageMode.InTab) {
 
                 var tdata = new xtabdata();
                 tdata.linktype = Enums.LinkType.Direct;
                 tdata.id = 0;
-                tdata.name = "Cargo Creation";
-                tdata.label = "Cargo Creation";
+                tdata.name = "Agreement Entry";
+                tdata.label = "Agreement Entry";
                 tdata.type = 0;
                 tdata.url = url;
                 tdata.tabaction = Enums.TabAction.InNewTab;
@@ -116,13 +116,13 @@
       <div class="card">
       <div class="card-header p-0">
        <div class="d-flex align-items-center justify-content-between p-1">
-         <h5 class="card-title">Cargo List</h5>
+         <h5 class="card-title">Agreement List</h5>
            <asp:LinkButton runat="server" ID="btnNewAdd" CssClass="btn btn-primary p-1"><i class="fas fa-plus"></i> New Entry</asp:LinkButton>
        </div>
        </div>
 
         <div class="card-body">
-        <%--  <div class="row mb-0">
+          <div class="row mb-0">
 
                
 
@@ -141,7 +141,7 @@
 
                 </div>
 
-           </div>--%>
+           </div>
 
 
             <div class="row-mb-0">
@@ -153,7 +153,7 @@
             <div class="row">
              <div class="col-md-12">
                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" ShowHeader="true" CssClass="table table-sm table-striped table-bordered table-responsive-sm"  
-                DataKeyNames="CARGO_ID" EnableModelValidation="True" ClientIDMode="AutoID" OnRowDataBound="GridView1_RowDataBound" AllowPaging="true" EmptyDataText="There is no record" PageSize="2" 
+                DataKeyNames="AGR_ID" EnableModelValidation="True" ClientIDMode="AutoID" OnRowDataBound="GridView1_RowDataBound" AllowPaging="true" EmptyDataText="There is no record" PageSize="2" 
                  OnPageIndexChanging="GridView1_PageIndexChanging" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
                   <PagerSettings Mode="NumericFirstLast" />
                 <HeaderStyle CssClass="table-info" Font-Size="Smaller" />                                      
@@ -163,11 +163,13 @@
                   <ItemStyle Width="50px" />
                   </asp:HyperLinkField>
               
-                   <asp:BoundField DataField="CARGO_NUMBER" HeaderText="Cargo Number" />
-                  <asp:BoundField DataField="CARGO_DATE" HeaderText="Date" DataFormatString="{0:dd-MMM-yyyy}" HtmlEncode="false" />
-                  <asp:BoundField DataField="STARTING_DIST_NAME" HeaderText="Starting District" />
-                  <asp:BoundField DataField="DESTINATION_DIST_NAME" HeaderText="Destination District" />
-                  <asp:BoundField DataField="TOWN_NAME" HeaderText="Town" />
+                   <asp:BoundField DataField="AGREEMENT_NAME" HeaderText="Agreement Name" />
+                  <asp:BoundField DataField="AGREEMENT_DATE" HeaderText="Agreement Date" DataFormatString="{0:dd-MMM-yyyy}" HtmlEncode="false" />
+                  <asp:BoundField DataField="AGREEMENT_START_DATE" HeaderText="Strat Date" DataFormatString="{0:dd-MMM-yyyy}" HtmlEncode="false" />
+                  <asp:BoundField DataField="AGREEMENT_END_DATE" HeaderText="End Date" DataFormatString="{0:dd-MMM-yyyy}" HtmlEncode="false" />
+                  <asp:BoundField DataField="CLIENT_NAME" HeaderText="Client Name" />
+                  
+                  <asp:BoundField DataField="IS_ACTIVE" HeaderText="Active Status" />
                  
 
                </Columns>

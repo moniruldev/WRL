@@ -24,6 +24,8 @@ namespace PG.DBClass.WRELDC
         private DateTime? m_CREATE_DATE = null;
         private string m_EDIT_BY = string.Empty;
         private DateTime? m_EDIT_DATE = null;
+        private string m_CN_NUMBER = string.Empty;
+        
 
         #endregion  //private members
 
@@ -164,7 +166,26 @@ namespace PG.DBClass.WRELDC
                 this.NotifyPropertyChanged("EDIT_DATE");
             }
         }
-
+         [DBColumn(Name = "CN_NUMBER", Storage = "m_CN_NUMBER", DbType = "126")]
+        public string CN_NUMBER
+        {
+            get { return this.m_CN_NUMBER; }
+            set
+            {
+                this.m_CN_NUMBER = value;
+                this.NotifyPropertyChanged("CN_NUMBER");
+            }
+        }
+        
         #endregion //properties
+    }
+
+    public partial class dcCN_ASSIGNMENT
+    {
+        public string CONSIGNEE_NAME { get; set; }
+        public int DEPT_ID { get; set; }
+        public string DEPT_NAME { get; set; }
+
+
     }
 }

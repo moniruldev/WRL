@@ -13,9 +13,9 @@ using System.Web.Script.Serialization;
 namespace PG.Web.Service.WREL
 {
     /// <summary>
-    /// Summary description for GetAgreementDtlList
+    /// Summary description for GetEmployeeList
     /// </summary>
-    public class GetAgreementDtlList : IHttpHandler
+    public class GetEmployeeList : IHttpHandler
     {
 
         public void ProcessRequest(HttpContext context)
@@ -56,7 +56,7 @@ namespace PG.Web.Service.WREL
 
             System.Text.StringBuilder sbStatment = new System.Text.StringBuilder();
 
-            sbStatment.Append(AGREEMENT_DETAILLBL.GetAgreementDtlSQLString());
+            sbStatment.Append(EMPLOYEE_MSTBL.GetEmployeeMstListString());
 
             DBQuery dbq = new DBQuery();
             List<DBFilter> filterList = new List<DBFilter>();
@@ -87,13 +87,13 @@ namespace PG.Web.Service.WREL
                 }
                 if (isCodeName == 1)
                 {
-                    filterListCN.Add(new DBFilter("UPPER(MST.DESCRIPTION)", dealerName.ToUpper(), DBFilterDataTypeEnum.String, compTypeAccName, DBFilterCombineTypeEnum.OR));
-                    filterListCN.Add(new DBFilter("UPPER(IM.ITEM_NAME)", dealerName.ToUpper(), DBFilterDataTypeEnum.String, compTypeAccName, DBFilterCombineTypeEnum.OR));
+                    filterListCN.Add(new DBFilter("UPPER(EMPLOYEE_MST.EMP_NAME)", dealerName.ToUpper(), DBFilterDataTypeEnum.String, compTypeAccName, DBFilterCombineTypeEnum.OR));
+                    //filterListCN.Add(new DBFilter("HMCOUNTRY_MST.COUNTRY_NAME", dealerName, DBFilterDataTypeEnum.String, compTypeAccName, DBFilterCombineTypeEnum.OR));
                 }
                 else
                 {
-                    filterListCN.Add(new DBFilter("UPPER(MST.DESCRIPTION)", dealerName.ToUpper(), DBFilterDataTypeEnum.String, compTypeAccName));
-                    filterListCN.Add(new DBFilter("UPPER(IM.ITEM_NAME)", dealerName.ToUpper(), DBFilterDataTypeEnum.String, compTypeAccName));
+                    filterListCN.Add(new DBFilter("UPPER(EMPLOYEE_MST.EMP_NAME)", dealerName.ToUpper(), DBFilterDataTypeEnum.String, compTypeAccName));
+                    //filterListCN.Add(new DBFilter("HMCOUNTRY_MST.COUNTRY_NAME", dealerName, DBFilterDataTypeEnum.String, compTypeAccName));
                 }
                 isCodeNameFilter = true;
             }
@@ -122,7 +122,7 @@ namespace PG.Web.Service.WREL
 
             if (Selected != "")
             {
-                filterList.Add(new DBFilter(" TRIM(Upper( mst.DESCRIPTION)) ", Selected.Trim(), DBFilterDataTypeEnum.String));
+                filterList.Add(new DBFilter(" TRIM(Upper( EMPLOYEE_MST.EMP_NAME)) ", Selected.Trim(), DBFilterDataTypeEnum.String));
             }
 
 
@@ -133,14 +133,14 @@ namespace PG.Web.Service.WREL
                 dbq.RowCount = rows;
             }
 
-            dbq.OrderBy = "MST.DESCRIPTION";
+            dbq.OrderBy = "EMPLOYEE_MST.EMP_NAME";
 
             dbq.DBQueryMode = DBQueryModeEnum.SQLStatement;
             dbq.SQLStatement = sbStatment.ToString();
             dbq.DBFilterList = filterList;
 
 
-            List<dcAGREEMENT_DETAILL> listData = AGREEMENT_DETAILLBL.GetAGREEMENT_DETAILLList(dbq, null);
+            List<dcEMPLOYEE_MST> listData = EMPLOYEE_MSTBL.GetEMPLOYEE_MSTList(dbq, null);
             int totRec = listData.Count;
             string comma = string.Empty;
 
@@ -148,13 +148,11 @@ namespace PG.Web.Service.WREL
             var jsonList = from c in listData
                            select new
                            {
-                               agrdtlid = c.AGR_DETAIL_ID,
-                               agrid = c.AGR_ID,
-                               itemname = c.ITEM_NAME,
-                               itemid=c.ITEM_ID,
-                               returnprice = c.RETURN_SERVICE_AMOUNT,
-                               description = c.DESCRIPTION,
-                               serviceamt = c.SERVICE_AMOUNT,
+                               empcode = c.EMP_CODE,
+                               empid = c.EMP_ID,
+                               empname=c.EMP_NAME,
+
+
                                enable = true
                            };
 

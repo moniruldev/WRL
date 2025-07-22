@@ -10,7 +10,7 @@
 namespace PG.Web.WREL {
     
     
-    public partial class AgreementEntry {
+    public partial class CargoCreationV2 {
         
         /// <summary>
         /// hdnLoggedInUser control.
@@ -22,103 +22,211 @@ namespace PG.Web.WREL {
         protected global::System.Web.UI.WebControls.HiddenField hdnLoggedInUser;
         
         /// <summary>
-        /// hdnAGR_ID control.
+        /// hdnCARGO_ID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnAGR_ID;
+        protected global::System.Web.UI.WebControls.HiddenField hdnCARGO_ID;
         
         /// <summary>
-        /// txtAgreementName control.
+        /// hdnReservationId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtAgreementName;
+        protected global::System.Web.UI.WebControls.HiddenField hdnReservationId;
         
         /// <summary>
-        /// txtAgreementdt control.
+        /// txtCargoNo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtAgreementdt;
+        protected global::System.Web.UI.WebControls.TextBox txtCargoNo;
         
         /// <summary>
-        /// txtClientName control.
+        /// txtCargoDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtClientName;
+        protected global::System.Web.UI.WebControls.TextBox txtCargoDate;
         
         /// <summary>
-        /// hdnClientId control.
+        /// txtStartingDist control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnClientId;
+        protected global::System.Web.UI.WebControls.TextBox txtStartingDist;
         
         /// <summary>
-        /// txtDepartment control.
+        /// hdnStartingDistId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDepartment;
+        protected global::System.Web.UI.WebControls.HiddenField hdnStartingDistId;
         
         /// <summary>
-        /// hdnDepartmentId control.
+        /// txtDestinationDist control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnDepartmentId;
+        protected global::System.Web.UI.WebControls.TextBox txtDestinationDist;
         
         /// <summary>
-        /// txtAgreementStDate control.
+        /// hdnDestDistId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtAgreementStDate;
+        protected global::System.Web.UI.WebControls.HiddenField hdnDestDistId;
         
         /// <summary>
-        /// txtAgrEndDate control.
+        /// txtDestinationTown control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtAgrEndDate;
+        protected global::System.Web.UI.WebControls.TextBox txtDestinationTown;
         
         /// <summary>
-        /// txtDescription control.
+        /// hdnDestTownId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDescription;
+        protected global::System.Web.UI.WebControls.HiddenField hdnDestTownId;
         
         /// <summary>
-        /// ddlStatus control.
+        /// txtRoute control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlStatus;
+        protected global::System.Web.UI.WebControls.TextBox txtRoute;
+        
+        /// <summary>
+        /// hdnRouteId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnRouteId;
+        
+        /// <summary>
+        /// txtManagerName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtManagerName;
+        
+        /// <summary>
+        /// hdnManagerId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnManagerId;
+        
+        /// <summary>
+        /// txtWeight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtWeight;
+        
+        /// <summary>
+        /// txtRemarks control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtRemarks;
+        
+        /// <summary>
+        /// txtCNNo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCNNo;
+        
+        /// <summary>
+        /// hdnCNIDtop control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnCNIDtop;
+        
+        /// <summary>
+        /// hdnClientName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnClientName;
+        
+        /// <summary>
+        /// btnadd control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnadd;
+        
+        /// <summary>
+        /// lblUploadPR control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblUploadPR;
+        
+        /// <summary>
+        /// FileUpload1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload FileUpload1;
+        
+        /// <summary>
+        /// btnUpload control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnUpload;
         
         /// <summary>
         /// UpdatePanel1 control.
