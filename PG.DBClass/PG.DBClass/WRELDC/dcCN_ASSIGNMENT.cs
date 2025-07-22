@@ -184,7 +184,11 @@ namespace PG.DBClass.WRELDC
     {
         public string CONSIGNEE_NAME { get; set; }
         public int DEPT_ID { get; set; }
-        public string DEPT_NAME { get; set; }
+        public string DELIVERY_MAN_NAME { get; set; }
+         public string CONSIGNEE_ADDRESS { get; set; }
+         public string CONSIGNEE_MOBILE_NO { get; set; }
+         public byte[] POD { get; set; }
+            
 
 
     }

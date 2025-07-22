@@ -1,4 +1,5 @@
 ﻿using PG.Core.DBBase;
+using PG.Core.Utility;
 using PG.DBClass.WRELDC;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,161 @@ namespace PG.BLLibrary.WRElBL
             DataLoadOptions dlo = new DataLoadOptions();
             //dlo.LoadWith<DBClass.dcCN_ASSIGNMENT>(obj => obj.relatedclassname);
             return dlo;
+        }
+
+        public static string GetCNAssignmentMstinfoString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(" SELECT DISTINCT MST.CN_ASSIGN_ID,MST.ASSIGN_DATE,mst.DELIVERY_MAN_ID,STD.DELIVERY_MAN_NAME ");
+            sb.Append(" FROM CN_ASSIGNMENT mst ");
+            sb.Append(" INNER JOIN DELIVERY_MAN_MST STD ON mst.DELIVERY_MAN_ID=std.DELIVERY_MAN_ID ");
+            
+            sb.Append(" WHERE 1=1 ");
+
+            return sb.ToString();
+        }
+
+        public static string GetCNAssignmentMstListString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(" SELECT  MST.CN_ASSIGN_ID,MST.ASSIGN_DATE,MST.CN_ID,mst.DELIVERY_MAN_ID,STD.CN_NUMBER,STD.CONSIGNEE_NAME,STD.CONSIGNEE_MOBILE_NO,STD.CONSIGNEE_ADDRESS,dm.DELIVERY_MAN_NAME,STD.POD ");
+            sb.Append(" FROM CN_ASSIGNMENT mst ");
+            sb.Append(" INNER JOIN CN_CREATION_MST STD ON mst.CN_ID=std.CN_ID ");
+            sb.Append(" INNER JOIN DELIVERY_MAN_MST dm ON mst.DELIVERY_MAN_ID=dm.DELIVERY_MAN_ID ");
+
+            sb.Append(" WHERE 1=1 ");
+
+            return sb.ToString();
+        }
+
+        public static dcCN_ASSIGNMENT GetCNAssignMstInfoById(int pCN_ASSIGN_ID)
+        {
+            return GetCNAssignMstInfoById(pCN_ASSIGN_ID, null);
+        }
+
+        public static dcCN_ASSIGNMENT GetCNAssignMstInfoById(int pCN_ASSIGN_ID, DBContext dc)
+        {
+            dcCN_ASSIGNMENT cObjList = new dcCN_ASSIGNMENT();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetCNAssignmentMstinfoString());
+                if (pCN_ASSIGN_ID > 0)
+                {
+                    sb.Append(" AND mst.CN_ASSIGN_ID= @pCN_ASSIGN_ID ");
+                    cmdInfo.DBParametersInfo.Add("@pCN_ASSIGN_ID", pCN_ASSIGN_ID);
+                }
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcCN_ASSIGNMENT>(dbq, dc).FirstOrDefault();
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
+        }
+
+        public static List<dcCN_ASSIGNMENT> GetCNAssignmentMstListData()
+        {
+            return GetCNAssignmentMstListData(0, null);
+        }
+
+        public static List<dcCN_ASSIGNMENT> GetCNAssignmentMstListData(int pCN_ASSIGN_ID, DBContext dc)
+        {
+            List<dcCN_ASSIGNMENT> cObjList = new List<dcCN_ASSIGNMENT>();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetCNAssignmentMstinfoString());
+                if (pCN_ASSIGN_ID > 0)
+                {
+                    sb.Append(" AND mst.CN_ASSIGN_ID= @pCN_ASSIGN_ID ");
+                    cmdInfo.DBParametersInfo.Add("@pCN_ASSIGN_ID", pCN_ASSIGN_ID);
+                }
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcCN_ASSIGNMENT>(dbq, dc);
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
+        }
+
+
+        public static List<dcCN_ASSIGNMENT> GetCNAssignmentMstListDatabyDelManID(int pDElMan_ID, DBContext dc)
+        {
+            List<dcCN_ASSIGNMENT> cObjList = new List<dcCN_ASSIGNMENT>();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetCNAssignmentMstListString());
+                if (pDElMan_ID > 0)
+                {
+                    sb.Append(" AND mst.DELIVERY_MAN_ID= @pDElMan_ID ");
+                    cmdInfo.DBParametersInfo.Add("@pDElMan_ID", pDElMan_ID);
+                }
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcCN_ASSIGNMENT>(dbq, dc);
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
+        }
+
+        public static List<dcCN_ASSIGNMENT> GetCNAssignmentMstList()
+        {
+            return GetCNAssignmentMstList(0, null);
+        }
+
+        public static List<dcCN_ASSIGNMENT> GetCNAssignmentMstList(int pCN_ASSIGN_ID, DBContext dc)
+        {
+            List<dcCN_ASSIGNMENT> cObjList = new List<dcCN_ASSIGNMENT>();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetCNAssignmentMstListString());
+                if (pCN_ASSIGN_ID > 0)
+                {
+                    sb.Append(" AND mst.CN_ASSIGN_ID= @pCN_ASSIGN_ID ");
+                    cmdInfo.DBParametersInfo.Add("@pCN_ASSIGN_ID", pCN_ASSIGN_ID);
+                }
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcCN_ASSIGNMENT>(dbq, dc);
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
         }
         public static List<dcCN_ASSIGNMENT> GetCN_ASSIGNMENTList()
         {
@@ -280,6 +436,39 @@ namespace PG.BLLibrary.WRElBL
             catch { throw; }
             finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
             return cObjList;
+        }
+
+        public static int CheckAlreadyExistCNNo(string pCNNo, int pDeliveryManID)
+        {
+            return CheckAlreadyExistCNNo(pCNNo, pDeliveryManID, null);
+        }
+        public static int CheckAlreadyExistCNNo(string pCNNo, int pDeliveryManID, DBContext dc)
+        {
+            //dcINVOICE_MASTER cObj = null;
+            bool isDCInit = false;
+            int chkinvaty = 0;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder("SELECT COUNT(*) FROM CN_ASSIGNMENT WHERE CN_NUMBER=@pCNNo AND DELIVERY_MAN_ID=@pDeliveryManID ");
+                cmdInfo.DBParametersInfo.Add("@pCNNo", pCNNo);
+
+                cmdInfo.DBParametersInfo.Add("@pDeliveryManID", pDeliveryManID);
+
+
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+                chkinvaty = Conversion.DBNullIntToZero(DBQuery.ExecuteDBScalar(dbq, dc));
+                //cObj = DBQuery.ExecuteDBQuery<dcINVOICE_MASTER>(dbq, dc).FirstOrDefault();
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return chkinvaty;
         }
     }
 }

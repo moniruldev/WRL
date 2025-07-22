@@ -562,14 +562,36 @@
                     eCode = $(elem).val();
 
                     isComboGridOpen = $(self).combogrid('isOpened');
-                    var selectedData = $(self).data("selectedItem");
+                    //var selectedData = $(self).data("selectedItem");
 
-                    if (eCode === '') {
+                    //if (eCode === '') {
+                    //    ClearItemData(elemID);
+                    //} else if (selectedData) {
+                    //     //SetItemData(elemID, selectedData);
+                    //} else {
+                    //    ClearItemData(elemID);
+                    //}
+
+                    if (eCode == '') {
                         ClearItemData(elemID);
-                    } else if (selectedData) {
-                         SetItemData(elemID, selectedData);
-                    } else {
-                        ClearItemData(elemID);
+                    }
+                    else {
+                        // var eCode = $('#' + txtITEM_NAME_DIS).val();
+                        var serviceURL = ItemListServiceLink + "?isterm=1&includeempty=0&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+                        serviceURL += "&ispaging=1";
+                        //alert(eCode);
+                        var prcNo = GetItemNo(eCode, serviceURL);
+                        if (prcNo == null) {
+                            ClearItemData(elemID);
+                        }
+                        else {
+                            SetItemData(elemID, grp);
+                            //CheckItemChanged(elemID);
+                        }
+                    }
+                    grpID = $(self).closest('tr').find('input[id$="hdnItemID"]').val();
+                    if (grpID == '0' | grpID == '') {
+                        $(self).addClass('textError');
                     }
 
                 });
@@ -577,19 +599,31 @@
             });
 
         }
+        //$('#' + txtITEM_NAME_DIS).val(data.itemname);
 
-        function ClearItemData(txtItemID) {
-            var detRow = $('#' + txtItemID).closest('tr.gridRow');
+        //var detRow = $('#' + txtITEM_NAME_DIS).closest('tr.gridRow');
+
+        //$(detRow).find('input[id$="hdnItemcode"]').val(data.itemcode);
+
+        function ClearItemData(txtItemName) {
+            var detRow = $('#' + txtItemName).closest('tr.gridRow');
             $(detRow).find('input[id$="hdnItemID"]').val('0');
             $(detRow).find('input[id$="txtItemName"]').val('');
         }
 
-        function SetItemData(txtItemCodeID, data) {
-            $('#' + txtItemCodeID).val(data.itemname);
-            var detRow = $('#' + txtItemCodeID).closest('tr.gridRow');
+        function SetItemData(txtItemName, data) {
+            
+          
+            $('#' + txtItemName).val(data.itemname);
+           
+           
+            var detRow = $('#' + txtItemName).closest('tr.gridRow');
+           
             $(detRow).find('input[id$="hdnItemID"]').val(data.itemid);
+           
             $(detRow).find('input[id$="txtItemName"]').val(data.itemname);
-
+            
+           
         }
 
         function bindDistanceTypeList(gridViewID) {
@@ -674,15 +708,38 @@
                     eCode = $(elem).val();
 
                     isComboGridOpen = $(self).combogrid('isOpened');
-                    var selectedData = $(self).data("selectedItem");
+                    //var selectedData = $(self).data("selectedItem");
 
-                    if (eCode === '') {
-                        ClearDistanceTypeData(elemID);
-                    } else if (selectedData) {
-                        SetDistanceTypeData(elemID, selectedData);
-                    } else {
-                        ClearDistanceTypeData(elemID);
+                    //if (eCode === '') {
+                    //    ClearDistanceTypeData(elemID);
+                    //} else if (selectedData) {
+                    //    SetDistanceTypeData(elemID, selectedData);
+                    //} else {
+                    //    ClearDistanceTypeData(elemID);
+                    //}
+
+                    if (eCode == '') {
+                        ClearItemData(elemID);
                     }
+                    else {
+                        // var eCode = $('#' + txtITEM_NAME_DIS).val();
+                        var serviceURL = DistanceTypeListServiceLink + "?isterm=1&includeempty=0&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+                        serviceURL += "&ispaging=1";
+                        //alert(eCode);
+                        var prcNo = GetItemNo(eCode, serviceURL);
+                        if (prcNo == null) {
+                            ClearItemData(elemID);
+                        }
+                        else {
+                            SetItemData(elemID, grp);
+                            //CheckItemChanged(elemID);
+                        }
+                    }
+                    grpID = $(self).closest('tr').find('input[id$="hdnDistanceTypeID"]').val();
+                    if (grpID == '0' | grpID == '') {
+                        $(self).addClass('textError');
+                    }
+
 
                 });
 
@@ -690,15 +747,16 @@
 
         }
 
-        function ClearDistanceTypeData(txtItemID) {
-            var detRow = $('#' + txtItemID).closest('tr.gridRow');
+        function ClearDistanceTypeData(txtDistanceType) {
+            var detRow = $('#' + txtDistanceType).closest('tr.gridRow');
             $(detRow).find('input[id$="hdnDistanceTypeID"]').val('0');
             $(detRow).find('input[id$="txtDistanceType"]').val('');
         }
 
-        function SetDistanceTypeData(txtItemCodeID, data) {
-            $('#' + txtItemCodeID).val(data.distancetypename);
-            var detRow = $('#' + txtItemCodeID).closest('tr.gridRow');
+        function SetDistanceTypeData(txtDistanceType, data) {
+            $('#' + txtDistanceType).val(data.distancetypename);
+           // $('input[id*="hdnDistanceTypeID"]').val(data.distancetypeid);
+            var detRow = $('#' + txtDistanceType).closest('tr.gridRow');
             $(detRow).find('input[id$="hdnDistanceTypeID"]').val(data.distancetypeid);
             $(detRow).find('input[id$="txtDistanceType"]').val(data.distancetypename);
 
@@ -923,8 +981,8 @@
 
        </div>
       <div class="card-body">
-            <asp:HiddenField ID="hdnCARGO_ID" runat="server" Value="0" />
-            <asp:HiddenField ID="hdnReservationId" runat="server" Value="0" />
+            <asp:HiddenField ID="hdnAGR_ID" runat="server" Value="0" />
+           
 
               <div class="row mb-0">
 
@@ -1072,7 +1130,7 @@
              <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" ShowHeader="true"
     CssClass="table table-sm table-striped table-bordered w-auto"  
     DataKeyNames="AGR_ID" EnableModelValidation="True" ClientIDMode="AutoID"
-    OnRowDataBound="GridView1_RowDataBound" OnRowCommand="GridView1_RowCommand" OnRowDeleting="GridView1_RowDeleting">
+    OnRowDataBound="GridView1_RowDataBound" OnRowCommand="GridView1_RowCommand" OnRowDeleting="GridView1_RowDeleting" OnRowCreated="GridView1_RowCreated">
     
     <HeaderStyle CssClass="table-info" Font-Size="Smaller" />
 
@@ -1084,6 +1142,8 @@
                         Text='<%# Bind("ITEM_NAME") %>' Style="width: 200px;"></asp:TextBox>
                     <asp:HiddenField ID="hdnItemID" runat="server" Value='<%# Bind("ITEM_ID") %>' />
                     <asp:HiddenField ID="hdnAGR_DETAIL_ID" runat="server" Value='<%# Bind("AGR_DETAIL_ID") %>' />
+                     <%--<input id="btnitemcode" type="button" value="" runat="server" class="buttonDropdown"
+                                                                                            tabindex="-1" />--%>
                 </div>
             </ItemTemplate>
         </asp:TemplateField>
@@ -1101,17 +1161,18 @@
          <asp:TemplateField HeaderText="Is OTP">
             <ItemTemplate>
                 <div class="d-flex">
-                    <asp:DropDownList ID="ddlIsOTP" runat="server">
-                        <asp:ListItem 
-                    </asp:DropDownList><%-- <asp:TextBox ID="txtDistanceType" runat="server" CssClass="form-control form-control-sm" 
-                        Text='<%# Bind("IS_OTP_SERVICE") %>' Style="width: 150px;"></asp:TextBox>--%></div>
+                    <asp:DropDownList ID="ddlIsOTP" runat="server" CssClass="form-control form-control-sm" SelectedValue='<%# Bind("IS_OTP_SERVICE") %>'>
+                        <asp:ListItem  Selected="True" Text="No" Value="N"></asp:ListItem>
+                        <asp:ListItem Text="Yes" Value="Y"></asp:ListItem>
+                        <asp:ListItem Text="--Select--" Value=""></asp:ListItem>
+                    </asp:DropDownList></div>
             </ItemTemplate>
         </asp:TemplateField>
         <asp:TemplateField HeaderText="Service Price">
             <ItemTemplate>
                 <div class="d-flex">
                     <asp:TextBox ID="txtServiceAmt" runat="server" CssClass="form-control form-control-sm" 
-                        Text='<%# Bind("SERVICE_AMOUNT") %>' Style="width: 100px;"></asp:TextBox>
+                        Text='<%# Bind("SERVICE_AMOUNT") %>' Style="width: 90px;"></asp:TextBox>
                     
                 </div>
             </ItemTemplate>
@@ -1120,17 +1181,25 @@
             <ItemTemplate>
                 <div class="d-flex">
                     <asp:TextBox ID="txtReturnPrice" runat="server" CssClass="form-control form-control-sm" 
-                        Text='<%# Bind("RETURN_PRICE") %>' Style="width: 100px;"></asp:TextBox>
+                        Text='<%# Bind("RETURN_SERVICE_AMOUNT") %>' Style="width: 90px;"></asp:TextBox>
                     
                 </div>
             </ItemTemplate>
         </asp:TemplateField>
-
+         <asp:TemplateField HeaderText="SLA Days">
+            <ItemTemplate>
+                <div class="d-flex">
+                    <asp:TextBox ID="txtSLA_DAYS" runat="server" CssClass="form-control form-control-sm" 
+                        Text='<%# Bind("SLA_DAYS") %>' Style="width: 60px;"></asp:TextBox>
+                    
+                </div>
+            </ItemTemplate>
+        </asp:TemplateField>
          <asp:TemplateField HeaderText="REMARKS">
             <ItemTemplate>
                 <div class="d-flex">
                     <asp:TextBox ID="txtREMARKS" runat="server" CssClass="form-control form-control-sm" 
-                        Text='<%# Bind("REMARKS") %>' Style="width: 150px;"></asp:TextBox>
+                        Text='<%# Bind("REMARKS") %>' Style="width: 120px;"></asp:TextBox>
                     
                 </div>
             </ItemTemplate>

@@ -91,7 +91,11 @@
 
             //bindCNList(gridViewIDDet);
 
+            if ($('#' + txtDeliveryMan).is(':visible')) {
 
+                bindDeliveryManList();
+
+            }
 
         });
      
@@ -761,14 +765,14 @@
        <div class="card">
          <div class="card-header p-0">
            <div class="d-flex align-items-center justify-content-between p-1">
-             <h5 class="card-title">CN Assignment to Delivery Man</h5>
+             <h5 class="card-title"><b>CN Assignment to Delivery Man</b></h5>
              <a class="btn btn-primary p-1"> <i class="fas fa-list"></i> Assignment List </a>
          </div>
 
        </div>
       <div class="card-body">
-            <asp:HiddenField ID="hdnCARGO_ID" runat="server" Value="0" />
-            <asp:HiddenField ID="hdnReservationId" runat="server" Value="0" />
+            <asp:HiddenField ID="hdnCN_ASSIGN_ID" runat="server" Value="0" />
+            
 
               <div class="row mb-0">
 
@@ -897,12 +901,33 @@
               <strong>Cargo Details :</strong>
 
            </div>
+            <div class="row mb-0">
+    <div class="col-md-12">
+        <div class="form-group row mb-0 align-items-center">
+            <label for="lblCNNo" class="col-sm-1 col-form-label-sm">CN No :</label>
+            <div class="col-sm-11 d-flex align-items-center flex-wrap">
+                <asp:TextBox runat="server" class="form-control form-control-sm me-2 mb-1" ID="txtCNNo" placeholder="Enter CN" Width="150px" OnTextChanged="txtCNNo_TextChanged" AutoPostBack="true"></asp:TextBox>
+
+                <asp:HiddenField ID="hdnCNIDtop" runat="server" />
+                <asp:HiddenField ID="hdnConsigneeName" runat="server" />
+                &nbsp;
+                <asp:Button ID="btnadd" runat="server" Text="Add" CssClass="btn btn-primary btn-sm me-3 mb-1" OnClick="btnadd_Click" />
+                &nbsp;
+                <asp:Label ID="lblUploadPR" runat="server" Text="Upload CN:" CssClass="form-label me-2 mb-1"></asp:Label>
+                &nbsp;
+                <asp:FileUpload ID="FileUpload1" runat="server" CssClass="form-control-file me-3 mb-1" style="height: 30px; width: 250px;" />
+
+                <asp:Button ID="btnUpload" CssClass="btn btn-primary btn-sm mb-1" runat="server" Text="Load Data" OnClick="btnUpload_Click" />
+            </div>
+        </div>
+    </div>
+</div>
 
             <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
               <ContentTemplate>
              <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" ShowHeader="true"
     CssClass="table table-sm table-striped table-bordered w-auto"  
-    DataKeyNames="CARGO_ID" EnableModelValidation="True" ClientIDMode="AutoID"
+    DataKeyNames="CN_ASSIGN_ID" EnableModelValidation="True" ClientIDMode="AutoID"
     OnRowDataBound="GridView1_RowDataBound" OnRowCommand="GridView1_RowCommand" OnRowDeleting="GridView1_RowDeleting" OnRowCreated="GridView1_RowCreated" >
     
     <HeaderStyle CssClass="table-info" Font-Size="Smaller" />
@@ -915,7 +940,7 @@
         <ItemStyle HorizontalAlign="Center" Width="40px" />
     </asp:TemplateField>
 
-       <asp:TemplateField HeaderText="CN">
+        <asp:TemplateField HeaderText="CN">
     <ItemTemplate>
         <div class="d-flex align-items-center">
             <table>
@@ -923,11 +948,28 @@
                     <td class="p-0">
                         <asp:TextBox ID="txtCNName" runat="server"
                             CssClass="form-control form-control-sm"
-                            Style="width: 250px;"
-                            Text='<%# Bind("CN_NUMBER") %>' OnTextChanged="txtCNName_TextChanged" AutoPostBack="true"></asp:TextBox>
+                            Style="width: 150px;"
+                            Text='<%# Bind("CN_NUMBER") %>' ></asp:TextBox>
+
 
                         <asp:HiddenField ID="hdnCNID" runat="server" Value='<%# Bind("CN_ID") %>' />
-                        <asp:HiddenField ID="hdnCargoDtlId" runat="server" Value='<%# Bind("CARGO_DETAIL_ID") %>' />
+                        <asp:HiddenField ID="hdnCN_ASSIGN_IDGrid" runat="server" Value='<%# Bind("CN_ASSIGN_ID") %>' />
+                    </td>
+                
+                </tr>
+            </table>
+        </div>
+    </ItemTemplate>
+</asp:TemplateField>
+        <asp:TemplateField HeaderText="Client">
+    <ItemTemplate>
+        <div class="d-flex align-items-center">
+            <table>
+                <tr>
+                   
+                    <td class="p-0">
+                        <asp:TextBox ID="txtConsigneeName" runat="server" CssClass="form-control form-control-sm" Style="width: 200px;"
+                            Text='<%# Bind("CONSIGNEE_NAME") %>' ></asp:TextBox>
                     </td>
                 </tr>
             </table>
@@ -961,7 +1003,7 @@
              </asp:UpdatePanel>
                   <div class="d-flex justify-content-start align-items-center mt-2 border-top pt-2">
     <asp:LinkButton runat="server" ID="btnNewRow" OnClick="btnNewRow_Click"
-        CssClass="btn btn-sm btn-primary me-2" Text="<i class='fa fa-plus'></i> New Row"></asp:LinkButton>
+        CssClass="btn btn-sm btn-primary me-2" Text="<i class='fa fa-plus'></i> New Row" Visible="false"></asp:LinkButton>
 
     <asp:UpdateProgress ID="UpdateProgress2" runat="server" AssociatedUpdatePanelID="UpdatePanel1" DisplayAfter="300">
         <ProgressTemplate>

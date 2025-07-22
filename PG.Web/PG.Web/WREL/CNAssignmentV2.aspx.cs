@@ -21,6 +21,7 @@ using PG.BLLibrary.HMSBL;
 using PG.DBClass.WRELDC;
 using PG.BLLibrary.WRElBL;
 using System.Collections;
+using System.IO;
 
 namespace PG.Web.WREL
 {
@@ -189,7 +190,7 @@ namespace PG.Web.WREL
             this.CN_ASSIGN_ID = 0;
             ViewState[ViewStateKey] = "0";
             this.listDetails.Clear();
-            CheckAndAddGridBlankRow();
+            //CheckAndAddGridBlankRow();
             BindDataToGrid(this.listDetails);
             //add
             SetControl(FormDataMode.Add);
@@ -207,73 +208,38 @@ namespace PG.Web.WREL
         {
             bool bStatus = false;
 
-            //dcCN_ASSIGNMENT cObj = CARGO_CREATION_MSTBL.GetCargoMstInfoById(id);
-            //if (cObj != null)
-            //{
+            dcCN_ASSIGNMENT cObj = CN_ASSIGNMENTBL.GetCNAssignMstInfoById(id);
+            if (cObj != null)
+            {
 
-                //hdnCN_ASSIGN_ID.Value = cObj.CN_ASSIGN_ID.ToString();
-                ////txtCargoNo.Text = cObj.CARGO_NUMBER;
-                //txtCargoDate.Text = Convert.ToDateTime(cObj.CARGO_DATE).ToString("dd-MMM-yyyy");
-                //hdnStartingDistId.Value = cObj.CARGO_STARTING_DIS_ID.ToString();
-                //hdnDestDistId.Value = cObj.CARGO_DESTINATION_DIST_ID.ToString();
-                //hdnDestTownId.Value = cObj.CARGO_DESTINATION_TOWN_ID.ToString();
-                //hdnRouteId.Value = cObj.ROUTE_ID.ToString();
-                //hdnManagerId.Value = cObj.MANAGER_ID;
-                //txtWeight.Text = cObj.WEIGHT_IN_KG.ToString("0.##");
-                //txtRemarks.Text = cObj.REMARKS;
-                //txtStartingDist.Text = cObj.STARTING_DIST_NAME;
-                //txtDestinationDist.Text = cObj.DESTINATION_DIST_NAME;
-                //txtDestinationTown.Text = cObj.TOWN_NAME;
-                //txtManagerName.Text = cObj.MANAGER_NAME;
-                //txtRoute.Text = cObj.ROUTE_NAME;
-                //this.listDetails = CARGO_CREATION_DETAILBL.GetCargoDtlListByCargoId(cObj.CN_ASSIGN_ID,null);
-                //BindDataToGrid(listDetails);
+                hdnCN_ASSIGN_ID.Value = cObj.CN_ASSIGN_ID.ToString();
+                txtAssignDate.Text = Convert.ToDateTime(cObj.ASSIGN_DATE).ToString("dd-MMM-yyyy");
+                hdnDeliveryManID.Value = cObj.DELIVERY_MAN_ID.ToString();
+                txtDeliveryMan.Text = cObj.DELIVERY_MAN_NAME;
+
+                this.listDetails = CN_ASSIGNMENTBL.GetCNAssignmentMstList();
+                BindDataToGrid(listDetails);
 
                 bStatus = true;
-            //}
+            }
             return bStatus;
 
         }
 
         private void SetControl(FormDataMode dataMode)
         {
-            //bool isEnabled = false;
+            bool isEnabled = false;
 
-            //if (dataMode == FormDataMode.Add | dataMode == FormDataMode.Edit)
-            //{
-            //    isEnabled = true;
-            //}
+            if (dataMode == FormDataMode.Add | dataMode == FormDataMode.Edit)
+            {
+                isEnabled = true;
+            }
 
-            //txtCargoNo.Enabled = isEnabled;
-            //txtCargoDate.Enabled = isEnabled;
-            //txtWeight.Enabled = isEnabled;
-            //txtRemarks.Enabled = isEnabled;
-            //txtStartingDist.Enabled = isEnabled;
-            //txtDestinationDist.Enabled = isEnabled;
-            //txtDestinationTown.Enabled = isEnabled;
-            //txtManagerName.Enabled = isEnabled;
-            ////buttons
-            //btnAddNew.Visible = !isEnabled;
-            //btnEdit.Visible = !isEnabled;
-            //btnSave.Visible = isEnabled;
-            ////btnUpdate.Visible = !isEnabled;
+            txtDeliveryMan.Enabled = isEnabled;
+            txtAssignDate.Enabled = isEnabled;
 
-            //SetControlGrid(dataMode);
+ 
 
-            bool isEnabled = (dataMode == FormDataMode.Add || dataMode == FormDataMode.Edit);
-
-            // Apply disabled/enabled logic without losing Bootstrap styling
-            //SetTextBoxState(txtCargoNo, isEnabled);
-            //SetTextBoxState(txtCargoDate, isEnabled);
-            //SetTextBoxState(txtWeight, isEnabled);
-            //SetTextBoxState(txtRemarks, isEnabled);
-            //SetTextBoxState(txtStartingDist, isEnabled);
-            //SetTextBoxState(txtDestinationDist, isEnabled);
-            //SetTextBoxState(txtDestinationTown, isEnabled);
-            //SetTextBoxState(txtManagerName, isEnabled);
-            //SetTextBoxState(txtRoute, isEnabled);
-
-            //txtCargoDate.Enabled = isEnabled;
             // buttons
             btnAddNew.Visible = !isEnabled;
             btnEdit.Visible = !isEnabled;
@@ -325,15 +291,20 @@ namespace PG.Web.WREL
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                int currentRowIndex = e.Row.RowIndex;
-                int serialNo = totalRowCount - currentRowIndex;
+                //int currentRowIndex = e.Row.RowIndex;
+                //int serialNo = totalRowCount - currentRowIndex;
 
+                //Label lblSerial = (Label)e.Row.FindControl("lblSerialNo");
+                //if (lblSerial != null)
+                //{
+                //    lblSerial.Text = serialNo.ToString();
+                //}
                 Label lblSerial = (Label)e.Row.FindControl("lblSerialNo");
                 if (lblSerial != null)
                 {
-                    lblSerial.Text = serialNo.ToString();
+                    // Set the serial number as (RowIndex + 1)
+                    lblSerial.Text = (e.Row.RowIndex + 1).ToString();
                 }
-
 
                 string rowID = e.Row.ClientID;
                 string js = string.Format("return ShowDetailsPopup('{0}');", rowID);
@@ -387,10 +358,10 @@ namespace PG.Web.WREL
         {
             int rowCount = listData.Count;
             this.totalRowCount = listData.Count;
-            if (rowCount == 0)
-            {
-                listData.Add(new dcCN_ASSIGNMENT());
-            }
+            //if (rowCount == 0)
+            //{
+            //    listData.Add(new dcCN_ASSIGNMENT());
+            //}
 
             GridView1.DataSource = listData.ToList();
             GridView1.DataBind();
@@ -413,7 +384,9 @@ namespace PG.Web.WREL
             {
                 if (gvR.RowType == DataControlRowType.DataRow)
                 {
-                    ((TextBox)gvR.FindControl("txtCNName")).Enabled = isEnabled;
+                     ((TextBox)gvR.FindControl("txtCNName")).Attributes.Add("readonly", "readonly");
+                     ((TextBox)gvR.FindControl("txtConsigneeName")).Attributes.Add("readonly", "readonly");
+                    
                     LinkButton lnkDelete = (LinkButton)gvR.FindControl("btnDeleteRow");
                     lnkDelete.Enabled = isEnabled;
                     if (!isEnabled)
@@ -431,10 +404,6 @@ namespace PG.Web.WREL
         private void ReadDetailsFromGrid()
         {
 
-            //int locationID = Convert.ToInt32(hdnLocationID.Value);
-            this.listDetails.Clear();
-
-            ///addition
             foreach (GridViewRow gvR in this.GridView1.Rows)
             {
                 if (gvR.RowType == DataControlRowType.DataRow)
@@ -565,56 +534,26 @@ namespace PG.Web.WREL
         {
             errMsg = string.Empty;
 
-            //if (txtManagerName.Text == "")
-            //{
-            //    ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', 'Enter Manager Name!', 'Error');", true);
-            //    txtManagerName.Focus();
-            //    return false;
-
-            //}
-
             if (txtAssignDate.Text == "")
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', 'Enter Cargo Date!', 'Error');", true);
+                ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Enter Assign Date !!');", true);
                 txtAssignDate.Focus();
                 return false;
 
             }
 
-            //if (txtName.Text == "")
-            //{
-            //    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Enter Name !!');", true);
-            //    txtName.Focus();
-            //    return false;
+            if (txtDeliveryMan.Text == "")
+            {
+                ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Enter Delivery Man !!');", true);
+                txtDeliveryMan.Focus();
+                return false;
 
-            //}
+            }
 
-            //if (txtAddress.Text == "")
-            //{
-            //    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Enter Address !!');", true);
-            //    txtAddress.Focus();
-            //    return false;
 
-            //}
-
-            //if (txtMobileNo.Text == "")
-            //{
-            //    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Enter Mobile No !!');", true);
-            //    txtMobileNo.Focus();
-            //    return false;
-
-            //}
-
-            //if (hdnCountryId.Value == "0")
-            //{
-            //    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Select Country !!');", true);
-            //    txtCountry.Focus();
-            //    return false;
-
-            //}
 
             ReadDetailsFromGrid();
-
+            // Validation Check Must free time
             if (ValidateDetails(this.listDetails))
             {
                 return true;
@@ -655,59 +594,17 @@ namespace PG.Web.WREL
         {
 
             bool bStatus = false;
-            bool isAdd = false;
-            int newCN_ASSIGN_ID = 0;
-            dcCN_ASSIGNMENT cObj = new dcCN_ASSIGNMENT();
-            if (this.CN_ASSIGN_ID > 0)
-            {
-
-                //cObj.CN_ASSIGN_ID = this.CN_ASSIGN_ID;
-                cObj._RecordState = RecordStateEnum.Edited;
-            }
-            else
-            {
-                cObj._RecordState = RecordStateEnum.Added;
-                isAdd = true;
-            }
-
-            //cObj.CARGO_NUMBER = txtCargoNo.Text.Trim();
-            cObj.ASSIGN_DATE = Conversion.StringToDate(txtAssignDate.Text);
-            //cObj.CARGO_STARTING_DIS_ID = Conversion.StringToInt(hdnStartingDistId.Value);
-            //cObj.CARGO_DESTINATION_DIST_ID = Conversion.StringToInt(hdnStartingDistId.Value);
-            //cObj.CARGO_DESTINATION_TOWN_ID = Conversion.StringToInt(hdnStartingDistId.Value);
-            //cObj.ROUTE_ID = Conversion.StringToInt(hdnStartingDistId.Value);
-            //cObj.MANAGER_ID = hdnManagerId.Value;
-            //cObj.WEIGHT_IN_KG = Conversion.StringToDecimal(txtWeight.Text);
-            //cObj.REMARKS = txtRemarks.Text.Trim();
-
-
-            //if (isAdd)
-            //{
-            //    cObj.CREATE_BY = loggedinUser.UserName;
-            //    cObj.CREATE_DATE = DateTime.Now;
-
-            //}
-            //else
-            //{
-            //    cObj.EDIT_BY = loggedinUser.UserName;
-            //    cObj.EDIT_DATE = DateTime.Now;
-
-            //}
-
+            
 
             foreach (var detail in listDetails)
             {
                 CN_ASSIGNMENTBL.Insert(detail);
             }
 
-            // CN_ASSIGNMENTBL.SaveList(this.listDetails);
-            //if (newCN_ASSIGN_ID > 0)
-            //{
-            //    this.CN_ASSIGN_ID = newCN_ASSIGN_ID;
-            //ReadTask();
+            ReadTask();
             bStatus = true;
             ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Data saved successfully !!');", true);
-            //}
+
 
 
 
@@ -856,7 +753,7 @@ namespace PG.Web.WREL
             ReadDetailsFromGrid();
             AddBlankRowToGridList();
 
-            BindDataToGrid(this.listDetails);
+            //BindDataToGrid(this.listDetails);
 
             if (GridView1.Rows.Count > 0)
             {
@@ -893,12 +790,89 @@ namespace PG.Web.WREL
 
         private void AddBlankRowToGridList()
         {
-            dcCN_ASSIGNMENT cObj = new dcCN_ASSIGNMENT();
+            dcCARGO_CREATION_DETAIL cObj = new dcCARGO_CREATION_DETAIL();
             cObj._RecordState = RecordStateEnum.Added;
             //this.listDetails.Add(cObj);
-            this.listDetails.Insert(0, cObj);
+            //this.listDetails.Insert(0, cObj);
+        }
+        protected void txtCNNo_TextChanged(object sender, EventArgs e)
+        {
+            int isexit=CN_ASSIGNMENTBL.CheckAlreadyExistCNNo(txtCNNo.Text.Trim(),Conversion.StringToInt( hdnDeliveryManID.Value));
+            if (isexit == 0)
+            {
+                dcCN_ASSIGNMENT cobjb = CN_ASSIGNMENTBL.GetCNInfoByCNNumberassign(txtCNNo.Text.Trim());
+                hdnCNIDtop.Value = cobjb.CN_ID.ToString();
+                hdnConsigneeName.Value = cobjb.CONSIGNEE_NAME;
+
+                btnadd_Click(sender, e);
+            }
+            else
+            {
+                cleartext();
+                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('CN Number Already Assign !!');", true);
+                return;
+            }
         }
 
+        protected void btnadd_Click(object sender, EventArgs e)
+        {
+            dcCN_ASSIGNMENT cobjb = new dcCN_ASSIGNMENT();
+            cobjb.CN_ID = Conversion.StringToInt(hdnCNIDtop.Value);
+            cobjb.CN_NUMBER = txtCNNo.Text;
+            cobjb.CONSIGNEE_NAME = hdnConsigneeName.Value;
+            listDetails.Add(cobjb);
+            ReadDetailsFromGrid();
+            BindDataToCNNumber(this.listDetails);
+            cleartext();
+            txtCNNo.Focus();
+        }
+
+        private void BindDataToCNNumber(List<dcCN_ASSIGNMENT> listDataCN)
+        {
+            int rowCount = listDataCN.Count;
+            //if (rowCount == 0)
+            //{
+            //    listData.Add(new dcGLAccountHistoryRef());
+            //}
+
+            GridView1.DataSource = listDataCN.ToList();
+            GridView1.DataBind();
+
+            GridView1.CssClass = "grid";
+            //SumDetGrid1();
+            //SumDetGrid1();
+
+            //int i = GRDDTLITEMLIST.PageCount;
+
+            //if (GRDDTLITEMLIST.PageIndex > 0)
+            //{
+            //  GRDDTLITEMLIST.PageIndex = GRDDTLITEMLIST.PageCount;
+            // GRDDTLITEMLIST.PageIndex = GRDDTLITEMLIST.PageIndex - 1;
+
+
+
+            //}
+
+        }
+
+        protected void btnUpload_Click(object sender, EventArgs e)
+        {
+            if (!FileUpload1.HasFile)
+            {
+                //lblMessage.Text = "Please select an Excel file.";
+                return;
+            }
+
+            string ext = Path.GetExtension(FileUpload1.FileName).ToLower();
+            string path = Server.MapPath("~/Uploads/" + FileUpload1.FileName);
+        }
+        private void cleartext()
+        {
+            hdnCNIDtop.Value = "";
+            txtCNNo.Text = "";
+            hdnConsigneeName.Value = "";
+
+        }
         protected void txtCNName_TextChanged(object sender, EventArgs e)
         {
             //dcCN_CREATION_MST cnInfo = CN_CREATION_MSTBL.GetCNInfoByCNNumber(txtCNName.text);
