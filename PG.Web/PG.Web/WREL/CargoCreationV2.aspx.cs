@@ -130,7 +130,7 @@ namespace PG.Web.WREL
 
             SetHyperLink();
 
-
+            txtCargoNo.Attributes.Add("readonly", "readonly");
             //this.ShowPageMessage(this.lblMessage);
             // Response.Write("UserID : " + this.UserID.ToString());
 
@@ -675,8 +675,8 @@ namespace PG.Web.WREL
                 cObj._RecordState = RecordStateEnum.Added;
                 isAdd = true;
             }
-
-            cObj.CARGO_NUMBER = txtCargoNo.Text.Trim();
+            cObj.CARGO_NUMBER = CARGO_CREATION_MSTBL.Get_New_Cargo_No(DateTime.Now.ToString("dd-MMM-yy"), null);
+            txtCargoNo.Text = cObj.CARGO_NUMBER;
             cObj.CARGO_DATE = Conversion.StringToDate(txtCargoDate.Text);
             cObj.CARGO_STARTING_DIS_ID = Conversion.StringToInt(hdnStartingDistId.Value);
             cObj.CARGO_DESTINATION_DIST_ID = Conversion.StringToInt(hdnStartingDistId.Value);
@@ -981,14 +981,14 @@ namespace PG.Web.WREL
 
         protected void btnUpload_Click(object sender, EventArgs e)
         {
-            if (!FileUpload1.HasFile)
-            {
-                //lblMessage.Text = "Please select an Excel file.";
-                return;
-            }
+            //if (!FileUpload1.HasFile)
+            //{
+            //    //lblMessage.Text = "Please select an Excel file.";
+            //    return;
+            //}
 
-            string ext = Path.GetExtension(FileUpload1.FileName).ToLower();
-            string path = Server.MapPath("~/Uploads/" + FileUpload1.FileName);
+            //string ext = Path.GetExtension(FileUpload1.FileName).ToLower();
+            //string path = Server.MapPath("~/Uploads/" + FileUpload1.FileName);
 
             // Delete existing file if needed
             //if (File.Exists(path))
@@ -1080,174 +1080,146 @@ namespace PG.Web.WREL
             // lblMessage.Text = "Excel file uploaded successfully.";
         }
 
-//        protected void btnUpload_Click(object sender, EventArgs e)
-//        {
+        private void Clear()
+        {
+            Session["dtDebitTrans"] = null;
+            GridView1.DataSource = null;
+            GridView1.DataBind();
+        }
+        private void InitiateDataSource()
+        {
+            DataTable dtTrans = new DataTable();
+            dtTrans.Columns.Add("ChassisNo", typeof(string));
+            dtTrans.Columns.Add("Description", typeof(string));
 
-//            string ext = Path.GetExtension(FileUpload1.FileName).ToLower();
-//            string path = Server.MapPath("~/Uploads/" + FileUpload1.FileName);
-//            if (!File.Exists(path))
-//            {
-//                File.Delete(path);
-//            }
-//            FileUpload1.SaveAs(path);
-//XLWorkbook workbook = new XLWorkbook(path);
-//IXLWorksheet worksheet = workbook.Worksheet(1); // first worksheet
+            Session["dtDebitTrans"] = dtTrans;
+        }
 
-//DataTable tbl = new DataTable();
+        protected void btnPasteData_Click(object sender, EventArgs e)
+        {
+            finddataPaste();
+        }
 
-//bool firstRow = true;
+        //protected void doneButton_OnClick(object sender, EventArgs e)
+        //{
+        //    ViewState["_LCNo"] = null;
+        //    ViewState["_lblDrAmount"] = null;
 
-//var firstRowUsed = worksheet.FirstRowUsed();
-//var lastRowUsed = worksheet.LastRowUsed();
+        //    finddataPaste();
+        //}
+        //private void clearSessionDatatable()
+        //{
 
-//for (int rowNum = firstRowUsed.RowNumber(); rowNum <= lastRowUsed.RowNumber(); rowNum++)
-//{
-//    var row = worksheet.Row(rowNum);
+        //    Session["dtDebitTrans"] = null;
 
-//    if (firstRow)
-//    {
-//        // Loop cells by index for header row
-//        int colIndex = 1;
-//        while (true)
-//        {
-//            var cell = row.Cell(colIndex);
-//            if (cell == null || cell.IsEmpty())
-//                break;
+        //    ViewState["dtdr"] = null;
+        //}
+        private void finddataPaste()
+        {
+            //string rundate = BaseContent.GetCompanyDate().ToString("dd-MMM-yyyy");
+            if (DrPasteTextBox.Text != "")
+            {
+                try
+                {
+                    DataTable dtCh = new DataTable("dtCh");
+                    dtCh.Columns.Add("xlCNNo", typeof(string));
+                    dtCh.Columns.Add("xlDesc", typeof(string));
 
-//            tbl.Columns.Add(cell.Value.ToString());
-//            colIndex++;
-//        }
-//        firstRow = false;
-//    }
-//    else
-//    {
-//        DataRow dr = tbl.NewRow();
-//        int i = 0;
-//        int colIndex = 1;
-//        while (true)
-//        {
-//            var cell = row.Cell(colIndex);
-//            if (cell == null || cell.IsEmpty())
-//                break;
-
-//            dr[i++] = cell.Value.ToString();
-//            colIndex++;
-//        }
-//        tbl.Rows.Add(dr);
-//    }
-//}
-
-//// Bind to GridView or your list
-//this.listDetails.Clear();
-
-//foreach (DataRow row in tbl.Rows)
-//{
-//    if (row["CN_NUMBER"] == DBNull.Value || string.IsNullOrWhiteSpace(row["CN_NUMBER"].ToString()))
-//        continue;
-
-//    dcCARGO_CREATION_DETAIL cObj = new dcCARGO_CREATION_DETAIL();
-//    cObj.CN_NUMBER = row["CN_NUMBER"].ToString();
-
-//    // Fetch CN info from DB
-//    dcCARGO_CREATION_DETAIL cobjbdt = CARGO_CREATION_DETAILBL.GetCNInfoByCNNumber(cObj.CN_NUMBER);
-
-//    if (cobjbdt != null)
-//    {
-//        cObj.CN_ID = cobjbdt.CN_ID;
-//        cObj.CLIENT_NAME = cobjbdt.CLIENT_NAME;
-
-//        this.listDetails.Add(cObj);
-//    }
-//}
-
-//GridView1.DataSource = listDetails;
-//GridView1.DataBind();
-
-//btnSave.Enabled = listDetails.Count > 0;
-
-//            //string ConStr = "";
-//            //string ext = Path.GetExtension(FileUpload1.FileName).ToLower();
+                    string copiedContent = Request.Form[DrPasteTextBox.UniqueID];
+                    foreach (string row in copiedContent.Split('\n'))
+                    {
+                        if (!string.IsNullOrEmpty(row))
+                        {
+                            dtCh.Rows.Add();
+                            int i = 0;
+                            foreach (string cell in row.Split('\t'))
+                            {
+                                dtCh.Rows[dtCh.Rows.Count - 1][i] = cell;
+                                i++;
+                            }
+                        }
+                    }
+                    DrPasteTextBox.Text = "";
 
 
-//            //if (!string.IsNullOrEmpty(ext))
-//            //{
-//            //    string path = Server.MapPath("~/Uploads/" + FileUpload1.FileName);
-//            //    if (!File.Exists(path))
-//            //    {
-//            //        File.Delete(path);
-//            //    }
-//            //    FileUpload1.SaveAs(path);
-
-//            //    if (ext.Trim() == ".xls")
-//            //    {
-//            //        //connection string for that file which extantion is .xls  
-//            //        ConStr = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path + ";Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=2\"";
-//            //    }
-//            //    else if (ext.Trim() == ".xlsx")
-//            //    {
-//            //        //connection string for that file which extantion is .xlsx  
-//            //        ConStr = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + path + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=2\"";
-//            //    }
-
-//            //    string query = "SELECT * FROM [Sheet1$]";
-//            //    //Providing connection  
-//            //    OleDbConnection conn = new OleDbConnection(ConStr);
-//            //    //checking that connection state is closed or not if closed the   
-//            //    //open the connection  
-//            //    if (conn.State == ConnectionState.Closed)
-//            //    {
-//            //        conn.Open();
-//            //    }
-//            //    //create command object  
-//            //    OleDbCommand cmd = new OleDbCommand(query, conn);
-//            //    // create a data adapter and get the data into dataadapter  
-//            //    OleDbDataAdapter da = new OleDbDataAdapter(cmd);
-//            //    DataSet ds = new DataSet();
-//            //    //DataTable tbl = new DataTable();
-//            //    //fill the Excel data to data set  
-//            //    da.Fill(ds);
-
-//            //    //set data source of the grid view  
-
-//            //    conn.Close();
-
-//            //    DataTable tbl = ds.Tables[0];
-//            //    int count = tbl.Rows.Count;
-//            //    //DBContext dc = null;
-//            //    //bool isDCInit = false;
-
-//            //    string strSql = string.Empty;
-//            //    //DataTable dtData = null;
-
-//            //    //DataTable dtDataSum = null;
-//            //    this.listDetails.Clear();
-//            //    //List<dcSALE_TARGET_SE> listObj = new List<dcSALE_TARGET_SE>();
-
-//            //    foreach (DataRow Row in tbl.Rows)
-//            //    {
-//            //        dcCARGO_CREATION_DETAIL cObj = new dcCARGO_CREATION_DETAIL();
-//            //        cObj.CN_NUMBER = Row["CN_NUMBER"].ToString();
-//            //        dcCARGO_CREATION_DETAIL cobjbdt = new dcCARGO_CREATION_DETAIL();
-//            //        cobjbdt = CARGO_CREATION_DETAILBL.GetCNInfoByCNNumber(txtCNNo.Text.Trim()); ;
-
-//            //        if (cobjbdt != null)
-//            //        {
-//            //            cObj.CN_ID = Conversion.StringToInt(Row["CN_ID"].ToString());
-//            //            cObj.CLIENT_NAME = cobjbdt.CLIENT_NAME;
+                    LoadGridDr(dtCh);
 
 
-//            //            this.listDetails.Add(cObj);
-//            //        }
-//            //    }
+                }
+                catch (Exception ex)
+                {
+                    //messageLabel2.Text = ex.ToString();
+                    return;
+                }
+            }
+            else
+            {
+                ScriptManager.RegisterClientScriptBlock(btnSave, this.Page.GetType(), "Message", string.Format("alert(\"Please select an Excel File{0}.\");", ""), true);
+            }
+        }
 
-//            //    GridView1.DataSource = listDetails;
-//            //    GridView1.DataBind();
-//            //    //SetControlGrid();
+        private void LoadGridDr(DataTable dt)
+        {
+            DataTable dtDebitTrans = new DataTable();
+            dtDebitTrans.Columns.Add("SlNo", typeof(int));
+            dtDebitTrans.Columns.Add("CARGO_ID", typeof(int));
+            dtDebitTrans.Columns.Add("CARGO_DETAIL_ID", typeof(int));
+            dtDebitTrans.Columns.Add("CN_ID", typeof(int));
+            dtDebitTrans.Columns.Add("CN_NUMBER", typeof(string));
+            dtDebitTrans.Columns.Add("Description", typeof(string));
+            dtDebitTrans.Columns.Add("CLIENT_NAME", typeof(string));
+            
+            Session["dtDebitTrans"] = dtDebitTrans;
 
-//            //    btnSave.Enabled = true;
+            DataTable dtdr = (DataTable)Session["dtDebitTrans"];
+            if (dt.Rows.Count > 0)
+            {
+                for (int i = 0; i < dt.Rows.Count; i++)
+                #region forloop
+                {
+                    string strCNNo = "";
+                    string strDescription = "";
+                    int CN_ID = 0;
+                    string strclientName = "";
 
-//            //}
-//        }
+                    strCNNo = dt.Rows[i]["xlCNNo"].ToString();
+                    strDescription = dt.Rows[i]["xlDesc"].ToString();
+                    
+
+                    dcCARGO_CREATION_DETAIL cobjb = CARGO_CREATION_DETAILBL.GetCNInfoByCNNumber(strCNNo);
+                    CN_ID = cobjb.CN_ID;
+                    strclientName = cobjb.CLIENT_NAME;
+
+                    DataRow row;
+                    row = dtdr.NewRow();
+                    row["SlNo"] = (i + 1).ToString();
+                    row["CN_NUMBER"] = strCNNo;
+                    row["Description"] = strDescription; //strSubLedgerName;
+                    row["CARGO_ID"] = 0;
+                    row["CN_ID"] = CN_ID;
+                    row["CARGO_DETAIL_ID"] = 0;
+
+                    row["CLIENT_NAME"] = strclientName;
+                    
+                    dtdr.Rows.Add(row);
+                    ViewState["dtdr"] = dtdr;
+                }
+                #endregion forloop
+                DataTable dtf = new DataTable();
+                dtf = (DataTable)ViewState["dtdr"];
+                ViewState["BulkDebit"] = dtf;
+                Session["dtDebitTrans"] = dtf;
+
+                GridView1.DataSource = dtf;
+                GridView1.DataBind();
+            }
+        }
+        protected void ClearButton_OnClick(object sender, EventArgs e)
+        {
+            DrPasteTextBox.Text = "";
+
+            //Modalpopupextender2.Show();
+        }
 
     }
 }

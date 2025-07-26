@@ -335,6 +335,7 @@ namespace PG.Web.WREL
                 LinkButton btnforward = (LinkButton)gvr.FindControl("lnkView");
                 //HiddenField hdnPOType = (HiddenField)gvr.FindControl("hdnPOType");
                 int CN_ID =Conversion.StringToInt( e.CommandArgument.ToString());
+
             }
 
             if (e.CommandName == "UploadImage")

@@ -1,11 +1,15 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/AppMaster.Master" AutoEventWireup="true" CodeBehind="CargoCreationV2.aspx.cs" Inherits="PG.Web.WREL.CargoCreationV2" %>
 
+<%@ Register Assembly="System.Web.Extensions, Version=1.0.61025.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"   Namespace="System.Web.UI" TagPrefix="asp" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <script src="../javascript/jquery.ui.combogrid.js" type="text/javascript"></script>
     <script src="../javascript/jquery.attributeobserver.js" type="text/javascript"></script>
     <link href="../css/jquery.ui.combogrid.css" rel="stylesheet" type="text/css" />
 
+     
   
     <script language="javascript" type="text/javascript">
         // <!CDATA[
@@ -741,7 +745,7 @@
     </script>
 
     <style type="text/css">
-
+        
 
         input[type="radio"] + label
         {
@@ -754,9 +758,10 @@
         /*label.col-form-label-sm{
             text-align:right;
         }*/
-        
-      
+       
     </style>
+   
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:HiddenField ID="hdnLoggedInUser" runat="server" />
@@ -781,7 +786,7 @@
                     <label for="name" class="col-sm-5 col-form-label-sm">Cargo No :</label>
                     <div class="col-sm-7">
                        
-                       <asp:TextBox ID="txtCargoNo" runat="server" CssClass="form-control form-control-sm" ></asp:TextBox>
+                       <asp:TextBox ID="txtCargoNo" runat="server" CssClass="form-control form-control-sm" BackColor="LightYellow" ></asp:TextBox>
 
                     </div>
                   </div>
@@ -889,6 +894,22 @@
 
              </div>
 
+          <div class="row mb-0">
+
+               
+
+                 <div class="col-md-4">
+                  <div class="form-group row mb-0">
+                    <label for="name" class="col-sm-5 col-form-label-sm">Paste Excel :</label>
+                    <div class="col-sm-7">
+                      <asp:TextBox ID="DrPasteTextBox" runat="server" class="form-control form-control-sm" TextMode="MultiLine" Width="99%" Height="150px" BorderColor="Black"></asp:TextBox>
+                         &nbsp;
+                 <asp:Button ID="btnPastData" runat="server" Text="Load Data" CssClass="buttoncommon" OnClick="btnPasteData_Click" />
+                    </div>
+                  </div>
+                </div>
+
+             </div>
         
       
 
@@ -900,23 +921,7 @@
               <strong>Cargo Details :</strong>
 
            </div>
-    <%--     <div class="row mb-0">
-    <div class="col-md-4">
-        <div class="form-group row mb-0">
-            <label for="name" class="col-sm-3 col-form-label-sm">CN No :</label>
-            <div class="col-sm-9 d-flex align-items-center">
-                <asp:TextBox runat="server" class="form-control form-control-sm me-2" ID="txtCNNo" placeholder="Enter CN" Width="150px" OnTextChanged="txtCNNo_TextChanged" AutoPostBack="true"></asp:TextBox>
-                <asp:HiddenField ID="hdnCNIDtop" runat="server" />
-                <asp:HiddenField ID="hdnClientName" runat="server" />
-                &nbsp;&nbsp;
-                <asp:Button ID="btnadd" runat="server" Text="Add" CssClass="btn btn-primary btn-sm " OnClick="btnadd_Click" /> &nbsp;&nbsp; 
-                <asp:Label ID="lblUploadPR" runat="server" class="col-sm-3 col-form-label-sm" Text="Upload CN:"></asp:Label> &nbsp;
-                <asp:FileUpload ID="FileUpload1" runat="server" style="margin-top: 0px" Height="20px" Width="250px" /> &nbsp;&nbsp;
-                <asp:Button ID="btnUpload" CssClass="btn btn-primary btn-sm" runat="server" Text="Load Data" OnClick="btnUpload_Click" />
-            </div>
-        </div>
-    </div>
-</div>--%>
+  
             <div class="row mb-0">
     <div class="col-md-12">
         <div class="form-group row mb-0 align-items-center">
@@ -926,14 +931,7 @@
 
                 <asp:HiddenField ID="hdnCNIDtop" runat="server" />
                 <asp:HiddenField ID="hdnClientName" runat="server" />
-                &nbsp;
-                <asp:Button ID="btnadd" runat="server" Text="Add" CssClass="btn btn-primary btn-sm me-3 mb-1" OnClick="btnadd_Click" />
-                &nbsp;
-                <asp:Label ID="lblUploadPR" runat="server" Text="Upload CN:" CssClass="form-label me-2 mb-1"></asp:Label>
-                &nbsp;
-                <asp:FileUpload ID="FileUpload1" runat="server" CssClass="form-control-file me-3 mb-1" style="height: 30px; width: 250px;" />
-
-                <asp:Button ID="btnUpload" CssClass="btn btn-primary btn-sm mb-1" runat="server" Text="Load Data" OnClick="btnUpload_Click" />
+               
             </div>
         </div>
     </div>
@@ -1049,8 +1047,37 @@
       
 
     </div>
+           
+    <%-- <table>
+    <tr>
+        <td align="center">
+            <asp:LinkButton Text="Show Modal" ID="LinkButton2" runat="server" />
+            
+            <ajaxToolkit:ModalPopupExtender ID="Modalpopupextender2" runat="server"
+                PopupControlID="Panel4"
+                TargetControlID="LinkButton2"
+                CancelControlID="Button4"
+                BackgroundCssClass="modalBackground">
+            </ajaxToolkit:ModalPopupExtender>
+
+            <asp:Panel ID="Panel4" runat="server" CssClass="modalPopup" Width="400px"
+                Style="display: none; background-color: lightsteelblue; padding:10px;">
+                
+                <asp:Label ID="Label1" runat="server" Text="Paste Excel [ without Header / Caption ]" Font-Bold="true"></asp:Label>
+                <br /><br />
+
+                <asp:TextBox ID="DrPasteTextBox" runat="server" TextMode="MultiLine" Width="99%" Height="150px"></asp:TextBox>
+                <br /><br />
+
+                <asp:Button ID="Button4" runat="server" Text="Close" />
+                <asp:Button ID="doneButton" runat="server" Text="Confirm" OnClick="doneButton_OnClick" />
+                <asp:Button ID="ClearButton" runat="server" Text="Clear" OnClick="ClearButton_OnClick" />
+            </asp:Panel>
+        </td>
+    </tr>
+</table>--%>
+         
    </div>
-      
      
      </div>
     </div>

@@ -297,5 +297,28 @@ namespace PG.BLLibrary.WRElBL
             bStatus = true;
             return bStatus;
         }
+
+        public static string Get_New_Cargo_No(string pdate, DBContext dc)
+        {
+            bool isDCInit = false;
+            string _CARGO_No = string.Empty;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                string abbr = " SELECT FN_NEW_CARGO_NUMBER(@pdate) A from Dual ";
+                cmdInfo.DBParametersInfo.Add("@pdate", pdate);
+
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = abbr;
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+                _CARGO_No = Convert.ToString(DBQuery.ExecuteDBScalar(dbq, dc));
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return _CARGO_No;
+        }
     }
 }

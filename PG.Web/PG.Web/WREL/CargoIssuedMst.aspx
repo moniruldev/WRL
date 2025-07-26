@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/AppMaster.Master" AutoEventWireup="true" CodeBehind="HubEntry.aspx.cs" Inherits="PG.Web.WREL.HubEntry" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/AppMaster.Master" AutoEventWireup="true" CodeBehind="CargoIssuedMst.aspx.cs" Inherits="PG.Web.WREL.CargoIssuedMst" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -18,16 +18,23 @@
         var ReportPDFPageLink = '<%=this.ReportPDFPageLink%>';
 
         var CountryListServiceLink = '<%=this.CountryListServiceLink%>';
-        var DistrictListServiceLink = '<%=this.DistrictListServiceLink%>';
-        var TownListServiceLink = '<%=this.TownListServiceLink%>';
-        <%--   var txtCountry = '<%=txtCountry.ClientID%>';
-        var hdnCountryId = '<%=hdnCountryId.ClientID%>';--%>
+        var CargoListService = '<%=this.CargoListService%>';
+        var HubListServiceLink = '<%=this.HubListServiceLink%>';
+        var TransporterMstListServiceLink = '<%=this.TransporterMstListServiceLink%>';
+        
+        var txtCargoNo = '<%=txtCargoNo.ClientID%>';
+        var hdnCargoID = '<%=hdnCargoID.ClientID%>';
 
-        var txtDistrict = '<%=txtDistrict.ClientID%>';
-        var hdnDistId = '<%=hdnDistId.ClientID%>';
-        var txtTown = '<%=txtTown.ClientID%>';
-        var hdnTownId = '<%=hdnTownId.ClientID%>';
+        var txtFromHubName = '<%=txtFromHubName.ClientID%>';
+        var hdnFromHubID = '<%=hdnFromHubID.ClientID%>';
 
+        var txtToHubName = '<%=txtToHubName.ClientID%>';
+        var hdnToHubID = '<%=hdnToHubID.ClientID%>';
+
+        var txtTransportMedia = '<%=txtTransportMedia.ClientID%>';
+        var hdnTransMediaID = '<%=hdnTransMediaID.ClientID%>';
+        
+        
         $(document).ready(function () {
 
             //var pageInstance = Sys.WebForms.PageRequestManager.getInstance();
@@ -44,43 +51,47 @@
 
             //});
 
-            if ($('#' + txtDistrict).is(':visible')) {
 
-                bindDistrictList();
+            if ($('#' + txtCargoNo).is(':visible')) {
 
-            }
-
-            if ($('#' + txtTown).is(':visible')) {
-
-                bindTownList();
-
-            }
-
-
-            if ($('#' + txtCountry).is(':visible')) {
-
-                bindCountryList();
+                bindCargoList();
 
             }
 
 
 
+            if ($('#' + txtFromHubName).is(':visible')) {
 
+                bindFromHubList();
 
+            }
+
+            if ($('#' + txtToHubName).is(':visible')) {
+
+                bindToHubList();
+
+            }
+            if ($('#' + txtTransportMedia).is(':visible')) {
+
+                bindTransportMediaList();
+
+            }
+            
         });
+     
 
-        function bindDistrictList() {
+        function bindTransportMediaList() {
             var cgColumns = [
-                             { 'columnName': 'distcode', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Code' }
-                            , { 'columnName': 'distname', 'width': '200', 'align': 'left', 'highlight': 4, 'label': 'Name' }
+                             { 'columnName': 'transname', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Name' }
+                           
 
             ];
-            var serviceURL = DistrictListServiceLink + "?isterm=1&includeempty=0&hasitem=1&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+            var serviceURL = TransporterMstListServiceLink + "?isterm=1&includeempty=0&hasitem=1&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
 
             serviceURL += "&ispaging=0";
-            var groupIDElem = $('#' + txtDistrict);
+            var groupIDElem = $('#' + txtTransportMedia);
 
-            $('#' + txtDistrict).click(function (e) {
+            $('#' + txtTransportMedia).click(function (e) {
                 $(groupIDElem).combogrid("dropdownClick");
             });
 
@@ -115,8 +126,8 @@
                         return false;
                     }
                     else {
-                        $('#' + hdnDistId).val(ui.item.distid);
-                        $('#' + txtDistrict).val(ui.item.distname);
+                        $('#' + hdnTransMediaID).val(ui.item.transporterid);
+                        $('#' + txtTransportMedia).val(ui.item.transname);
                     }
                     return false;
                 },
@@ -130,24 +141,24 @@
 
                 var groupID = $(groupIDElem).val();
                 if (groupID == '') {
-                    $('#' + txtDistrict).val('');
-                    $('#' + hdnDistId).val('0');
+                    $('#' + txtTransportMedia).val('');
+                    $('#' + hdnTransMediaID).val('0');
                 }
             });
         }
 
-        function bindTownList() {
+        function bindCargoList() {
             var cgColumns = [
-                             { 'columnName': 'townname', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Code' }
-                            , { 'columnName': 'distname', 'width': '200', 'align': 'left', 'highlight': 4, 'label': 'Name' }
+                             { 'columnName': 'cargonumber', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Code' }
+
 
             ];
-            var serviceURL = TownListServiceLink + "?isterm=1&includeempty=0&hasitem=1&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+            var serviceURL = CargoListService + "?isterm=1&includeempty=0&hasitem=1&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
 
             serviceURL += "&ispaging=0";
-            var groupIDElem = $('#' + txtTown);
+            var groupIDElem = $('#' + txtCargoNo);
 
-            $('#' + txtTown).click(function (e) {
+            $('#' + txtCargoNo).click(function (e) {
                 $(groupIDElem).combogrid("dropdownClick");
             });
 
@@ -165,8 +176,8 @@
                 width: 350,
                 url: serviceURL,
                 search: function (event, ui) {
-                    var distid = $('#' + hdnDistId).val();
-                    var newServiceURL = serviceURL + "&distid=" + distid;
+
+                    var newServiceURL = serviceURL;
                     $(this).combogrid("option", "url", newServiceURL);
 
 
@@ -182,8 +193,8 @@
                         return false;
                     }
                     else {
-                        $('#' + hdnTownId).val(ui.item.townid);
-                        $('#' + txtTown).val(ui.item.townname);
+                        $('#' + hdnCargoID).val(ui.item.cargoid);
+                        $('#' + txtCargoNo).val(ui.item.cargonumber);
                     }
                     return false;
                 },
@@ -197,12 +208,148 @@
 
                 var groupID = $(groupIDElem).val();
                 if (groupID == '') {
-                    $('#' + txtTown).val('');
-                    $('#' + hdnTownId).val('0');
+                    $('#' + txtCargoNo).val('');
+                    $('#' + hdnCargoID).val('0');
                 }
             });
         }
-     
+
+        function bindFromHubList() {
+            var cgColumns = [
+                             { 'columnName': 'hubname', 'width': '200', 'align': 'left', 'highlight': 4, 'label': 'Name' }
+                            //, { 'columnName': 'distname', 'width': '200', 'align': 'left', 'highlight': 4, 'label': 'Name' }
+
+            ];
+            var serviceURL = HubListServiceLink + "?isterm=1&includeempty=0&hasitem=1&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+
+            serviceURL += "&ispaging=0";
+            var groupIDElem = $('#' + txtFromHubName);
+
+            $('#' + txtFromHubName).click(function (e) {
+                $(groupIDElem).combogrid("dropdownClick");
+            });
+
+            $(groupIDElem).combogrid({
+                debug: true,
+                searchButton: false,
+                resetButton: false,
+                alternate: true,
+                munit: 'px',
+                scrollBar: true,
+                showPager: true,
+                colModel: cgColumns,
+                autoFocus: true,
+                showError: true,
+                width: 350,
+                url: serviceURL,
+                search: function (event, ui) {
+
+                    var newServiceURL = serviceURL;
+                    $(this).combogrid("option", "url", newServiceURL);
+
+
+                },
+                select: function (event, ui) {
+                    if (!ui.item) {
+                        event.preventDefault();
+                        return false;
+                    }
+
+                    if (ui.item.dealerid == '') {
+                        event.preventDefault();
+                        return false;
+                    }
+                    else {
+                        $('#' + hdnFromHubID).val(ui.item.hubid);
+                        $('#' + txtFromHubName).val(ui.item.hubname);
+                    }
+                    return false;
+                },
+
+                lc: ''
+            });
+
+
+            $(groupIDElem).blur(function () {
+                var self = this;
+
+                var groupID = $(groupIDElem).val();
+                if (groupID == '') {
+                    $('#' + txtFromHubName).val('');
+                    $('#' + hdnFromHubID).val('0');
+                }
+            });
+        }
+
+        function bindToHubList() {
+            var cgColumns = [
+                             { 'columnName': 'hubname', 'width': '200', 'align': 'left', 'highlight': 4, 'label': 'Name' }
+                            //, { 'columnName': 'distname', 'width': '200', 'align': 'left', 'highlight': 4, 'label': 'Name' }
+
+            ];
+            var serviceURL = HubListServiceLink + "?isterm=1&includeempty=0&hasitem=1&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+
+            serviceURL += "&ispaging=0";
+            var groupIDElem = $('#' + txtToHubName);
+
+            $('#' + txtToHubName).click(function (e) {
+                $(groupIDElem).combogrid("dropdownClick");
+            });
+
+            $(groupIDElem).combogrid({
+                debug: true,
+                searchButton: false,
+                resetButton: false,
+                alternate: true,
+                munit: 'px',
+                scrollBar: true,
+                showPager: true,
+                colModel: cgColumns,
+                autoFocus: true,
+                showError: true,
+                width: 350,
+                url: serviceURL,
+                search: function (event, ui) {
+
+                    var newServiceURL = serviceURL;
+                    $(this).combogrid("option", "url", newServiceURL);
+
+
+                },
+                select: function (event, ui) {
+                    if (!ui.item) {
+                        event.preventDefault();
+                        return false;
+                    }
+
+                    if (ui.item.dealerid == '') {
+                        event.preventDefault();
+                        return false;
+                    }
+                    else {
+                        $('#' + hdnToHubID).val(ui.item.hubid);
+                        $('#' + txtToHubName).val(ui.item.hubname);
+                    }
+                    return false;
+                },
+
+                lc: ''
+            });
+
+
+            $(groupIDElem).blur(function () {
+                var self = this;
+
+                var groupID = $(groupIDElem).val();
+                if (groupID == '') {
+                    $('#' + txtToHubName).val('');
+                    $('#' + hdnToHubID).val('0');
+                }
+            });
+        }
+
+
+
         function bindCountryList() {
             var cgColumns = [
                              { 'columnName': 'countrycode', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Code' }
@@ -517,7 +664,7 @@
        <div class="card ">  <%-- "d-flex flex-column min-vh-100" this class for set footer on bottom--%>
          <div class="card-header p-0">
            <div class="d-flex align-items-center justify-content-between p-1">
-             <h5 class="card-title">Hub Entry</h5>
+             <h5 class="card-title">Cargo Transfer Entry</h5>
           <%--   <asp:LinkButton runat="server" ID="lnkList" class="btn btn-primary p-1"> <i class="fas fa-list"></i> Room List </asp:LinkButton>--%>
          </div>
 
@@ -526,255 +673,126 @@
       <div class="card-body">
             <asp:HiddenField ID="hdnClientType_ID" runat="server" />
 
-              <div class="row mb-0">
+            <div class="row mb-0">
                  
-                <div class="col-md-2">
-                 
+              
+                 <div class="col-md-4">
+                  <div class="form-group row mb-0">
+                    <label for="name" class="col-sm-4 col-form-label-sm">Cargo :</label>
+                    <div class="col-sm-8">
+                      <asp:TextBox ID="txtCargoNo" runat="server" CssClass="form-control form-control-sm" ></asp:TextBox>
+                        <asp:HiddenField runat="server" ID="hdnCargoID" Value="0" /> 
+                    </div>
+                  </div>
                 </div>
 
-                 <div class="col-md-6">
+             
+
+                 <div class="col-md-4">
                   <div class="form-group row mb-0">
-                    <label for="name" class="col-sm-3 col-form-label-sm">Hub Name :</label>
-                    <div class="col-sm-9">
-                      <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtHubName" placeholder="Hub Name" ></asp:TextBox> 
+                    <label for="name" class="col-sm-4 col-form-label-sm">Issue Date :</label>
+                    <div class="col-sm-8">
+                     <asp:TextBox ID="txtIssuedate" runat="server" CssClass="TextBoxnew textDate dateParse" Width="130px" ></asp:TextBox>
+                       &nbsp;&nbsp; <span style="color:red;"><b>Issue</b></span>
+                    </div>
+                  </div>
+                </div>
+             
+
+             </div>
+
+             
+
+           <div class="row mb-0">
+                 
+             
+
+                 <div class="col-md-4">
+                  <div class="form-group row mb-0">
+                    <label for="name" class="col-sm-4 col-form-label-sm">From Hub :</label>
+                    <div class="col-sm-8">
+                        <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtFromHubName" placeholder="Enter Hub Name" ></asp:TextBox> 
+                       <asp:HiddenField runat="server" ID="hdnFromHubID" Value="0" />  
                     </div>
                   </div>
                 </div>
 
 
-                
+             
 
-
-                 <div class="col-md-2">
-                 
+               
+                 <div class="col-md-4">
+                  <div class="form-group row mb-0">
+                    <label for="name" class="col-sm-4 col-form-label-sm">To Hub :</label>
+                    <div class="col-sm-8">
+                        <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtToHubName" placeholder="Enter Hub Name" ></asp:TextBox> 
+                       <asp:HiddenField runat="server" ID="hdnToHubID" Value="0" />  
+                    </div>
+                  </div>
                 </div>
+            
+
+             </div>
+
+             <div class="row mb-0">
+                 
+           
+
+                 <div class="col-md-4">
+                  <div class="form-group row mb-0">
+                    <label for="name" class="col-sm-4 col-form-label-sm">Transport Media :</label>
+                    <div class="col-sm-8">
+                       <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtTransportMedia" placeholder="Enter Transport Name" ></asp:TextBox> 
+                       <asp:HiddenField runat="server" ID="hdnTransMediaID" Value="0" />  
+                    </div>
+                  </div>
+                </div>
+
+
+              
+                 <div class="col-md-4">
+                  <div class="form-group row mb-0">
+                    <label for="name" class="col-sm-4 col-form-label-sm">Contact Person :</label>
+                    <div class="col-sm-8">
+                       <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtContactPerson" placeholder="Enter Contact Person" ></asp:TextBox> 
+                       <asp:HiddenField runat="server" ID="HiddenField1" Value="0" />  
+                    </div>
+                  </div>
+                </div>
+
+                 
 
              </div>
 
            <div class="row mb-0">
                  
-                <div class="col-md-2">
-                 
-                </div>
-
                 
 
-
-               <div class="col-md-6">
+                 <div class="col-md-4">
                   <div class="form-group row mb-0">
-                    <label for="name" class="col-sm-3 col-form-label-sm">Hub Type:</label>
-                    <div class="col-sm-9">
-                      <asp:DropDownList runat="server" ID="ddlHubType" CssClass="form-control form-control-sm">
-                         
-                     </asp:DropDownList>
+                    <label for="name" class="col-sm-4 col-form-label-sm">Mobile No :</label>
+                    <div class="col-sm-8">
+                      <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtMobileNo" placeholder="Mobile No" ></asp:TextBox> 
                     </div>
                   </div>
                 </div>
 
-                 <div class="col-md-2">
-                 
-                </div>
-
-             </div>
-          <div class="row mb-0">
-                 
-                <div class="col-md-2">
-                 
-                </div>
-
+            
                 
-
-
-             <div class="col-md-6">
+               <div class="col-md-4">
                   <div class="form-group row mb-0">
-                    <label for="name" class="col-sm-3 col-form-label-sm">District :</label>
-                    <div class="col-sm-9">
-                      <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtDistrict" placeholder="Select" ></asp:TextBox> 
-                           <asp:HiddenField runat="server" ID="hdnDistId" Value="0" /> 
-                    </div>
-                  </div>
-
-                </div>
-
-                 <div class="col-md-2">
-                 
-                </div>
-
-             </div>
-          <div class="row mb-0">
-                 
-                <div class="col-md-2">
-                 
-                </div>
-
-                
-
-
-                <div class="col-md-6">
-                  <div class="form-group row mb-0">
-                    <label for="name" class="col-sm-3 col-form-label-sm">Thana :</label>
-                    <div class="col-sm-9">
-                      <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtTown" placeholder="Select" ></asp:TextBox> 
-                           <asp:HiddenField runat="server" ID="hdnTownId" Value="0" /> 
-                    </div>
-                  </div>
-
-                </div>
-
-                 <div class="col-md-2">
-                 
-                </div>
-
-             </div>
-
-          <div class="row mb-0">
-                 
-                <div class="col-md-2">
-                 
-                </div>
-
-                
-
-
-               <div class="col-md-6">
-                  <div class="form-group row mb-0">
-                    <label for="name" class="col-sm-3 col-form-label-sm">Address:</label>
-                    <div class="col-sm-9">
-                     <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtAddress" placeholder="Address" ></asp:TextBox>
+                    <label for="name" class="col-sm-4 col-form-label-sm">Remarks :</label>
+                    <div class="col-sm-8">
+                      <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtRemarks" placeholder="Remarks" ></asp:TextBox> 
                     </div>
                   </div>
                 </div>
 
-                 <div class="col-md-2">
-                 
-                </div>
+             
 
              </div>
 
-          <div class="row mb-0">
-                 
-                <div class="col-md-2">
-                 
-                </div>
-
-                
-
-
-               <div class="col-md-6">
-                  <div class="form-group row mb-0">
-                    <label for="name" class="col-sm-3 col-form-label-sm">Phone No:</label>
-                    <div class="col-sm-9">
-                     <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtPhoneNO" placeholder="Phone No" ></asp:TextBox>
-                    </div>
-                  </div>
-                </div>
-
-                 <div class="col-md-2">
-                 
-                </div>
-
-             </div>
-          <div class="row mb-0">
-                 
-                <div class="col-md-2">
-                 
-                </div>
-
-                
-
-
-               <div class="col-md-6">
-                  <div class="form-group row mb-0">
-                    <label for="name" class="col-sm-3 col-form-label-sm">Responsible Person:</label>
-                    <div class="col-sm-9">
-                     <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtRP" placeholder="Responsible Person" ></asp:TextBox>
-                    </div>
-                  </div>
-                </div>
-
-                 <div class="col-md-2">
-                 
-                </div>
-
-             </div>
-
-          <div class="row mb-0">
-                 
-                <div class="col-md-2">
-                 
-                </div>
-
-                
-
-
-               <div class="col-md-6">
-                  <div class="form-group row mb-0">
-                    <label for="name" class="col-sm-3 col-form-label-sm">RP Contact:</label>
-                    <div class="col-sm-9">
-                     <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtRPContact" placeholder="RP Contact" ></asp:TextBox>
-                    </div>
-                  </div>
-                </div>
-
-                 <div class="col-md-2">
-                 
-                </div>
-
-             </div>
-
-          <div class="row mb-0">
-                 
-                <div class="col-md-2">
-                 
-                </div>
-
-                
-
-
-               <div class="col-md-6">
-                  <div class="form-group row mb-0">
-                    <label for="name" class="col-sm-3 col-form-label-sm">Description:</label>
-                    <div class="col-sm-9">
-                     <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtDescription" placeholder="Description" ></asp:TextBox>
-                    </div>
-                  </div>
-                </div>
-
-                 <div class="col-md-2">
-                 
-                </div>
-
-             </div>
-
-          
-
-
-             <div class="row mb-0">
-                 
-                <div class="col-md-2">
-                 
-                </div>
-
-
-
-                <div class="col-md-6">
-                  <div class="form-group row mb-0">
-                    <label for="name" class="col-sm-3 col-form-label-sm">Status:</label>
-                    <div class="col-sm-9">
-                      <asp:DropDownList runat="server"  class="form-control form-control-sm"  ID="ddlStatus" >
-                          <asp:ListItem Text="Active" Value="Y" Selected="True"></asp:ListItem>
-                           <asp:ListItem Text="Inactive" Value="N"></asp:ListItem>
-                      </asp:DropDownList> 
-                    </div>
-                  </div>
-
-                </div>
-
-                 <div class="col-md-2">
-                 
-                </div>
-
-             </div>
+             
 
             <div class="row mb-0">
                  
@@ -819,7 +837,7 @@
     <div class="card-footer mt-auto">
          <div class="row">
       <div class="col-md-12">
-       <asp:LinkButton runat="server" ID="btnAddNew" OnClick="btnAddNew_Click" CssClass="btn btn-primary" Text="<i class='fa fa-plus'></i> Add New"></asp:LinkButton>
+       <asp:LinkButton runat="server" ID="btnAddNew" OnClick="btnAddNew_Click"  CssClass="btn btn-primary" Text="<i class='fa fa-plus'></i> Add New"></asp:LinkButton>
        <asp:LinkButton runat="server" ID="btnSave" OnClick="btnSave_Click" CssClass="btn btn-primary" Text="<i class='fas fa-save'></i> Save"></asp:LinkButton>
        <asp:LinkButton runat="server" ID="btnEdit" OnClick="btnEdit_Click" CssClass="btn btn-primary" Text="<i class='fas fa-edit'></i> Edit"></asp:LinkButton>
        <asp:LinkButton runat="server" ID="btnClear" CssClass="btn btn-danger" Text="<i class='fa fa-ban'></i> Clear"></asp:LinkButton>

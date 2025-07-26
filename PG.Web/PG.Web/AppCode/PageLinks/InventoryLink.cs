@@ -224,6 +224,16 @@ namespace PG.Web.PageLinks
         {
             get { return WebUtility.GetAbsoluteUrl("~/Service/WREL/GetAgentList.ashx"); }
         }
+
+        public static string GetLink_CargoMstList
+        {
+            get { return WebUtility.GetAbsoluteUrl("~/Service/WREL/GetCargoMstList.ashx"); }
+        }
+
+        public static string GetLink_TransporterMstList
+        {
+            get { return WebUtility.GetAbsoluteUrl("~/Service/WREL/GetTransporterMstList.ashx"); }
+        }
         
         
     }
