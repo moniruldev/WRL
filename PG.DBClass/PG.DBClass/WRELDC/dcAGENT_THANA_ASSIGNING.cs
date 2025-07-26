@@ -167,4 +167,10 @@ namespace PG.DBClass.WRELDC
 
         #endregion //properties
     }
+
+    public partial class dcAGENT_THANA_ASSIGNING
+    {
+        public string TOWN_NAME { get; set; }
+        public string AGENT_COMPANY_NAME { get; set; }
+    }
 }

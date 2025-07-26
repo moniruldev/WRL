@@ -2,6 +2,7 @@
 using PG.DBClass.WRELDC;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Linq;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,45 @@ namespace PG.BLLibrary.WRElBL
             DataLoadOptions dlo = new DataLoadOptions();
             //dlo.LoadWith<DBClass.dcAGENT_THANA_ASSIGNING>(obj => obj.relatedclassname);
             return dlo;
+        }
+
+        public static string GetAgentThanaInfoSQLString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(" SELECT AT.*,a.agent_company_name,t.town_name FROM agent_thana_assigning AT");
+            sb.Append(" INNER JOIN AGENT_MST A ON at.agent_id=a.agent_id ");
+            sb.Append(" INNER JOIN  thana_town_mst T ON at.town_id=t.town_id ");
+            sb.Append(" WHERE 1=1 ");
+
+            return sb.ToString();
+        }
+
+        public static List<dcAGENT_THANA_ASSIGNING> GetAgentThanaInfoByAgentId(int pAgentId, DBContext dc)
+        {
+            List<dcAGENT_THANA_ASSIGNING> cObjList = new List<dcAGENT_THANA_ASSIGNING>();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetAgentThanaInfoSQLString());
+                if (pAgentId > 0)
+                {
+                    sb.Append(" AND AT.AGENT_ID= @pAgentId ");
+                    cmdInfo.DBParametersInfo.Add("@pAgentId", pAgentId);
+                }
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcAGENT_THANA_ASSIGNING>(dbq, dc);
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
         }
         public static List<dcAGENT_THANA_ASSIGNING> GetAGENT_THANA_ASSIGNINGList()
         {

@@ -219,6 +219,11 @@ namespace PG.Web.PageLinks
         {
             get { return WebUtility.GetAbsoluteUrl("~/Service/WREL/GetDeliveryManList.ashx"); }
         }
+
+        public static string GetLink_AgentList
+        {
+            get { return WebUtility.GetAbsoluteUrl("~/Service/WREL/GetAgentList.ashx"); }
+        }
         
         
     }
