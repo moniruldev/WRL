@@ -167,4 +167,11 @@ namespace PG.DBClass.WRELDC
 
         #endregion //properties
     }
+
+     public partial class dcITEM_MST
+     {
+         public string UOM_NAME { get; set; }
+         public string ITEM_TYPE_NAME { get; set; }
+
+     }
 }

@@ -2,6 +2,7 @@
 using PG.DBClass.WRELDC;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Linq;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,52 @@ namespace PG.BLLibrary.WRElBL
             DataLoadOptions dlo = new DataLoadOptions();
             //dlo.LoadWith<DBClass.dcITEM_TYPE_MST>(obj => obj.relatedclassname);
             return dlo;
+        }
+
+        public static string GetItemTypeSQLString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(" SELECT * ");
+            sb.Append(" FROM ITEM_TYPE_MST  ");
+
+            sb.Append(" WHERE 1=1 ");
+
+            return sb.ToString();
+        }
+
+        public static List<dcITEM_TYPE_MST> GetItemTypeList(dcITEM_TYPE_MST cobj, DBContext dc)
+        {
+            List<dcITEM_TYPE_MST> cObjList = new List<dcITEM_TYPE_MST>();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetItemTypeSQLString());
+
+
+
+
+                if (cobj.IS_ACTIVE != "0")
+                {
+                    sb.Append(" AND IS_ACTIVE= @IS_ACTIVE ");
+                    cmdInfo.DBParametersInfo.Add("@IS_ACTIVE", cobj.IS_ACTIVE);
+                }
+
+
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcITEM_TYPE_MST>(dbq, dc);
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
         }
         public static List<dcITEM_TYPE_MST> GetITEM_TYPE_MSTList()
         {

@@ -20,10 +20,10 @@ namespace PG.BLLibrary.InventoryBL
         public static string GetUOM_INFO_List_SQLString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("SELECT UOM_INFO.* ");
-            sb.Append(" FROM UOM_INFO ");
+            sb.Append("SELECT UOM_MST.* ");
+            sb.Append(" FROM UOM_MST ");
             sb.Append(" WHERE 1=1 ");
-            sb.Append(" ORDER BY UOM_CODE ");
+            sb.Append(" ORDER BY UOM_NAME ");
             return sb.ToString();
         }
 
@@ -71,7 +71,7 @@ namespace PG.BLLibrary.InventoryBL
                 StringBuilder sb = new StringBuilder(GetUOM_INFO_List_SQLString());
 
 
-                sb.Append(" AND UOM_INFO.UOM_ID=@UOMID ");
+                sb.Append(" AND UOM_MST.UOM_ID=@UOMID ");
                 cmdInfo.DBParametersInfo.Add("@UOMID", pUOMID);
     
 
