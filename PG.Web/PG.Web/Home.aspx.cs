@@ -20,6 +20,8 @@ using PG.Core.Extentions;
 using PG.Core.DBFilters;
 
 using PG.BLLibrary.AccountingBL.GeneralLedgerBL;
+using System.Web.Script.Serialization;
+
 
 namespace PG.Web
 {
@@ -58,47 +60,96 @@ namespace PG.Web
 
         protected void Page_Load(object sender, EventArgs e)
         {
-           // Response.Write("UserID : " + this.UserID.ToString());
-
-            lblWelcome.Text = "Welcome to " +  AppInfo.AppNameFull;
-
-            if (!this.IsPostBack)
-            {
-               
-
-            }
-
-
-
-
+            if (!IsPostBack)
+                LoadDashboard(DateTime.Now);
         }
 
-        private void SetHyperLink()
+        protected void btnFilter_Click(object sender, EventArgs e)
         {
 
-            //new button
-            //string hLink = "javascript:tbopenSalInfo("+ this.PRSettingID.ToString() +")";
-            //if (base.PageMode == PG.Core.Web.PageModeEnum.InTab)
-            //{
-            //    hLink = "javascript:tbopenSalInfo(" + this.PRSettingID.ToString() + ")";
-            //    //this.btnSalaryInfo = string.Empty;
-            //    this.btnSalaryInfo.Attributes.Add("onclick", hLink);
-            //}
-            //else
-            //{
-            //    hLink = "~/Master/EmpSalaryInfo.aspx?eid=" + this.PRSettingID.ToString();
-            //    //this.btnAddNew.PostBackUrl = hLink;
-            //    //this.btnAddNew.OnClientClick = string.Empty;
-            //    this.btnSalaryInfo.Attributes.Add("onclick", hLink);
-            //}
+        }
 
-            
+        private void LoadDashboard(DateTime filterDate)
+        {
+            // fetch metrics from DB based on filterDate
+            litTotalParcel.Text = "0";
+            litTotalUser.Text = "0";
+            litTotalClient.Text = "0";
+            litTotalDeliveryMan.Text = "0";
+
+            litTotalHub.Text = "0";
+            litTotalAccounts.Text = "0";
+            litAgreement.Text = "0";
+            litTotalParcelDelivered.Text = "0";
+
+            litDMIncome.Text = "৳0";
+            litDMExpense.Text = "৳0";
+            litDMBalance.Text = "৳0";
+
+            litMerchantIncome.Text = "৳0";
+            litMerchantExpense.Text = "৳0";
+            litMerchantBalance.Text = "৳0";
+
+            litBranchIncome.Text = "৳0";
+            litBranchExpense.Text = "৳0";
+            litBranchBalance.Text = "৳0";
+
+            // revenue and expense totals
+            litIncomeTotal.Text = "0";
+            litExpenseTotal.Text = "0";
+            litRevenueTotal.Text = "0";
+
+                           // Example: Static income/expense data
+                var labels = new[] { "Jan", "Feb", "Mar", "Apr", "May" };
+                var income = new[] { 5000, 7000, 6000, 8000, 7500 };
+                var expense = new[] { 3000, 4000, 3500, 5000, 4500 };
+
+                // Show totals
+                litIncomeTotal.Text = income.Sum().ToString("N0");
+                litExpenseTotal.Text = expense.Sum().ToString("N0");
+
+                // Prepare chart data
+                var chartData = new
+                {
+                    labels,
+                    income,
+                    expense
+                };
+
+                // Serialize to JSON and inject into page
+                var serializer = new JavaScriptSerializer();
+                string json = serializer.Serialize(chartData);
+
+                // Literal to inject JSON safely
+               litChartData.Text = string.Format("<script type='application/json' id='litChartDataJson'>{0}</script>", json);
            
+              var pieData = new
+                {
+                    labels = new[] { "Product A", "Product B", "Product C" },
+                    datasets = new[]
+                    {
+                        new
+                        {
+                            data = new[] { 300, 150, 100 },
+                            backgroundColor = new[] { "#007bff", "#28a745", "#ffc107" }
+                        }
+                    }
+                };
+
+        string jsonPieData = serializer.Serialize(pieData);
+
+        litPieChartData.Text = string.Format("<script type='application/json' id='pieChartData'>{0}</script>", jsonPieData);
+
+
+        litRevenueTotal.Text = "550";
+        Literal1.Text = "Expense";
+
+      
         }
 
 
-       
-       
+
+
 
         public string FromControl(int x)
         {

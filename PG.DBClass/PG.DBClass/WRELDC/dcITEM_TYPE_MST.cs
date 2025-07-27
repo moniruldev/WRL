@@ -20,7 +20,7 @@ namespace PG.DBClass.WRELDC
         private string m_CREATE_BY = string.Empty;
         private DateTime? m_CREATE_DATE = null;
         private string m_EDIT_BY = string.Empty;
-        private string m_EDIT_DATE = string.Empty;
+        private DateTime? m_EDIT_DATE = null;
 
         #endregion  //private members
 
@@ -119,7 +119,7 @@ namespace PG.DBClass.WRELDC
         }
 
         [DBColumn(Name = "EDIT_DATE", Storage = "m_EDIT_DATE", DbType = "126")]
-        public string EDIT_DATE
+        public DateTime? EDIT_DATE
         {
             get { return this.m_EDIT_DATE; }
             set

@@ -64,6 +64,40 @@ namespace PG.BLLibrary.WRElBL
             finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
             return cObjList;
         }
+
+        public static dcITEM_TYPE_MST GetItemTypeById(int pItemTypeId, DBContext dc)
+        {
+            dcITEM_TYPE_MST cObjList = new dcITEM_TYPE_MST();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetItemTypeSQLString());
+
+
+
+
+                if (pItemTypeId > 0)
+                {
+                    sb.Append(" AND ITEM_TYPE_ID= @pItemTypeId ");
+                    cmdInfo.DBParametersInfo.Add("@pItemTypeId", pItemTypeId);
+                }
+
+
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcITEM_TYPE_MST>(dbq, dc).FirstOrDefault();
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
+        }
         public static List<dcITEM_TYPE_MST> GetITEM_TYPE_MSTList()
         {
             return GetITEM_TYPE_MSTList(null, null);
@@ -284,6 +318,76 @@ namespace PG.BLLibrary.WRElBL
             DBContextManager.ReleaseDBContext(ref dc, isDCInit);
             bStatus = true;
             return bStatus;
+        }
+
+        public static bool IsItemTypeNameExists(string pItemTypeName)
+        {
+            return IsItemTypeNameExists(pItemTypeName, null);
+        }
+        public static bool IsItemTypeNameExists(string pItemTypeName, DBContext dc)
+        {
+            bool isData = false;
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetItemTypeSQLString());
+
+                sb.Append(" AND UPPER(ITEM_TYPE_NAME)=UPPER(@itemTypeName) ");
+                cmdInfo.DBParametersInfo.Add("@itemTypeName", pItemTypeName);
+
+
+
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                isData = GetITEM_TYPE_MSTList(dbq, dc).Count > 0;
+
+            }
+            finally
+            {
+                DBContextManager.ReleaseDBContext(ref dc, isDCInit);
+            }
+            return isData;
+        }
+        public static bool IsItemTypeNameExists(string pItemTypeName, int pItemTypeId)
+        {
+            return IsItemTypeNameExists(pItemTypeName, pItemTypeId, null);
+        }
+        public static bool IsItemTypeNameExists(string pItemTypeName, int pItemTypeId, DBContext dc)
+        {
+            bool isData = false;
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetItemTypeSQLString());
+
+                sb.Append(" AND UPPER(ITEM_TYPE_NAME)=UPPER(@itemTypeName) ");
+                cmdInfo.DBParametersInfo.Add("@itemTypeName", pItemTypeName);
+
+
+                sb.Append(" AND ITEM_TYPE_ID <> @itemTypeID ");
+                cmdInfo.DBParametersInfo.Add("@itemTypeID", pItemTypeId);
+
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+                isData = GetITEM_TYPE_MSTList(dbq, dc).Count > 0;
+            }
+            finally
+            {
+                DBContextManager.ReleaseDBContext(ref dc, isDCInit);
+            }
+            return isData;
         }
     }
 }
