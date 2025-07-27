@@ -64,6 +64,34 @@ namespace PG.BLLibrary.WRElBL
             finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
             return cObjList;
         }
+
+        public static List<dcCARGO_TRACKING> GetCargoTransferListInfo(dcCARGO_TRACKING Prm, DBContext dc)
+        {
+            List<dcCARGO_TRACKING> cObjList = new List<dcCARGO_TRACKING>();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetCargoTrackingSQLString());
+                if (Prm.TRANS_TYPE!=string.Empty)
+                {
+                    sb.Append(" AND c.TRANS_TYPE= @pTRANS_TYPE ");
+                    cmdInfo.DBParametersInfo.Add("@pTRANS_TYPE", Prm.TRANS_TYPE);
+                }
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcCARGO_TRACKING>(dbq, dc);
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
+        }
         public static List<dcCARGO_TRACKING> GetCARGO_TRACKINGList()
         {
             return GetCARGO_TRACKINGList(null, null);
@@ -284,6 +312,21 @@ namespace PG.BLLibrary.WRElBL
             DBContextManager.ReleaseDBContext(ref dc, isDCInit);
             bStatus = true;
             return bStatus;
+        }
+
+        public static string GetCargoReceivePendingSQLString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(" SELECT C.*,fh.HUB_NAME F_HUBNAME,th.HUB_NAME T_HUBNAME,cc.CARGO_NUMBER,tm.TRANS_MEDIA_NAME ");
+            sb.Append("  FROM CARGO_TRACKING c ");
+            sb.Append("  INNER JOIN HUB_MST fh ON c.FROM_HUB_ID=fh.HUB_ID ");
+            sb.Append("  INNER JOIN HUB_MST th ON c.TO_HUB_ID=th.HUB_ID ");
+            sb.Append("  INNER JOIN CARGO_CREATION_MST cc ON c.CARGO_ID=cc.CARGO_ID ");
+            sb.Append("  LEFT JOIN TRANSPORT_MEDIA_MST tm ON c.TRANS_MEDIA_ID=tm.TRANS_MEDIA_ID ");
+            sb.Append(" WHERE 1=1 AND c.CARGO_TRACK_ID NOT IN (SELECT REF_TRANS_ID FROM CARGO_TRACKING WHERE REF_TRANS_ID IS NOT NULL) AND TRANS_TYPE='I'");
+
+            return sb.ToString();
         }
     }
 }
