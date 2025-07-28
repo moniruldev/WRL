@@ -26,6 +26,7 @@ using System.Data.OleDb;
 using System.Data;
 using OfficeOpenXml;
 using System.ComponentModel;
+using PG.Report.ReportGen.WRELRGN;
 
 namespace PG.Web.WREL
 {
@@ -943,91 +944,91 @@ namespace PG.Web.WREL
             }
         }
 
-        protected void btnUpload_Click(object sender, EventArgs e)
-        {
-            string ConStr = "";
-            string ext = Path.GetExtension(FileUpload1.FileName).ToLower();
+        //protected void btnUpload_Click(object sender, EventArgs e)
+        //{
+        //    string ConStr = "";
+        //    string ext = Path.GetExtension(FileUpload1.FileName).ToLower();
 
 
-            if (!string.IsNullOrEmpty(ext))
-            {
-                string path = Server.MapPath("~/Uploads/" + FileUpload1.FileName);
-                if (!File.Exists(path))
-                {
-                    File.Delete(path);
-                }
-                FileUpload1.SaveAs(path);
+        //    if (!string.IsNullOrEmpty(ext))
+        //    {
+        //        string path = Server.MapPath("~/Uploads/" + FileUpload1.FileName);
+        //        if (!File.Exists(path))
+        //        {
+        //            File.Delete(path);
+        //        }
+        //        FileUpload1.SaveAs(path);
 
-                if (ext.Trim() == ".xls")
-                {
-                    //connection string for that file which extantion is .xls  
-                    ConStr = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path + ";Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=2\"";
-                }
-                else if (ext.Trim() == ".xlsx")
-                {
-                    //connection string for that file which extantion is .xlsx  
-                    ConStr = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + path + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=2\"";
-                }
+        //        if (ext.Trim() == ".xls")
+        //        {
+        //            //connection string for that file which extantion is .xls  
+        //            ConStr = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path + ";Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=2\"";
+        //        }
+        //        else if (ext.Trim() == ".xlsx")
+        //        {
+        //            //connection string for that file which extantion is .xlsx  
+        //            ConStr = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + path + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=2\"";
+        //        }
 
-                string query = "SELECT * FROM [Sheet1$]";
+        //        string query = "SELECT * FROM [Sheet1$]";
 
-                OleDbConnection conn = new OleDbConnection(ConStr);
+        //        OleDbConnection conn = new OleDbConnection(ConStr);
 
-                if (conn.State == ConnectionState.Closed)
-                {
-                    conn.Open();
-                }
-                //create command object  
-                OleDbCommand cmd = new OleDbCommand(query, conn);
+        //        if (conn.State == ConnectionState.Closed)
+        //        {
+        //            conn.Open();
+        //        }
+        //        //create command object  
+        //        OleDbCommand cmd = new OleDbCommand(query, conn);
 
-                OleDbDataAdapter da = new OleDbDataAdapter(cmd);
-                DataSet ds = new DataSet();
+        //        OleDbDataAdapter da = new OleDbDataAdapter(cmd);
+        //        DataSet ds = new DataSet();
 
-                da.Fill(ds);
+        //        da.Fill(ds);
 
-                conn.Close();
+        //        conn.Close();
 
-                DataTable tbl = ds.Tables[0];
-                int count = tbl.Rows.Count;
-                string strSql = string.Empty;
+        //        DataTable tbl = ds.Tables[0];
+        //        int count = tbl.Rows.Count;
+        //        string strSql = string.Empty;
 
-                this.listDetails.Clear();
+        //        this.listDetails.Clear();
 
 
-                foreach (DataRow Row in tbl.Rows)
-                {
-                    dcCN_CREATION_MST cObj = new dcCN_CREATION_MST();
-                    //cObj.item_code = Row["ITEM_CODE"].ToString();
-                    //dcINV_ITEM_MASTER objitem = new dcINV_ITEM_MASTER();
-                    //objitem = INV_ITEM_MASTERBL.GetItemByCode(cObj.item_code);
+        //        foreach (DataRow Row in tbl.Rows)
+        //        {
+        //            dcCN_CREATION_MST cObj = new dcCN_CREATION_MST();
+        //            //cObj.item_code = Row["ITEM_CODE"].ToString();
+        //            //dcINV_ITEM_MASTER objitem = new dcINV_ITEM_MASTER();
+        //            //objitem = INV_ITEM_MASTERBL.GetItemByCode(cObj.item_code);
 
-                    //if (objitem != null)
-                    //{
-                    cObj.CONSIGNEE_NAME = (Row["CONSIGNEE_NAME"].ToString());
-                    cObj.CONSIGNEE_ADDRESS = (Row["CONSIGNEE_ADDRESS"].ToString());
-                    cObj.CONSIGNEE_MOBILE_NO = (Row["CONSIGNEE_MOBILE_NO"].ToString());
-                    cObj.DESTINATION_DIST_NAME = (Row["DESTINATION_DIST_NAME"].ToString());
-                    cObj.DESTINATION_TOWN_NAME = (Row["DESTINATION_TOWN_NAME"].ToString());
+        //            //if (objitem != null)
+        //            //{
+        //            cObj.CONSIGNEE_NAME = (Row["CONSIGNEE_NAME"].ToString());
+        //            cObj.CONSIGNEE_ADDRESS = (Row["CONSIGNEE_ADDRESS"].ToString());
+        //            cObj.CONSIGNEE_MOBILE_NO = (Row["CONSIGNEE_MOBILE_NO"].ToString());
+        //            cObj.DESTINATION_DIST_NAME = (Row["DESTINATION_DIST_NAME"].ToString());
+        //            cObj.DESTINATION_TOWN_NAME = (Row["DESTINATION_TOWN_NAME"].ToString());
 
-                    //cObj.PRIORITY = Row["PRIORITY"].ToString();
-                    //cObj.UOM_ID = objitem.UOM_ID;
-                    //cObj.INDT_REMARKS = Row["INDENT_REMARKS"].ToString();
+        //            //cObj.PRIORITY = Row["PRIORITY"].ToString();
+        //            //cObj.UOM_ID = objitem.UOM_ID;
+        //            //cObj.INDT_REMARKS = Row["INDENT_REMARKS"].ToString();
 
-                    //this.listDetails.Add(cObj);
-                    //}
-                }
+        //            //this.listDetails.Add(cObj);
+        //            //}
+        //        }
 
-                GridView1.DataSource = listDetails;
-                GridView1.DataBind();
-                //SetControlGrid();
+        //        GridView1.DataSource = listDetails;
+        //        GridView1.DataBind();
+        //        //SetControlGrid();
 
-                btnSave.Enabled = true;
+        //        btnSave.Enabled = true;
 
-            }
+        //    }
 
 
            
-        }
+        //}
 
         protected void btnDownloadSample_Click(object sender, EventArgs e)
         {
@@ -1047,5 +1048,159 @@ namespace PG.Web.WREL
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', ' File not found!', 'Error');", true);
             }
         }
+
+        protected void btnPasteData_Click(object sender, EventArgs e)
+        {
+            finddataPaste();
+        }
+
+        private void finddataPaste()
+        {
+            //string rundate = BaseContent.GetCompanyDate().ToString("dd-MMM-yyyy");
+            if (DrPasteTextBox.Text != "")
+            {
+                try
+                {
+                    DataTable dtCh = new DataTable("dtCh");
+                    dtCh.Columns.Add("xCONSIGNEE_NAME", typeof(string));
+                    dtCh.Columns.Add("xCONSIGNEE_ADDRESS", typeof(string));
+                    dtCh.Columns.Add("xCONSIGNEE_MOBILE_NO", typeof(string));
+                    dtCh.Columns.Add("xDESTINATION_DIST_NAME", typeof(string));
+                    dtCh.Columns.Add("xDESTINATION_TOWN_NAME", typeof(string));
+                    
+
+
+                    string copiedContent = Request.Form[DrPasteTextBox.UniqueID];
+                    foreach (string row in copiedContent.Split('\n'))
+                    {
+                        if (!string.IsNullOrEmpty(row))
+                        {
+                            dtCh.Rows.Add();
+                            int i = 0;
+                            foreach (string cell in row.Split('\t'))
+                            {
+                                dtCh.Rows[dtCh.Rows.Count - 1][i] = cell;
+                                i++;
+                            }
+                        }
+                    }
+                    DrPasteTextBox.Text = "";
+
+
+                    LoadGridDr(dtCh);
+
+
+                }
+                 catch (Exception ex)
+                {
+                    //messageLabel2.Text = ex.ToString();
+                    return;
+                }
+            }
+            else
+            {
+                ScriptManager.RegisterClientScriptBlock(btnSave, this.Page.GetType(), "Message", string.Format("alert(\"Please select an Excel File{0}.\");", ""), true);
+            }
+        }
+
+        private void LoadGridDr(DataTable dt)
+        {
+            DataTable dtDebitTrans = new DataTable();
+            dtDebitTrans.Columns.Add("SlNo", typeof(int));
+            dtDebitTrans.Columns.Add("CN_ID", typeof(int));
+            dtDebitTrans.Columns.Add("CN_NUMBER", typeof(string));
+            dtDebitTrans.Columns.Add("CONSIGNEE_NAME", typeof(string));
+            dtDebitTrans.Columns.Add("CONSIGNEE_ADDRESS", typeof(string));
+            dtDebitTrans.Columns.Add("CONSIGNEE_MOBILE_NO", typeof(string));
+            dtDebitTrans.Columns.Add("DESTINATION_DIST_NAME", typeof(string));
+            dtDebitTrans.Columns.Add("DESTINATION_TOWN_NAME", typeof(string));
+            dtDebitTrans.Columns.Add("DESTINATION_DIST_ID", typeof(int));
+            dtDebitTrans.Columns.Add("DESTINATION_TOWN_ID", typeof(int));
+            
+                
+
+            Session["dtDebitTrans"] = dtDebitTrans;
+
+            DataTable dtdr = (DataTable)Session["dtDebitTrans"];
+            if (dt.Rows.Count > 0)
+            {
+                for (int i = 0; i < dt.Rows.Count; i++)
+                #region forloop
+                {
+                    string strCNNo = "";
+                    string strDescription = "";
+                    int DIST_ID = 0;
+                    int TOWN_ID = 0;
+                    string strclientName = "";
+
+                  
+
+
+                    string strCONSIGNEE_NAME = dt.Rows[i]["xCONSIGNEE_NAME"].ToString();
+                    string strCONSIGNEE_ADDRESS = dt.Rows[i]["xCONSIGNEE_ADDRESS"].ToString();
+                    string strCONSIGNEE_MOBILE_NO = dt.Rows[i]["xCONSIGNEE_MOBILE_NO"].ToString();
+                    string strDESTINATION_DIST_NAME = dt.Rows[i]["xDESTINATION_DIST_NAME"].ToString();
+                    //string strDESTINATION_TOWN_NAME = dt.Rows[i]["xDESTINATION_TOWN_NAME"].ToString();
+                    string strDESTINATION_TOWN_NAME = dt.Rows[i]["xDESTINATION_TOWN_NAME"].ToString().Replace("\r", "").Trim();
+
+                    dcDISTRICT_MST cobjb = DISTRICT_MSTBL.GetDistrictInfoByName(strDESTINATION_DIST_NAME);
+                    DIST_ID = cobjb.DIST_ID;
+                    dcTHANA_TOWN_MST cobjbt = THANA_TOWN_MSTBL.GetThanaInfoByName(strDESTINATION_TOWN_NAME);
+                    //string cleanData = rawData.Replace("\r", "");
+                    TOWN_ID = cobjbt.TOWN_ID;
+
+                    DataRow row;
+                    row = dtdr.NewRow();
+                    //row["SlNo"] = (i + 1).ToString();
+                    row["CN_ID"] = 0;
+                    row["CN_NUMBER"] = "";
+                    row["CONSIGNEE_NAME"] = strCONSIGNEE_NAME; //strSubLedgerName;
+                    row["CONSIGNEE_ADDRESS"] = strCONSIGNEE_ADDRESS;
+                    row["CONSIGNEE_MOBILE_NO"] = strCONSIGNEE_MOBILE_NO;
+                    row["DESTINATION_DIST_NAME"] = strDESTINATION_DIST_NAME;
+
+                    row["DESTINATION_DIST_ID"] = DIST_ID;
+                    row["DESTINATION_TOWN_NAME"] = strDESTINATION_TOWN_NAME;
+
+                    row["DESTINATION_TOWN_ID"] = TOWN_ID;
+
+                    dtdr.Rows.Add(row);
+                    ViewState["dtdr"] = dtdr;
+                }
+                #endregion forloop
+                DataTable dtf = new DataTable();
+                dtf = (DataTable)ViewState["dtdr"];
+                ViewState["BulkDebit"] = dtf;
+                Session["dtDebitTrans"] = dtf;
+
+                GridView1.DataSource = dtf;
+                GridView1.DataBind();
+            }
+        }
+        protected void ClearButton_OnClick(object sender, EventArgs e)
+        {
+            DrPasteTextBox.Text = "";
+
+            //Modalpopupextender2.Show();
+        }
+
+        protected void btnPrint_Click(object sender, EventArgs e)
+        {
+            this.ReportOpenType = ReportOpenTypeEnum.Preview;
+            OpenEntryPreviewReport();
+        }
+
+        private void OpenEntryPreviewReport()
+        {
+            clsPrmWREL prm = new clsPrmWREL();
+            ReportOptions rptOption = GetReportOptions();
+            prm.CN_NUMBER = "WR002507001";
+
+
+            AppReport rpt = WRELRGN.CN_Barcode_Report(prm, rptOption);
+            string rk = AppReport.SetAppReportToSession(rpt, this.Context);
+            ShowReport(rk);
+        }
+        
     }
 }

@@ -969,6 +969,7 @@
 
                         <asp:HiddenField ID="hdnCNID" runat="server" Value='<%# Bind("CN_ID") %>' />
                         <asp:HiddenField ID="hdnCargoDtlId" runat="server" Value='<%# Bind("CARGO_DETAIL_ID") %>' />
+                        <asp:HiddenField ID="hdnSourceCargoID" runat="server" Value='<%# Bind("SOURCE_CARGO_ID") %>' />
                     </td>
                 
                 </tr>

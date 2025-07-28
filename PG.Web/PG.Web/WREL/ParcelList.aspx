@@ -169,7 +169,7 @@
                   <asp:BoundField DataField="CONSIGNEE_MOBILE_NO" HeaderText="Mobile No" />
                     <asp:BoundField DataField="IS_DELIVERED" HeaderText="Status" />
                  
-                   <asp:TemplateField HeaderText="Action">
+                   <%--<asp:TemplateField HeaderText="Action">
                        <ItemTemplate>
                             <asp:LinkButton ID="lnkView" runat="server"
                                 CommandName="ViewRow"
@@ -178,7 +178,7 @@
                                 Text="  Assign Deliveryman" />
                         </ItemTemplate>
                         <ItemStyle Width="200px" />
-                 </asp:TemplateField>
+                 </asp:TemplateField>--%>
                </Columns>
                                                      
           </asp:GridView>

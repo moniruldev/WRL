@@ -13,5 +13,6 @@ namespace PG.DBClass.WRELDC
         public DateTime? FromDate = null;
         public DateTime? ToDate = null;
         public string Status = string.Empty;
+        public string CN_NUMBER = string.Empty;
     }
 }

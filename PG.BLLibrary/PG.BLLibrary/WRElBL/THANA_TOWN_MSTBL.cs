@@ -2,6 +2,7 @@
 using PG.DBClass.WRELDC;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Linq;
 using System.Linq;
 using System.Text;
@@ -26,6 +27,48 @@ namespace PG.BLLibrary.WRElBL
             sb.Append(" WHERE 1=1 ");
 
             return sb.ToString();
+        }
+        public static string GetTownsingleSQLString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(" SELECT * ");
+            sb.Append(" FROM THANA_TOWN_MST  ");
+            
+            sb.Append(" WHERE 1=1 ");
+
+            return sb.ToString();
+        }
+
+        public static dcTHANA_TOWN_MST GetThanaInfoByName(string pThana_NAME)
+        {
+            return GetThanaInfoByNameList(pThana_NAME, null).FirstOrDefault();
+        }
+        public static List<dcTHANA_TOWN_MST> GetThanaInfoByNameList(string pThana_NAME, DBContext dc)
+        {
+            List<dcTHANA_TOWN_MST> cObjList = new List<dcTHANA_TOWN_MST>();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetTownsingleSQLString());
+                if (pThana_NAME != string.Empty)
+                {
+                    sb.Append(" AND TOWN_NAME like '%" + pThana_NAME + "%' ");
+                    // cmdInfo.DBParametersInfo.Add("@pDIST_NAME", pDIST_NAME);
+                }
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcTHANA_TOWN_MST>(dbq, dc);
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
         }
         public static List<dcTHANA_TOWN_MST> GetTHANA_TOWN_MSTList()
         {

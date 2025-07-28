@@ -2,6 +2,7 @@
 using PG.DBClass.WRELDC;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Linq;
 using System.Linq;
 using System.Text;
@@ -25,6 +26,38 @@ namespace PG.BLLibrary.WRElBL
             sb.Append(" WHERE 1=1 ");
        
             return sb.ToString();
+        }
+
+        public static dcDISTRICT_MST GetDistrictInfoByName(string pDIST_NAME)
+        {
+            return GetDistrictInfoByNameList(pDIST_NAME, null).FirstOrDefault();
+        }
+        public static List<dcDISTRICT_MST> GetDistrictInfoByNameList(string pDIST_NAME, DBContext dc)
+        {
+            List<dcDISTRICT_MST> cObjList = new List<dcDISTRICT_MST>();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetDistrictSQLString());
+                if (pDIST_NAME != string.Empty)
+                {
+                    sb.Append(" AND DIST_NAME like '%" + pDIST_NAME + "%' ");
+                   // cmdInfo.DBParametersInfo.Add("@pDIST_NAME", pDIST_NAME);
+                }
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcDISTRICT_MST>(dbq, dc);
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
         }
         public static List<dcDISTRICT_MST> GetDISTRICT_MSTList()
         {

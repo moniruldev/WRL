@@ -810,7 +810,7 @@
        <div class="card">
          <div class="card-header p-0">
            <div class="d-flex align-items-center justify-content-between p-1">
-             <h5 class="card-title">Parcel Create</h5>
+             <h5 class="card-title">CN (Parcel) Create</h5>
              <a class="btn btn-primary p-1"> <i class="fas fa-list"></i> Parcel List </a>
          </div>
 
@@ -845,8 +845,8 @@
 
                  <div class="col-md-4">
                   <div class="form-group row mb-0">
-                    <label for="name" class="col-sm-5 col-form-label-sm">Aggrement Details :</label>
-                    <div class="col-sm-7">
+                    <label for="name" class="col-sm-6 col-form-label-sm">Aggrement Details :</label>
+                    <div class="col-sm-6">
                       <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtAggrementDtl" placeholder="Select" ></asp:TextBox> 
                            <asp:HiddenField runat="server" ID="hdnAggrementDtlId" Value="0" /> 
                     </div>
@@ -855,8 +855,8 @@
                 </div>
                     <div class="col-md-4">
                   <div class="form-group row mb-0">
-                    <label for="name" class="col-sm-5 col-form-label-sm">Item :</label>
-                    <div class="col-sm-7">
+                    <label for="name" class="col-sm-3 col-form-label-sm">Item :</label>
+                    <div class="col-sm-9">
                       <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtItemName" placeholder="Select" ></asp:TextBox> 
                        <asp:HiddenField runat="server" ID="hdnItemId" Value="0" /> 
                     </div>
@@ -883,8 +883,8 @@
 
                  <div class="col-md-4">
                   <div class="form-group row mb-0">
-                    <label for="name" class="col-sm-5 col-form-label-sm">Route :</label>
-                    <div class="col-sm-7">
+                    <label for="name" class="col-sm-6 col-form-label-sm">Route :</label>
+                    <div class="col-sm-6">
                       <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtRoute" placeholder="Select" ></asp:TextBox> 
                         <asp:HiddenField runat="server" ID="hdnRouteId" Value="0" /> 
                     </div>
@@ -893,8 +893,8 @@
                 </div>
                   <div class="col-md-4">
                   <div class="form-group row mb-0">
-                    <label for="name" class="col-sm-5 col-form-label-sm">Hub :</label>
-                    <div class="col-sm-7">
+                    <label for="name" class="col-sm-3 col-form-label-sm">Hub :</label>
+                    <div class="col-sm-9">
                       <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtHubName" placeholder="Enter Hub Name" ></asp:TextBox> 
                        <asp:HiddenField runat="server" ID="hdnHubId" Value="0" /> 
                     </div>
@@ -902,13 +902,44 @@
                 </div>
 
                 </div>
-
-
-           <div class="row mb-0">
+          <div class="row mb-0">
+   <div class="col-md-4">
+        <div class="form-group row mb-0">
+            <label for="DrPasteTextBox" class="col-sm-5 col-form-label col-form-label-sm">Paste Excel:</label>
+            <div class="col-sm-7">
+                <asp:TextBox ID="DrPasteTextBox" runat="server" 
+                             class="form-control form-control-sm" 
+                             TextMode="MultiLine" 
+                             Height="150px" Width="700px"
+                             BorderColor="Black" 
+                             >
+                </asp:TextBox>
+                
+            </div>
+      </div>
+    </div>
+</div>
+           <%--<div class="row mb-0">
 
                
 
-                  <div class="col-md-4">
+                 <div class="col-md-4">
+                  <div class="form-group row mb-0">
+                    <label for="name" class="col-sm-5 col-form-label-sm">Paste Excel :</label>
+                    <div class="col-sm-7">
+                      <asp:TextBox ID="DrPasteTextBox" runat="server" class="form-control form-control-sm w-100" TextMode="MultiLine"  Height="150px" BorderColor="Black"></asp:TextBox>
+                         &nbsp;
+                 <asp:Button ID="btnPastData" runat="server" Text="Load Data" CssClass="buttoncommon" OnClick="btnPasteData_Click" />
+                    </div>
+                  </div>
+                </div>
+
+             </div>--%>
+         <div class="row mb-0">
+
+               
+
+                 <%-- <div class="col-md-4">
                     <div class="form-group row align-items-center mb-0">
                         <label for="FileUpload1" class="col-sm-5 col-form-label-sm">Upload Details :</label>
                         <div class="col-sm-7">
@@ -917,15 +948,22 @@
                       
                     </div>
                 
-                </div>
+                </div>--%>
 
           <div class="col-md-4">
                 <div class="form-group d-flex align-items-center mb-0 gap-2">
-                    <asp:Button ID="btnUpload" runat="server" Text="Upload Excel"
-                        CssClass="btn btn-sm btn-primary mr-2" OnClick="btnUpload_Click" />
-
+                    <%--<asp:Button ID="btnUpload" runat="server" Text="Upload Excel"
+                        CssClass="btn btn-sm btn-primary mr-2" OnClick="btnUpload_Click" />--%>
+                    
+             
+                     
                     <asp:Button ID="btnDownloadSample" runat="server" Text="Download Sample"
                         CssClass="btn btn-sm btn-primary" OnClick="btnDownloadSample_Click" />
+                    &nbsp;     &nbsp;
+                    <asp:Button ID="btnPastData" runat="server" 
+                            Text="Load Data" 
+                            CssClass="btn btn-primary btn-sm" 
+                            OnClick="btnPasteData_Click" />
                 </div>
             </div>
 
@@ -957,22 +995,22 @@
     <Columns>
      <asp:TemplateField HeaderText="SL" HeaderStyle-HorizontalAlign="Center">
         <ItemTemplate>
-            <asp:Label ID="lblSerialNo" runat="server" Text=""></asp:Label>
+            <asp:Label ID="lblSerialNo" runat="server" Text="" ></asp:Label>
               <asp:HiddenField runat="server" ID="hdnCNId" Value='<%# Bind("CN_ID") %>' />
         </ItemTemplate>
         <ItemStyle HorizontalAlign="Center" Width="40px" />
     </asp:TemplateField>
 
-   <%--      <asp:TemplateField HeaderText="CN Number">
+         <asp:TemplateField HeaderText="CN Number">
     <ItemTemplate>
         <div class="d-flex align-items-center">
             <table>
                 <tr>
                     <td class="p-0">
-                        <asp:TextBox ID="txtCNNumber" runat="server"
+                        <asp:label ID="txtCNNumber" runat="server"
                             CssClass="form-control form-control-sm"
-                            Style="width: 100px;"
-                            Text='<%# Bind("CN_NUMBER") %>' ></asp:TextBox>
+                            Style="width: 110px;"
+                            Text='<%# Bind("CN_NUMBER") %>' ></asp:label>
                       
 
                     </td>
@@ -980,7 +1018,7 @@
             </table>
         </div>
     </ItemTemplate>
-</asp:TemplateField>--%>
+</asp:TemplateField>
     <asp:TemplateField HeaderText="Recipient Name">
     <ItemTemplate>
         <div class="d-flex align-items-center">
@@ -989,7 +1027,7 @@
                     <td class="p-0">
                         <asp:TextBox ID="txtRecipientName" runat="server"
                             CssClass="form-control form-control-sm"
-                            Style="width: 200px;"
+                            Style="width: 170px;"
                             Text='<%# Bind("CONSIGNEE_NAME") %>' ></asp:TextBox>
 
                     </td>
@@ -1006,7 +1044,7 @@
                     <td class="p-0">
                         <asp:TextBox ID="txtRecipientAddress" runat="server"
                             CssClass="form-control form-control-sm"
-                            Style="width: 250px;"
+                            Style="width: 200px;"
                             Text='<%# Bind("CONSIGNEE_ADDRESS") %>' ></asp:TextBox>
 
                     </td>
@@ -1024,7 +1062,7 @@
                     <td class="p-0">
                         <asp:TextBox ID="txtRecipientMobileNo" runat="server"
                             CssClass="form-control form-control-sm"
-                            Style="width: 200px;"
+                            Style="width: 120px;"
                             Text='<%# Bind("CONSIGNEE_MOBILE_NO") %>' ></asp:TextBox>
 
                     </td>
@@ -1042,7 +1080,7 @@
                     <td class="p-0">
                         <asp:TextBox ID="txtDestinationDist" runat="server"
                             CssClass="form-control form-control-sm"
-                            Style="width: 200px;"
+                            Style="width: 150px;"
                             Text='<%# Bind("DESTINATION_DIST_NAME") %>' ></asp:TextBox>
 
                         <asp:HiddenField ID="hdnDestinationDistId" runat="server" Value='<%# Bind("DESTINATION_DIST_ID") %>' />
@@ -1062,7 +1100,7 @@
                     <td class="p-0">
                         <asp:TextBox ID="txtTownName" runat="server"
                             CssClass="form-control form-control-sm"
-                            Style="width: 200px;"
+                            Style="width: 150px;"
                             Text='<%# Bind("DESTINATION_TOWN_NAME") %>' ></asp:TextBox>
 
                         <asp:HiddenField ID="hdnTownId" runat="server" Value='<%# Bind("DESTINATION_TOWN_ID") %>' />
@@ -1122,7 +1160,7 @@
        <asp:LinkButton runat="server" ID="btnSave" OnClick="btnSave_Click" CssClass="btn btn-success" Text="<i class='fas fa-save'></i> Save"></asp:LinkButton>
        <asp:LinkButton runat="server" ID="btnEdit" OnClick="btnEdit_Click" CssClass="btn btn-primary" Text="<i class='fas fa-edit'></i> Edit"></asp:LinkButton>
 
-          <asp:LinkButton runat="server" ID="btnPrint"  CssClass="btn btn-primary" Text="<i class='fas fa-print'></i> CN Print"></asp:LinkButton>
+          <asp:LinkButton runat="server" ID="btnPrint" OnClick="btnPrint_Click" CssClass="btn btn-primary" Text="<i class='fas fa-print'></i> CN Print"></asp:LinkButton>
      
       
       </div>

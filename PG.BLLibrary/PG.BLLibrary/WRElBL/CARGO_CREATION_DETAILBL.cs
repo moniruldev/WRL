@@ -332,5 +332,49 @@ namespace PG.BLLibrary.WRElBL
             finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
             return cObjList;
         }
+
+        public static string GetCargoIDListinfoSQLString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(" SELECT * FROM CARGO_CREATION_DETAIL  ");
+            sb.Append(" WHERE 1=1 ");
+
+            return sb.ToString();
+        }
+
+        public static dcCARGO_CREATION_DETAIL GetCargoIDInfoByCNID(int pCN_ID)
+        {
+            return GetCargoIDInfoByCNIDList(pCN_ID, null).FirstOrDefault();
+        }
+        public static List<dcCARGO_CREATION_DETAIL> GetCargoIDInfoByCNIDList(int pCN_ID, DBContext dc)
+        {
+            List<dcCARGO_CREATION_DETAIL> cObjList = new List<dcCARGO_CREATION_DETAIL>();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetCargoIDListinfoSQLString());
+                if (pCN_ID >0)
+                {
+                    sb.Append(" AND CN_ID= @pCN_ID ");
+                    cmdInfo.DBParametersInfo.Add("@pCN_ID", pCN_ID);
+                }
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcCARGO_CREATION_DETAIL>(dbq, dc);
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
+        }
+
+        
     }
 }

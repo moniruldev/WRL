@@ -505,8 +505,11 @@ namespace PG.Web.WREL
             strD = ((TextBox)gvR.FindControl("txtAgentCompanyName")).Text;
             cObj.AGENT_COMPANY_NAME = strD;
 
-            strD = ((HiddenField)gvR.FindControl("hdnAgentDtlId")).Value;
-            cObj.AGENT_ID = Conversion.StringToInt(strD);
+            //strD = ((HiddenField)gvR.FindControl("hdnAgentDtlId")).Value;
+            //cObj.AGENT_ID = Conversion.StringToInt(strD);
+            //strD = ((HiddenField)gvR.FindControl("hdnAgentDtlId")).Value;
+            cObj.AGENT_ID = Conversion.StringToInt(hdnAgentId.Value);
+            
 
             strD = ((TextBox)gvR.FindControl("txtContractDate")).Text;
             cObj.CONTRACT_DATE_FROM = Conversion.StringToDate(strD);

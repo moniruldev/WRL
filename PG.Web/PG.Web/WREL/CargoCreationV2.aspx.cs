@@ -499,7 +499,9 @@ namespace PG.Web.WREL
 
             strD = ((TextBox)gvR.FindControl("txtClientName")).Text;
             cObj.CLIENT_NAME = strD;
-
+            strD = ((HiddenField)gvR.FindControl("hdnSourceCargoID")).Value;
+            cObj.SOURCE_CARGO_ID = Conversion.StringToInt(strD);
+            
 
             if (!gvR.Visible)
             {
@@ -1168,6 +1170,8 @@ namespace PG.Web.WREL
             dtDebitTrans.Columns.Add("CN_NUMBER", typeof(string));
             dtDebitTrans.Columns.Add("Description", typeof(string));
             dtDebitTrans.Columns.Add("CLIENT_NAME", typeof(string));
+            dtDebitTrans.Columns.Add("SOURCE_CARGO_ID", typeof(int));
+            
             
             Session["dtDebitTrans"] = dtDebitTrans;
 
@@ -1180,6 +1184,7 @@ namespace PG.Web.WREL
                     string strCNNo = "";
                     string strDescription = "";
                     int CN_ID = 0;
+                    int CARGO_ID = 0;
                     string strclientName = "";
 
                     strCNNo = dt.Rows[i]["xlCNNo"].ToString();
@@ -1190,6 +1195,9 @@ namespace PG.Web.WREL
                     CN_ID = cobjb.CN_ID;
                     strclientName = cobjb.CLIENT_NAME;
 
+                    dcCARGO_CREATION_DETAIL cobjb1 = CARGO_CREATION_DETAILBL.GetCargoIDInfoByCNID(CN_ID);
+                    CARGO_ID = cobjb1.CARGO_ID;
+
                     DataRow row;
                     row = dtdr.NewRow();
                     row["SlNo"] = (i + 1).ToString();
@@ -1198,7 +1206,7 @@ namespace PG.Web.WREL
                     row["CARGO_ID"] = 0;
                     row["CN_ID"] = CN_ID;
                     row["CARGO_DETAIL_ID"] = 0;
-
+                    row["SOURCE_CARGO_ID"] = CARGO_ID;
                     row["CLIENT_NAME"] = strclientName;
                     
                     dtdr.Rows.Add(row);
