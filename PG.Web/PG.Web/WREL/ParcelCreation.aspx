@@ -906,11 +906,20 @@
    <div class="col-md-4">
         <div class="form-group row mb-0">
             <label for="DrPasteTextBox" class="col-sm-5 col-form-label col-form-label-sm">Paste Excel:</label>
-            <div class="col-sm-7">
+           
+      </div>
+    </div>
+</div>
+
+    <div class="row mb-2">
+   <div class="col-md-12">
+        <div class="form-group row mb-0">
+           
+            <div class="col-sm-12">
                 <asp:TextBox ID="DrPasteTextBox" runat="server" 
                              class="form-control form-control-sm" 
                              TextMode="MultiLine" 
-                             Height="150px" Width="700px"
+                             Height="250px" Width="100%"
                              BorderColor="Black" 
                              >
                 </asp:TextBox>
@@ -1160,7 +1169,7 @@
        <asp:LinkButton runat="server" ID="btnSave" OnClick="btnSave_Click" CssClass="btn btn-success" Text="<i class='fas fa-save'></i> Save"></asp:LinkButton>
        <asp:LinkButton runat="server" ID="btnEdit" OnClick="btnEdit_Click" CssClass="btn btn-primary" Text="<i class='fas fa-edit'></i> Edit"></asp:LinkButton>
 
-          <asp:LinkButton runat="server" ID="btnPrint" OnClick="btnPrint_Click" CssClass="btn btn-primary" Text="<i class='fas fa-print'></i> CN Print"></asp:LinkButton>
+          <asp:LinkButton runat="server" ID="btnPrint" OnClick="btnPrint_Click" CssClass="btn btn-primary" Text="<i class='fas fa-print'></i> CN Print" Visible="false"></asp:LinkButton>
      
       
       </div>

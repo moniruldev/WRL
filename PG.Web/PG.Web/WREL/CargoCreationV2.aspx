@@ -904,13 +904,13 @@
                     <div class="col-sm-7">
                       <asp:TextBox ID="DrPasteTextBox" runat="server" class="form-control form-control-sm" TextMode="MultiLine" Width="99%" Height="150px" BorderColor="Black"></asp:TextBox>
                          &nbsp;
-                 <asp:Button ID="btnPastData" runat="server" Text="Load Data" CssClass="buttoncommon" OnClick="btnPasteData_Click" />
+                 <asp:Button ID="btnPastData" runat="server" Text="Load Data" CssClass="btn btn-primary btn-sm mb-1 mt-2" OnClick="btnPasteData_Click" />
                     </div>
                   </div>
                 </div>
 
              </div>
-        
+
       
 
       </div>

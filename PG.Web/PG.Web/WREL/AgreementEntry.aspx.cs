@@ -267,18 +267,18 @@ namespace PG.Web.WREL
                 case DataControlRowType.DataRow:
                     e.Row.CssClass += " gridRow";
                     break;
-                case DataControlRowType.Header:
-                    e.Row.CssClass += " headerRow";
-                    break;
-                case DataControlRowType.Footer:
-                    e.Row.CssClass += " footerRow";
-                    break;
-                case DataControlRowType.Pager:
-                    e.Row.CssClass += " pagerRow";
-                    break;
-                case DataControlRowType.EmptyDataRow:
-                    e.Row.CssClass += " gridRow";
-                    break;
+                //case DataControlRowType.Header:
+                //    e.Row.CssClass += " headerRow";
+                //    break;
+                //case DataControlRowType.Footer:
+                //    e.Row.CssClass += " footerRow";
+                //    break;
+                //case DataControlRowType.Pager:
+                //    e.Row.CssClass += " pagerRow";
+                //    break;
+                //case DataControlRowType.EmptyDataRow:
+                //    e.Row.CssClass += " gridRow";
+                //    break;
             }
         }
 
