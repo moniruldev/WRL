@@ -108,8 +108,7 @@ namespace PG.Web
 
             if ((txtUser.Text.Trim() == "") || (txtPassword.Text == ""))
             {
-                //lblStatus.Text = @"User or password is empty!!";
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', 'User or password is empty!!', 'Error');", true);
+                lblStatus.Text = @"User or password is empty!!";
                 return;
             }
 
@@ -134,16 +133,14 @@ namespace PG.Web
                     bool UserLocationValid = LocationUserBL.IsLocationUserLoginAllowed(locationID, userKey);
                     if (!UserLocationValid)
                     {
-                        //lblStatus.Text = @"Invalid User Location! Please Select valid Location";
-                        ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', 'Invalid User Location! Please Select valid Location', 'Error');", true);
+                        lblStatus.Text = @"Invalid User Location! Please Select valid Location";
                         return;
                     }
                 }
 
                 if (!BLLibrary.SystemsBL.AppInfoBL.CheckAppRegistration(AppInfo.AppID))
                 {
-                    //lblStatus.Text = @"Application Registration Expired! Please contact with Program Administrator";
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', 'Application Registration Expired! Please contact with Program Administrator', 'Error');", true);
+                    lblStatus.Text = @"Application Registration Expired! Please contact with Program Administrator";
                     return;
                 }
 
@@ -188,8 +185,7 @@ namespace PG.Web
             }
             else
             {
-                //lblStatus.Text = @"Invalid Login!!";
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', 'Invalid user or password!!', 'Error');", true);
+                lblStatus.Text = @"Invalid Login!!";
             }
 
            
