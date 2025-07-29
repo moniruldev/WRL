@@ -8,7 +8,7 @@
 	<!-- <link href="css/tab.css" rel="stylesheet" type="text/css" /> !-->
 	<link href="css/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
 	<link href="css/layout-default-latest.css" rel="stylesheet" type="text/css" />
-  
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css" type="text/css"/>
 				 
@@ -25,7 +25,6 @@
 	<script src="javascript/pg.jssecurity.js?v=1.2.0" type="text/javascript"></script>
 	<script src="javascript/pg.tabclass.js?v=2.0.3" type="text/javascript"></script>
 	<script src="javascript/pg.tabmenu.js?v=2.2.0" type="text/javascript"></script>
-
 	
 	
 	<style type="text/css">
@@ -607,6 +606,9 @@
 	 //    , 5000);
  });
 
+
+
+
  $(document).ready(function () {
 	 JSSecurity.AppID = appID;
 	 JSSecurity.RootPath = rootPath;
@@ -1000,7 +1002,7 @@ $(document).ready(function() {
 			<div id="dvTop" class="pane ui-layout-north fixPng"">
 			   <div id="dvTopInner" 
 					style="padding:0; width:100%;height:100%; Background-color:#3CC1CF;  background-repeat:no-repeat;"> <%--background-image: linear-gradient(to right, green, red,#0094ff, green); --%>
-				 <table border="0" cellpadding="0" cellspacing="0" style="width:100%;">
+				 <table border="0" cellpadding="0" cellspacing="0" style="width:100%;height:100%">
 				   <tr>
 					 <td style="width:60%;">
 					  <table border="0" cellpadding="0" cellspacing="0">

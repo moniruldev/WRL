@@ -29,6 +29,13 @@
     text-decoration: none;
   }
 
+   .card-link-hover h5,
+  .card-link-hover h1,
+  .card-link-hover i {
+    color:black ; 
+  
+  }
+
     
         
          
