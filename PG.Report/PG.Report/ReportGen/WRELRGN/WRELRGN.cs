@@ -28,5 +28,20 @@ namespace PG.Report.ReportGen.WRELRGN
             rpt.DataSources.Add(new AppReport.DataSource("dsCN", rList));
             return rpt;
         }
+
+        public static AppReport CargoManifest_Report(clsPrmWREL rptClass, ReportOptions rptOptions)
+        {
+            return CargoManifest_Report(rptClass, rptOptions, null);
+        }
+        public static AppReport CargoManifest_Report(clsPrmWREL rptClass, ReportOptions rptOptions, DBContext dc)
+        {
+            AppReport rpt = new AppReport();
+            rpt.ReportID = ReportIDEnum.ItemReport;
+            rpt.ReportOptions = rptOptions;
+            rpt.ReportEmbeddedResource = @"PG.Report.ReportDef.WRELDef.rptCargoManifest.rdlc";
+            List<rcWREL> rList = WRELRBL.Get_CargoManifest_Report(rptClass, dc);
+            rpt.DataSources.Add(new AppReport.DataSource("dsCargo", rList));
+            return rpt;
+        }
     }
 }
