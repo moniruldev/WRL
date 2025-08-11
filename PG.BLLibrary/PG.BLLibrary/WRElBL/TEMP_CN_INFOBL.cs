@@ -18,7 +18,7 @@ namespace PG.BLLibrary.WRElBL
             //dlo.LoadWith<DBClass.dcTEMP_CN_INFO>(obj => obj.relatedclassname);
             return dlo;
         }
-
+          //re
         public static string GetTempCNinfoSQLString()
         {
             StringBuilder sb = new StringBuilder();
