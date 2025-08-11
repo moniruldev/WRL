@@ -32,7 +32,7 @@ namespace PG.DBClass.WRELDC
         private string m_REF_CHALLAN_NO = string.Empty;
         private string m_REF_ACCOUNT_NO = string.Empty;
         private string m_DISTANCE_TYPE_NAME = string.Empty;
-        
+        //dd
         #endregion  //private members
 
         #region public events
