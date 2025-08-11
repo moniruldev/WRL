@@ -452,30 +452,7 @@
 
              </div>
 
-           <div class="row mb-0">
-                 
-                <div class="col-md-2">
-                 
-                </div>
-
-                 <div class="col-md-4">
-                  <div class="form-group row mb-0">
-                    <label for="name" class="col-sm-4 col-form-label-sm">Service Charge :</label>
-                    <div class="col-sm-8">
-                      <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtServiceChargeAmt" placeholder="Service Charge Amount" onkeypress="return isNumberKey(event, this);"></asp:TextBox> 
-                    </div>
-                  </div>
-                </div>
-
-
-                
-
-
-                 <div class="col-md-2">
-                 
-                </div>
-
-             </div>
+          
 
 
            <div class="row mb-0">

@@ -103,6 +103,8 @@ namespace PG.DBClass.WRELDC
          public decimal SERVICE_AMOUNT { get; set; }
 
          public string CONSIGNEE_NAME { get; set; }
+
+         public int SLNo { get; set; }
          
          
      }

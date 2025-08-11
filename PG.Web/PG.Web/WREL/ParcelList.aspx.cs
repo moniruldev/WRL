@@ -18,16 +18,24 @@ using PG.DBClass.HMSDC;
 using PG.BLLibrary.HMSBL;
 using PG.DBClass.WRELDC;
 using PG.BLLibrary.WRElBL;
+using PG.Report;
+using PG.Report.ReportEnums;
+using PG.Report.ReportGen.WRELRGN;
 
 namespace PG.Web.WREL
 {
     public partial class ParcelList : BagePage
     {
+        public string ReportViewPageLink = PageLinks.ReportLinks.GetLink_ReportView;
+        public string ReportViewPDFPageLink = PageLinks.ReportLinks.GetLink_ReportViewPDF;
+        public string ReportPrintPageLink = PageLinks.ReportLinks.GetLink_ReportPrint;
+        public string ReportPDFPageLink = PageLinks.ReportLinks.GetLink_ReportPDF;
+
         int CompanyID = 0;
         public string ItemListServiceLink = PageLinks.InventoryLink.GetLink_ItemList;
         public string ItemGroupListServiceLink = PageLinks.InventoryLink.GetLink_ItemGroupList;
-      
 
+        ReportOpenTypeEnum ReportOpenType = ReportOpenTypeEnum.Preview;
         protected override void OnPreInit(EventArgs e)
         {
             if (Globals.AppMasterPage != string.Empty)
@@ -87,6 +95,9 @@ namespace PG.Web.WREL
             //prmClient.IS_ACTIVE = ddlIsActive.SelectedValue;
 
             List<dcCN_CREATION_MST> listData = CN_CREATION_MSTBL.GetCNInfoList();
+            listData = listData
+                .OrderBy(x => x.CN_ID) // ascending
+                .ToList();
             BindGridData(listData);
             SetGridInfo(listData.Count);
 
@@ -293,6 +304,213 @@ namespace PG.Web.WREL
         {
             GoTotPageNo(PG.Core.Utility.Conversion.StringToInt(txtGridPageNo.Text));
         }
+
+        protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "print")
+            {
+                int cnID = Convert.ToInt32(e.CommandArgument);
+
+                clsPrmWREL prm = new clsPrmWREL();
+                ReportOptions rptOption = GetReportOptions();
+                prm.CN_ID = cnID;
+
+
+                AppReport rpt = WRELRGN.CN_Barcode_Report(prm, rptOption);
+                string rk = AppReport.SetAppReportToSession(rpt, this.Context);
+                ShowReport(rk);
+
+            }
+        }
+
+        private ReportOptions GetReportOptions()
+        {
+            ReportOptions rptOption = new ReportOptions();
+
+            //rptOption.ReportViewMode = (ReportViewModeEnum)Convert.ToInt32(ddlReportFormat.SelectedValue);
+            //rptOption.ReportOpenType = this.ReportOpenType;
+
+            //AppInfo.SetAppInfoToReportOptions(rptOption);
+            //CompanyInfo.SetCompanyInfoToReportOptions(rptOption, this.Context);
+            //rptOption.UserName = base.LoginUserName;
+
+
+            return rptOption;
+        }
+        private void ShowReport(string reportKey)
+        {
+
+            ReportOpenTypeEnum rptOpenType = this.ReportOpenType;
+            ReportViewModeEnum rptViewMode = (ReportViewModeEnum)Convert.ToInt32(ddlReportViewMode.SelectedValue);
+
+            bool pdfView = ddlReportViewType.SelectedValue == "1";
+
+            string strWait = "true";
+            string strIsPrint = "false";
+            string strIsPDFAutoPrint = "false";
+            string strPDFView = "false";
+
+
+            switch (rptOpenType)
+            {
+                case ReportOpenTypeEnum.Preview:
+                    if (ddlReportViewType.SelectedValue == "1")
+                    {
+                        strPDFView = "true";
+                    }
+
+                    break;
+                case ReportOpenTypeEnum.Print:
+                    rptViewMode = ReportViewModeEnum.InThisTab;
+                    strWait = "false";
+                    strIsPrint = "true";
+                    break;
+                case ReportOpenTypeEnum.Export:
+                    //rptViewMode = ReportViewModeEnum.InThisTab;
+                    rptViewMode = ReportViewModeEnum.InNewWindow;
+                    strWait = "false";
+                    break;
+            }
+
+            bool isPDFAutoPrint = true;
+            if (Request.Browser.Browser.ToLower().Contains("ie") == true)
+            {
+                // isPDFAutoPrint = !AccSettings.IsIERsClientPrint;
+            }
+
+            strIsPDFAutoPrint = isPDFAutoPrint ? "true" : "false";
+
+
+            //string strTime = DateTime.Now.ToString("hhmm");
+            string strTime = DateTime.Now.ToFileTime().ToString();
+            //string strTime = DateTime.Now now.getTime().toString();
+            string url = this.ReportViewPageLink + "?rk=" + reportKey + "&_tt=" + strTime;
+            if (pdfView && rptOpenType == ReportOpenTypeEnum.Preview)
+            {
+                url = this.ReportViewPDFPageLink + "?rk=" + reportKey + "&_tt=" + strTime;
+            }
+
+            //string url = this.ReportViewPageLink + "?rk=" + reportKey + "&_tt=" + strTime;
+            //string jsScript = "$(function(){tbopen('" + reportKey + "'," + strWait + ");});";
+
+            //string jsScript = "$(function(){tbopen('" + reportKey + "', " +  strIsPrint  +  "," + strWait + ");});";
+
+            //string jsScript = "$(function(){tbopen('" + reportKey + "', " + strIsPrint +  "," + strIsPDFAutoPrint  + "," + strWait + ");});";
+
+            string jsScript = "$(function(){tbopen('" + reportKey + "', " + strPDFView + ", " + strIsPrint + "," + strIsPDFAutoPrint + "," + strWait + ");});";
+
+            //string jsScript = string.Format("$(function(){tbopen('{0}',{1},{2});});",reportKey,strIsPrint,strWait);
+
+
+            switch (rptViewMode)
+            {
+                case ReportViewModeEnum.InThisTab:
+                    if (rptOpenType == ReportOpenTypeEnum.Print)
+                    {
+                        ClientScript.RegisterClientScriptBlock(this.Page.GetType(), "showreport", jsScript, true);
+                    }
+                    else
+                    {
+                        Response.Redirect(url, false);
+                    }
+
+
+                    break;
+                case ReportViewModeEnum.InNewTab:
+                    ClientScript.RegisterClientScriptBlock(this.Page.GetType(), "showreport", jsScript, true);
+                    break;
+                case ReportViewModeEnum.InNewWindow:
+                    // ClientScript.RegisterStartupScript(this.GetType(), "newWindow", String.Format("<script>window.open('{0}');</script>", url));
+                    ClientScript.RegisterStartupScript(this.GetType(), "newWindow", String.Format("<script>reportInNewWindow('{0}');</script>", url));
+                    break;
+                case ReportViewModeEnum.InDialog:
+                    break;
+                default:
+                    ClientScript.RegisterClientScriptBlock(this.Page.GetType(), "showreport", jsScript, true);
+                    break;
+            }
+            //ReportOpenTypeEnum rptOpenType = this.ReportOpenType;
+            //ReportViewModeEnum rptViewMode = (ReportViewModeEnum)Convert.ToInt32(1);
+
+            //bool pdfView = true;
+
+            //string strWait = "true";
+            //string strIsPrint = "false";
+            //string strIsPDFAutoPrint = "false";
+            //string strPDFView = "false";
+
+
+            //switch (rptOpenType)
+            //{
+            //    case ReportOpenTypeEnum.Preview:
+            //        if (ddlReportViewType.SelectedValue == "1")
+            //        {
+            //            strPDFView = "true";
+            //        }
+
+            //        break;
+            //    case ReportOpenTypeEnum.Print:
+            //        rptViewMode = ReportViewModeEnum.InThisTab;
+            //        strWait = "false";
+            //        strIsPrint = "true";
+            //        break;
+            //    case ReportOpenTypeEnum.Export:
+            //        //rptViewMode = ReportViewModeEnum.InThisTab;
+            //        rptViewMode = ReportViewModeEnum.InNewWindow;
+            //        strWait = "false";
+            //        break;
+            //}
+
+            //bool isPDFAutoPrint = true;
+            //if (Request.Browser.Browser.ToLower().Contains("ie") == true)
+            //{
+            //    // isPDFAutoPrint = !AccSettings.IsIERsClientPrint;
+            //}
+
+            //strIsPDFAutoPrint = isPDFAutoPrint ? "true" : "false";
+
+
+            ////string strTime = DateTime.Now.ToString("hhmm");
+            //string strTime = DateTime.Now.ToFileTime().ToString();
+            ////string strTime = DateTime.Now now.getTime().toString();
+            //string url = this.ReportViewPageLink + "?rk=" + reportKey + "&_tt=" + strTime;
+            //if (pdfView && rptOpenType == ReportOpenTypeEnum.Preview)
+            //{
+            //    url = this.ReportViewPDFPageLink + "?rk=" + reportKey + "&_tt=" + strTime;
+            //}
+
+
+            //string jsScript = "$(function(){tbopen('" + reportKey + "', " + strPDFView + ", " + strIsPrint + "," + strIsPDFAutoPrint + "," + strWait + ");});";
+
+
+            //switch (rptViewMode)
+            //{
+            //    case ReportViewModeEnum.InThisTab:
+            //        if (rptOpenType == ReportOpenTypeEnum.Print)
+            //        {
+            //            ClientScript.RegisterClientScriptBlock(this.Page.GetType(), "showreport", jsScript, true);
+            //        }
+            //        else
+            //        {
+            //            Response.Redirect(url, false);
+            //        }
+
+
+            //        break;
+            //    case ReportViewModeEnum.InNewTab:
+            //        ClientScript.RegisterClientScriptBlock(this.Page.GetType(), "showreport", jsScript, true);
+            //        break;
+            //    case ReportViewModeEnum.InNewWindow:
+            //        ClientScript.RegisterStartupScript(this.GetType(), "newWindow", String.Format("<script>window.open('{0}');</script>", url));
+            //        break;
+            //    case ReportViewModeEnum.InDialog:
+            //        break;
+            //    default:
+            //        ClientScript.RegisterClientScriptBlock(this.Page.GetType(), "showreport", jsScript, true);
+            //        break;
+            //}
+        }
+
 
 
 

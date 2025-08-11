@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace PG.DBClass.WRELDC
 {
     [DBTable(Name = "CARGO_TRACKING")]
+    [Serializable]
     public partial class dcCARGO_TRACKING : DBBaseClass, INotifyPropertyChanged
     {
         #region private members

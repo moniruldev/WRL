@@ -39,7 +39,7 @@ namespace PG.BLLibrary.WRElBL
             sb.Append(" im.item_name, ");
             sb.Append(" r.route_name, ");
             sb.Append(" dis.dist_name AS DESTINATION_DIST_NAME, ");
-            sb.Append(" th.town_name AS DESTINATION_TOWN_NAME ");
+            sb.Append(" th.town_name AS DESTINATION_TOWN_NAME,dp.DEPT_NAME ");
             sb.Append(" FROM CN_CREATION_MST mst ");
             sb.Append(" LEFT JOIN client_mst cl ON mst.client_id = cl.client_id ");
             sb.Append(" LEFT JOIN agreement_detaill ag ON mst.agr_detail_id = ag.agr_detail_id ");
@@ -48,6 +48,7 @@ namespace PG.BLLibrary.WRElBL
             sb.Append(" LEFT JOIN route_mst r ON mst.route_id = r.route_id ");
             sb.Append(" LEFT JOIN district_mst dis ON mst.destination_dist_id = dis.dist_id ");
             sb.Append(" LEFT JOIN thana_town_mst th ON mst.destination_town_id = th.town_id ");
+            sb.Append(" LEFT JOIN DEPARTMENT_MST dp ON mst.CLIENT_DEPT_ID = dp.DEPT_ID ");
             sb.Append(" WHERE 1=1 ");
 
             return sb.ToString();

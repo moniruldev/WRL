@@ -192,7 +192,7 @@ namespace PG.Web.WREL
         private void ResetFormFields()
         {
             txtItemName.Text = string.Empty;
-            txtServiceChargeAmt.Text = string.Empty;
+          
             txtRemarks.Text = string.Empty;
         }
 
@@ -207,7 +207,7 @@ namespace PG.Web.WREL
                 txtItemName.Text = cObj.ITEM_NAME;
                 ddlItemType.SelectedValue = cObj.ITEM_TYPE_ID.ToString();
                 ddlUnitId.SelectedValue = cObj.UOM_ID.ToString();
-                txtServiceChargeAmt.Text = cObj.SERVICE_CHARGE_AMT_DEFAULT.ToString("0.##");
+                
                 txtRemarks.Text = cObj.REMARKS;
                 ddlStatus.SelectedValue = cObj.IS_ACTIVE;
 
@@ -237,7 +237,7 @@ namespace PG.Web.WREL
             ddlStatus.CssClass = "form-control form-control-sm";
             ddlUnitId.CssClass = "form-control form-control-sm";
             SetTextBoxState(txtItemName, isEnabled);
-            SetTextBoxState(txtServiceChargeAmt, isEnabled);
+           
             SetTextBoxState(txtRemarks, isEnabled);
             
             //buttons
@@ -410,7 +410,7 @@ namespace PG.Web.WREL
             cObj.ITEM_NAME = txtItemName.Text.Trim();
             cObj.ITEM_TYPE_ID = Conversion.StringToInt(ddlItemType.SelectedValue);
             cObj.UOM_ID = Conversion.StringToInt(ddlUnitId.SelectedValue);
-            cObj.SERVICE_CHARGE_AMT_DEFAULT = Conversion.StringToDecimal(txtServiceChargeAmt.Text);
+           
             cObj.REMARKS = txtRemarks.Text.Trim();
             cObj.IS_ACTIVE = ddlStatus.SelectedValue;
             

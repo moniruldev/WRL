@@ -31,6 +31,24 @@ namespace PG.Web.WREL {
         protected global::System.Web.UI.WebControls.LinkButton btnLoadData;
         
         /// <summary>
+        /// ddlReportViewType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlReportViewType;
+        
+        /// <summary>
+        /// ddlReportViewMode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlReportViewMode;
+        
+        /// <summary>
         /// GridView1 control.
         /// </summary>
         /// <remarks>

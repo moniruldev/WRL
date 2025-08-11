@@ -23,6 +23,25 @@ namespace PG.Report.ReportClass.WRELRC
         private string m_DEPARTMENT= string.Empty;
         private string m_ITEM_NAME = string.Empty;
         private decimal m_SERVICE_AMOUNT = 0;
+
+       
+
+        public string CLIENT_ADDRESS { get; set; }
+        public string CLIENT_MOBILE { get; set; }
+       
+
+        public string ROUTE_NAME { get; set; }
+       
+        public string TOWN_NAME { get; set; }
+       
+
+        public DateTime? CREATE_DATE { get; set; }
+        public DateTime? BOOKING_DATE { get; set; }
+        public decimal SERVICE_CHARGE_AMT_DEFAULT { get; set; }
+        public decimal WEIGHT { get; set; }
+        public Int32 QUANTITY { get; set; }
+        public string DEPT_NAME { get; set; }
+        public string DIST_CODE { get; set; }
          
         public int CARGO_ID
         {

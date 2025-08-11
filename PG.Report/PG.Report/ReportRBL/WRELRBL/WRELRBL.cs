@@ -34,17 +34,27 @@ namespace PG.Report.ReportRBL.WRELRBL
 
                 sb.Length = 0;
 
-                sb.Append(" Select CN_NUMBER FROM CN_CREATION_MST ");
-                    sb.Append(" Where 1=1  ");
-                    if (prmINV.CN_NUMBER != null)
-                    {
-                        sb.Append(" AND  CN_NUMBER =@CN_NUMBER ");
-                        cmdInfo.DBParametersInfo.Add("@CN_NUMBER", prmINV.CN_NUMBER);
-                        
-                    }
+                sb.Append(" Select cnm.CN_NUMBER,clm.CLIENT_NAME,clm.CLIENT_ADDRESS,clm.MOBILE_NO CLIENT_MOBILE,im.ITEM_NAME,rm.ROUTE_NAME,cnm.DESTINATION DIST_NAME,tm.TOWN_NAME ");
+                sb.Append(" ,cnm.CREATE_DATE,cnm.BOOKING_DATE,cnm.SERVICE_AMOUNT SERVICE_CHARGE_AMT_DEFAULT,0 WEIGHT,1 QUANTITY ,cnm.CONSIGNEE_NAME,cnm.CONSIGNEE_ADDRESS,cnm.CONSIGNEE_MOBILE_NO,dm.DIST_CODE ");
+                sb.Append(" ,dpm.DEPT_NAME ");
+                sb.Append(" FROM CN_CREATION_MST cnm ");
+                sb.Append(" INNER JOIN CLIENT_MST clm ON cnm.CLIENT_ID=clm.CLIENT_ID ");
+                sb.Append(" INNER JOIN ITEM_MST im ON cnm.ITEM_ID=im.ITEM_ID ");
+                sb.Append(" LEFT JOIN DEPARTMENT_MST dpm ON cnm.CLIENT_DEPT_ID=dpm.DEPT_ID ");
+                sb.Append(" LEFT JOIN ROUTE_MST rm ON cnm.ROUTE_ID=rm.ROUTE_ID ");
+                sb.Append(" LEFT JOIN DISTRICT_MST dm ON cnm.DESTINATION_DIST_ID=dm.DIST_ID ");
+                sb.Append(" LEFT JOIN THANA_TOWN_MST tm ON cnm.DESTINATION_TOWN_ID=tm.TOWN_ID ");
+
+                sb.Append(" Where 1=1  ");
+                if (prmINV.CN_ID > 0)
+                {
+                    sb.Append(" AND  cnm.CN_ID =@CN_ID ");
+                    cmdInfo.DBParametersInfo.Add("@CN_ID", prmINV.CN_ID);
+
+                }
 
 
-                   
+
 
 
 
@@ -61,7 +71,25 @@ namespace PG.Report.ReportRBL.WRELRBL
                     rcWREL stk = new rcWREL();
 
                     stk.CN_NUMBER = dRow["CN_NUMBER"].ToString();
-                    stk.img = GenerateQrCode(stk.CN_NUMBER);
+                    stk.CLIENT_NAME = dRow["CLIENT_NAME"].ToString();
+                    stk.CLIENT_ADDRESS = dRow["CLIENT_ADDRESS"].ToString();
+
+                    stk.CLIENT_MOBILE = dRow["CLIENT_MOBILE"].ToString();
+                    stk.ITEM_NAME = dRow["ITEM_NAME"].ToString();
+                    stk.ROUTE_NAME = dRow["ROUTE_NAME"].ToString();
+                    stk.DIST_NAME = dRow["DIST_NAME"].ToString();
+                    stk.TOWN_NAME = dRow["TOWN_NAME"].ToString();
+                    stk.CREATE_DATE = Convert.ToDateTime(dRow["CREATE_DATE"].ToString());
+
+                    stk.SERVICE_CHARGE_AMT_DEFAULT = Convert.ToDecimal(dRow["SERVICE_CHARGE_AMT_DEFAULT"].ToString());
+                    stk.WEIGHT = Convert.ToDecimal(dRow["WEIGHT"].ToString());
+                    stk.QUANTITY = Convert.ToInt32(dRow["QUANTITY"].ToString());
+                    stk.CONSIGNEE_NAME = dRow["CONSIGNEE_NAME"].ToString();
+                    stk.CONSIGNEE_ADDRESS = dRow["CONSIGNEE_ADDRESS"].ToString();
+                    stk.CONSIGNEE_MOBILE_NO = dRow["CONSIGNEE_MOBILE_NO"].ToString();
+
+
+                    stk.img = GenerateQrCode(stk.CN_NUMBER + " Booking Date : " + Convert.ToDateTime(dRow["CREATE_DATE"]).ToString("dd-MMM-yyyy") + " Customer : " + stk.CLIENT_NAME + " Web : www.world-runner.com");
                     cRptList.Add(stk);
 
                 }
@@ -80,7 +108,7 @@ namespace PG.Report.ReportRBL.WRELRBL
             QRCoder.QRCodeGenerator qRCodeGenerator = new QRCoder.QRCodeGenerator();
             QRCoder.QRCodeData qRCodeData = qRCodeGenerator.CreateQrCode(qrmsg, QRCoder.QRCodeGenerator.ECCLevel.Q);
             QRCoder.QRCode qRCode = new QRCoder.QRCode(qRCodeData);
-            
+
             using (Bitmap bmp = qRCode.GetGraphic(5))
             {
                 using (MemoryStream ms = new MemoryStream())
@@ -95,6 +123,26 @@ namespace PG.Report.ReportRBL.WRELRBL
                 }
             }
         }
+        //private static byte[] GenerateQrCode(string qrmsg)
+        //{
+        //    QRCoder.QRCodeGenerator qRCodeGenerator = new QRCoder.QRCodeGenerator();
+        //    QRCoder.QRCodeData qRCodeData = qRCodeGenerator.CreateQrCode(qrmsg, QRCoder.QRCodeGenerator.ECCLevel.Q);
+        //    QRCoder.QRCode qRCode = new QRCoder.QRCode(qRCodeData);
+            
+        //    using (Bitmap bmp = qRCode.GetGraphic(5))
+        //    {
+        //        using (MemoryStream ms = new MemoryStream())
+        //        {
+        //            bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
+
+
+        //            byte[] byteImage = ms.ToArray();
+        //            //MemoryStream ms1 = new MemoryStream(byteImage);
+        //            //img = Image.FromStream(ms1);  
+        //            return byteImage;
+        //        }
+        //    }
+        //}
         //Others
 
         public static List<rcWREL> Get_CargoManifest_Report(clsPrmWREL prm, DBContext dc)

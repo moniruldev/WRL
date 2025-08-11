@@ -13,6 +13,11 @@
     <script language="javascript" type="text/javascript">
         // <!CDATA[
 
+        var ReportViewPageLink = '<%=this.ReportViewPageLink%>';
+        var ReportViewPDFPageLink = '<%=this.ReportViewPDFPageLink%>';
+        var ReportPrintPageLink = '<%=this.ReportPrintPageLink%>';
+        var ReportPDFPageLink = '<%=this.ReportPDFPageLink%>';
+
         var ItemListServiceLink = '<%=this.ItemListServiceLink%>';
 
         var btnGridPageGoTo = '<%=btnGridPageGoTo.ClientID %>';
@@ -100,7 +105,90 @@
 
 
         });    
+        function tbopen(key, isPrint, isPDFAutoPrint, showWait) {
+            key = key || '';
+            isPrint = isPrint || false;
+            showWait = showWait || true;
 
+            if (isPrint) {
+                if (key != '') {
+                    ReportPrint(key, isPDFAutoPrint);
+                    return;
+                }
+            }
+
+            //var url = "/Report/ReportView.aspx?rk=" + key
+
+            var now = new Date();
+            var strTime = now.getTime().toString();
+            var url = ReportViewPageLink + "?rk=" + key + "&_tt=" + strTime;
+            //var url = ReportViewPageLink + "?rk=" + key;
+
+            //if (pageInTab == 1)
+            if (TabVar.PageMode == Enums.PageMode.InTab) {
+
+                var tdata = new xtabdata();
+                tdata.linktype = Enums.LinkType.Direct;
+                tdata.id = 7999;
+                tdata.name = "Report view";
+                //tdata.label = "User: " + userid;
+                tdata.label = "Report view";
+                tdata.type = 0;
+                tdata.url = url;
+                tdata.tabaction = Enums.TabAction.InNewTab;
+                tdata.selecttab = 1;
+                tdata.reload = 0;
+                tdata.param = "";
+                tdata.showWait = showWait;
+
+                try {
+                    //window.parent.OpenMenuByData(tdata);
+                    window.parent.TabMenu.OpenMenuByData(tdata);
+                }
+                catch (err) {
+                    alert("error in page");
+                }
+            }
+            else {
+                //on new window/tab
+                //window.open(url,'_blank');   
+
+                window.location = url;
+            }
+        }
+
+        function reportInNewWindow(url) {
+            var rWin = window.open(url, '_blank');
+            if (rWin == null) {
+                reportURL = url;
+                showOverlayReport();
+            }
+        }
+
+        function ReportPrint(key, isPDFAutoPrint) {
+            var rptPageLink = ReportViewPageLink;
+            if (isPDFAutoPrint) {
+                //rptPageLink = ReportPDFPageLink;
+                rptPageLink = ReportViewPDFPageLink;
+            }
+
+            //var url = "./Report/ReportView.aspx?rk=" + key
+            var now = new Date();
+            var strTime = now.getTime().toString();
+            var url = ReportViewPageLink + "?rk=" + key + "&_tt=" + strTime;
+
+            //var url = rptPageLink + "?rk=" + key;
+
+            iframe = document.getElementById(ifPrintButton);
+            if (iframe === null) {
+                iframe = document.createElement('iframe');
+                iframe.id = hiddenIFrameID;
+                //        iframe.style.display = 'none';
+                //        iframe.style = 'none';
+                document.body.appendChild(iframe);
+            }
+            iframe.src = url;
+        }
      
     </script>
 
@@ -147,6 +235,16 @@
             <div class="row-mb-0">
               <div class="card-footer m-2 p-1">
               <asp:LinkButton runat="server" ID="btnLoadData" OnClick="btnLoadData_Click"  CssClass="btn btn-primary" Text="<i class='fa fa-list'></i> Show Data"></asp:LinkButton>
+
+                   <asp:DropDownList ID="ddlReportViewType" runat="server" CssClass="dropDownList" Visible="false">
+                            <asp:ListItem Value="0">Screen</asp:ListItem>
+                            <asp:ListItem Selected="True" Value="1">PDF</asp:ListItem>
+                        </asp:DropDownList>
+                  <asp:DropDownList ID="ddlReportViewMode" runat="server" CssClass="dropDownList" Visible="false">
+                            <asp:ListItem Value="0">In This Tab</asp:ListItem>
+                            <asp:ListItem Value="1">In New Tab</asp:ListItem>
+                            <asp:ListItem Selected="True" Value="2">In New Window</asp:ListItem>
+                        </asp:DropDownList>
              </div>
             </div>
 
@@ -154,7 +252,7 @@
              <div class="col-md-12">
                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" ShowHeader="true" CssClass="table table-sm table-striped table-bordered table-responsive-sm"  
                 DataKeyNames="CN_ID" EnableModelValidation="True" ClientIDMode="AutoID" OnRowDataBound="GridView1_RowDataBound" AllowPaging="true" EmptyDataText="There is no record" PageSize="2" 
-                 OnPageIndexChanging="GridView1_PageIndexChanging" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
+                 OnPageIndexChanging="GridView1_PageIndexChanging" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" OnRowCommand="GridView1_RowCommand">
                   <PagerSettings Mode="NumericFirstLast" />
                 <HeaderStyle CssClass="table-info" Font-Size="Smaller" />                                      
               <Columns>
@@ -167,18 +265,18 @@
                   <asp:BoundField DataField="CONSIGNEE_NAME" HeaderText="Recipient Name" />
                   <asp:BoundField DataField="CONSIGNEE_ADDRESS" HeaderText="Recipient Address" />
                   <asp:BoundField DataField="CONSIGNEE_MOBILE_NO" HeaderText="Mobile No" />
-                    <asp:BoundField DataField="IS_DELIVERED" HeaderText="Status" />
+                    <asp:BoundField DataField="IS_DELIVERED" HeaderText="Delivery Status" />
                  
-                   <%--<asp:TemplateField HeaderText="Action">
+                   <asp:TemplateField HeaderText="Action">
                        <ItemTemplate>
                             <asp:LinkButton ID="lnkView" runat="server"
-                                CommandName="ViewRow"
+                                CommandName="print"
                                 CommandArgument='<%# Eval("CN_ID") %>'
                                 CssClass="btn btn-sm btn-primary"
-                                Text="  Assign Deliveryman" />
+                                Text="  CN Print" />
                         </ItemTemplate>
                         <ItemStyle Width="200px" />
-                 </asp:TemplateField>--%>
+                 </asp:TemplateField>
                </Columns>
                                                      
           </asp:GridView>

@@ -23,9 +23,9 @@ namespace PG.BLLibrary.WRElBL
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append(" SELECT C.*,ct.CLIENT_NAME CLIENT_NAME ");
+            sb.Append(" SELECT DISTINCT c.DEPT_ID,c.DEPT_NAME ");
             sb.Append(" FROM DEPARTMENT_MST c ");
-            sb.Append(" INNER JOIN CLIENT_MST CT ON c.CLIENT_ID=CT.CLIENT_ID ");
+            sb.Append(" INNER JOIN AGREEMENT_MST CT ON c.DEPT_ID=CT.DEPT_ID ");
             sb.Append(" WHERE 1=1 ");
 
             return sb.ToString();

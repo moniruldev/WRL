@@ -189,13 +189,13 @@ namespace PG.Web.WREL
         private void ClearText()
         {
             txtHubName.Text = string.Empty;
-            ddlHubType.SelectedValue = string.Empty;
+            ddlHubType.SelectedIndex = 0;
             txtAddress.Text = string.Empty;
             txtPhoneNO.Text = string.Empty;
             txtRP.Text = string.Empty;
             txtRPContact.Text = string.Empty;
             txtDescription.Text = string.Empty;
-            ddlStatus.SelectedValue = string.Empty;
+            ddlStatus.SelectedValue = "Y";
             hdnTownId.Value = string.Empty;
             hdnDistId.Value = string.Empty;
             txtTown.Text = string.Empty;

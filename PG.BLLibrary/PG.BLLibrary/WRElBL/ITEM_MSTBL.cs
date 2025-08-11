@@ -396,5 +396,32 @@ namespace PG.BLLibrary.WRElBL
             }
             return isData;
         }
+
+
+        public static string getItemIDByItemName(string pitemName, DBContext dc)
+        {
+            bool isDCInit = false;
+            string AutoStatus = string.Empty;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder("SELECT   ITEM_ID FROM ITEM_MST Where ITEM_NAME=@pitemName ");
+                cmdInfo.DBParametersInfo.Add("@pitemName", pitemName);
+
+
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+                AutoStatus = Convert.ToString(DBQuery.ExecuteDBScalar(dbq, dc));
+               
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return AutoStatus;
+        }
     }
 }

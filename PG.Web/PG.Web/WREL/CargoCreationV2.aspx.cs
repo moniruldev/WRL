@@ -25,6 +25,7 @@ using System.Collections;
 using System.IO;
 using System.Data.OleDb;
 using System.Data;
+using OfficeOpenXml;
 //using ClosedXML.Excel;
 //using NPOI.SS.UserModel;
 //using NPOI.XSSF.UserModel;
@@ -981,107 +982,111 @@ namespace PG.Web.WREL
             
         }
 
-        protected void btnUpload_Click(object sender, EventArgs e)
+   
+
+protected void btnUpload_Click(object sender, EventArgs e)
+{
+    int k = 0;
+    if (FileUpload1.HasFile)
+    {
+        string ext = Path.GetExtension(FileUpload1.FileName).ToLower();
+        if (ext == ".xlsx")
         {
-            //if (!FileUpload1.HasFile)
-            //{
-            //    //lblMessage.Text = "Please select an Excel file.";
-            //    return;
-            //}
+            string filePath = Server.MapPath("~/Uploads/" + FileUpload1.FileName);
+            FileUpload1.SaveAs(filePath);
 
-            //string ext = Path.GetExtension(FileUpload1.FileName).ToLower();
-            //string path = Server.MapPath("~/Uploads/" + FileUpload1.FileName);
+            var tbl = new DataTable();
 
-            // Delete existing file if needed
-            //if (File.Exists(path))
-            //{
-            //    File.Delete(path);
-            //}
+            using (var package = new ExcelPackage(new FileInfo(filePath)))
+            {
+                if (package.Workbook.Worksheets.Count == 0)
+                {
+                    throw new Exception("❌ No worksheets found in the Excel file.");
+                }
 
-            //// Save uploaded file
-            //FileUpload1.SaveAs(path);
+                var sheet = package.Workbook.Worksheets[1];
 
-            //IWorkbook workbook;
-            //using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
-            //{
-            //    if (ext == ".xls")
-            //    {
-            //        workbook = new HSSFWorkbook(fs); // For Excel 97-2003
-            //    }
-            //    else if (ext == ".xlsx")
-            //    {
-            //        workbook = new XSSFWorkbook(fs); // For Excel 2007+
-            //    }
-            //    else
-            //    {
-            //        //lblMessage.Text = "Invalid file type. Only .xls or .xlsx allowed.";
-            //        return;
-            //    }
-            //}
+                if (sheet.Dimension == null)
+                {
+                    throw new Exception("Worksheet is empty.");
+                }
 
-            //ISheet worksheet = workbook.GetSheetAt(0); // First worksheet
+                bool hasHeader = true;
+                int totalCols = sheet.Dimension.End.Column;
+                int totalRows = sheet.Dimension.End.Row;
 
-            //DataTable tbl = new DataTable();
-            //bool firstRow = true;
+                // Add columns to DataTable
+                for (int col = 1; col <= totalCols; col++)
+                {
+                    string columnName = hasHeader ? sheet.Cells[1, col].Text : "Column{col}";
 
-            //for (int rowNum = worksheet.FirstRowNum; rowNum <= worksheet.LastRowNum; rowNum++)
-            //{
-            //    IRow row = worksheet.GetRow(rowNum);
-            //    if (row == null) continue;
+                    if (string.IsNullOrWhiteSpace(columnName))
+                        columnName = "Column{col}";
 
-            //    if (firstRow)
-            //    {
-            //        // Header row
-            //        foreach (ICell cell in row.Cells)
-            //        {
-            //            tbl.Columns.Add(cell.ToString());
-            //        }
-            //        firstRow = false;
-            //    }
-            //    else
-            //    {
-            //        DataRow dr = tbl.NewRow();
-            //        int i = 0;
-            //        foreach (ICell cell in row.Cells)
-            //        {
-            //            dr[i++] = cell.ToString();
-            //        }
-            //        tbl.Rows.Add(dr);
-            //    }
-            //}
+                    // Ensure uniqueness
+                    if (tbl.Columns.Contains(columnName))
+                    {
+                        int i = 1;
+                        string newColumnName;
+                        do
+                        {
+                            newColumnName = columnName + "_" + i++;
+                        } while (tbl.Columns.Contains(newColumnName));
+                        columnName = newColumnName;
+                    }
 
-            //// Process DataTable and bind to GridView
-            //this.listDetails.Clear();
+                    tbl.Columns.Add(columnName);
+                }
 
-            //foreach (DataRow row in tbl.Rows)
-            //{
-            //    if (!tbl.Columns.Contains("CN_NUMBER")) continue;
+                // Add rows to DataTable
+                int startRow = hasHeader ? 2 : 1;
+                for (int rowNum = startRow; rowNum <= totalRows; rowNum++)
+                {
+                    DataRow row = tbl.NewRow();
+                    for (int col = 1; col <= totalCols; col++)
+                    {
+                        row[col - 1] = sheet.Cells[rowNum, col].Text;
+                    }
+                    tbl.Rows.Add(row);
+                }
+            }
 
-            //    string cnNumber = row["CN_NUMBER"].ToString();
-            //    if (string.IsNullOrWhiteSpace(cnNumber)) continue;
+            // Populate your list from the DataTable
+            this.listDetails.Clear();
+            
+            if (tbl.Rows.Count > 0)
+            {
+                foreach (DataRow Row in tbl.Rows)
+                {
+                    dcCARGO_CREATION_DETAIL cObj = new dcCARGO_CREATION_DETAIL();
+                    cObj.CN_NUMBER = Row["CN_NUMBER"].ToString();
+                    cObj = CARGO_CREATION_DETAILBL.GetCNInfoByCNNumber(cObj.CN_NUMBER);
+                  int  CN_ID = cObj.CN_ID;
+                  string   strclientName = cObj.CLIENT_NAME;
 
-            //    dcCARGO_CREATION_DETAIL cObj = new dcCARGO_CREATION_DETAIL();
-            //    cObj.CN_NUMBER = cnNumber;
+                  if (cObj != null)
+                    {
+                        cObj.SLNo=k+1;
+                        cObj.CN_ID = CN_ID;
+                        cObj.CLIENT_NAME = strclientName;
+                        cObj.CARGO_ID = 0;
+                        cObj.SOURCE_CARGO_ID =0;
+                        this.listDetails.Add(cObj);
+                    }
+                }
 
-            //    // Fetch CN info from DB
-            //    dcCARGO_CREATION_DETAIL cobjbdt = CARGO_CREATION_DETAILBL.GetCNInfoByCNNumber(cObj.CN_NUMBER);
+                GridView1.DataSource = listDetails;
+                GridView1.DataBind();
+                //SetControlGrid();
 
-            //    if (cobjbdt != null)
-            //    {
-            //        cObj.CN_ID = cobjbdt.CN_ID;
-            //        cObj.CLIENT_NAME = cobjbdt.CLIENT_NAME;
-
-            //        this.listDetails.Add(cObj);
-            //    }
-            //}
-
-            //GridView1.DataSource = listDetails;
-            //GridView1.DataBind();
-
-            //btnSave.Enabled = listDetails.Count > 0;
-            // lblMessage.Text = "Excel file uploaded successfully.";
+                btnSave.Enabled = true;
+            }
         }
+    }
+}
 
+
+      
         private void Clear()
         {
             Session["dtDebitTrans"] = null;
@@ -1102,20 +1107,7 @@ namespace PG.Web.WREL
             finddataPaste();
         }
 
-        //protected void doneButton_OnClick(object sender, EventArgs e)
-        //{
-        //    ViewState["_LCNo"] = null;
-        //    ViewState["_lblDrAmount"] = null;
-
-        //    finddataPaste();
-        //}
-        //private void clearSessionDatatable()
-        //{
-
-        //    Session["dtDebitTrans"] = null;
-
-        //    ViewState["dtdr"] = null;
-        //}
+        
         private void finddataPaste()
         {
             //string rundate = BaseContent.GetCompanyDate().ToString("dd-MMM-yyyy");

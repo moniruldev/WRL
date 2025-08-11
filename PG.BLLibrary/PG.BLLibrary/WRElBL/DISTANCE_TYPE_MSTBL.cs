@@ -2,6 +2,7 @@
 using PG.DBClass.WRELDC;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Linq;
 using System.Linq;
 using System.Text;
@@ -249,6 +250,32 @@ namespace PG.BLLibrary.WRElBL
             DBContextManager.ReleaseDBContext(ref dc, isDCInit);
             bStatus = true;
             return bStatus;
+        }
+
+        public static int getDistanceTypeIDByTypeName(string pTypeName, DBContext dc)
+        {
+            bool isDCInit = false;
+            int distancetypeid = 0;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder("SELECT   DISTANCE_TYPE_ID FROM DISTANCE_TYPE_MST Where TYPE_NAME=@pTypeName ");
+                cmdInfo.DBParametersInfo.Add("@pTypeName", pTypeName);
+
+
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+                distancetypeid = Convert.ToInt32(DBQuery.ExecuteDBScalar(dbq, dc));
+
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return distancetypeid;
         }
     }
 }

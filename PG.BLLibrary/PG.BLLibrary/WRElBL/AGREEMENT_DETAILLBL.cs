@@ -268,15 +268,15 @@ namespace PG.BLLibrary.WRElBL
             {
                 switch (oDet._RecordState)
                 {
-                    //case Interwave.Core.DBClass.RecordStateEnum.Added:
-                    //    int a = Insert(oDet, dc);
-                    //    break;
-                    //case Interwave.Core.DBClass.RecordStateEnum.Edited:
-                    //    bool e = Update(oDet, dc);
-                    //    break;
-                    //case Interwave.Core.DBClass.RecordStateEnum.Deleted:
-                    //    bool d = Delete(oDet.AGREEMENT_DETAILLID, dc);
-                    //    break;
+                    case RecordStateEnum.Added:
+                        int a = Insert(oDet, dc);
+                        break;
+                    case RecordStateEnum.Edited:
+                        bool e = Update(oDet, dc);
+                        break;
+                    case RecordStateEnum.Deleted:
+                        bool d = Delete(oDet.AGR_DETAIL_ID, dc);
+                        break;
                     default:
                         break;
                 }
@@ -285,6 +285,61 @@ namespace PG.BLLibrary.WRElBL
             DBContextManager.ReleaseDBContext(ref dc, isDCInit);
             bStatus = true;
             return bStatus;
+        }
+
+        public static string getServiceAmountByItemID(int pclientID, int pitemID,int pDistancetypeid, DBContext dc)
+        {
+            bool isDCInit = false;
+            string AutoStatus = string.Empty;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder("SELECT SERVICE_AMOUNT FROM AGREEMENT_MST a INNER JOIN AGREEMENT_DETAILL b ON a.AGR_ID=b.AGR_ID Where a.CLIENT_ID=@pclientID and b.ITEM_ID=@pitemID AND b.DISTANCE_TYPE_ID=@pDistancetypeid AND ROWNUM = 1 ");
+                cmdInfo.DBParametersInfo.Add("@pclientID", pclientID);
+                cmdInfo.DBParametersInfo.Add("@pitemID", pitemID);
+                cmdInfo.DBParametersInfo.Add("@pDistancetypeid", pDistancetypeid);
+
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+                AutoStatus = Convert.ToString(DBQuery.ExecuteDBScalar(dbq, dc));
+
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return AutoStatus;
+        }
+
+        public static string getAgreementdtlIDByItemID(int pclientID, int pitemID,int pDistancetypeid, DBContext dc)
+        {
+            bool isDCInit = false;
+            string AutoStatus = string.Empty;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder("SELECT b.AGR_DETAIL_ID FROM AGREEMENT_MST a INNER JOIN AGREEMENT_DETAILL b ON a.AGR_ID=b.AGR_ID Where a.CLIENT_ID=@pclientID and b.ITEM_ID=@pitemID AND b.DISTANCE_TYPE_ID=@pDistancetypeid AND ROWNUM = 1 ");
+                cmdInfo.DBParametersInfo.Add("@pclientID", pclientID);
+                cmdInfo.DBParametersInfo.Add("@pitemID", pitemID);
+                cmdInfo.DBParametersInfo.Add("@pDistancetypeid", pDistancetypeid);
+                
+
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+                AutoStatus = Convert.ToString(DBQuery.ExecuteDBScalar(dbq, dc));
+
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return AutoStatus;
         }
     }
 }

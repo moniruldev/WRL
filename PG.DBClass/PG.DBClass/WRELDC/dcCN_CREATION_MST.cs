@@ -46,6 +46,21 @@ namespace PG.DBClass.WRELDC
         private string m_POD = string.Empty;
         private DateTime? m_DELIVERY_DATE = null;
         private decimal m_SLA_DAYS = 0;
+        private DateTime? m_PICKUP_DATE = null;
+        private string m_PICKUP_BY = string.Empty;
+        private DateTime? m_BOOKING_DATE = null;
+        private string m_CN_CLIENT_CODE = string.Empty;
+        private string m_PRODUCT_TYPE = string.Empty;
+        private string m_UPS = string.Empty;
+        private string m_STATUS = string.Empty;
+        private string m_NARRATION = string.Empty;
+        private string m_ITEM_NAME = string.Empty;
+        private int m_CLIENT_DEPT_ID = 0;
+        private int m_HUB_ID = 0;
+        private string m_DESTINATION = string.Empty;
+        private string m_REF_TYPE = string.Empty;
+        private int m_DISTANCE_TYPE_ID = 0;
+        
 
         #endregion  //private members
 
@@ -431,6 +446,159 @@ namespace PG.DBClass.WRELDC
             }
         }
 
+        [DBColumn(Name = "PICKUP_DATE", Storage = "m_PICKUP_DATE", DbType = "106")]
+        public DateTime? PICKUP_DATE
+        {
+            get { return this.m_PICKUP_DATE; }
+            set
+            {
+                this.m_PICKUP_DATE = value;
+                this.NotifyPropertyChanged("PICKUP_DATE");
+            }
+        }
+
+        [DBColumn(Name = "PICKUP_BY", Storage = "m_PICKUP_BY", DbType = "102")]
+        public string PICKUP_BY
+        {
+            get { return this.m_PICKUP_BY; }
+            set
+            {
+                this.m_PICKUP_BY = value;
+                this.NotifyPropertyChanged("PICKUP_BY");
+            }
+        }
+
+        [DBColumn(Name = "BOOKING_DATE", Storage = "m_BOOKING_DATE", DbType = "106")]
+        public DateTime? BOOKING_DATE
+        {
+            get { return this.m_BOOKING_DATE; }
+            set
+            {
+                this.m_BOOKING_DATE = value;
+                this.NotifyPropertyChanged("BOOKING_DATE");
+            }
+        }
+
+        [DBColumn(Name = "CN_CLIENT_CODE", Storage = "m_CN_CLIENT_CODE", DbType = "102")]
+        public string CN_CLIENT_CODE
+        {
+            get { return this.m_CN_CLIENT_CODE; }
+            set
+            {
+                this.m_CN_CLIENT_CODE = value;
+                this.NotifyPropertyChanged("CN_CLIENT_CODE");
+            }
+        }
+
+        [DBColumn(Name = "PRODUCT_TYPE", Storage = "m_PRODUCT_TYPE", DbType = "102")]
+        public string PRODUCT_TYPE
+        {
+            get { return this.m_PRODUCT_TYPE; }
+            set
+            {
+                this.m_PRODUCT_TYPE = value;
+                this.NotifyPropertyChanged("PRODUCT_TYPE");
+            }
+        }
+
+        [DBColumn(Name = "UPS", Storage = "m_UPS", DbType = "102")]
+        public string UPS
+        {
+            get { return this.m_UPS; }
+            set
+            {
+                this.m_UPS = value;
+                this.NotifyPropertyChanged("UPS");
+            }
+        }
+        [DBColumn(Name = "STATUS", Storage = "m_STATUS", DbType = "102")]
+        public string STATUS
+        {
+            get { return this.m_STATUS; }
+            set
+            {
+                this.m_STATUS = value;
+                this.NotifyPropertyChanged("STATUS");
+            }
+        }
+        [DBColumn(Name = "NARRATION", Storage = "m_NARRATION", DbType = "102")]
+        public string NARRATION
+        {
+            get { return this.m_NARRATION; }
+            set
+            {
+                this.m_NARRATION = value;
+                this.NotifyPropertyChanged("NARRATION");
+            }
+        }
+
+        [DBColumn(Name = "ITEM_NAME", Storage = "m_ITEM_NAME", DbType = "102")]
+        public string ITEM_NAME
+        {
+            get { return this.m_ITEM_NAME; }
+            set
+            {
+                this.m_ITEM_NAME = value;
+                this.NotifyPropertyChanged("ITEM_NAME");
+            }
+        }
+
+       
+         [DBColumn(Name = "CLIENT_DEPT_ID", Storage = "m_CLIENT_DEPT_ID", DbType = "107")]
+         public int CLIENT_DEPT_ID
+         {
+             get { return this.m_CLIENT_DEPT_ID; }
+             set
+             {
+                 this.m_CLIENT_DEPT_ID = value;
+                 this.NotifyPropertyChanged("CLIENT_DEPT_ID");
+             }
+         }
+
+        [DBColumn(Name = "HUB_ID", Storage = "m_HUB_ID", DbType = "107")]
+         public int HUB_ID
+         {
+             get { return this.m_HUB_ID; }
+             set
+             {
+                 this.m_HUB_ID = value;
+                 this.NotifyPropertyChanged("HUB_ID");
+             }
+         }
+
+       
+        [DBColumn(Name = "DESTINATION", Storage = "m_DESTINATION", DbType = "102")]
+        public string DESTINATION
+        {
+            get { return this.m_DESTINATION; }
+            set
+            {
+                this.m_DESTINATION = value;
+                this.NotifyPropertyChanged("DESTINATION");
+            }
+        }
+        [DBColumn(Name = "REF_TYPE", Storage = "m_REF_TYPE", DbType = "102")]
+        public string REF_TYPE
+        {
+            get { return this.m_REF_TYPE; }
+            set
+            {
+                this.m_REF_TYPE = value;
+                this.NotifyPropertyChanged("REF_TYPE");
+            }
+        }
+        [DBColumn(Name = "DISTANCE_TYPE_ID", Storage = "m_DISTANCE_TYPE_ID", DbType = "107")]
+        public int DISTANCE_TYPE_ID
+         {
+             get { return this.m_DISTANCE_TYPE_ID; }
+             set
+             {
+                 this.m_DISTANCE_TYPE_ID = value;
+                 this.NotifyPropertyChanged("DISTANCE_TYPE_ID");
+             }
+         }
+
+        
         #endregion //properties
     }
 
@@ -440,7 +608,7 @@ namespace PG.DBClass.WRELDC
          private string m_DESTINATION_TOWN_NAME = "";
          private string m_CLIENT_NAME = "";
          private string m_AGREEMENT_DESCRIPTION = "";
-         private string m_ITEM_NAME = "";
+       
          private string m_ROUTE_NAME = "";
          private string m_HUB_NAME = "";
 
@@ -468,11 +636,7 @@ namespace PG.DBClass.WRELDC
              set { this.m_AGREEMENT_DESCRIPTION = value; }
          }
 
-         public string ITEM_NAME
-         {
-             get { return this.m_ITEM_NAME; }
-             set { this.m_ITEM_NAME = value; }
-         }
+        
 
          public string ROUTE_NAME
          {
@@ -486,6 +650,9 @@ namespace PG.DBClass.WRELDC
              set { this.m_HUB_NAME = value; }
          }
 
-
+         public int SLNO { get; set; }
+         public string DEPT_NAME { get; set; }
+         public string DISTANCE_TYPE_NAME { get; set; }
+         
      }
 }

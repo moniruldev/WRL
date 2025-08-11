@@ -26,6 +26,7 @@
         var ClientListServiceLink = '<%=this.ClientListServiceLink%>';
         var AgreementDetailsListServiceLink = '<%=this.AgreementDetailsListServiceLink%>';
         var HubListServiceLink = '<%=this.HubListServiceLink%>';
+        var DepartmentListbyClientIDServiceLink = '<%=this.DepartmentListbyClientIDServiceLink%>';
         
         
         
@@ -48,7 +49,9 @@
         var txtHubName = '<%=txtHubName.ClientID%>';
         var hdnHubId = '<%=hdnHubId.ClientID%>';
       
-
+        var txtDepartment = '<%=txtDepartment.ClientID%>';
+        var hdnDeptID = '<%=hdnDeptID.ClientID%>';
+        
         
 
         $(document).ready(function () {
@@ -92,6 +95,12 @@
                 bindRouteList();
 
             }
+            if ($('#' + txtDepartment).is(':visible')) {
+
+                bindDepartmentListByClientID();
+
+            }
+            
 
             bindDestinationDistList(gridViewIDDet);
             bindDestinationTownList(gridViewIDDet);
@@ -100,6 +109,73 @@
 
         });
      
+        function bindDepartmentListByClientID() {
+            var cgColumns = [
+                             { 'columnName': 'deptname', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Dept Name' }
+                            
+
+            ];
+            var serviceURL = DepartmentListbyClientIDServiceLink + "?isterm=1&includeempty=0&hasitem=1&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+
+            serviceURL += "&ispaging=0";
+            var groupIDElem = $('#' + txtDepartment);
+
+            $('#' + txtDepartment).click(function (e) {
+                $(groupIDElem).combogrid("dropdownClick");
+            });
+
+            $(groupIDElem).combogrid({
+                debug: true,
+                searchButton: false,
+                resetButton: false,
+                alternate: true,
+                munit: 'px',
+                scrollBar: true,
+                showPager: true,
+                colModel: cgColumns,
+                autoFocus: true,
+                showError: true,
+                width: 350,
+                url: serviceURL,
+                search: function (event, ui) {
+                    var clientid = $('#' + hdnClientId).val();
+                    var newServiceURL = serviceURL + " &clientid=" + clientid;
+                    $(this).combogrid("option", "url", newServiceURL);
+
+
+                },
+                select: function (event, ui) {
+                    if (!ui.item) {
+                        event.preventDefault();
+                        return false;
+                    }
+
+                    if (ui.item.dealerid == '') {
+                        event.preventDefault();
+                        return false;
+                    }
+                    else {
+                        $('#' + hdnDeptID).val(ui.item.deptid);
+                        $('#' + txtDepartment).val(ui.item.deptname);
+                    }
+                    return false;
+                },
+
+                lc: ''
+            });
+
+
+            $(groupIDElem).blur(function () {
+                var self = this;
+
+                var groupID = $(groupIDElem).val();
+                if (groupID == '') {
+                    $('#' + txtDepartment).val('');
+                    $('#' + hdnDeptID).val('0');
+                }
+            });
+        }
+
         function bindClientNameList() {
             var cgColumns = [
                              { 'columnName': 'clientname', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Client Name' }
@@ -794,7 +870,20 @@
             margin-right: 4px;
         } 
 
-
+        .grid-fixed {
+        table-layout: fixed;
+        width: 100%;
+    }
+    .grid-fixed td, .grid-fixed th {
+        padding: 2px !important;
+        font-size: 12px;
+    }
+        .pagination a, .pagination span {
+    padding: 5px 10px;
+    margin: 2px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
         
         /*label.col-form-label-sm{
             text-align:right;
@@ -810,10 +899,12 @@
        <div class="card">
          <div class="card-header p-0">
            <div class="d-flex align-items-center justify-content-between p-1">
-             <h5 class="card-title">CN (Parcel) Create</h5>
-             <a class="btn btn-primary p-1"> <i class="fas fa-list"></i> Parcel List </a>
+             <h5 class="card-title">Shipment Booking (CN)</h5>
+             <%--<a class="btn btn-primary p-1"> <i class="fas fa-list"></i> Parcel List </a>--%>
+                <asp:Button ID="btnDownloadSample" runat="server" Text="Download Sample"
+                        CssClass="btn btn-sm btn-primary" OnClick="btnDownloadSample_Click" />
          </div>
-
+            
        </div>
       <div class="card-body">
             <asp:HiddenField ID="hdnCN_ID" runat="server" Value="0" />
@@ -841,13 +932,31 @@
                   </div>
 
                 </div>
-               
+                 <div class="col-md-4">
+                  <div class="form-group row mb-0">
+                    <label for="name" class="col-sm-6 col-form-label-sm" >Department :</label>
+                    <div class="col-sm-6">
+                      <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtDepartment" ></asp:TextBox> 
+                           <asp:HiddenField runat="server" ID="hdnDeptID" Value="0" /> 
+                    </div>
+                  </div>
+
+                </div>
+                   <div class="col-md-4">
+                  <div class="form-group row mb-0">
+                    <label for="name" class="col-sm-3 col-form-label-sm">Hub :</label>
+                    <div class="col-sm-9">
+                      <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtHubName" placeholder="Enter Hub Name" ></asp:TextBox> 
+                       <asp:HiddenField runat="server" ID="hdnHubId" Value="0" /> 
+                    </div>
+                  </div>
+                </div>
 
                  <div class="col-md-4">
                   <div class="form-group row mb-0">
-                    <label for="name" class="col-sm-6 col-form-label-sm">Aggrement Details :</label>
+                    <label for="name" class="col-sm-6 col-form-label-sm" style="display:none;">Aggrement Details :</label>
                     <div class="col-sm-6">
-                      <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtAggrementDtl" placeholder="Select" ></asp:TextBox> 
+                      <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtAggrementDtl" placeholder="Select" Visible="false" ></asp:TextBox> 
                            <asp:HiddenField runat="server" ID="hdnAggrementDtlId" Value="0" /> 
                     </div>
                   </div>
@@ -855,9 +964,9 @@
                 </div>
                     <div class="col-md-4">
                   <div class="form-group row mb-0">
-                    <label for="name" class="col-sm-3 col-form-label-sm">Item :</label>
+                    <label for="name" class="col-sm-3 col-form-label-sm" style="display:none;">Item :</label>
                     <div class="col-sm-9">
-                      <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtItemName" placeholder="Select" ></asp:TextBox> 
+                      <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtItemName" placeholder="Select" Visible="false" ></asp:TextBox> 
                        <asp:HiddenField runat="server" ID="hdnItemId" Value="0" /> 
                     </div>
                   </div>
@@ -872,9 +981,9 @@
 
                  <div class="col-md-4">
                   <div class="form-group row mb-0">
-                    <label for="name" class="col-sm-5 col-form-label-sm">Service Amount :</label>
+                    <label for="name" class="col-sm-5 col-form-label-sm" style="display:none;">Service Amount :</label>
                     <div class="col-sm-7">
-                      <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtServiceAmt" placeholder="Select"  ></asp:TextBox> 
+                      <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtServiceAmt" placeholder="Select" Visible="false"  ></asp:TextBox> 
                        
                     </div>
                   </div>
@@ -883,29 +992,21 @@
 
                  <div class="col-md-4">
                   <div class="form-group row mb-0">
-                    <label for="name" class="col-sm-6 col-form-label-sm">Route :</label>
+                    <label for="name" class="col-sm-6 col-form-label-sm" style="display:none;">Route :</label>
                     <div class="col-sm-6">
-                      <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtRoute" placeholder="Select" ></asp:TextBox> 
+                      <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtRoute" placeholder="Select" Visible="false" ></asp:TextBox> 
                         <asp:HiddenField runat="server" ID="hdnRouteId" Value="0" /> 
                     </div>
                   </div>
 
                 </div>
-                  <div class="col-md-4">
-                  <div class="form-group row mb-0">
-                    <label for="name" class="col-sm-3 col-form-label-sm">Hub :</label>
-                    <div class="col-sm-9">
-                      <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtHubName" placeholder="Enter Hub Name" ></asp:TextBox> 
-                       <asp:HiddenField runat="server" ID="hdnHubId" Value="0" /> 
-                    </div>
-                  </div>
-                </div>
+                 
 
                 </div>
           <div class="row mb-0">
    <div class="col-md-4">
         <div class="form-group row mb-0">
-            <label for="DrPasteTextBox" class="col-sm-5 col-form-label col-form-label-sm">Paste Excel:</label>
+            <label for="DrPasteTextBox" class="col-sm-5 col-form-label col-form-label-sm" style="display:none;">Paste Excel:</label>
            
       </div>
     </div>
@@ -919,8 +1020,8 @@
                 <asp:TextBox ID="DrPasteTextBox" runat="server" 
                              class="form-control form-control-sm" 
                              TextMode="MultiLine" 
-                             Height="250px" Width="100%"
-                             BorderColor="Black" 
+                             Height="200px" Width="100%"
+                             BorderColor="Black"  Visible="false"
                              >
                 </asp:TextBox>
                 
@@ -928,61 +1029,32 @@
       </div>
     </div>
 </div>
-           <%--<div class="row mb-0">
 
-               
-
-                 <div class="col-md-4">
-                  <div class="form-group row mb-0">
-                    <label for="name" class="col-sm-5 col-form-label-sm">Paste Excel :</label>
-                    <div class="col-sm-7">
-                      <asp:TextBox ID="DrPasteTextBox" runat="server" class="form-control form-control-sm w-100" TextMode="MultiLine"  Height="150px" BorderColor="Black"></asp:TextBox>
-                         &nbsp;
-                 <asp:Button ID="btnPastData" runat="server" Text="Load Data" CssClass="buttoncommon" OnClick="btnPasteData_Click" />
-                    </div>
-                  </div>
-                </div>
-
-             </div>--%>
-         <div class="row mb-0">
-
-               
-
-                 <%-- <div class="col-md-4">
-                    <div class="form-group row align-items-center mb-0">
-                        <label for="FileUpload1" class="col-sm-5 col-form-label-sm">Upload Details :</label>
-                        <div class="col-sm-7">
-                            <asp:FileUpload ID="FileUpload1" runat="server" CssClass="form-control form-control-sm p-0 m-0" />
-                        </div>
-                      
-                    </div>
-                
-                </div>--%>
 
           <div class="col-md-4">
                 <div class="form-group d-flex align-items-center mb-0 gap-2">
-                    <%--<asp:Button ID="btnUpload" runat="server" Text="Upload Excel"
-                        CssClass="btn btn-sm btn-primary mr-2" OnClick="btnUpload_Click" />--%>
-                    
-             
-                     
-                    <asp:Button ID="btnDownloadSample" runat="server" Text="Download Sample"
-                        CssClass="btn btn-sm btn-primary" OnClick="btnDownloadSample_Click" />
-                    &nbsp;     &nbsp;
                     <asp:Button ID="btnPastData" runat="server" 
                             Text="Load Data" 
                             CssClass="btn btn-primary btn-sm" 
-                            OnClick="btnPasteData_Click" />
+                            OnClick="btnPasteData_Click" Visible="false" />
                 </div>
             </div>
 
 
-
+          <div class="row mb-0">
+    <div class="col-md-4">
+        <div class="form-group row mb-0 align-items-center">
+            <label for="FileUpload1" class="col-sm-5 col-form-label col-form-label-sm">Upload Excel :</label>
+            <div class="col-sm-7 d-flex gap-2">
+                <asp:FileUpload ID="FileUpload1" runat="server" CssClass="form-control form-control-sm" Width="250" />
+                <asp:Button ID="btnUpload" CssClass="btn btn-sm btn-primary" runat="server" Text="Load Excel" OnClick="btnUpload_Click" />
+            </div>
+        </div>
+    </div>
+</div>
                
 
              </div>
-
-
       </div>
     <div class="row">
     <div class="col-md-12">
@@ -994,21 +1066,26 @@
 
             <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
               <ContentTemplate>
-             <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" ShowHeader="true"
-    CssClass="table table-sm table-striped table-bordered w-auto"  
+             <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" ShowHeader="true" 
+    CssClass="table table-sm table-striped table-bordered grid-fixed"  
     DataKeyNames="CN_ID" EnableModelValidation="True" ClientIDMode="AutoID"
-    OnRowDataBound="GridView1_RowDataBound" OnRowCommand="GridView1_RowCommand" OnRowDeleting="GridView1_RowDeleting" OnRowCreated="GridView1_RowCreated" >
+    OnRowDataBound="GridView1_RowDataBound" OnRowCommand="GridView1_RowCommand" OnRowDeleting="GridView1_RowDeleting" OnRowCreated="GridView1_RowCreated" AllowPaging="True" 
+PageSize="10" 
+OnPageIndexChanging="GridView1_PageIndexChanging" >
     
     <HeaderStyle CssClass="table-info" Font-Size="Smaller" />
-
+<PagerStyle CssClass="pagination" HorizontalAlign="Center" />
     <Columns>
-     <asp:TemplateField HeaderText="SL" HeaderStyle-HorizontalAlign="Center">
-        <ItemTemplate>
-            <asp:Label ID="lblSerialNo" runat="server" Text="" ></asp:Label>
-              <asp:HiddenField runat="server" ID="hdnCNId" Value='<%# Bind("CN_ID") %>' />
-        </ItemTemplate>
-        <ItemStyle HorizontalAlign="Center" Width="40px" />
-    </asp:TemplateField>
+      <asp:TemplateField HeaderText="SL">
+            <HeaderStyle Width="40px" HorizontalAlign="Center" />
+            <ItemStyle Width="40px" HorizontalAlign="Center" />
+            <ItemTemplate>
+                <div style="width: 40px; overflow: hidden; white-space: nowrap;">
+                    <%# Container.DataItemIndex + 1 + (GridView1.PageSize * GridView1.PageIndex) %>
+                </div>
+                <asp:HiddenField runat="server" ID="hdnCNId" Value='<%# Bind("CN_ID") %>' />
+            </ItemTemplate>
+        </asp:TemplateField>
 
          <asp:TemplateField HeaderText="CN Number">
     <ItemTemplate>
@@ -1028,16 +1105,42 @@
         </div>
     </ItemTemplate>
 </asp:TemplateField>
+        <asp:TemplateField HeaderText="Pickup Date">
+    <ItemTemplate>
+        <div class="d-flex align-items-center">
+            <table>
+                <tr>
+                    <td class="p-0">
+                        <asp:TextBox ID="txtPICKUP_DATE" runat="server" CssClass="form-control form-control-sm" Style="width: 100px;" Text='<%# Bind("PICKUP_DATE") %>' ></asp:TextBox>
+
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </ItemTemplate>
+</asp:TemplateField>
+        <asp:TemplateField HeaderText="Client Code">
+    <ItemTemplate>
+        <div class="d-flex align-items-center">
+            <table>
+                <tr>
+                    <td class="p-0">
+                        <asp:TextBox ID="txtCN_CLIENT_CODE" runat="server" CssClass="form-control form-control-sm" Style="width: 170px;" Text='<%# Bind("CN_CLIENT_CODE") %>' ></asp:TextBox>
+
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </ItemTemplate>
+</asp:TemplateField>
+
     <asp:TemplateField HeaderText="Recipient Name">
     <ItemTemplate>
         <div class="d-flex align-items-center">
             <table>
                 <tr>
                     <td class="p-0">
-                        <asp:TextBox ID="txtRecipientName" runat="server"
-                            CssClass="form-control form-control-sm"
-                            Style="width: 170px;"
-                            Text='<%# Bind("CONSIGNEE_NAME") %>' ></asp:TextBox>
+                        <asp:TextBox ID="txtRecipientName" runat="server" CssClass="form-control form-control-sm" Style="width: 270px;" Text='<%# Bind("CONSIGNEE_NAME") %>' ></asp:TextBox>
 
                     </td>
                 </tr>
@@ -1053,7 +1156,7 @@
                     <td class="p-0">
                         <asp:TextBox ID="txtRecipientAddress" runat="server"
                             CssClass="form-control form-control-sm"
-                            Style="width: 200px;"
+                            Style="width: 250px;"
                             Text='<%# Bind("CONSIGNEE_ADDRESS") %>' ></asp:TextBox>
 
                     </td>
@@ -1069,10 +1172,7 @@
             <table>
                 <tr>
                     <td class="p-0">
-                        <asp:TextBox ID="txtRecipientMobileNo" runat="server"
-                            CssClass="form-control form-control-sm"
-                            Style="width: 120px;"
-                            Text='<%# Bind("CONSIGNEE_MOBILE_NO") %>' ></asp:TextBox>
+                        <asp:TextBox ID="txtRecipientMobileNo" runat="server" CssClass="form-control form-control-sm" Style="width: 120px;"  Text='<%# Bind("CONSIGNEE_MOBILE_NO") %>' ></asp:TextBox>
 
                     </td>
                 </tr>
@@ -1080,8 +1180,56 @@
         </div>
     </ItemTemplate>
 </asp:TemplateField>
+           <asp:TemplateField HeaderText="Item Name">
+    <ItemTemplate>
+        <div class="d-flex align-items-center">
+            <table>
+                <tr>
+                    <td class="p-0">
+                        <asp:TextBox ID="txtITEM_NAME" runat="server" CssClass="form-control form-control-sm" Style="width: 120px;"  Text='<%# Bind("ITEM_NAME") %>' ></asp:TextBox>
+                        <asp:HiddenField ID="hdnITEM_ID" runat="server" Value='<%# Bind("ITEM_ID") %>' />
+                        <asp:HiddenField ID="hdnServiceAmount" runat="server" Value='<%# Bind("SERVICE_AMOUNT") %>' />
+                        <asp:HiddenField ID="hdnAgreementDTLID" runat="server" Value='<%# Bind("AGR_DETAIL_ID") %>' />
+                        <asp:HiddenField ID="hdnDISTANCE_TYPE_ID" runat="server" Value='<%# Bind("DISTANCE_TYPE_ID") %>' />
+                        
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </ItemTemplate>
+</asp:TemplateField>
+              <asp:TemplateField HeaderText="Product Type">
+    <ItemTemplate>
+        <div class="d-flex align-items-center">
+            <table>
+                <tr>
+                    <td class="p-0">
+                        <asp:TextBox ID="txtPRODUCT_TYPE" runat="server" CssClass="form-control form-control-sm" Style="width: 120px;"  Text='<%# Bind("PRODUCT_TYPE") %>' ></asp:TextBox>
 
-            <asp:TemplateField HeaderText="Destination District">
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </ItemTemplate>
+</asp:TemplateField>
+        <asp:TemplateField HeaderText="UPS">
+    <ItemTemplate>
+        <div class="d-flex align-items-center">
+            <table>
+                <tr>
+                    <td class="p-0">
+                        <asp:TextBox ID="txtUPS" runat="server" CssClass="form-control form-control-sm" Style="width: 120px;"  Text='<%# Bind("UPS") %>' ></asp:TextBox>
+
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </ItemTemplate>
+</asp:TemplateField>
+        
+        
+
+            <asp:TemplateField HeaderText="Destination">
     <ItemTemplate>
         <div class="d-flex align-items-center">
             <table>
@@ -1090,9 +1238,9 @@
                         <asp:TextBox ID="txtDestinationDist" runat="server"
                             CssClass="form-control form-control-sm"
                             Style="width: 150px;"
-                            Text='<%# Bind("DESTINATION_DIST_NAME") %>' ></asp:TextBox>
+                            Text='<%# Bind("DESTINATION") %>' ></asp:TextBox>
 
-                        <asp:HiddenField ID="hdnDestinationDistId" runat="server" Value='<%# Bind("DESTINATION_DIST_ID") %>' />
+                       
                      
                     </td>
                 </tr>
@@ -1101,18 +1249,15 @@
     </ItemTemplate>
 </asp:TemplateField>
         
-    <asp:TemplateField HeaderText="Destination Upozilla">
+    <asp:TemplateField HeaderText="SLA Days">
     <ItemTemplate>
         <div class="d-flex align-items-center">
             <table>
                 <tr>
                     <td class="p-0">
-                        <asp:TextBox ID="txtTownName" runat="server"
-                            CssClass="form-control form-control-sm"
-                            Style="width: 150px;"
-                            Text='<%# Bind("DESTINATION_TOWN_NAME") %>' ></asp:TextBox>
+                        <asp:TextBox ID="txtSLA_DAYS" runat="server" CssClass="form-control form-control-sm" Style="width: 150px;" Text='<%# Bind("SLA_DAYS") %>' ></asp:TextBox>
 
-                        <asp:HiddenField ID="hdnTownId" runat="server" Value='<%# Bind("DESTINATION_TOWN_ID") %>' />
+                        
                      
                     </td>
                 </tr>
@@ -1120,7 +1265,48 @@
         </div>
     </ItemTemplate>
 </asp:TemplateField>
+           <asp:TemplateField HeaderText="STATUS">
+    <ItemTemplate>
+        <div class="d-flex align-items-center">
+            <table>
+                <tr>
+                    <td class="p-0">
+                        <asp:TextBox ID="txtSTATUS" runat="server" CssClass="form-control form-control-sm" Style="width: 150px;" Text='<%# Bind("STATUS") %>' ></asp:TextBox>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </ItemTemplate>
+</asp:TemplateField>
+        
+         <asp:TemplateField HeaderText="NARRATION">
+    <ItemTemplate>
+        <div class="d-flex align-items-center">
+            <table>
+                <tr>
+                    <td class="p-0">
+                        <asp:TextBox ID="txtNARRATION" runat="server" CssClass="form-control form-control-sm" Style="width: 150px;" Text='<%# Bind("NARRATION") %>' ></asp:TextBox>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </ItemTemplate>
+</asp:TemplateField>
 
+         <asp:TemplateField HeaderText="Refernce">
+    <ItemTemplate>
+        <div class="d-flex align-items-center">
+            <table>
+                <tr>
+                    <td class="p-0">
+                        <asp:TextBox ID="txtREF_TYPE" runat="server" CssClass="form-control form-control-sm" Style="width: 100px;" Text='<%# Bind("REF_TYPE") %>' ></asp:TextBox>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </ItemTemplate>
+</asp:TemplateField>
+        
 <asp:TemplateField HeaderText="Delete" ShowHeader="false">
     <ItemTemplate>
         <div class="d-flex align-items-center justify-content-center">
@@ -1182,5 +1368,5 @@
       
      
      </div>
-    </div>
+    <%--</div>--%>
 </asp:Content>

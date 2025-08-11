@@ -171,6 +171,10 @@ namespace PG.Web.WREL
             this.EditMode = FormDataMode.Add;
             this.IsDirty = false;
             this.CLIENT_TYPE_ID = 0;
+            txtTypeName.Text = "";
+            txtDescription.Text = "";
+            ddlStatus.SelectedValue = "Y";
+
             ViewState[ViewStateKey] = "0";
             SetControl(FormDataMode.Add);
         }
@@ -363,6 +367,11 @@ namespace PG.Web.WREL
 
 
         protected void btnAddNew_Click(object sender, EventArgs e)
+        {
+            AddTask();
+        }
+
+        protected void btnClear_Click(object sender, EventArgs e)
         {
             AddTask();
         }

@@ -37,7 +37,7 @@ namespace PG.BLLibrary.WRElBL
 
             sb.Append(" SELECT a.HUB_ID,a.HUB_NAME,a.HUB_TYPE_ID,a.ADDRESS,a.PHONE_NO,a.RESPONSIBLE_PERSON,a.RP_MOBILE_NO,a.DESCRIPTION,a.IS_ACTIVE,a.DIST_ID,a.TOWN_ID,b.DIST_NAME,c.TOWN_NAME ");
             sb.Append(" FROM HUB_MST a INNER JOIN DISTRICT_MST b ON a.DIST_ID=b.DIST_ID ");
-            sb.Append(" INNER JOIN THANA_TOWN_MST c ON a.TOWN_ID=b.TOWN_ID ");
+            sb.Append(" INNER JOIN THANA_TOWN_MST c ON a.TOWN_ID=C.TOWN_ID ");
 
            // sb.Append(" WHERE a.IS_ACTIVE='Y' ");
 

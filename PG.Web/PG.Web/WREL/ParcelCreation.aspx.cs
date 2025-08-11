@@ -58,11 +58,13 @@ namespace PG.Web.WREL
         public string ClientListServiceLink = PageLinks.InventoryLink.GetLink_ClientList;
         public string AgreementDetailsListServiceLink = PageLinks.InventoryLink.GetLink_AgreementDtlList;
         public string HubListServiceLink = PageLinks.InventoryLink.GetLink_HubList;
+        public string DepartmentListbyClientIDServiceLink = PageLinks.InventoryLink.GetLink_DepartmentListbyClientID;
         
         
 
         List<dcCN_CREATION_MST> listDetails = new List<dcCN_CREATION_MST>();
-
+        List<dcTEMP_CN_INFO> CNTEMPlistDetails = new List<dcTEMP_CN_INFO>();
+        
         protected override void OnPreInit(EventArgs e)
         {
 
@@ -93,8 +95,8 @@ namespace PG.Web.WREL
                 //FillCombo();
 
 
-
-
+                hdnHubId.Value = "1";
+                txtHubName.Text = "Dhaka Central Hub";
 
                 if (this.CN_ID == 0) //not query string
                 {
@@ -222,15 +224,10 @@ namespace PG.Web.WREL
 
                hdnClientId.Value = obj.CLIENT_ID.ToString();
                txtClientName.Text = obj.CLIENT_NAME.ToString();
-               txtAggrementDtl.Text = obj.AGREEMENT_DESCRIPTION;
-               hdnAggrementDtlId.Value = obj.AGR_DETAIL_ID.ToString();
-               txtItemName.Text = obj.ITEM_NAME;
-               hdnItemId.Value = obj.ITEM_ID.ToString();
-               txtRoute.Text = obj.ROUTE_NAME;
-               hdnRouteId.Value = obj.ROUTE_ID.ToString();
-               txtServiceAmt.Text = obj.SERVICE_AMOUNT.ToString();
                txtHubName.Text = obj.HUB_NAME;
-               //hdnHubId.Value = obj.HUB_ID.ToString();
+               hdnDeptID.Value = obj.CLIENT_DEPT_ID.ToString();
+               txtDepartment.Text = obj.DEPT_NAME;
+               hdnHubId.Value = obj.HUB_ID.ToString();
 
                BindDataToGrid(cObjList);
                bStatus = true;
@@ -248,9 +245,9 @@ namespace PG.Web.WREL
             //    isEnabled = true;
             //}
 
-            //txtCargoNo.Enabled = isEnabled;
-            //txtCargoDate.Enabled = isEnabled;
-            //txtWeight.Enabled = isEnabled;
+          //  txtClientName.Enabled = isEnabled;
+          //txtDepartment.Enabled = isEnabled;
+          //txtHubName.Enabled= isEnabled;
             //txtRemarks.Enabled = isEnabled;
             //txtStartingDist.Enabled = isEnabled;
             //txtDestinationDist.Enabled = isEnabled;
@@ -268,14 +265,14 @@ namespace PG.Web.WREL
 
             // Apply disabled/enabled logic without losing Bootstrap styling
             //SetTextBoxState(txtCNNo, false);
-            ////SetTextBoxState(txtCargoDate, isEnabled);
-            //SetTextBoxState(txtWeight, isEnabled);
-            //SetTextBoxState(txtRemarks, isEnabled);
+            SetTextBoxState(txtClientName, isEnabled);
+            SetTextBoxState(txtDepartment, isEnabled);
+            SetTextBoxState(txtHubName, isEnabled);
             //SetTextBoxState(txtStartingDist, isEnabled);
             //SetTextBoxState(txtDestinationDist, isEnabled);
             //SetTextBoxState(txtDestinationTown, isEnabled);
             //SetTextBoxState(txtManagerName, isEnabled);
-            SetTextBoxState(txtRoute, isEnabled);
+            //SetTextBoxState(txtRoute, isEnabled);
 
             //txtCargoDate.Enabled = isEnabled;
             // buttons
@@ -435,8 +432,22 @@ namespace PG.Web.WREL
             {
                 if (gvR.RowType == DataControlRowType.DataRow)
                 {
-                    ((TextBox)gvR.FindControl("txtRecipientName")).Enabled = isEnabled;
-                    //((TextBox)gvR.FindControl("txtCNNumber")).Attributes.Add("readonly", "readonly");
+
+                    ((TextBox)gvR.FindControl("txtPICKUP_DATE")).Attributes.Add("readonly", "readonly");
+                    ((TextBox)gvR.FindControl("txtRecipientName")).Attributes.Add("readonly", "readonly");
+                    ((TextBox)gvR.FindControl("txtCN_CLIENT_CODE")).Attributes.Add("readonly", "readonly");
+                    ((TextBox)gvR.FindControl("txtRecipientAddress")).Attributes.Add("readonly", "readonly");
+                    ((TextBox)gvR.FindControl("txtRecipientMobileNo")).Attributes.Add("readonly", "readonly");
+                    ((TextBox)gvR.FindControl("txtITEM_NAME")).Attributes.Add("readonly", "readonly");
+                    ((TextBox)gvR.FindControl("txtPRODUCT_TYPE")).Attributes.Add("readonly", "readonly");
+
+                    ((TextBox)gvR.FindControl("txtUPS")).Attributes.Add("readonly", "readonly");
+                    ((TextBox)gvR.FindControl("txtDestinationDist")).Attributes.Add("readonly", "readonly");
+                    ((TextBox)gvR.FindControl("txtSLA_DAYS")).Attributes.Add("readonly", "readonly");
+                    ((TextBox)gvR.FindControl("txtSTATUS")).Attributes.Add("readonly", "readonly");
+                    ((TextBox)gvR.FindControl("txtNARRATION")).Attributes.Add("readonly", "readonly");
+                    ((TextBox)gvR.FindControl("txtREF_TYPE")).Attributes.Add("readonly", "readonly");
+                    
                     LinkButton lnkDelete = (LinkButton)gvR.FindControl("btnDeleteRow");
                     lnkDelete.Enabled = isEnabled;
                     if (!isEnabled)
@@ -500,34 +511,41 @@ namespace PG.Web.WREL
                 cObj._RecordState = RecordStateEnum.Added;
             }
 
-
-            //cObj.CN_NUMBER = strD;
-            //cObj.CLIENT_ID = Conversion.StringToInt(hdnClientId.Value);
-            //cObj.AGR_DETAIL_ID = Conversion.StringToInt(hdnAggrementDtlId.Value);
-            //cObj.ITEM_ID = Conversion.StringToInt(hdnItemId.Value);
-            //cObj.ROUTE_ID = Conversion.StringToInt(hdnRouteId.Value);
-            //cObj.SERVICE_AMOUNT = Conversion.StringToDecimal(txtServiceAmt.Text);
-
+            strD = ((HiddenField)gvR.FindControl("hdnAgreementDTLID")).Value;
+            cObj.AGR_DETAIL_ID = Conversion.StringToInt(strD);
+            strD = ((TextBox)gvR.FindControl("txtPICKUP_DATE")).Text;
+            cObj.PICKUP_DATE =Conversion.StringToDate(strD);
+            strD = ((TextBox)gvR.FindControl("txtCN_CLIENT_CODE")).Text;
+            cObj.CN_CLIENT_CODE = strD;
             strD = ((TextBox)gvR.FindControl("txtRecipientName")).Text;
             cObj.CONSIGNEE_NAME = strD;
-
             strD = ((TextBox)gvR.FindControl("txtRecipientAddress")).Text;
             cObj.CONSIGNEE_ADDRESS = strD;
-
             strD = ((TextBox)gvR.FindControl("txtRecipientMobileNo")).Text;
             cObj.CONSIGNEE_MOBILE_NO = strD;
-
+            strD = ((TextBox)gvR.FindControl("txtITEM_NAME")).Text;
+            cObj.ITEM_NAME = strD;
+            strD = ((HiddenField)gvR.FindControl("hdnITEM_ID")).Value;
+            cObj.ITEM_ID =Conversion.StringToInt(strD);
+            strD = ((TextBox)gvR.FindControl("txtPRODUCT_TYPE")).Text;
+            cObj.PRODUCT_TYPE = strD;
+            strD = ((TextBox)gvR.FindControl("txtUPS")).Text;
+            cObj.UPS = strD;
             strD = ((TextBox)gvR.FindControl("txtDestinationDist")).Text;
-            cObj.DESTINATION_DIST_NAME = strD;
-
-            strD = ((HiddenField)gvR.FindControl("hdnDestinationDistId")).Value;
-            cObj.DESTINATION_DIST_ID = Conversion.StringToInt(strD);
-
-            strD = ((TextBox)gvR.FindControl("txtTownName")).Text;
-            cObj.DESTINATION_TOWN_NAME = strD;
-
-            strD = ((HiddenField)gvR.FindControl("hdnTownId")).Value;
-            cObj.DESTINATION_TOWN_ID = Conversion.StringToInt(strD);
+            cObj.DESTINATION = strD;
+            strD = ((TextBox)gvR.FindControl("txtSLA_DAYS")).Text;
+            cObj.SLA_DAYS =Conversion.StringToInt(strD);
+            strD = ((TextBox)gvR.FindControl("txtSTATUS")).Text;
+            cObj.STATUS = strD;
+            strD = ((TextBox)gvR.FindControl("txtNARRATION")).Text;
+            cObj.NARRATION = strD;
+            strD = ((TextBox)gvR.FindControl("txtREF_TYPE")).Text;
+            cObj.REF_TYPE = strD;
+            strD = ((HiddenField)gvR.FindControl("hdnServiceAmount")).Value;
+            cObj.SERVICE_AMOUNT = Conversion.StringToDecimal(strD);
+            strD = ((HiddenField)gvR.FindControl("hdnDISTANCE_TYPE_ID")).Value;
+            cObj.DISTANCE_TYPE_ID = Conversion.StringToInt(strD);
+            
 
 
             if (!gvR.Visible)
@@ -584,14 +602,21 @@ namespace PG.Web.WREL
         private bool ValidateDetails(List<dcCN_CREATION_MST> list)
         {
             bool y = true;
+            int i = 0;
             foreach (var item in list)
             {
-                //if(!(item.ROOM_QTY > 0))
-                //{
-                //    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Select atleast one Room !!');", true);
-                //    y = false;
+                i = i + 1;
+                if (item.ITEM_ID == 0)
+                {
+                    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Enter Proper ITem Name Row SL# " + i + "!!');", true);
+                    y = false;
 
-                //}
+                }
+                if(item.DISTANCE_TYPE_ID==0)
+                {
+                    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Enter Proper Distance Type Row SL# " + i + "!!');", true);
+                    y = false;
+                }
 
             }
 
@@ -602,56 +627,26 @@ namespace PG.Web.WREL
         {
             errMsg = string.Empty;
 
-            //if (txtManagerName.Text == "")
-            //{
-            //    ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', 'Enter Manager Name!', 'Error');", true);
-            //    txtManagerName.Focus();
-            //    return false;
+            if (txtClientName.Text == "")
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', 'Enter Client Name!', 'Error');", true);
+                txtClientName.Focus();
+                return false;
 
-            //}
+            }
 
-            //if (txtCargoDate.Text == "")
-            //{
-            //    ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', 'Enter Cargo Date!', 'Error');", true);
-            //    txtCargoDate.Focus();
-            //    return false;
+            if (txtDepartment.Text == "")
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', 'Enter Client Department!', 'Error');", true);
+                txtDepartment.Focus();
+                return false;
 
-            //}
+            }
 
-            //if (txtName.Text == "")
-            //{
-            //    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Enter Name !!');", true);
-            //    txtName.Focus();
-            //    return false;
-
-            //}
-
-            //if (txtAddress.Text == "")
-            //{
-            //    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Enter Address !!');", true);
-            //    txtAddress.Focus();
-            //    return false;
-
-            //}
-
-            //if (txtMobileNo.Text == "")
-            //{
-            //    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Enter Mobile No !!');", true);
-            //    txtMobileNo.Focus();
-            //    return false;
-
-            //}
-
-            //if (hdnCountryId.Value == "0")
-            //{
-            //    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Select Country !!');", true);
-            //    txtCountry.Focus();
-            //    return false;
-
-            //}
+            
 
             ReadDetailsFromGrid();
-
+            listDetails = Session["CNList"] as List<dcCN_CREATION_MST>;
             if (ValidateDetails(this.listDetails))
             {
                 return true;
@@ -694,11 +689,12 @@ namespace PG.Web.WREL
             bool bStatus = false;
             bool isAdd = false;
             int newCN_ID = 0;
-            ReadDetailsFromGrid();
+           // ReadDetailsFromGrid();
+            listDetails = Session["CNList"] as List<dcCN_CREATION_MST>;
             foreach(dcCN_CREATION_MST obj in this.listDetails)
             {
                 dcCN_CREATION_MST cObj = new dcCN_CREATION_MST();
-                cObj._RecordState = obj._RecordState;
+                cObj._RecordState = RecordStateEnum.Added;
                 if(cObj._RecordState == RecordStateEnum.Added)
                 {
                     cObj.CREATE_BY = loggedinUser.UserName;
@@ -712,18 +708,31 @@ namespace PG.Web.WREL
 
                 cObj.CN_NUMBER = CN_CREATION_MSTBL.Get_New_CN_No(DateTime.Now.ToString("dd-MMM-yy"), null);
                 cObj.CLIENT_ID = Conversion.StringToInt(hdnClientId.Value);
+                cObj.CLIENT_DEPT_ID = Conversion.StringToInt(hdnDeptID.Value);
+                cObj.AGR_DETAIL_ID = obj.AGR_DETAIL_ID;
+                cObj.PICKUP_DATE = obj.PICKUP_DATE;
+                cObj.CN_CLIENT_CODE = obj.CN_CLIENT_CODE;
                 cObj.AGR_DETAIL_ID = Conversion.StringToInt(hdnAggrementDtlId.Value);
-                cObj.ITEM_ID = Conversion.StringToInt(hdnItemId.Value);
-                cObj.ROUTE_ID = Conversion.StringToInt(hdnRouteId.Value);
-                cObj.SERVICE_AMOUNT = Conversion.StringToDecimal(txtServiceAmt.Text);
+                cObj.ITEM_ID = obj.ITEM_ID;
+                cObj.ITEM_NAME = obj.ITEM_NAME;
+                cObj.SERVICE_AMOUNT = obj.SERVICE_AMOUNT;
+                cObj.CLIENT_DEPT_ID = Conversion.StringToInt(hdnDeptID.Value);
+                cObj.HUB_ID = Conversion.StringToInt(hdnHubId.Value);
 
                 cObj.CONSIGNEE_NAME = obj.CONSIGNEE_NAME;
                 cObj.CONSIGNEE_ADDRESS = obj.CONSIGNEE_ADDRESS;
                 cObj.CONSIGNEE_MOBILE_NO = obj.CONSIGNEE_MOBILE_NO;
-                cObj.DESTINATION_DIST_NAME = obj.DESTINATION_DIST_NAME;
+                cObj.DESTINATION = obj.DESTINATION;
                 cObj.DESTINATION_DIST_ID = obj.DESTINATION_DIST_ID;
-                cObj.DESTINATION_TOWN_NAME = obj.DESTINATION_TOWN_NAME;
-                cObj.DESTINATION_TOWN_ID = obj.DESTINATION_TOWN_ID;
+                cObj.PRODUCT_TYPE = obj.PRODUCT_TYPE;
+                cObj.UPS = obj.UPS;
+                cObj.DESTINATION = obj.DESTINATION;
+                cObj.SLA_DAYS = obj.SLA_DAYS;
+                cObj.NARRATION = obj.NARRATION;
+                cObj.STATUS = obj.STATUS;
+                cObj.REF_TYPE = obj.REF_TYPE;
+                cObj.DISTANCE_TYPE_ID = obj.DISTANCE_TYPE_ID;
+          
 
                 newCN_ID = CN_CREATION_MSTBL.Save(cObj);
             }
@@ -734,6 +743,7 @@ namespace PG.Web.WREL
             {
                 this.CN_ID = newCN_ID;
                 //ReadTask();
+                SetControl(FormDataMode.Read);
                 bStatus = true;
             }
 
@@ -1201,6 +1211,187 @@ namespace PG.Web.WREL
             string rk = AppReport.SetAppReportToSession(rpt, this.Context);
             ShowReport(rk);
         }
+
+        protected void btnUpload_Click(object sender, EventArgs e)
+        {
+            int k = 0;
+            if (FileUpload1.HasFile)
+            {
+                string ext = Path.GetExtension(FileUpload1.FileName).ToLower();
+                if (ext == ".xlsx")
+                {
+                    string filePath = Server.MapPath("~/Uploads/" + FileUpload1.FileName);
+                    FileUpload1.SaveAs(filePath);
+
+                    var tbl = new DataTable();
+
+                    using (var package = new ExcelPackage(new FileInfo(filePath)))
+                    {
+                        if (package.Workbook.Worksheets.Count == 0)
+                        {
+                            throw new Exception("❌ No worksheets found in the Excel file.");
+                        }
+
+                        var sheet = package.Workbook.Worksheets[1];
+
+                        if (sheet.Dimension == null)
+                        {
+                            throw new Exception("Worksheet is empty.");
+                        }
+
+                        bool hasHeader = true;
+                        int totalCols = sheet.Dimension.End.Column;
+                        int totalRows = sheet.Dimension.End.Row;
+
+                        // Add columns to DataTable
+                        for (int col = 1; col <= totalCols; col++)
+                        {
+                            string columnName = hasHeader ? sheet.Cells[1, col].Text : "Column{col}";
+
+                            if (string.IsNullOrWhiteSpace(columnName))
+                                columnName = "Column{col}";
+
+                            // Ensure uniqueness
+                            if (tbl.Columns.Contains(columnName))
+                            {
+                                int i = 1;
+                                string newColumnName;
+                                do
+                                {
+                                    newColumnName = columnName + "_" + i++;
+                                } while (tbl.Columns.Contains(newColumnName));
+                                columnName = newColumnName;
+                            }
+
+                            tbl.Columns.Add(columnName);
+                        }
+
+                        // Add rows to DataTable
+                        int startRow = hasHeader ? 2 : 1;
+                        for (int rowNum = startRow; rowNum <= totalRows; rowNum++)
+                        {
+                            DataRow row = tbl.NewRow();
+                            for (int col = 1; col <= totalCols; col++)
+                            {
+                                row[col - 1] = sheet.Cells[rowNum, col].Text;
+                            }
+                            tbl.Rows.Add(row);
+                        }
+                    }
+
+                    // Populate your list from the DataTable
+                    this.listDetails.Clear();
+                   
+                    if (tbl.Rows.Count > 0)
+                    {
+                        foreach (DataRow Row in tbl.Rows)
+                        {
+                                 DBContext dc = null;
+                                bool isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+                                bool isTransInit = dc.StartTransaction();
+                            try
+                            {
+                            dcTEMP_CN_INFO cObj = new dcTEMP_CN_INFO();
+                            cObj.SLNO =Conversion.StringToInt(Row["SL_NO"].ToString());
+                            cObj.PICKUP_DATE = Conversion.StringToDate(Row["PICKUP_DATE"].ToString());
+                            cObj.CN_CLIENT_CODE = Row["CLIENT_CODE"].ToString();
+                            cObj.CN_NAME = Row["NAME"].ToString();
+                            cObj.CN_MOBILE_NO = Row["MobileNo"].ToString();
+                            cObj.ADDRESS = Row["Address"].ToString();
+                            cObj.ITEM_NAME = Row["Item"].ToString();
+                           
+                            cObj.PRODUCT_TYPE = Row["Product_Type"].ToString();
+
+                            cObj.UPS = Row["UPS"].ToString();
+                            cObj.DESTINATION = Row["Destination"].ToString();
+                            cObj.SLA_BREEZE = Conversion.StringToInt(Row["SLA_Breeze"].ToString());
+                            cObj.STATUS = Row["Status"].ToString();
+                            cObj.NARRATION = Row["Narration"].ToString();
+                            cObj.CN_DATE = Conversion.StringToDate(Row["DATE"].ToString());
+                            cObj.REF_TYPE = Row["REF_TYPE"].ToString();
+                            cObj.DISTANCE_TYPE_NAME = Row["DISTANCE_TYPE"].ToString();
+                            //cObj.REF_CHALLAN_NO = Row["ChallanNo"].ToString();
+                            //cObj.REF_ACCOUNT_NO = Row["AccountNo"].ToString();
+                            TEMP_CN_INFOBL.Insert(cObj, dc);
+                           // string strclientName = cObj.CLIENT_NAME;
+                            dc.CommitTransaction(isTransInit);
+            }
+            catch
+            {
+                // cStatus = false;
+                dc.RollbackTransaction();
+            }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+                            //if (cObj != null)
+                            //{
+                            //   // cObj.SLNo = k + 1;
+                            //    cObj.CN_ID = CN_ID;
+                            //    cObj.CLIENT_NAME = strclientName;
+                            //   // cObj.CARGO_ID = 0;
+                            //    //cObj.SOURCE_CARGO_ID = 0;
+                            //    this.listDetails.Add(cObj);
+                            //}
+                        }
+
+                        CNTEMPlistDetails=  TEMP_CN_INFOBL.GetTempCNListInfo("1", null);
+                      
+                        foreach (var Item in CNTEMPlistDetails)
+                        {
+                            dcCN_CREATION_MST objcn = new dcCN_CREATION_MST();
+
+                            objcn.SLNO = Item.SLNO;
+                            objcn.CN_NUMBER = "";
+                            objcn.CN_ID = 0;
+                            objcn.PICKUP_DATE = Item.PICKUP_DATE;
+                            objcn.CN_CLIENT_CODE = Item.CN_CLIENT_CODE;
+                           
+                            objcn.CONSIGNEE_NAME = Item.CN_NAME;
+                            objcn.CONSIGNEE_MOBILE_NO = Item.CN_MOBILE_NO;
+                            objcn.CONSIGNEE_ADDRESS = Item.ADDRESS;
+                            objcn.ITEM_NAME = Item.ITEM_NAME;
+
+                            objcn.ITEM_ID =Conversion.StringToInt(ITEM_MSTBL.getItemIDByItemName(Item.ITEM_NAME,null));
+                            objcn.DISTANCE_TYPE_NAME = Item.DISTANCE_TYPE_NAME;
+                            objcn.DISTANCE_TYPE_ID = DISTANCE_TYPE_MSTBL.getDistanceTypeIDByTypeName(objcn.DISTANCE_TYPE_NAME,null);
+                            objcn.SERVICE_AMOUNT = Conversion.StringToDecimal(AGREEMENT_DETAILLBL.getServiceAmountByItemID(Conversion.StringToInt(hdnClientId.Value), objcn.ITEM_ID, objcn.DISTANCE_TYPE_ID, null));
+                            objcn.AGR_DETAIL_ID = Conversion.StringToInt(AGREEMENT_DETAILLBL.getAgreementdtlIDByItemID(Conversion.StringToInt(hdnClientId.Value), objcn.ITEM_ID, objcn.DISTANCE_TYPE_ID, null)); 
+                            objcn.PRODUCT_TYPE = Item.PRODUCT_TYPE;
+                            objcn.UPS = Item.UPS;
+                            objcn.DESTINATION = Item.DESTINATION;
+                         
+                            objcn.SLA_DAYS = Item.SLA_BREEZE;
+                            objcn.STATUS = Item.STATUS;
+                            objcn.NARRATION = Item.NARRATION;
+                            objcn.BOOKING_DATE = Item.CN_DATE;
+                            objcn.REF_TYPE = Item.REF_TYPE;
+                            
+                            listDetails.Add(objcn);
+                            
+                        }
+                        Session["CNList"] = listDetails;
+                        GridView1.DataSource = listDetails;
+                        GridView1.DataBind();
+                        //SetControlGrid();
+                        TEMP_CN_INFOBL.DeleteTempData(null);
+                        btnSave.Enabled = true;
+                    }
+                   
+            
+                }
+            }
+        }
+
+        protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GridView1.PageIndex = e.NewPageIndex;
+            if (Session["CNList"] != null)
+            {
+                GridView1.DataSource = (List<dcCN_CREATION_MST>)Session["CNList"];
+                GridView1.DataBind();
+            }
+        }
+
+       
         
     }
 }

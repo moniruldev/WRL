@@ -940,7 +940,7 @@
         <ItemStyle HorizontalAlign="Center" Width="40px" />
     </asp:TemplateField>
 
-        <asp:TemplateField HeaderText="CN">
+        <asp:TemplateField HeaderText="CN Number">
     <ItemTemplate>
         <div class="d-flex align-items-center">
             <table>
@@ -961,7 +961,7 @@
         </div>
     </ItemTemplate>
 </asp:TemplateField>
-        <asp:TemplateField HeaderText="Client">
+        <asp:TemplateField HeaderText="CN Name">
     <ItemTemplate>
         <div class="d-flex align-items-center">
             <table>

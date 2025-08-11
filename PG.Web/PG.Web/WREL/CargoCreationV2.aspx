@@ -900,16 +900,53 @@
 
                  <div class="col-md-4">
                   <div class="form-group row mb-0">
-                    <label for="name" class="col-sm-5 col-form-label-sm">Paste Excel :</label>
+                    <label for="name" class="col-sm-5 col-form-label-sm" style="display:none;">Paste Excel :</label>
                     <div class="col-sm-7">
-                      <asp:TextBox ID="DrPasteTextBox" runat="server" class="form-control form-control-sm" TextMode="MultiLine" Width="99%" Height="150px" BorderColor="Black"></asp:TextBox>
+                      <asp:TextBox ID="DrPasteTextBox" runat="server" class="form-control form-control-sm" TextMode="MultiLine" Width="600px" Height="150px" BorderColor="Black" Visible="false"></asp:TextBox>
                          &nbsp;
-                 <asp:Button ID="btnPastData" runat="server" Text="Load Data" CssClass="btn btn-primary btn-sm mb-1 mt-2" OnClick="btnPasteData_Click" />
+                 <asp:Button ID="btnPastData" runat="server" Text="Load Data" CssClass="btn btn-primary btn-sm mb-1 mt-2" OnClick="btnPasteData_Click" Visible="false" />
                     </div>
                   </div>
                 </div>
 
              </div>
+          <div class="row mb-0">
+    <div class="col-md-4">
+        <div class="form-group row mb-0 align-items-center">
+            <label for="FileUpload1" class="col-sm-5 col-form-label col-form-label-sm">Upload Excel :</label>
+            <div class="col-sm-7 d-flex gap-2">
+                <asp:FileUpload ID="FileUpload1" runat="server" CssClass="form-control form-control-sm" />
+                <asp:Button ID="btnUpload" CssClass="btn btn-sm btn-primary" runat="server" Text="Load Excel" OnClick="btnUpload_Click" />
+            </div>
+        </div>
+    </div>
+</div>
+
+
+          <%--<div class="row mb-0">
+             <div class="col-md-4">
+                  <div class="form-group row mb-0">
+                       <label for="name" class="col-sm-5 col-form-label-sm">Upload Excel :</label>
+                                       <div class="col-sm-7">
+                                           <table>
+                                               <tr>
+                                                   <td>
+                                                        <asp:FileUpload ID="FileUpload1" runat="server" style="margin-top: 0px" Height="30px" Width="200px" />   &nbsp;
+                                                   </td>
+                                                   <td>
+                                                        <asp:Button ID="btnUpload" CssClass="buttonSearch" runat="server" Text="Load Excel" OnClick="btnUpload_Click" />
+                                                   </td>
+                                               </tr>
+                                           </table>
+                                            
+                                           
+                                           
+
+                                       </div>
+                  </div>
+                </div>
+
+          </div>--%>
 
       
 
@@ -950,7 +987,7 @@
     <Columns>
      <asp:TemplateField HeaderText="SL" HeaderStyle-HorizontalAlign="Center">
         <ItemTemplate>
-            <asp:Label ID="lblSerialNo" runat="server" Text=""></asp:Label>
+            <asp:Label ID="lblSerialNo" runat="server" Text='<%# Bind("SLNo") %>' ></asp:Label>
         </ItemTemplate>
         <ItemStyle HorizontalAlign="Center" Width="40px" />
     </asp:TemplateField>

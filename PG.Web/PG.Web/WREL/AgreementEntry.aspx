@@ -719,7 +719,7 @@
                     //}
 
                     if (eCode == '') {
-                        ClearItemData(elemID);
+                        ClearDistanceTypeData(elemID);
                     }
                     else {
                         // var eCode = $('#' + txtITEM_NAME_DIS).val();
@@ -728,10 +728,10 @@
                         //alert(eCode);
                         var prcNo = GetItemNo(eCode, serviceURL);
                         if (prcNo == null) {
-                            ClearItemData(elemID);
+                            ClearDistanceTypeData(elemID);
                         }
                         else {
-                            SetItemData(elemID, grp);
+                            SetDistanceTypeData(elemID, grp);
                             //CheckItemChanged(elemID);
                         }
                     }
@@ -745,6 +745,44 @@
 
             });
 
+        }
+
+       
+        function GetItemNo(eCode, serviceURL) {
+            var prcNo = null;
+            var isError = false;
+            var isComplete = false;
+            //alert(eCode);
+            //ajax call
+            var newServiceURL = serviceURL + " &selectitemname=" + eCode + "&segmentid=" + 1;
+            var dummyVar = $.ajax({
+                type: "GET",
+                cache: false,
+                async: false,
+                dataType: "json",
+                url: newServiceURL,
+
+                success: function (prddata) {
+                    //            if (accdata.menu[0].count > 0) {
+                    //                menu = menudata.menu[0];
+                    //            }
+                    if (prddata.rows.length > 0) {
+                        prcNo = prddata.rows[0];
+                    }
+                },
+                complete: function () {
+                    if (!isError) {
+                        //return;
+                        //alert (menu.name);
+                    }
+                    isComplete = true;
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    isError = true;
+                    alert(textStatus);
+                }
+            });
+            return prcNo;
         }
 
         function ClearDistanceTypeData(txtDistanceType) {
