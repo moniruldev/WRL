@@ -43,5 +43,20 @@ namespace PG.Report.ReportGen.WRELRGN
             rpt.DataSources.Add(new AppReport.DataSource("dsCargo", rList));
             return rpt;
         }
+
+        public static AppReport CNList_Report(clsPrmWREL rptClass, ReportOptions rptOptions)
+        {
+            return CNList_Report(rptClass, rptOptions, null);
+        }
+        public static AppReport CNList_Report(clsPrmWREL rptClass, ReportOptions rptOptions, DBContext dc)
+        {
+            AppReport rpt = new AppReport();
+            rpt.ReportID = ReportIDEnum.ItemReport;
+            rpt.ReportOptions = rptOptions;
+            rpt.ReportEmbeddedResource = @"PG.Report.ReportDef.WRELDef.rptCNDashboardList.rdlc";
+            List<rcWREL> rList = WRELRBL.Get_CNList_Report(rptClass, dc);
+            rpt.DataSources.Add(new AppReport.DataSource("dsCargo", rList));
+            return rpt;
+        }
     }
 }

@@ -44,6 +44,7 @@ namespace PG.DBClass.InventoryDC
         private string m_LOCATIONCODE = string.Empty;
         private int m_MS_PRC = 0;
         private string m_MS_RPT_MARK = string.Empty;
+        private int m_CLIENT_ID = 0;
        
         #endregion  //private members
 
@@ -402,6 +403,18 @@ namespace PG.DBClass.InventoryDC
             {
                 this.m_MS_RPT_MARK = value;
                 this.NotifyPropertyChanged("MS_RPT_MARK");
+            }
+        }
+
+
+        [DBColumn(Name = "CLIENT_ID", Storage = "m_CLIENT_ID", DbType = "107")]
+        public int CLIENT_ID
+        {
+            get { return this.m_CLIENT_ID; }
+            set
+            {
+                this.m_CLIENT_ID = value;
+                this.NotifyPropertyChanged("CLIENT_ID");
             }
         }
 

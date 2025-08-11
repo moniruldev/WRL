@@ -113,6 +113,56 @@ namespace PG.BLLibrary.WRElBL
             return cObjList;
         }
 
+        public static List<dcCN_CREATION_MST> GetCNInfoList(clsPrmWREL prm, DBContext dc)
+        {
+            List<dcCN_CREATION_MST> cObjList = new List<dcCN_CREATION_MST>();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetCNInfoListSQLString());
+
+                sb.Append(" AND mst.CLIENT_ID= @clientId ");
+                cmdInfo.DBParametersInfo.Add("@clientId", prm.CLIENT_ID);
+
+                if (!string.IsNullOrWhiteSpace(prm.ITEM_NAME))
+                {
+                    sb.Append(" AND UPPER(im.item_name) LIKE @itemName ");
+                    cmdInfo.DBParametersInfo.Add("@itemName", "%" + prm.ITEM_NAME.ToUpper() + "%");
+                }
+
+                if (!string.IsNullOrWhiteSpace(prm.CONSIGNEE_NAME))
+                {
+                    sb.Append(" AND UPPER(mst.CONSIGNEE_NAME) LIKE @conName ");
+                    cmdInfo.DBParametersInfo.Add("@conName", "%" + prm.CONSIGNEE_NAME.ToUpper() + "%");
+                }
+
+                if (!string.IsNullOrWhiteSpace(prm.CN_NUMBER))
+                {
+                    sb.Append(" AND UPPER(mst.CN_NUMBER) LIKE @cnNumber ");
+                    cmdInfo.DBParametersInfo.Add("@cnNumber", "%" + prm.CN_NUMBER.ToUpper() + "%");
+                }
+
+                if (prm.CONSIGNEE_MOBILE_NO != "")
+                {
+                    sb.Append(" AND mst.CONSIGNEE_MOBILE_NO= @mobileNo ");
+                    cmdInfo.DBParametersInfo.Add("@mobileNo", prm.CONSIGNEE_MOBILE_NO);
+                }
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcCN_CREATION_MST>(dbq, dc);
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
+        }
+
         public static string Get_New_CN_No(string pdate, DBContext dc)
         {
             bool isDCInit = false;

@@ -1,4 +1,5 @@
-﻿using PG.Core.DBBase;
+﻿using PG.BLLibrary.WRElBL;
+using PG.Core.DBBase;
 using PG.DBClass.WRELDC;
 using PG.Report.ReportClass.WRELRC;
 using System;
@@ -181,6 +182,75 @@ namespace PG.Report.ReportRBL.WRELRBL
                     cmdInfo.DBParametersInfo.Add("@CARGO_NO", prm.TRANS_NO);
 
                 }
+
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandTimeout = 600;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+                cRptList = DBQuery.ExecuteDBQuery<rcWREL>(dbq, dc);
+
+                //foreach (DataRow dRow in dtData.Rows)
+                //{
+                //    rcWREL stk = new rcWREL();
+
+                //    stk.CN_NUMBER = dRow["CN_NUMBER"].ToString();
+                //    stk.img = GenerateQrCode(stk.CN_NUMBER);
+                //    cRptList.Add(stk);
+
+                //}
+
+            }
+            {
+                DBContextManager.ReleaseDBContext(ref dc, isDCInit);
+            }
+
+            return cRptList;
+
+        }
+
+        public static List<rcWREL> Get_CNList_Report(clsPrmWREL prm, DBContext dc)
+        {
+            List<rcWREL> cRptList = new List<rcWREL>();
+            bool isDCInit = false;
+            //try
+            {
+
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                //StringBuilder sb = new StringBuilder();
+                cmdInfo.DBParametersInfo.Clear();
+
+                StringBuilder sb = new StringBuilder(CN_CREATION_MSTBL.GetCNInfoListSQLString());
+
+                sb.Append(" AND mst.CLIENT_ID= @clientId ");
+                cmdInfo.DBParametersInfo.Add("@clientId", prm.CLIENT_ID);
+
+                if (!string.IsNullOrWhiteSpace(prm.ITEM_NAME))
+                {
+                    sb.Append(" AND UPPER(im.item_name) LIKE @itemName ");
+                    cmdInfo.DBParametersInfo.Add("@itemName", "%" + prm.ITEM_NAME.ToUpper() + "%");
+                }
+
+                if (!string.IsNullOrWhiteSpace(prm.CONSIGNEE_NAME))
+                {
+                    sb.Append(" AND UPPER(mst.CONSIGNEE_NAME) LIKE @conName ");
+                    cmdInfo.DBParametersInfo.Add("@conName", "%" + prm.CONSIGNEE_NAME.ToUpper() + "%");
+                }
+
+                if (!string.IsNullOrWhiteSpace(prm.CN_NUMBER))
+                {
+                    sb.Append(" AND UPPER(mst.CN_NUMBER) LIKE @cnNumber ");
+                    cmdInfo.DBParametersInfo.Add("@cnNumber", "%" + prm.CN_NUMBER.ToUpper() + "%");
+                }
+
+                if (prm.CONSIGNEE_MOBILE_NO != "")
+                {
+                    sb.Append(" AND mst.CONSIGNEE_MOBILE_NO= @mobileNo ");
+                    cmdInfo.DBParametersInfo.Add("@mobileNo", prm.CONSIGNEE_MOBILE_NO);
+                }
+
 
                 DBQuery dbq = new DBQuery();
                 dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;

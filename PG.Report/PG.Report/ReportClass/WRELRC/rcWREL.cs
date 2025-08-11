@@ -23,6 +23,7 @@ namespace PG.Report.ReportClass.WRELRC
         private string m_DEPARTMENT= string.Empty;
         private string m_ITEM_NAME = string.Empty;
         private decimal m_SERVICE_AMOUNT = 0;
+        private string m_IS_DELIVERED = string.Empty;
 
        
 
@@ -123,7 +124,11 @@ namespace PG.Report.ReportClass.WRELRC
             set { this.m_SERVICE_AMOUNT = value; }
         }
 
-      
+        public string IS_DELIVERED
+        {
+            get { return this.m_IS_DELIVERED; }
+            set { this.m_IS_DELIVERED = value; }
+        }
 
         private byte[] m_img;
         public byte[] img
