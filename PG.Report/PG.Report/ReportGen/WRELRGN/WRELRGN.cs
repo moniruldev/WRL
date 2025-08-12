@@ -58,5 +58,22 @@ namespace PG.Report.ReportGen.WRELRGN
             rpt.DataSources.Add(new AppReport.DataSource("dsCargo", rList));
             return rpt;
         }
+
+        public static AppReport CN_Reference_Report(clsPrmWREL rptClass, ReportOptions rptOptions)
+        {
+            return CN_Reference_Report(rptClass, rptOptions, null);
+        }
+        public static AppReport CN_Reference_Report(clsPrmWREL rptClass, ReportOptions rptOptions, DBContext dc)
+        {
+            AppReport rpt = new AppReport();
+            rpt.ReportID = ReportIDEnum.Department_Production_Report;
+            rpt.ReportOptions = rptOptions;
+            // SetParameter(rptClass, rpt, dc);
+            rpt.ReportEmbeddedResource = @"PG.Report.ReportDef.WRELDef.rptCNReference.rdlc";
+            List<rcWREL> rList = WRELRBL.Get_CNReferenceInfo_Report(rptClass, dc);
+            rpt.DataSources.Add(new AppReport.DataSource("dsCN", rList));
+            return rpt;
+        }
+
     }
 }

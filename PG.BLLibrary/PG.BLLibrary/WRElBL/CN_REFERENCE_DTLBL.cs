@@ -323,5 +323,38 @@ namespace PG.BLLibrary.WRElBL
             finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
             return cObjList;
         }
+
+
+        public static List<dcCN_REFERENCE_DTL> GetCNInfofromReferenceList()
+        {
+            return GetCNInfofromReferenceListById(0, null);
+        }
+        public static List<dcCN_REFERENCE_DTL> GetCNInfofromReferenceListById(int pCNId, DBContext dc)
+        {
+            List<dcCN_REFERENCE_DTL> cObjList = new List<dcCN_REFERENCE_DTL>();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(" SELECT DISTINCT a.CN_ID,b.CN_NUMBER,b.CONSIGNEE_NAME,b.CONSIGNEE_ADDRESS,b.CONSIGNEE_MOBILE_NO FROM CN_REFERENCE_DTL a INNER JOIN CN_CREATION_MST b ON a.CN_ID=b.CN_ID ");
+                //if (pCNId > 0)
+                //{
+                //    sb.Append(" AND mst.CN_ID= @pCNId ");
+                //    cmdInfo.DBParametersInfo.Add("@pCNId", pCNId);
+                //}
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcCN_REFERENCE_DTL>(dbq, dc);
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
+        }
     }
 }

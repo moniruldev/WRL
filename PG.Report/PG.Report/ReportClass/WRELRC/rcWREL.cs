@@ -25,7 +25,10 @@ namespace PG.Report.ReportClass.WRELRC
         private decimal m_SERVICE_AMOUNT = 0;
         private string m_IS_DELIVERED = string.Empty;
 
-       
+        public string REF_CLIENT_CODE { get; set; }
+        public string REF_ACCOUNT_NO { get; set; }
+        public string REF_MOBILE_NO { get; set; }
+        public string REF_CHALLAN_NO { get; set; }
 
         public string CLIENT_ADDRESS { get; set; }
         public string CLIENT_MOBILE { get; set; }

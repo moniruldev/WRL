@@ -205,6 +205,12 @@ namespace PG.DBClass.WRELDC
         public int SLNO { get; set; }
         public string CN_NUMBER { get; set; }
         public string DISTANCE_TYPE_NAME { get; set; }
+        public string CONSIGNEE_NAME { get; set; }
 
+         public string CONSIGNEE_ADDRESS { get; set; }
+         public string CONSIGNEE_MOBILE_NO { get; set; }
+        
+            
+        
     }
 }
