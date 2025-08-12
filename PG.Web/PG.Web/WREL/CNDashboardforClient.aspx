@@ -58,7 +58,10 @@
                           extend: 'excelHtml5',
                           text: '<i class="bi bi-file-earmark-excel"></i> Export Excel',
                           filename: exportTitle.replace(/\s+/g, '_'), 
-                          title: exportTitle
+                          title: exportTitle,
+                          exportOptions: {
+                              columns: ':not(:last-child)' 
+                          }
                       },
                      {
                          extend: 'pdfHtml5',
@@ -93,6 +96,9 @@
                                  paddingTop: function(i, node) { return 2; },
                                  paddingBottom: function(i, node) { return 2; }
                              };
+                         },
+                         exportOptions: {
+                             columns: ':not(:last-child)'
                          }
                      },
                     //{ extend: 'copyHtml5', text: '<i class="bi bi-clipboard"></i> Copy' },
@@ -105,9 +111,15 @@
                                 'text-align': 'center',
                                 'width': '100%'
                             });
+                        },
+                        exportOptions: {
+                            columns: ':not(:last-child)'
                         }
                     }
-                ]
+                ],
+                language: {
+                    emptyTable: "No data available"
+                }
             });
         });
 
@@ -312,41 +324,35 @@
        </div>
 
         <div class="card-body">
-          <div class="row mb-0 d-none">
 
-                <div class="col-md-3">
-                   <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtCNNumber" placeholder="CN Number" ></asp:TextBox> 
-                       <asp:HiddenField runat="server" ID="hdnCNNumber" Value="0" /> 
-                  </div>
-                 <div class="col-md-3">
-                   <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtItemName" placeholder="Item Name" ></asp:TextBox> 
-                       <asp:HiddenField runat="server" ID="hdnItemId" Value="0" /> 
-                  </div>
-              
-                <div class="col-md-3">
-                   <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtRecipientName" placeholder="Recipient Name" ></asp:TextBox> 
-                       <asp:HiddenField runat="server" ID="hdnRecipientName" Value="0" /> 
-                  </div>
-                <div class="col-md-3">
-                   <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtMobileNo" placeholder="Mobile Number" ></asp:TextBox> 
-                       <asp:HiddenField runat="server" ID="hdnMobileNumber" Value="0" /> 
-                  </div>
+        <div class="d-flex align-items-center border-bottom pb-2 mb-2">
+            <div class="d-flex align-items-center mr-3">
+                <label for="txtFromDate" class="mr-2 mb-0 small">From Date:</label>
+                <asp:TextBox ID="txtFromDate" runat="server" CssClass="TextBoxnew textDate dateParse form-control form-control-sm" Style="width:130px;"></asp:TextBox>
+            </div>
 
-           </div>
+            <div class="d-flex align-items-center mr-3">
+                <label for="txtToDate" class="mr-2 mb-0 small">To Date:</label>
+                <asp:TextBox ID="txtToDate" runat="server" CssClass="TextBoxnew textDate dateParse form-control form-control-sm" Style="width:130px;"></asp:TextBox>
+            </div>
+
+            <asp:LinkButton runat="server" ID="btnLoadData" OnClick="btnLoadData_Click" CssClass="btn btn-primary btn-sm">
+                <i class="fa fa-list"></i> Load Data
+            </asp:LinkButton>
+        </div>
+
 
 
                <div class="row mb-0 d-none">
                 <div class="m-2 p-1 d-flex justify-content-between align-items-center w-100">
                     <div>
-                        <asp:LinkButton runat="server" ID="btnLoadData" OnClick="btnLoadData_Click" CssClass="btn btn-primary">
-                            <i class="fa fa-list"></i> Show Data
-                        </asp:LinkButton>
-                          <asp:LinkButton runat="server" ID="btnClearFilter" OnClick="btnClearFilter_Click" CssClass="btn btn-primary">
+                     
+                          <asp:LinkButton runat="server" ID="btnClearFilter" OnClick="btnClearFilter_Click" CssClass="btn btn-primary" Visible="false">
                             <i class="fa fa-times text-danger"></i> Clear Filter
                         </asp:LinkButton>
                     </div>
 
-                    <div>
+                    <div class="d-none">
                         <asp:LinkButton runat="server" ID="btnDownloadPdf" OnClick="btnDownloadPdf_Click" CssClass="btn btn-primary">
                             <i class="fas fa-file-pdf text-danger"></i> View PDF
                         </asp:LinkButton>
@@ -380,7 +386,7 @@
              </div>
             </div>
             <div class="row">
-   <asp:Repeater ID="rptData" runat="server">
+   <asp:Repeater ID="rptData" runat="server" OnItemCommand="rptData_ItemCommand">
     <HeaderTemplate>
         <table id="myTable" class="display table table-striped table-bordered" style="width:100%">
             <thead class="table-info">
@@ -391,6 +397,7 @@
                     <th>Recipient Address</th>
                     <th>Mobile No</th>
                     <th>Status</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -404,6 +411,14 @@
             <td><%# Eval("CONSIGNEE_ADDRESS") %></td>
             <td><%# Eval("CONSIGNEE_MOBILE_NO") %></td>
             <td><%# Eval("IS_DELIVERED") %></td>
+             <td>
+                <asp:LinkButton ID="lnkPrint" runat="server"
+                    CommandName="print"
+                    CommandArgument='<%# Eval("CN_ID") %>'
+                    CssClass="btn btn-sm btn-primary" Width="70px">
+                    CN Print
+                </asp:LinkButton>
+            </td>
         </tr>
     </ItemTemplate>
 

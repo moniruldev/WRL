@@ -150,6 +150,23 @@ namespace PG.BLLibrary.WRElBL
                     sb.Append(" AND mst.CONSIGNEE_MOBILE_NO= @mobileNo ");
                     cmdInfo.DBParametersInfo.Add("@mobileNo", prm.CONSIGNEE_MOBILE_NO);
                 }
+
+                if (prm.FromDate.HasValue)
+                {
+                    if (prm.ToDate.HasValue)
+                    {
+                        sb.Append(" AND (TO_DATE(mst.CREATE_DATE) BETWEEN @fromDate AND @toDate) ");
+                        cmdInfo.DBParametersInfo.Add("@fromDate", prm.FromDate.Value);
+                        cmdInfo.DBParametersInfo.Add("@toDate", prm.ToDate.Value);
+                    }
+                    else
+                    {
+                        sb.Append(" AND TO_DATE(mst.CREATE_DATE) = @fromDate ");
+                        cmdInfo.DBParametersInfo.Add("@fromDate", prm.FromDate.Value);
+
+                    }
+
+                }
                 DBQuery dbq = new DBQuery();
                 dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
                 cmdInfo.CommandText = sb.ToString();

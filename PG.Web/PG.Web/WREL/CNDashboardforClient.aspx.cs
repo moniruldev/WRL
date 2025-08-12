@@ -60,18 +60,8 @@ namespace PG.Web.WREL
                 hdnClientId.Value = loggedinUser.CLIENT_ID.ToString();
                 FillCombo();
                 SetDate();
-                //LoadData();
-                clsPrmWREL prmCn = new clsPrmWREL();
-                DateTime? fromDate = null;
-                DateTime? toDate = null;
-                prmCn.CLIENT_ID = Conversion.StringToInt(hdnClientId.Value);
-                prmCn.ITEM_NAME = txtItemName.Text.Trim();
-                prmCn.CN_NUMBER = txtCNNumber.Text.Trim();
-                prmCn.CONSIGNEE_NAME = txtRecipientName.Text.Trim();
-                prmCn.CONSIGNEE_MOBILE_NO = txtMobileNo.Text.Trim();
-                List<dcCN_CREATION_MST> listData = CN_CREATION_MSTBL.GetCNInfoList(prmCn, null);
-                rptData.DataSource = listData;
-                rptData.DataBind();
+                LoadData();
+              
                 btnGridPageGoTo.Style.Add("display", "none");
             }
             SetHyperLink();
@@ -86,6 +76,8 @@ namespace PG.Web.WREL
         {
             var now = DateTime.Now;
             var firstDate = new DateTime(now.Year, now.Month, 1);
+            txtFromDate.Text = now.ToString("dd-MMM-yyyy");
+            txtToDate.Text = now.ToString("dd-MMM-yyyy");
 
         }
 
@@ -109,15 +101,23 @@ namespace PG.Web.WREL
             clsPrmWREL prmCn = new clsPrmWREL();
             DateTime? fromDate = null;
             DateTime? toDate = null;
+         
+            DateTime dt;
+            if (DateTime.TryParse(txtFromDate.Text, out dt))
+            {
+                fromDate = dt;
+            }
+            if (DateTime.TryParse(txtToDate.Text, out dt))
+            {
+                toDate = dt;
+            }
             prmCn.CLIENT_ID = Conversion.StringToInt(hdnClientId.Value);
-            prmCn.ITEM_NAME = txtItemName.Text.Trim();
-            prmCn.CN_NUMBER = txtCNNumber.Text.Trim();
-            prmCn.CONSIGNEE_NAME = txtRecipientName.Text.Trim();
-            prmCn.CONSIGNEE_MOBILE_NO = txtMobileNo.Text.Trim();
-
-            List<dcCN_CREATION_MST> listData = CN_CREATION_MSTBL.GetCNInfoList(prmCn,null);
-            BindGridData(listData);
-            SetGridInfo(listData.Count);
+            prmCn.FromDate = fromDate;
+            prmCn.ToDate = toDate;
+       
+            List<dcCN_CREATION_MST> listData = CN_CREATION_MSTBL.GetCNInfoList(prmCn, null);
+            rptData.DataSource = listData;
+            rptData.DataBind();
 
         }
 
@@ -326,20 +326,7 @@ namespace PG.Web.WREL
         protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
         {
 
-            //if (e.CommandName.Equals("ViewReport"))
-            //{
-            //    GridViewRow clickedRow = ((LinkButton)e.CommandSource).NamingContainer as GridViewRow;
-            //    clsPrmWREL prm = new clsPrmWREL();
-            //    string cargoNumber = e.CommandArgument.ToString();
-            //    prm.TRANS_NO = cargoNumber;
-            //    ReportOptions rptOption = GetReportOptions();
-
-            //    AppReport rpt = WRELRGN.CargoManifest_Report(prm, rptOption);
-            //    string rk = AppReport.SetAppReportToSession(rpt, this.Context);
-            //    ShowReport(rk);
-
-
-            //}
+        
         }
 
         private ReportOptions GetReportOptions()
@@ -439,10 +426,10 @@ namespace PG.Web.WREL
         {
             clsPrmWREL prm = new clsPrmWREL();
             prm.CLIENT_ID = Conversion.StringToInt(hdnClientId.Value);
-            prm.ITEM_NAME = txtItemName.Text.Trim();
-            prm.CN_NUMBER = txtCNNumber.Text.Trim();
-            prm.CONSIGNEE_NAME = txtRecipientName.Text.Trim();
-            prm.CONSIGNEE_MOBILE_NO = txtMobileNo.Text.Trim();
+            //prm.ITEM_NAME = txtItemName.Text.Trim();
+            //prm.CN_NUMBER = txtCNNumber.Text.Trim();
+            //prm.CONSIGNEE_NAME = txtRecipientName.Text.Trim();
+            //prm.CONSIGNEE_MOBILE_NO = txtMobileNo.Text.Trim();
             ReportOptions rptOption = GetReportOptions();
 
             AppReport rpt = WRELRGN.CNList_Report(prm, rptOption);
@@ -460,11 +447,26 @@ namespace PG.Web.WREL
 
         public void Cleartextbox()
         {
-            txtItemName.Text = string.Empty;
-            txtCNNumber.Text = string.Empty;
-            txtRecipientName.Text = string.Empty;
-            txtMobileNo.Text = string.Empty;
+          
 
+        }
+
+        protected void rptData_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            if (e.CommandName == "print")
+            {
+                int cnID = Convert.ToInt32(e.CommandArgument);
+
+                clsPrmWREL prm = new clsPrmWREL();
+                ReportOptions rptOption = GetReportOptions();
+                prm.CN_ID = cnID;
+
+
+                AppReport rpt = WRELRGN.CN_Barcode_Report(prm, rptOption);
+                string rk = AppReport.SetAppReportToSession(rpt, this.Context);
+                ShowReport(rk);
+
+            }
         }
 
 
