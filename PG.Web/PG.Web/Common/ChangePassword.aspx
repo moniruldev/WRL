@@ -147,6 +147,59 @@ function btnSalaryInfo_onclick() {
             width: 25%;
             height: 27px;
         }
+
+         .change-password-container {
+        max-width: 450px;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+        font-family: Arial, sans-serif;
+    }
+
+    .change-password-container h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .form-group .error {
+        color: red;
+        font-size: 12px;
+    }
+
+    .btn {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+        font-size: 16px;
+    }
+
+    .btn:hover {
+        background-color: #45a049;
+    }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -155,7 +208,7 @@ function btnSalaryInfo_onclick() {
      <div id="dvContentHeader" class="dvContentHeader">  
     <div id="dvHeader" class="dvHeader" >
         <asp:Label ID="lblHeader" CssClass="lblHeader" runat="server" 
-            Text="Change Password"></asp:Label>
+            Text=""></asp:Label>
     </div>
      <div id="dvMessage" class="dvMessage" >
         <asp:Label ID="lblMessage" runat="server" Font-Size="Small" Width="100%"></asp:Label>
@@ -164,9 +217,9 @@ function btnSalaryInfo_onclick() {
 
     <div id="dvContentMain" class="dvContentMain"> 
 
-    <div id = "dvControls" 
+   <%-- <div id = "dvControls" 
             style="height:auto; width:100%">
-              <table style="" border="0" cellpadding="3" cellspacing="3">
+              <table style="" border="1"  width="100%">
                  <tr>
                    <td style="width:50px;">
                    </td>
@@ -194,7 +247,7 @@ function btnSalaryInfo_onclick() {
                    <td style="">
                    </td>
                    <td style="" align="right">
-                      <asp:Label id="Label1" runat="server" Text="User" ></asp:Label>
+                      <asp:Label id="Label1" runat="server" Text="User : " ></asp:Label>
                    </td>
                    <td style="" align="left">
                       <asp:TextBox id="txtUser" runat="server" CssClass="textBox" 
@@ -206,7 +259,7 @@ function btnSalaryInfo_onclick() {
                    <td style="">
                    </td>
                    <td style="" align="right">
-                      <asp:Label id="Label3" runat="server" Text="Current Password" ></asp:Label>
+                      <asp:Label id="Label3" runat="server" Text="Current Password : " ></asp:Label>
                    </td>
                    <td style="" align="left">
                         <asp:TextBox id="txtCurPassword" runat="server" CssClass="textBox" 
@@ -218,7 +271,7 @@ function btnSalaryInfo_onclick() {
                    <td style="">
                    </td>
                    <td style="" align="right">
-                     <asp:Label id="Label4" runat="server" Text="New Password" ></asp:Label>
+                     <asp:Label id="Label4" runat="server" Text="New Password : " ></asp:Label>
                    </td>
                    <td style="" align="left">
                        <asp:TextBox id="txtNewPassword" runat="server" CssClass="textBox" 
@@ -230,7 +283,7 @@ function btnSalaryInfo_onclick() {
                    <td style="">
                    </td>
                    <td style="" align="right">
-                       <asp:Label id="Label5" runat="server" Text="Confirm New Password" ></asp:Label>
+                       <asp:Label id="Label5" runat="server" Text="Confirm New Password : " ></asp:Label>
                    </td>
                    <td style="" align="left">
                       <asp:TextBox id="txtNewPasswordConfirm" runat="server" CssClass="textBox" 
@@ -270,7 +323,38 @@ function btnSalaryInfo_onclick() {
                  
               </table>
 
-        </div>  
+        </div>  --%>
+        <div class="change-password-container">
+    <h2>Change Password</h2>
+
+    <div class="form-group">
+        <label for="txtUser">User</label>
+        <asp:TextBox ID="txtUser" runat="server" CssClass="textBox" ReadOnly="True"></asp:TextBox>
+    </div>
+
+    <div class="form-group">
+        <label for="txtCurPassword">Current Password</label>
+        <asp:TextBox ID="txtCurPassword" runat="server" TextMode="Password"></asp:TextBox>
+    </div>
+
+    <div class="form-group">
+        <label for="txtNewPassword">New Password</label>
+        <asp:TextBox ID="txtNewPassword" runat="server" TextMode="Password"></asp:TextBox>
+    </div>
+
+    <div class="form-group">
+        <label for="txtNewPasswordConfirm">Confirm New Password</label>
+        <asp:TextBox ID="txtNewPasswordConfirm" runat="server" TextMode="Password"></asp:TextBox>
+        <asp:CompareValidator ID="CompareValidator1" runat="server"
+            ErrorMessage="Password not matched!"
+            ControlToCompare="txtNewPassword"
+            ControlToValidate="txtNewPasswordConfirm"
+            CssClass="error"></asp:CompareValidator>
+    </div>
+
+    <asp:Button ID="btnChangePass" runat="server" Text="Change Password" CssClass="btn"
+        OnClick="btnSave_Click" />
+</div>
      
      </div>
 

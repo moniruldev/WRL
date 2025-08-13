@@ -23,7 +23,7 @@ namespace PG.Report.ReportGen.WRELRGN
             rpt.ReportID = ReportIDEnum.Department_Production_Report;
             rpt.ReportOptions = rptOptions;
            // SetParameter(rptClass, rpt, dc);
-            rpt.ReportEmbeddedResource = @"PG.Report.ReportDef.WRELDef.rptCNBarcode.rdlc";
+            rpt.ReportEmbeddedResource = @"PG.Report.ReportDef.WRELDef.rptCNBarcodeDual.rdlc";
             List<rcWREL> rList = WRELRBL.Get_CNBarcodeInfo_Report(rptClass, dc);
             rpt.DataSources.Add(new AppReport.DataSource("dsCN", rList));
             return rpt;
