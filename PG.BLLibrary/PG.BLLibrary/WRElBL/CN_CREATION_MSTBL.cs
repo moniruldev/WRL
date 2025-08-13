@@ -54,6 +54,7 @@ namespace PG.BLLibrary.WRElBL
             return sb.ToString();
         }
 
+
         public static dcCN_CREATION_MST GetCNInfoByCNNumber(string pCNNumber, DBContext dc)
         {
             dcCN_CREATION_MST cObjList = new dcCN_CREATION_MST();
@@ -81,6 +82,8 @@ namespace PG.BLLibrary.WRElBL
             finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
             return cObjList;
         }
+
+
         public static List<dcCN_CREATION_MST> GetCNInfoList()
         {
             return GetCNInfoListById(0, null);
@@ -167,6 +170,45 @@ namespace PG.BLLibrary.WRElBL
                     }
 
                 }
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcCN_CREATION_MST>(dbq, dc);
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
+        }
+
+
+        public static List<dcCN_CREATION_MST> GetCNTrackingInfoList(clsPrmWREL prm, DBContext dc)
+        {
+            List<dcCN_CREATION_MST> cObjList = new List<dcCN_CREATION_MST>();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder();
+                sb.Append(" SELECT CASE WHEN COUNT(CN_NUMBER)>0 THEN 1 ELSE 0 END  STEP_NUMBER FROM cn_creation_mst MST WHERE UPPER(CN_NUMBER)=:cnNumber  ");
+                sb.Append(" UNION ALL ");
+                sb.Append(" SELECT CASE WHEN COUNT(CN_NUMBER)>0 THEN 2 ELSE 0 END  STEP_NUMBER FROM cargo_creation_detail WHERE UPPER(cn_number)=:cnNumber  ");
+                sb.Append(" UNION ALL ");
+                sb.Append(" SELECT CASE WHEN COUNT(CN_NUMBER)>0 THEN 3 ELSE 0 END  STEP_NUMBER FROM cargo_tracking CT INNER JOIN cargo_creation_detail CDTL ON ct.cargo_id=cdtl.cargo_id WHERE ct.trans_type='I' AND UPPER(CDTL.cn_number)=:cnNumber  ");
+                sb.Append(" UNION ALL ");
+                sb.Append(" SELECT CASE WHEN COUNT(CN_NUMBER)>0 THEN 4 ELSE 0 END  STEP_NUMBER FROM cargo_tracking CT INNER JOIN cargo_creation_detail CDTL ON ct.cargo_id=cdtl.cargo_id WHERE ct.trans_type='R' AND UPPER(CDTL.cn_number)=:cnNumber  ");
+                sb.Append(" UNION ALL ");
+                sb.Append(" SELECT CASE WHEN COUNT(CN_NUMBER)>0 THEN 5 ELSE 0 END  STEP_NUMBER FROM cn_assignment MST WHERE UPPER(CN_NUMBER)=:cnNumber  ");
+                sb.Append(" UNION ALL ");
+                sb.Append(" SELECT CASE WHEN COUNT(CN_NUMBER)>0 THEN 6 ELSE 0 END  STEP_NUMBER FROM cn_creation_mst MST WHERE mst.is_delivered='Y' AND UPPER(CN_NUMBER)=:cnNumber  ");
+             
+                cmdInfo.DBParametersInfo.Add(":cnNumber", prm.CN_NUMBER.ToUpper());
+                
+              
                 DBQuery dbq = new DBQuery();
                 dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
                 cmdInfo.CommandText = sb.ToString();

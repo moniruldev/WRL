@@ -110,13 +110,24 @@
 	
 	.ui-layout-pane { /* all 'panes' */
 		background:	#FFF; 
-		border:		1px solid #BBB; 
+        border:0 !important;
+		/*border:		1px solid #BBB;*/ 
 	/* DO NOT add scrolling (or padding) to 'panes' that have a content-div,
 	   otherwise you may get double-scrollbars - on the pane AND on the content-div
 	*/
 	padding:	0px; 
 	overflow:	auto;
 	}
+    .ui-widget-header {
+     border: 0 !important;
+     border-bottom: 1px solid #dee2e6 !important;
+     background:none !important;
+    /* background: #cccccc url(images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50%
+50%
+ repeat-x; */
+    color: #222222; 
+    font-weight: bold;
+}
 	/* (scrolling) content-div inside pane allows for fixed header(s) and/or footer(s) */
 	.ui-layout-content {
 		padding: 0px;
@@ -148,7 +159,7 @@
 		height: 300px;	    
 	}
 	
-	#west-closer {
+	/*#west-closer {
 			position:	absolute;
 			top:		1px;
 			width: 		20px;
@@ -163,7 +174,26 @@
 	#west-closer:hover
 	{
 			background: url('image/go-lt-on.gif') no-repeat center;
-	}
+	}*/
+
+    #west-closer {
+    position: absolute;
+    top: 1px;
+    width: 30px;
+    height: 20px;
+    z-index: 2;
+    display: flex; /* to center the symbol */
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    right: 1px;
+    font-size: 26px; /* adjust size of dash symbol */
+    background: none; /* remove old image */
+}
+
+#west-closer::before {
+    content: "\2261"; /* Unicode for ≡ */
+}
 	
 	
 	.ui-layout-resizer-sliding {
@@ -320,8 +350,7 @@
 		border: 1px solid grey; 
 		*/
 	}
-	
-	
+
 	  
 	.ui-widget-content { border: none;}
 	#dvTabs .ui-widget-content { border:none; padding:0px; margin:0px; }
@@ -395,7 +424,8 @@
 	
 	.treeNode:hover
 	{
-		background-color:#3CC1CF; 
+		/*background-color:#3CC1CF;*/ 
+         background-color: #66b3ff;
 		color:white;
         padding:4px 2px 4px 2px;
         border-radius:2px 2px;
@@ -411,7 +441,8 @@
 		color:White;
 		/*background-color:#494E53;*/
         /*background-color:blue;*/
-		background-color:#3CC1CF;
+		/*background-color:#3CC1CF;*/
+        background-color: #66b3ff;
         padding:4px 2px 4px 2px;
         border-radius:2px 2px;
         font-weight:bold;
@@ -556,11 +587,11 @@
   float: right;
   padding:5px;
   margin: 5px;
-  color: white;
+  color: black;
   text-decoration:none;
   background-color:transparent;
   border-radius:5px;
-  border:1px solid white;
+  border: 1px solid #dee2e6;
   transition: width .35s;
   -webkit-transition: width .35s;
   overflow: hidden;
@@ -775,7 +806,7 @@
 			, togglerLength_closed: 100
 			, togglerAlign_closed: "top"
 			, togglerContent_closed: "M<BR>e<BR>n<BR>u"
-			, togglerTip_open: "Close Menu"
+			, togglerTip_open: "Hide Menu"
 			, togglerTip_closed: "Open Menu"
 			, onresize: "ResizeLeftPanels"
 		}
@@ -1001,7 +1032,7 @@ $(document).ready(function() {
 		<div id="containerInner" class="pane ui-layout-center">
 			<div id="dvTop" class="pane ui-layout-north fixPng"">
 			   <div id="dvTopInner" 
-					style="padding:0; width:100%;height:100%; Background-color:#3CC1CF;  background-repeat:no-repeat;"> <%--background-image: linear-gradient(to right, green, red,#0094ff, green); --%>
+					style="padding:0; width:100%;height:100%; Background-color:#FFF;  background-repeat:no-repeat;"> <%--background-image: linear-gradient(to right, green, red,#0094ff, green); --%>
 				 <table border="0" cellpadding="0" cellspacing="0" style="width:100%;height:100%">
 				   <tr>
 					 <td style="width:60%;">
@@ -1015,10 +1046,10 @@ $(document).ready(function() {
 									ImageAlign="AbsMiddle" ImageUrl="image/wr.png" Width="150px" Height="40px" 
 									BorderColor="#CCCCCC" BorderStyle="Solid" BorderWidth="0px"  />
 						 </td>
-						 <td style="width:10px;">
+						 <td style="width:30px;">
 						 </td>
-						   <td style="" class="lbluser"><asp:Label runat="server" ID="lblUserID" ForeColor="White"></asp:Label></td>
-                          <td style="" class="lbluser"><asp:Label runat="server" ID="lblUserName" ForeColor="White"></asp:Label></td> 
+						   <td style="" class="lbluser"><asp:Label runat="server" ID="lblUserID" ForeColor="Black"></asp:Label></td>
+                          <td style="" class="lbluser"><asp:Label runat="server" ID="lblUserName" ForeColor="Black"></asp:Label></td> 
 						
 						</tr> 
 					  </table> 

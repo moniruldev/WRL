@@ -608,6 +608,7 @@ namespace PG.DBClass.WRELDC
          private string m_DESTINATION_TOWN_NAME = "";
          private string m_CLIENT_NAME = "";
          private string m_AGREEMENT_DESCRIPTION = "";
+         private int m_STEP_NUMBER = 0;
        
          private string m_ROUTE_NAME = "";
          private string m_HUB_NAME = "";
@@ -648,6 +649,11 @@ namespace PG.DBClass.WRELDC
          {
              get { return this.m_HUB_NAME; }
              set { this.m_HUB_NAME = value; }
+         }
+         public int STEP_NUMBER
+         {
+             get { return this.m_STEP_NUMBER; }
+             set { this.m_STEP_NUMBER = value; }
          }
 
          public int SLNO { get; set; }
