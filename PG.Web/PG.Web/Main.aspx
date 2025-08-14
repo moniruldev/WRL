@@ -248,7 +248,7 @@
 		border: 0px none;
 		
 		background-color: #DCE4EF;	
-		background-image  :url('image/bgblue.jpg');
+		/*background-image  :url('image/bgblue.jpg');*/
 	}
 	
 	
@@ -1164,7 +1164,7 @@ $(document).ready(function() {
 							</ul>
 							<div id="tabs-1">
 								<div id="dvIFrame-1" class="dvIFrame">
-								  <iframe id="iframe-1" src="Home.aspx?_t=1&_n=1" class="ifContent" 
+								  <iframe id="iframe-1" src="<%=GetIframeSource() %>" class="ifContent" 
 										frameborder="0"> 
 
                                          

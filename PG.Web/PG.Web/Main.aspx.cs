@@ -24,6 +24,7 @@ namespace PG.Web
     public partial class Main : System.Web.UI.Page
     {
         public int AppID = AppInfo.AppID;
+        dcUser user = new dcUser();
         public string RootPath = PG.Core.Web.WebUtility.GetAbsoluteUrl("~/");
         public string GetMenuPageLinks = PageLinks.SystemLinks.GetLink_MenuItem;
         public string GetMenuKeepLive = PageLinks.SystemLinks.GetLink_KeepLive;
@@ -57,7 +58,7 @@ namespace PG.Web
                 //this is new menu code after multiple role menu implement.
                 List<dcAppMenu> cList = null;           
                 cList = AppMenu.GetAppMenuList(AppInfo.AppID);
-                dcUser user = AppSecurity.GetUserInfoFromSession();
+                user = AppSecurity.GetUserInfoFromSession();
                 //List<dcRoleMenu> cmList = RoleMenuBL.GetRoleMenuListByRole(AppInfo.AppID,user.RoleID);
                 List<dcRoleMenu> cmList = RoleMenuBL.GetRoleMenuListByRole(AppInfo.AppID, user.RoleID, user.UserID);
 
@@ -318,6 +319,11 @@ namespace PG.Web
         protected void TreeView1_TreeNodeDataBound(object sender, TreeNodeEventArgs e)
         {
             //int x = 0;
+        }
+
+        protected string GetIframeSource()
+        {
+           return user.UserType == "CLIENT" ? "WREL/ParcelTracking.aspx?_t=1&_n=1" : "Home.aspx?_t=1&_n=1";
         }
 
     

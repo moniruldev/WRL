@@ -65,6 +65,9 @@
          var hdnBrowserPrivateMode = '<%=hdnBrowserPrivateMode.ClientID%>';
 
          var GetJSonDataServiceLink = '<%=this.GetJSonDataServiceLink%>';
+         var txtUser = '<%= txtUser.ClientID %>';
+         var txtPassword = '<%= txtPassword.ClientID %>';
+         var btnLoginID = '<%= btnLogin.ClientID %>';
 
 
          $(document).ready(function () {
