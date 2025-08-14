@@ -14,6 +14,26 @@ Date: June 02, 2014
     margin-right: 0;
     }
 
+/* For Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #888 transparent;
+}
+
+/* For Chrome, Edge, Safari */
+*::-webkit-scrollbar {
+    width: 6px;   /* Vertical scrollbar thickness */
+    height: 6px;  /* Horizontal scrollbar thickness */
+}
+
+*::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+}
 
 
 a:focus {

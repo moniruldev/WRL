@@ -170,7 +170,7 @@ namespace PG.Web
                 tNode.Value = menu.AppMenuName;
                 tNode.Expanded = menu.Expanded;
                 tNode.SelectAction = (TreeNodeSelectAction)menu.SelectAction;
-                tNode.ToolTip = menu.ToolTip;
+                tNode.ToolTip = menu.AppMenuText;
 
                 if (menu.ShowImage)
                 {

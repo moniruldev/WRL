@@ -159,9 +159,8 @@ namespace PG.Web.Common
 
             if (txtNewPassword.Text.Trim() == string.Empty)
             {
-                //Helper.SetStatusMessage(lblMessage, "Please Enter Employee Name", MessageTypeEnum.InvalidData);
-                this.SetPageMessage("Empty password not allowed!", MessageTypeEnum.InvalidData);
-                this.ShowPageMessage(lblMessage, true);
+              
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', ' Empty password not allowed', 'Error');", true);
                 txtNewPassword.Focus();
                 return false;
             }
@@ -169,9 +168,7 @@ namespace PG.Web.Common
 
             if (txtNewPassword.Text != txtNewPasswordConfirm.Text )
             {
-                //Helper.SetStatusMessage(lblMessage, "Please Enter Employee Name", MessageTypeEnum.InvalidData);
-                this.SetPageMessage("Passwor Not Matched!", MessageTypeEnum.InvalidData);
-                this.ShowPageMessage(lblMessage, true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', ' Password Not Matched!', 'Error');", true);
                 txtNewPasswordConfirm.Focus();
                 return false;
             }
@@ -216,17 +213,17 @@ namespace PG.Web.Common
             if (SaveData())
             {
                 //SetHyperLink();
-                //Helper.SetStatusMessage(lblMessage, saveMsg, MessageTypeEnum.Successful);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('success', ' New Password Saved Successfully!', 'Success');", true);
                 this.SetPageMessage(saveMsg, MessageTypeEnum.Successful);
 
                 EditTask();
             }
             else
             {
-              //  Helper.SetStatusMessage(lblMessage, saveMsg, MessageTypeEnum.Error);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', ' Data save failed!', 'Error');", true);
                 this.SetPageMessage(saveMsg, MessageTypeEnum.Error);
             }
-            base.ShowPageMessage(lblMessage, true);
+            //base.ShowPageMessage(lblMessage, true);
             
         }
 
@@ -249,7 +246,7 @@ namespace PG.Web.Common
             else
             {
                 saveMsg = "Current Password not matched!";
-
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', ' Current Password not matched!', 'Error');", true);
             }
             return bStatus;
         }

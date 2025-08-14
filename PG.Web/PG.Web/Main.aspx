@@ -118,29 +118,46 @@
 	padding:	0px; 
 	overflow:	auto;
 	}
-    .ui-widget-header {
-     border: 0 !important;
-     border-bottom: 1px solid #dee2e6 !important;
-     background:none !important;
-    /* background: #cccccc url(images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50%
-50%
- repeat-x; */
-    color: #222222; 
-    font-weight: bold;
-}
+  
 	/* (scrolling) content-div inside pane allows for fixed header(s) and/or footer(s) */
 	.ui-layout-content {
 		padding: 0px;
 		position:	relative; /* contain floated or positioned elements */
 		overflow:	auto; /* add scrolling to content-div */
 	}
+
+    #dvLeftContentInner {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: #364d84;
+
+    /* For Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: #e7e2e2 #364d84;
+}
+
+
+/* For Chrome, Edge, Safari */
+#dvLeftContentInner::-webkit-scrollbar {
+    width: 2px; /* Thickness */
+}
+
+#dvLeftContentInner::-webkit-scrollbar-track {
+    background: transparent; /* Track color */
+}
+
+#dvLeftContentInner::-webkit-scrollbar-thumb {
+    background-color: #e7e2e2; /* Scrollbar color */
+    border-radius: 2px;
+}
 	
 	
 	
 	/* inner divs inside Outer East/West panes  url('image/header03.png') 0 50% repeat-x*/
 	.leftHeader { 
 		/*background: #00B386;*/
-        background: #494E53 ;
+        background: #364d77; /*494E53*/
 		font-weight: bold;
 		text-align: center;
 		padding: 2px 0 4px;
@@ -425,7 +442,7 @@
 	.treeNode:hover
 	{
 		/*background-color:#3CC1CF;*/ 
-         background-color: #66b3ff;
+         background-color: #3CC1CF;
 		color:white;
         padding:4px 2px 4px 2px;
         border-radius:2px 2px;
@@ -442,7 +459,7 @@
 		/*background-color:#494E53;*/
         /*background-color:blue;*/
 		/*background-color:#3CC1CF;*/
-        background-color: #66b3ff;
+        background-color: #3CC1CF;
         padding:4px 2px 4px 2px;
         border-radius:2px 2px;
         font-weight:bold;
@@ -587,7 +604,7 @@
   float: right;
   padding:5px;
   margin: 5px;
-  color: black;
+  color: white;
   text-decoration:none;
   background-color:transparent;
   border-radius:5px;
@@ -1032,7 +1049,7 @@ $(document).ready(function() {
 		<div id="containerInner" class="pane ui-layout-center">
 			<div id="dvTop" class="pane ui-layout-north fixPng"">
 			   <div id="dvTopInner" 
-					style="padding:0; width:100%;height:100%; Background-color:#FFF;  background-repeat:no-repeat;"> <%--background-image: linear-gradient(to right, green, red,#0094ff, green); --%>
+					style="padding:0; width:100%;height:100%; Background-color:#3CC1CF;  background-repeat:no-repeat;"> <%--background-image: linear-gradient(to right, green, red,#0094ff, green); --%>
 				 <table border="0" cellpadding="0" cellspacing="0" style="width:100%;height:100%">
 				   <tr>
 					 <td style="width:60%;">
@@ -1048,8 +1065,8 @@ $(document).ready(function() {
 						 </td>
 						 <td style="width:30px;">
 						 </td>
-						   <td style="" class="lbluser"><asp:Label runat="server" ID="lblUserID" ForeColor="Black"></asp:Label></td>
-                          <td style="" class="lbluser"><asp:Label runat="server" ID="lblUserName" ForeColor="Black"></asp:Label></td> 
+						   <td style="" class="lbluser"><asp:Label runat="server" ID="lblUserID" ForeColor="white"></asp:Label></td>
+                          <td style="" class="lbluser"><asp:Label runat="server" ID="lblUserName" ForeColor="white"></asp:Label></td> 
 						
 						</tr> 
 					  </table> 
@@ -1087,9 +1104,9 @@ $(document).ready(function() {
 				<div id="dvLeftHeader" class="leftHeader">Menu</div>
 				<div id="dvLeftContent"  class="leftContent">
 				  <div id="dvLeftContentInner" 
-						style="width:100%;height:100%; overflow:auto; background-color: #343A40;"> 
+						style="width:100%;height:100%; overflow:auto; background-color: #364d84;"> 
 					<div id="dvTreeMenu" style="padding: 4px 4px 0px 0px;" >
-						<asp:TreeView ID="TreeView1" runat="server" BackColor="#343A40" Font-Size="11pt" 
+						<asp:TreeView ID="TreeView1" runat="server" BackColor="#364d84" Font-Size="10pt" 
 							ForeColor="White" NodeIndent="11"
 							EnableViewState="False" Font-Names="Verdana" ImageSet="Arrows" 
 							NodeWrap="false" RootNodeStyle-Width="100%" RootNodeStyle-NodeSpacing="4px" 
