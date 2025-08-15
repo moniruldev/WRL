@@ -29,6 +29,7 @@ namespace PG.DBClass.WRELDC
         private string m_DEPARTMENT = string.Empty;
         private string m_ITEM_NAME = string.Empty;
         private decimal m_SERVICE_AMOUNT = 0;
+        private string m_USER_TYPE = string.Empty;
 
         public int CARGO_ID
         {
@@ -113,6 +114,12 @@ namespace PG.DBClass.WRELDC
         {
             get { return this.m_SERVICE_AMOUNT; }
             set { this.m_SERVICE_AMOUNT = value; }
+        }
+
+        public string USER_TYPE
+        {
+            get { return this.m_USER_TYPE; }
+            set { this.m_USER_TYPE = value; }
         }
     }
 }

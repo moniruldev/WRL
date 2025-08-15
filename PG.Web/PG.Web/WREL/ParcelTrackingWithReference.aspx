@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/AppMaster.Master" AutoEventWireup="true" CodeBehind="ParcelTracking.aspx.cs" Inherits="PG.Web.WREL.ParcelTracking" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/AppMaster.Master" AutoEventWireup="true" CodeBehind="ParcelTrackingWithReference.aspx.cs" Inherits="PG.Web.WREL.ParcelTrackingWithReference" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -281,7 +281,7 @@
 
         <div class="form-row justify-content-center mb-4">
             <div class="col-md-6">
-                <asp:TextBox ID="txtParcelNumber" runat="server" CssClass="form-control" Placeholder="Enter Parcel Number"></asp:TextBox>
+                <asp:TextBox ID="txtParcelNumber" runat="server" CssClass="form-control" Placeholder="Search Parcel"></asp:TextBox>
             </div>
             <div class="col-md-2">
                 <asp:Button ID="btnTrack" runat="server" CssClass="btn btn-primary btn-block" Text="Track Parcel" OnClick="btnTrack_Click" />
@@ -317,6 +317,7 @@
                 </div>
             </div>
 
+            <asp:Label ID="lblCnNumber" runat="server" CssClass="text-center d-block mt-3 font-weight-bold"></asp:Label>
             <asp:Label ID="lblStatusMessage" runat="server" CssClass="text-center d-block mt-3 font-weight-bold"></asp:Label>
         </asp:Panel>
 

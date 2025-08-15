@@ -25,7 +25,7 @@ using PG.DBClass.SecurityDC;
 
 namespace PG.Web.WREL
 {
-    public partial class ParcelTracking : BagePage
+    public partial class ParcelTrackingWithReference : BagePage
     {
         public string ReportViewPageLink = PageLinks.ReportLinks.GetLink_ReportView;
         public string ReportViewPDFPageLink = PageLinks.ReportLinks.GetLink_ReportViewPDF;
@@ -75,16 +75,18 @@ namespace PG.Web.WREL
                 return;
             }
 
-            
-            List<dcCN_CREATION_MST> clientParcel = CN_CREATION_MSTBL.GetCNInfoList(prm, null);
 
-            if (clientParcel == null || clientParcel.Count == 0)
+            dcCN_CREATION_MST clientParcel = CN_CREATION_MSTBL.GetCNInfoByReference(prm, null);
+
+            if (clientParcel == null)
             {
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', ' Parcel number not found for this client.', 'Error');", true);
                 pnlTracking.Visible = false;
                 return;
             }
 
+            prm.CN_NUMBER = clientParcel.CN_NUMBER;
+            prm.CLIENT_ID = clientParcel.CLIENT_ID;
             // Get completed steps using your class
             List<dcCN_CREATION_MST> completedSteps = CN_CREATION_MSTBL.GetCNTrackingInfoList(prm, null);
           
@@ -100,21 +102,9 @@ namespace PG.Web.WREL
 
             HighlightSteps(completedSteps);
             UpdateStatusText(completedSteps);
+            lblCnNumber.Text = string.Format("Parcel Number: {0}", clientParcel.CN_NUMBER);
         }
 
-  
-        private List<dcCN_CREATION_MST> GetCompletedSteps(string parcelNumber)
-        {
-           
-            return new List<dcCN_CREATION_MST>
-            {
-                new dcCN_CREATION_MST { STEP_NUMBER = 1 },
-                new dcCN_CREATION_MST { STEP_NUMBER = 2 },
-                new dcCN_CREATION_MST { STEP_NUMBER = 5 } ,
-                new dcCN_CREATION_MST { STEP_NUMBER = 0 } ,
-                new dcCN_CREATION_MST { STEP_NUMBER = 0 } 
-            };
-        }
 
         private void HighlightSteps(List<dcCN_CREATION_MST> completedSteps)
         {
@@ -147,7 +137,6 @@ namespace PG.Web.WREL
             {
                 int lastStep = completedSteps.Max(s => s.STEP_NUMBER);
                 lblStatusMessage.Text = string.Format("Current Status: {0}", GetStatusLabel(lastStep));
-
             }
         }
 

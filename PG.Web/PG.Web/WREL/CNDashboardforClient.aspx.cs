@@ -112,6 +112,7 @@ namespace PG.Web.WREL
                 toDate = dt;
             }
             prmCn.CLIENT_ID = Conversion.StringToInt(hdnClientId.Value);
+            prmCn.USER_TYPE = loggedinUser.UserType;
             prmCn.FromDate = fromDate;
             prmCn.ToDate = toDate;
        

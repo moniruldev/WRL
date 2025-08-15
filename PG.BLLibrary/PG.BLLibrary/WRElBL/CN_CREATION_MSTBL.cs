@@ -29,6 +29,17 @@ namespace PG.BLLibrary.WRElBL
             return sb.ToString();
         }
 
+        public static string GetCNListByReferenceSQLString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(" SELECT * FROM CN_REFERENCE_DTL REF ");
+            sb.Append(" INNER JOIN cn_creation_mst CN ON cn.cn_id=ref.cn_id ");
+            sb.Append(" WHERE 1=1 ");
+
+            return sb.ToString();
+        }
+
         public static string GetCNInfoListSQLString()
         {
             StringBuilder sb = new StringBuilder();
@@ -70,6 +81,49 @@ namespace PG.BLLibrary.WRElBL
                     sb.Append(" AND mst.CN_NUMBER= @pCNNumber ");
                     cmdInfo.DBParametersInfo.Add("@pCNNumber", pCNNumber);
                 }
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcCN_CREATION_MST>(dbq, dc).FirstOrDefault();
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
+        }
+
+        public static dcCN_CREATION_MST GetCNInfoByReference(clsPrmWREL prm, DBContext dc)
+        {
+            dcCN_CREATION_MST cObjList = new dcCN_CREATION_MST();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder();
+                sb.Append(" SELECT * FROM ( ");
+                sb.Append(" SELECT REFCN.*, CN.CN_NUMBER, CN.CLIENT_ID ");
+                sb.Append(" FROM cn_creation_mst CN ");
+                sb.Append(" LEFT JOIN cn_reference_dtl REFCN ON cn.cn_id=REFCN.cn_id ");
+                sb.Append(" WHERE 1=1 ");
+
+                if(prm.USER_TYPE.ToUpper() != "ADMIN")
+                {
+                    sb.Append(" AND CN.CLIENT_ID= @clientId ");
+                    cmdInfo.DBParametersInfo.Add("@clientId", prm.CLIENT_ID);
+                }
+              
+
+                sb.Append(" AND (UPPER(cn.cn_number)=:pCNNumber OR UPPER(REFCN.ref_client_code)=:pCNNumber OR UPPER(REFCN.ref_mobile_no)=:pCNNumber OR UPPER(REFCN.ref_challan_no)=:pCNNumber OR UPPER(REFCN.ref_account_no)=:pCNNumber) ");
+                cmdInfo.DBParametersInfo.Add(":pCNNumber", prm.CN_NUMBER.ToUpper());
+
+                sb.Append("  ORDER BY REFCN.cn_ref_dtl_id DESC ");
+                sb.Append(" ) ");
+                sb.Append(" WHERE ROWNUM = 1 ");
+
                 DBQuery dbq = new DBQuery();
                 dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
                 cmdInfo.CommandText = sb.ToString();
@@ -127,8 +181,11 @@ namespace PG.BLLibrary.WRElBL
                 DBCommandInfo cmdInfo = new DBCommandInfo();
                 StringBuilder sb = new StringBuilder(GetCNInfoListSQLString());
 
-                sb.Append(" AND mst.CLIENT_ID= @clientId ");
-                cmdInfo.DBParametersInfo.Add("@clientId", prm.CLIENT_ID);
+                if (prm.USER_TYPE.ToUpper() != "ADMIN")
+                {
+                    sb.Append(" AND mst.CLIENT_ID= @clientId ");
+                    cmdInfo.DBParametersInfo.Add("@clientId", prm.CLIENT_ID);
+                }
 
                 if (!string.IsNullOrWhiteSpace(prm.ITEM_NAME))
                 {
