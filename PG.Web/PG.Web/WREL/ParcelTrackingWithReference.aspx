@@ -96,11 +96,18 @@
             alert('this is called from parent: ' + val1);
         }
 
-
         $(document).ready(function () {
+            var input = $("#<%= txtParcelNumber.ClientID %>");
+        var button = $("#<%= btnTrack.ClientID %>");
 
+        input.on("keydown", function (event) {
+            if (event.keyCode === 13) { // Enter key
+                event.preventDefault();
+                button.click();
+            }
+        });
+    });
 
-        });    
         function tbopen(key, isPrint, isPDFAutoPrint, showWait) {
             key = key || '';
             isPrint = isPrint || false;

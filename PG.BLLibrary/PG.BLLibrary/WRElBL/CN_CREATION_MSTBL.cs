@@ -118,7 +118,7 @@ namespace PG.BLLibrary.WRElBL
               
 
                 sb.Append(" AND (UPPER(cn.cn_number)=:pCNNumber OR UPPER(REFCN.ref_client_code)=:pCNNumber OR UPPER(REFCN.ref_mobile_no)=:pCNNumber OR UPPER(REFCN.ref_challan_no)=:pCNNumber OR UPPER(REFCN.ref_account_no)=:pCNNumber) ");
-                cmdInfo.DBParametersInfo.Add(":pCNNumber", prm.CN_NUMBER.ToUpper());
+                cmdInfo.DBParametersInfo.Add(":pCNNumber", prm.CN_NUMBER.Trim().ToUpper());
 
                 sb.Append("  ORDER BY REFCN.cn_ref_dtl_id DESC ");
                 sb.Append(" ) ");
@@ -263,7 +263,7 @@ namespace PG.BLLibrary.WRElBL
                 sb.Append(" UNION ALL ");
                 sb.Append(" SELECT CASE WHEN COUNT(CN_NUMBER)>0 THEN 6 ELSE 0 END  STEP_NUMBER FROM cn_creation_mst MST WHERE mst.is_delivered='Y' AND UPPER(CN_NUMBER)=:cnNumber  ");
              
-                cmdInfo.DBParametersInfo.Add(":cnNumber", prm.CN_NUMBER.ToUpper());
+                cmdInfo.DBParametersInfo.Add(":cnNumber", prm.CN_NUMBER.Trim().ToUpper());
                 
               
                 DBQuery dbq = new DBQuery();
