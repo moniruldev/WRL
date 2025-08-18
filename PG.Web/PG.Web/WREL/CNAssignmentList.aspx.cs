@@ -110,6 +110,7 @@ namespace PG.Web.WREL
                 x.DELIVERY_MAN_NAME,
                 x.CONSIGNEE_NAME,
                 x.CONSIGNEE_MOBILE_NO,
+                x.OTP_CODE,
                 POD = x.POD != null && x.POD.Length > 0
                     ? "data:image/png;base64," + Convert.ToBase64String(x.POD)
                     : null
@@ -348,7 +349,7 @@ namespace PG.Web.WREL
             {
                 GridViewRow gvr = (GridViewRow)(((LinkButton)e.CommandSource).NamingContainer);
                 LinkButton btnforward = (LinkButton)gvr.FindControl("lnkView");
-                //HiddenField hdnPOType = (HiddenField)gvr.FindControl("hdnPOType");
+               
                 int CN_ID =Conversion.StringToInt( e.CommandArgument.ToString());
 
             }

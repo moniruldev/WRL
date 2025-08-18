@@ -272,7 +272,7 @@
                 <tr>
                     <td class="p-0">
                         <%--<asp:TextBox ID="txtAssignDate" runat="server" CssClass="form-control form-control-sm" Style="width: 100px;" Text='<%# Bind("ASSIGN_DATE") %>' DataFormatString="{0:dd-MMM-yyyy}"></asp:TextBox>--%>
-                        <asp:TextBox ID="txtAssignDate" runat="server" CssClass="form-control form-control-sm" Style="width: 100px;" Text='<%# Eval("ASSIGN_DATE", "{0:dd-MMM-yyyy}") %>' ReadOnly="true"></asp:TextBox>
+                        <asp:TextBox ID="txtAssignDate" runat="server" CssClass="form-control form-control-sm" Style="width: 80px;" Text='<%# Eval("ASSIGN_DATE", "{0:dd-MMM-yy}") %>' ReadOnly="true"></asp:TextBox>
                     </td>
                 </tr>
             </table>
@@ -280,19 +280,6 @@
     </ItemTemplate>
 </asp:TemplateField>
 
-                   <asp:TemplateField HeaderText="Delivery Man">
-    <ItemTemplate>
-        <div class="d-flex align-items-center">
-            <table>
-                <tr>
-                    <td class="p-0">
-                        <asp:TextBox ID="txtDeliveryMan" runat="server" CssClass="form-control form-control-sm" Style="width: 120px;" Text='<%# Bind("DELIVERY_MAN_NAME") %>'></asp:TextBox>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </ItemTemplate>
-</asp:TemplateField>
   <asp:TemplateField HeaderText="Consignee">
     <ItemTemplate>
         <div class="d-flex align-items-center">
@@ -313,7 +300,7 @@
             <table>
                 <tr>
                     <td class="p-0">
-                        <asp:TextBox ID="txtConsigneeMobil" runat="server" CssClass="form-control form-control-sm" Style="width: 120px;" Text='<%# Bind("CONSIGNEE_MOBILE_NO") %>'></asp:TextBox>
+                        <asp:TextBox ID="txtConsigneeMobil" runat="server" CssClass="form-control form-control-sm" Style="width: 100px;" Text='<%# Bind("CONSIGNEE_MOBILE_NO") %>'></asp:TextBox>
                     </td>
                 </tr>
             </table>
@@ -321,7 +308,48 @@
     </ItemTemplate>
 </asp:TemplateField>
                   
-                  <asp:TemplateField HeaderText="Upload Image">
+    <asp:TemplateField HeaderText="Status">
+    <ItemTemplate>
+        <div class="d-flex align-items-center">
+            <table>
+                <tr>
+                    <td class="p-0">
+                       <asp:DropDownList ID="ddlgStatus" runat="server" CssClass="dropDownList">
+                           <asp:ListItem Selected="True" Text="Delivered" Value="1"></asp:ListItem>
+                            <asp:ListItem  Text="Refund" Value="2"></asp:ListItem>
+                       </asp:DropDownList>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </ItemTemplate>
+</asp:TemplateField>
+                   <asp:TemplateField HeaderText="OTP">
+                       <ItemTemplate>
+                            <asp:LinkButton ID="btnotp" runat="server"
+                                CommandName="OTP"
+                                CommandArgument='<%# Eval("CONSIGNEE_MOBILE_NO") %>'
+                                CssClass="btn btn-sm btn-primary"
+                                Text="Send" />
+                        </ItemTemplate>
+                        <ItemStyle Width="60px" />
+                 </asp:TemplateField>
+
+   <asp:TemplateField HeaderText="Otp Code">
+    <ItemTemplate>
+        <div class="d-flex align-items-center">
+            <table>
+                <tr>
+                    <td class="p-0">
+                        <asp:TextBox ID="txtgOTP" runat="server" CssClass="form-control form-control-sm" Style="width: 60px;" Text='<%# Bind("OTP_CODE") %>'></asp:TextBox>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </ItemTemplate>
+</asp:TemplateField>
+
+   <asp:TemplateField HeaderText="Upload Image">
     <ItemTemplate>
         <div class="d-flex align-items-center">
             <table>
@@ -335,13 +363,7 @@
                             CommandName="UploadImage" CommandArgument='<%# Eval("CN_ID") %>' />
                     </td>
                     <td class="p-0">
-                        <%--<asp:Image ID="imgPhoto" runat="server" Width="100px"
-                            ImageUrl='<%# Eval("POD") %>' />--%>
-                         <!-- Thumbnail image -->
-                         <%--<asp:Image ID="imgPhoto" runat="server" Width="50px" Height="40px"
-                                            CssClass="img-thumbnail"
-                                            ImageUrl='<%# Eval("POD") %>'
-                                            onclick="return showLargeImage(this)" Style="cursor:pointer;" />--%>
+                      
                         <asp:Image ID="imgPhoto" runat="server" Width="60px" Height="35px"
     CssClass="img-thumbnail"
     ImageUrl='<%# string.IsNullOrEmpty(Convert.ToString(Eval("POD"))) ? "~/images/no-image.png" : Convert.ToString(Eval("POD")) %>'
@@ -352,15 +374,7 @@
         </div>
     </ItemTemplate>
 </asp:TemplateField>
-                 <%-- <asp:TemplateField HeaderText="Upload Image">
-            <ItemTemplate>
-                <asp:FileUpload ID="FileUpload1" runat="server" />
-                <asp:Button ID="btnUpload" runat="server" Text="Upload" CssClass="btn btn-sm btn-primary" CommandName="UploadImage" CommandArgument='<%# Eval("CN_ID") %>' />
-                <br />
-               <asp:Image ID="imgPhoto" runat="server" Width="100px"
-                    ImageUrl='<%# Eval("POD") %>' />
-            </ItemTemplate>
-        </asp:TemplateField>--%>
+        
 
                      <asp:TemplateField HeaderText="Action">
                        <ItemTemplate>
