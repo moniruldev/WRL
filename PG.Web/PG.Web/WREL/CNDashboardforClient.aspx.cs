@@ -463,7 +463,7 @@ namespace PG.Web.WREL
                 prm.CN_ID = cnID;
 
 
-                AppReport rpt = WRELRGN.CN_Barcode_Report(prm, rptOption);
+                AppReport rpt = WRELRGN.CN_BarcodeSingle_Report(prm, rptOption);
                 string rk = AppReport.SetAppReportToSession(rpt, this.Context);
                 ShowReport(rk);
 

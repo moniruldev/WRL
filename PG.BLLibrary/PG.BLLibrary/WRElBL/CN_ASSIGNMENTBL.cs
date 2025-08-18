@@ -470,5 +470,48 @@ namespace PG.BLLibrary.WRElBL
             finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
             return chkinvaty;
         }
+
+        public static string GetCNListinfoSQLStringcln()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(" SELECT mst.*,cl.CLIENT_NAME FROM CN_CREATION_MST mst INNER JOIN CLIENT_MST cl ON mst.CLIENT_ID=cl.CLIENT_ID ");
+            sb.Append(" WHERE 1=1 ");
+
+            return sb.ToString();
+        }
+
+        public static dcCN_ASSIGNMENT GetCNInfoByCNNumber(string pCN_NO)
+        {
+            return GetCNInfoByCNNumberList(pCN_NO, null).FirstOrDefault();
+        }
+        public static List<dcCN_ASSIGNMENT> GetCNInfoByCNNumberList(string pCN_NO, DBContext dc)
+        {
+            List<dcCN_ASSIGNMENT> cObjList = new List<dcCN_ASSIGNMENT>();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetCNListinfoSQLStringcln());
+                if (pCN_NO != string.Empty)
+                {
+                    sb.Append(" AND mst.CN_NUMBER= @pCN_NO ");
+                    cmdInfo.DBParametersInfo.Add("@pCN_NO", pCN_NO);
+                }
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcCN_ASSIGNMENT>(dbq, dc);
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
+        }
+
     }
 }

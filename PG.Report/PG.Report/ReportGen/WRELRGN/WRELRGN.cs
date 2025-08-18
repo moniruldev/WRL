@@ -29,6 +29,22 @@ namespace PG.Report.ReportGen.WRELRGN
             return rpt;
         }
 
+
+        public static AppReport CN_BarcodeSingle_Report(clsPrmWREL rptClass, ReportOptions rptOptions)
+        {
+            return CN_BarcodeSingle_Report(rptClass, rptOptions, null);
+        }
+        public static AppReport CN_BarcodeSingle_Report(clsPrmWREL rptClass, ReportOptions rptOptions, DBContext dc)
+        {
+            AppReport rpt = new AppReport();
+            rpt.ReportID = ReportIDEnum.Department_Production_Report;
+            rpt.ReportOptions = rptOptions;
+            // SetParameter(rptClass, rpt, dc);
+            rpt.ReportEmbeddedResource = @"PG.Report.ReportDef.WRELDef.rptCNBarcode.rdlc";
+            List<rcWREL> rList = WRELRBL.Get_CNBarcodeInfo_Report(rptClass, dc);
+            rpt.DataSources.Add(new AppReport.DataSource("dsCN", rList));
+            return rpt;
+        }
         public static AppReport CargoManifest_Report(clsPrmWREL rptClass, ReportOptions rptOptions)
         {
             return CargoManifest_Report(rptClass, rptOptions, null);

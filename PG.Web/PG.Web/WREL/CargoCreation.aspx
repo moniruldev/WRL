@@ -693,8 +693,8 @@
        <div class="card">
          <div class="card-header p-0">
            <div class="d-flex align-items-center justify-content-between p-1">
-             <h5 class="card-title">Cargo Entry</h5>
-             <a class="btn btn-primary p-1"> <i class="fas fa-list"></i> Cargo List </a>
+             <h5 class="card-title">Manifest Entry</h5>
+             <a class="btn btn-primary p-1"> <i class="fas fa-list"></i> Manifest List </a>
          </div>
 
        </div>

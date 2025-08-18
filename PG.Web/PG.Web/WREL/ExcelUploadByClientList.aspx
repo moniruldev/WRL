@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/AppMaster.Master" AutoEventWireup="true" CodeBehind="CNAssignmentList.aspx.cs" Inherits="PG.Web.WREL.CNAssignmentList" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/AppMaster.Master" AutoEventWireup="true" CodeBehind="ExcelUploadByClientList.aspx.cs" Inherits="PG.Web.WREL.ExcelUploadByClientList" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -13,17 +13,18 @@
     <script language="javascript" type="text/javascript">
         // <!CDATA[
 
-        <%--var ItemListServiceLink = '<%=this.ItemListServiceLink%>';--%>
+        var ReportViewPageLink = '<%=this.ReportViewPageLink%>';
+        var ReportViewPDFPageLink = '<%=this.ReportViewPDFPageLink%>';
+        var ReportPrintPageLink = '<%=this.ReportPrintPageLink%>';
+        var ReportPDFPageLink = '<%=this.ReportPDFPageLink%>';
 
+        var ItemListServiceLink = '<%=this.ItemListServiceLink%>';
+        var ClientListServiceLink = '<%=this.ClientListServiceLink%>';
         var btnGridPageGoTo = '<%=btnGridPageGoTo.ClientID %>';
         var txtGridPageNo = '<%=txtGridPageNo.ClientID %>';
      
-
-        var DeliveryManlistServiceLink = '<%=this.DeliveryManlistServiceLink%>';
-
-
-        var txtDeliveryMan = '<%=txtDeliveryMan.ClientID%>';
-        var hdnDeliveryManID = '<%=hdnDeliveryManID.ClientID%>';
+        var txtClientName = '<%=txtClientName.ClientID%>';
+        var hdnClientId = '<%=hdnClientId.ClientID%>';
 
         function PageResizeCompleted(pg, cntMain) {
             resizeContentInner(cntMain);
@@ -67,15 +68,15 @@
                 key = '';
             }
 
-            var url = IForm.RootPath + "WREL/CNAssignmentV2.aspx?id=" + key;
+            var url = IForm.RootPath + "WREL/ParcelCreation.aspx?id=" + key;
 
             if (IForm.PageMode == Enums.PageMode.InTab) {
 
                 var tdata = new xtabdata();
                 tdata.linktype = Enums.LinkType.Direct;
                 tdata.id = 0;
-                tdata.name = "CN Assignment";
-                tdata.label = "CN Assignment";
+                tdata.name = "Parcel Creation";
+                tdata.label = "Parcel Creation";
                 tdata.type = 0;
                 tdata.url = url;
                 tdata.tabaction = Enums.TabAction.InNewTab;
@@ -103,25 +104,26 @@
 
         $(document).ready(function () {
 
+            if ($('#' + txtClientName).is(':visible')) {
 
-            if ($('#' + txtDeliveryMan).is(':visible')) {
-
-                bindDeliveryManList();
+                bindClientNameList();
 
             }
-        });    
-        function bindDeliveryManList() {
+
+        });
+
+        function bindClientNameList() {
             var cgColumns = [
-                             { 'columnName': 'delmanname', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Name' }
+                             { 'columnName': 'clientname', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Client Name' }
                             , { 'columnName': 'mobile', 'width': '200', 'align': 'left', 'highlight': 4, 'label': 'Mobile' }
 
             ];
-            var serviceURL = DeliveryManlistServiceLink + "?isterm=1&includeempty=0&hasitem=1&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+            var serviceURL = ClientListServiceLink + "?isterm=1&includeempty=0&hasitem=1&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
 
             serviceURL += "&ispaging=0";
-            var groupIDElem = $('#' + txtDeliveryMan);
+            var groupIDElem = $('#' + txtClientName);
 
-            $('#' + txtDeliveryMan).click(function (e) {
+            $('#' + txtClientName).click(function (e) {
                 $(groupIDElem).combogrid("dropdownClick");
             });
 
@@ -156,8 +158,8 @@
                         return false;
                     }
                     else {
-                        $('#' + hdnDeliveryManID).val(ui.item.delmanid);
-                        $('#' + txtDeliveryMan).val(ui.item.delmanname);
+                        $('#' + hdnClientId).val(ui.item.clientid);
+                        $('#' + txtClientName).val(ui.item.clientname);
                     }
                     return false;
                 },
@@ -171,18 +173,94 @@
 
                 var groupID = $(groupIDElem).val();
                 if (groupID == '') {
-                    $('#' + txtDeliveryMan).val('');
-                    $('#' + hdnDeliveryManID).val('0');
+                    $('#' + txtClientName).val('');
+                    $('#' + hdnClientId).val('0');
                 }
             });
         }
+        function tbopen(key, isPrint, isPDFAutoPrint, showWait) {
+            key = key || '';
+            isPrint = isPrint || false;
+            showWait = showWait || true;
 
-        function showLargeImage(img) {
-            var src = img.src; // get small image src
-            document.getElementById("imgLarge").src = src; // set modal image
-            var modal = new bootstrap.Modal(document.getElementById('imgModal'));
-            modal.show();
-            return false; // prevent postback
+            if (isPrint) {
+                if (key != '') {
+                    ReportPrint(key, isPDFAutoPrint);
+                    return;
+                }
+            }
+
+            //var url = "/Report/ReportView.aspx?rk=" + key
+
+            var now = new Date();
+            var strTime = now.getTime().toString();
+            var url = ReportViewPageLink + "?rk=" + key + "&_tt=" + strTime;
+            //var url = ReportViewPageLink + "?rk=" + key;
+
+            //if (pageInTab == 1)
+            if (TabVar.PageMode == Enums.PageMode.InTab) {
+
+                var tdata = new xtabdata();
+                tdata.linktype = Enums.LinkType.Direct;
+                tdata.id = 7999;
+                tdata.name = "Report view";
+                //tdata.label = "User: " + userid;
+                tdata.label = "Report view";
+                tdata.type = 0;
+                tdata.url = url;
+                tdata.tabaction = Enums.TabAction.InNewTab;
+                tdata.selecttab = 1;
+                tdata.reload = 0;
+                tdata.param = "";
+                tdata.showWait = showWait;
+
+                try {
+                    //window.parent.OpenMenuByData(tdata);
+                    window.parent.TabMenu.OpenMenuByData(tdata);
+                }
+                catch (err) {
+                    alert("error in page");
+                }
+            }
+            else {
+                //on new window/tab
+                //window.open(url,'_blank');   
+
+                window.location = url;
+            }
+        }
+
+        function reportInNewWindow(url) {
+            var rWin = window.open(url, '_blank');
+            if (rWin == null) {
+                reportURL = url;
+                showOverlayReport();
+            }
+        }
+
+        function ReportPrint(key, isPDFAutoPrint) {
+            var rptPageLink = ReportViewPageLink;
+            if (isPDFAutoPrint) {
+                //rptPageLink = ReportPDFPageLink;
+                rptPageLink = ReportViewPDFPageLink;
+            }
+
+            //var url = "./Report/ReportView.aspx?rk=" + key
+            var now = new Date();
+            var strTime = now.getTime().toString();
+            var url = ReportViewPageLink + "?rk=" + key + "&_tt=" + strTime;
+
+            //var url = rptPageLink + "?rk=" + key;
+
+            iframe = document.getElementById(ifPrintButton);
+            if (iframe === null) {
+                iframe = document.createElement('iframe');
+                iframe.id = hiddenIFrameID;
+                //        iframe.style.display = 'none';
+                //        iframe.style = 'none';
+                document.body.appendChild(iframe);
+            }
+            iframe.src = url;
         }
      
     </script>
@@ -199,7 +277,7 @@
       <div class="card">
       <div class="card-header p-0">
        <div class="d-flex align-items-center justify-content-between p-1">
-         <h5 class="card-title">CN Delivery</h5>
+         <h5 class="card-title">Parcel List</h5>
            <asp:LinkButton runat="server" ID="btnNewAdd" CssClass="btn btn-primary p-1"><i class="fas fa-plus"></i> New Entry</asp:LinkButton>
        </div>
        </div>
@@ -209,17 +287,15 @@
 
                
 
-
-                <div class="col-md-4">
+               <div class="col-md-4">
                   <div class="form-group row mb-0">
-                    <label for="name" class="col-sm-4 col-form-label-sm">Delivery Man :</label>
-                    <div class="col-sm-8">
-                       
-                       <asp:TextBox ID="txtDeliveryMan" runat="server" CssClass="form-control form-control-sm" ></asp:TextBox>
-                        <asp:HiddenField runat="server" ID="hdnDeliveryManID" Value="0" /> 
-
+                    <label for="name" class="col-sm-5 col-form-label-sm">Client :</label>
+                    <div class="col-sm-7">
+                      <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtClientName" placeholder="Select" ></asp:TextBox> 
+                           <asp:HiddenField runat="server" ID="hdnClientId" Value="0" /> 
                     </div>
                   </div>
+
                 </div>
 
            </div>
@@ -228,174 +304,49 @@
             <div class="row-mb-0">
               <div class="card-footer m-2 p-1">
               <asp:LinkButton runat="server" ID="btnLoadData" OnClick="btnLoadData_Click"  CssClass="btn btn-primary" Text="<i class='fa fa-list'></i> Show Data"></asp:LinkButton>
+
+                   <asp:DropDownList ID="ddlReportViewType" runat="server" CssClass="dropDownList" Visible="false">
+                            <asp:ListItem Value="0">Screen</asp:ListItem>
+                            <asp:ListItem Selected="True" Value="1">PDF</asp:ListItem>
+                        </asp:DropDownList>
+                  <asp:DropDownList ID="ddlReportViewMode" runat="server" CssClass="dropDownList" Visible="false">
+                            <asp:ListItem Value="0">In This Tab</asp:ListItem>
+                            <asp:ListItem Value="1">In New Tab</asp:ListItem>
+                            <asp:ListItem Selected="True" Value="2">In New Window</asp:ListItem>
+                        </asp:DropDownList>
              </div>
             </div>
 
             <div class="row">
              <div class="col-md-12">
                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" ShowHeader="true" CssClass="table table-sm table-striped table-bordered table-responsive-sm"  
-                DataKeyNames="CN_ASSIGN_ID" EnableModelValidation="True" ClientIDMode="AutoID" OnRowDataBound="GridView1_RowDataBound" AllowPaging="true" EmptyDataText="There is no record" PageSize="10" 
+                DataKeyNames="UPLOAD_ID" EnableModelValidation="True" ClientIDMode="AutoID" OnRowDataBound="GridView1_RowDataBound" AllowPaging="true" EmptyDataText="There is no record" PageSize="2" 
                  OnPageIndexChanging="GridView1_PageIndexChanging" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" OnRowCommand="GridView1_RowCommand">
                   <PagerSettings Mode="NumericFirstLast" />
                 <HeaderStyle CssClass="table-info" Font-Size="Smaller" />                                      
               <Columns>
-                  <%-- <asp:HyperLinkField HeaderText="" Text="">
+                   <asp:HyperLinkField HeaderText="" Text="">
                    <ControlStyle CssClass="buttonViewGrid" Height="20px" Width="40px" />
                   <ItemStyle Width="50px" />
-                  </asp:HyperLinkField>--%>
-                  <asp:TemplateField HeaderText="SL">
-    <ItemTemplate>
-        <asp:Label ID="lblSL" runat="server"></asp:Label>
-    </ItemTemplate>
-</asp:TemplateField>
+                  </asp:HyperLinkField>
               
-                    <asp:TemplateField HeaderText="CN Number">
-    <ItemTemplate>
-        <div class="d-flex align-items-center">
-            <table>
-                <tr>
-                    <td class="p-0">
-                        <asp:TextBox ID="txtCNName" runat="server" CssClass="form-control form-control-sm" Style="width: 140px;" Text='<%# Bind("CN_NUMBER") %>'></asp:TextBox>
-
-                        <asp:HiddenField ID="hdnCNID" runat="server" Value='<%# Bind("CN_ID") %>' />
-                        
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </ItemTemplate>
-</asp:TemplateField>
-                  <asp:TemplateField HeaderText="Assign Date">
-    <ItemTemplate>
-        <div class="d-flex align-items-center">
-            <table>
-                <tr>
-                    <td class="p-0">
-                        <%--<asp:TextBox ID="txtAssignDate" runat="server" CssClass="form-control form-control-sm" Style="width: 100px;" Text='<%# Bind("ASSIGN_DATE") %>' DataFormatString="{0:dd-MMM-yyyy}"></asp:TextBox>--%>
-                        <asp:TextBox ID="txtAssignDate" runat="server" CssClass="form-control form-control-sm" Style="width: 100px;" Text='<%# Eval("ASSIGN_DATE", "{0:dd-MMM-yyyy}") %>' ReadOnly="true"></asp:TextBox>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </ItemTemplate>
-</asp:TemplateField>
-
-                   <asp:TemplateField HeaderText="Delivery Man">
-    <ItemTemplate>
-        <div class="d-flex align-items-center">
-            <table>
-                <tr>
-                    <td class="p-0">
-                        <asp:TextBox ID="txtDeliveryMan" runat="server" CssClass="form-control form-control-sm" Style="width: 120px;" Text='<%# Bind("DELIVERY_MAN_NAME") %>'></asp:TextBox>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </ItemTemplate>
-</asp:TemplateField>
-  <asp:TemplateField HeaderText="Consignee">
-    <ItemTemplate>
-        <div class="d-flex align-items-center">
-            <table>
-                <tr>
-                    <td class="p-0">
-                        <asp:TextBox ID="txtConsignee" runat="server" CssClass="form-control form-control-sm" Style="width: 120px;" Text='<%# Bind("CONSIGNEE_NAME") %>'></asp:TextBox>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </ItemTemplate>
-</asp:TemplateField>
-                 
-  <asp:TemplateField HeaderText="Consignee Mobile">
-    <ItemTemplate>
-        <div class="d-flex align-items-center">
-            <table>
-                <tr>
-                    <td class="p-0">
-                        <asp:TextBox ID="txtConsigneeMobil" runat="server" CssClass="form-control form-control-sm" Style="width: 120px;" Text='<%# Bind("CONSIGNEE_MOBILE_NO") %>'></asp:TextBox>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </ItemTemplate>
-</asp:TemplateField>
-                  
-                  <asp:TemplateField HeaderText="Upload Image">
-    <ItemTemplate>
-        <div class="d-flex align-items-center">
-            <table>
-                <tr>
-                    <td class="p-0 pe-1">
-                        <asp:FileUpload ID="FileUpload1" runat="server" CssClass="form-control form-control-sm" />
-                    </td>
-                    <td class="p-0 pe-1">
-                        <asp:Button ID="btnUpload" runat="server" 
-                            Text="Upload" CssClass="btn btn-sm btn-primary"
-                            CommandName="UploadImage" CommandArgument='<%# Eval("CN_ID") %>' />
-                    </td>
-                    <td class="p-0">
-                        <%--<asp:Image ID="imgPhoto" runat="server" Width="100px"
-                            ImageUrl='<%# Eval("POD") %>' />--%>
-                         <!-- Thumbnail image -->
-                         <%--<asp:Image ID="imgPhoto" runat="server" Width="50px" Height="40px"
-                                            CssClass="img-thumbnail"
-                                            ImageUrl='<%# Eval("POD") %>'
-                                            onclick="return showLargeImage(this)" Style="cursor:pointer;" />--%>
-                        <asp:Image ID="imgPhoto" runat="server" Width="60px" Height="35px"
-    CssClass="img-thumbnail"
-    ImageUrl='<%# string.IsNullOrEmpty(Convert.ToString(Eval("POD"))) ? "~/images/no-image.png" : Convert.ToString(Eval("POD")) %>'
-    onclick="return showLargeImage(this)" Style="cursor:pointer;" />
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </ItemTemplate>
-</asp:TemplateField>
-                 <%-- <asp:TemplateField HeaderText="Upload Image">
+                   <asp:BoundField DataField="FILE_NAME" HeaderText="File Name" />
+        <asp:BoundField DataField="FILE_PATH" HeaderText="Path" />
+           <asp:BoundField DataField="UPLOAD_DATE" HeaderText="Upload Date" />       
+        <asp:TemplateField HeaderText="Action">
             <ItemTemplate>
-                <asp:FileUpload ID="FileUpload1" runat="server" />
-                <asp:Button ID="btnUpload" runat="server" Text="Upload" CssClass="btn btn-sm btn-primary" CommandName="UploadImage" CommandArgument='<%# Eval("CN_ID") %>' />
-                <br />
-               <asp:Image ID="imgPhoto" runat="server" Width="100px"
-                    ImageUrl='<%# Eval("POD") %>' />
+                <asp:LinkButton ID="lnkDownload" runat="server" 
+                    CommandName="DownloadFile" 
+                    CommandArgument='<%# Eval("FILE_PATH") %>'>
+                    Download
+                </asp:LinkButton>
             </ItemTemplate>
-        </asp:TemplateField>--%>
-
-                     <asp:TemplateField HeaderText="Action">
-                       <ItemTemplate>
-                            <asp:LinkButton ID="lnkView" runat="server"
-                                CommandName="submit"
-                                CommandArgument='<%# Eval("CN_ID") %>'
-                                CssClass="btn btn-sm btn-primary"
-                                Text="Submit" />
-                        </ItemTemplate>
-                        <ItemStyle Width="130px" />
-                 </asp:TemplateField>
-                 <%-- <asp:BoundField DataField="ASSIGN_DATE" HeaderText="Date" DataFormatString="{0:dd-MMM-yyyy}" HtmlEncode="false" />
-                  <asp:BoundField DataField="" HeaderText="Delivery Man" />--%>
-                 
-                  
-                  
-                 
-
+        </asp:TemplateField>
                </Columns>
                                                      
           </asp:GridView>
-
-   
              </div>
             </div>
-            <!-- Bootstrap Modal for Large Image -->
-<div class="modal fade" id="imgModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
-    <div class="modal-content">
-      <div class="modal-body text-center">
-        <img id="imgLarge" src="" class="img-fluid" />
-      </div>
-    </div>
-  </div>
-</div>
             <div class="row">
                 <div class="col-md-12">
                      <div id="dvGridFooter" style="width: 100%; height: 25px; font-size: smaller;" class="subFooter">
@@ -480,8 +431,6 @@
                 </div>
 
             </div>
-
-            
 
         </div>
 

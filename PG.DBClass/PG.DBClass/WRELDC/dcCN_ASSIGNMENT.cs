@@ -188,8 +188,8 @@ namespace PG.DBClass.WRELDC
          public string CONSIGNEE_ADDRESS { get; set; }
          public string CONSIGNEE_MOBILE_NO { get; set; }
          public byte[] POD { get; set; }
-            
-
+         public string CLIENT_NAME { get; set; }   
+        
 
     }
 }
