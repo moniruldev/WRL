@@ -29,7 +29,7 @@ namespace PG.DBClass.WRELDC
         private string m_REQUEST_BY = string.Empty;
         private string m_APPROVED_STATUS = string.Empty;
         private string m_APPROVED_BY = string.Empty;
-        private string m_APPROVED_DATE = string.Empty;
+        private DateTime? m_APPROVED_DATE = null;
 
         #endregion  //private members
 
@@ -226,8 +226,8 @@ namespace PG.DBClass.WRELDC
             }
         }
 
-        [DBColumn(Name = "APPROVED_DATE", Storage = "m_APPROVED_DATE", DbType = "126")]
-        public string APPROVED_DATE
+        [DBColumn(Name = "APPROVED_DATE", Storage = "m_APPROVED_DATE", DbType = "106")]
+        public DateTime? APPROVED_DATE
         {
             get { return this.m_APPROVED_DATE; }
             set

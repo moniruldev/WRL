@@ -29,7 +29,7 @@ using System.ComponentModel;
 
 namespace PG.Web.WREL
 {
-    public partial class ChangeRequestForClient : BagePage
+    public partial class ChangeRequestApproval : BagePage
     {
         //this 
         string ViewStateKey = "REQUEST_ID";
@@ -190,9 +190,15 @@ namespace PG.Web.WREL
                 txtNewAddress.Text = cObj.NEW_CONSIGNEE_ADDRESS;
                 if(cObj.APPROVED_STATUS == "Y")
                 {
-                    btnEdit.Visible = false;
-                    btnEdit.Enabled = false;
-                    btnEdit.CssClass += " disabled";
+                    btnSave.Visible = false;
+                    btnSave.Enabled = false;
+                    btnSave.CssClass += " disabled";
+                }
+                else
+                {
+                    btnSave.Visible = true;
+                    btnSave.Enabled = true;
+                    btnSave.CssClass = btnSave.CssClass.Replace("disabled", "").Trim();
                 }
               
                 bStatus = true;
@@ -207,15 +213,14 @@ namespace PG.Web.WREL
 
             bool isEnabled = (dataMode == FormDataMode.Add || dataMode == FormDataMode.Edit);
 
-            SetTextBoxState(txtCnNumber, isEnabled);
+            txtCnNumber.Attributes.Add("readonly", "readonly");
             txtClientName.Attributes.Add("readonly", "readonly");
             txtConsigneeName.Attributes.Add("readonly", "readonly");
             txtConsigneeMobileNo.Attributes.Add("readonly", "readonly");
             txtConsigneeAddress.Attributes.Add("readonly", "readonly");
-            SetTextBoxState(txtNewAddress, isEnabled);
+            txtNewAddress.Attributes.Add("readonly", "readonly");
           
-            btnEdit.Visible = !isEnabled;
-            btnSave.Visible = isEnabled;
+            //btnSave.Visible = isEnabled;
 
          
 
@@ -301,14 +306,6 @@ namespace PG.Web.WREL
         {
             errMsg = string.Empty;
 
-            if (hdnCnId.Value == "0")
-            {
-                ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Select CN Number !!');", true);
-                txtCnNumber.Focus();
-                return false;
-
-            }
-
             if (txtNewAddress.Text == "")
             {
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', 'Enter New Address!', 'Error');", true);
@@ -317,13 +314,45 @@ namespace PG.Web.WREL
 
             }
 
-            if (hdnClientId.Value != hdnSelectedClientId.Value)
-            {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', 'You dont have permission to make change request for this client!', 'Error');", true);
-                txtCnNumber.Focus();
-                return false;
+            //if (txtCargoDate.Text == "")
+            //{
+            //    ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', 'Enter Cargo Date!', 'Error');", true);
+            //    txtCargoDate.Focus();
+            //    return false;
 
-            }
+            //}
+
+            //if (txtName.Text == "")
+            //{
+            //    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Enter Name !!');", true);
+            //    txtName.Focus();
+            //    return false;
+
+            //}
+
+            //if (txtAddress.Text == "")
+            //{
+            //    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Enter Address !!');", true);
+            //    txtAddress.Focus();
+            //    return false;
+
+            //}
+
+            //if (txtMobileNo.Text == "")
+            //{
+            //    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Enter Mobile No !!');", true);
+            //    txtMobileNo.Focus();
+            //    return false;
+
+            //}
+
+            //if (hdnCountryId.Value == "0")
+            //{
+            //    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Select Country !!');", true);
+            //    txtCountry.Focus();
+            //    return false;
+
+            //}
 
       
 
@@ -374,32 +403,35 @@ namespace PG.Web.WREL
             dcCN_INFO_CHANGE_REQUEST cObj = new dcCN_INFO_CHANGE_REQUEST();
             if (this.REQUEST_ID > 0)
             {
-                cObj.REQUEST_ID = this.REQUEST_ID;
-                cObj._RecordState = RecordStateEnum.Edited;
-            }
-            else
-            {
-                cObj._RecordState = RecordStateEnum.Added;
-                isAdd = true;
-            }
+                dcCN_INFO_CHANGE_REQUEST obj = CN_INFO_CHANGE_REQUESTBL.GetRequestInfoById(this.REQUEST_ID, null);
+                if(cObj !=null)
+                {
+                    dcCN_CREATION_MST objCN = new dcCN_CREATION_MST();
+                    objCN.CN_ID = obj.CN_ID;
+                    objCN.CONSIGNEE_ADDRESS = obj.NEW_CONSIGNEE_ADDRESS.Trim();
+                    objCN.UPDATE_DATE_REQUEST=DateTime.Now;
+                    objCN.UPDATE_BY_REQUEST=loggedinUser.UserID.ToString();
+                    bStatus = CN_CREATION_MSTBL.Update(objCN);
 
-            cObj.CN_ID = Conversion.StringToInt(hdnCnId.Value);
-            cObj.CLIENT_ID = Conversion.StringToInt(hdnClientId.Value);
-            cObj.CURRENT_CONSIGNEE_NAME = txtConsigneeName.Text;
-            cObj.CURRENT_MOBILE_NO = txtConsigneeMobileNo.Text;
-            cObj.CURRENT_CONSIGNEE_ADDRESS = txtConsigneeAddress.Text;
-            cObj.NEW_CONSIGNEE_ADDRESS = txtNewAddress.Text.Trim();
-            cObj.REQUEST_BY = loggedinUser.UserID.ToString();
-            cObj.REQUEST_DATE = DateTime.Now;
-            cObj.APPROVED_STATUS = "N";
+                }
+                if(bStatus)
+                {
+                    cObj.REQUEST_ID = this.REQUEST_ID;
+                    cObj._RecordState = RecordStateEnum.Edited;
+                    cObj.APPROVED_BY = loggedinUser.UserID.ToString();
+                    cObj.APPROVED_DATE = DateTime.Now;
+                    cObj.APPROVED_STATUS = "Y";
 
-            newREQUEST_ID = CN_INFO_CHANGE_REQUESTBL.Save(cObj);
+                    bStatus = CN_INFO_CHANGE_REQUESTBL.Update(cObj);
+
+                }
             
-            if (newREQUEST_ID > 0)
+             
+            }
+            if(bStatus)
             {
-                this.REQUEST_ID = newREQUEST_ID;
+                this.REQUEST_ID = cObj.REQUEST_ID;
                 ReadTask();
-                bStatus = true;
             }
 
             return bStatus;

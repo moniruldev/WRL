@@ -60,6 +60,8 @@ namespace PG.DBClass.WRELDC
         private string m_DESTINATION = string.Empty;
         private string m_REF_TYPE = string.Empty;
         private int m_DISTANCE_TYPE_ID = 0;
+        private string m_UPDATE_BY_REQUEST = string.Empty;
+        private DateTime? m_UPDATE_DATE_REQUEST = null;
         
 
         #endregion  //private members
@@ -597,6 +599,28 @@ namespace PG.DBClass.WRELDC
                  this.NotifyPropertyChanged("DISTANCE_TYPE_ID");
              }
          }
+
+        [DBColumn(Name = "UPDATE_BY_REQUEST", Storage = "m_UPDATE_BY_REQUEST", DbType = "126")]
+        public string UPDATE_BY_REQUEST
+        {
+            get { return this.m_UPDATE_BY_REQUEST; }
+            set
+            {
+                this.m_UPDATE_BY_REQUEST = value;
+                this.NotifyPropertyChanged("UPDATE_BY_REQUEST");
+            }
+        }
+
+        [DBColumn(Name = "UPDATE_DATE_REQUEST", Storage = "m_UPDATE_DATE_REQUEST", DbType = "106")]
+        public DateTime? UPDATE_DATE_REQUEST
+        {
+            get { return this.m_UPDATE_DATE_REQUEST; }
+            set
+            {
+                this.m_UPDATE_DATE_REQUEST = value;
+                this.NotifyPropertyChanged("UPDATE_DATE_REQUEST");
+            }
+        }
 
         
         #endregion //properties

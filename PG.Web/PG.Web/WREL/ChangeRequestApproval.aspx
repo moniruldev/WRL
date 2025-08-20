@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/AppMaster.Master" AutoEventWireup="true" CodeBehind="ChangeRequestForClient.aspx.cs" Inherits="PG.Web.WREL.ChangeRequestForClient" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/AppMaster.Master" AutoEventWireup="true" CodeBehind="ChangeRequestApproval.aspx.cs" Inherits="PG.Web.WREL.ChangeRequestApproval" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -29,8 +29,6 @@
         var txtConsigneeMobileNo = '<%=txtConsigneeMobileNo.ClientID%>';
         var txtConsigneeAddress = '<%=txtConsigneeAddress.ClientID%>';
         var hdnCnId = '<%=hdnCnId.ClientID%>';
-        var hdnSelectedClientId = '<%=hdnSelectedClientId.ClientID%>';
-        
      
 
 
@@ -54,7 +52,7 @@
 
             if ($('#' + txtCnNumber).is(':visible')) {
 
-                bindCNList();
+                //bindCNList();
 
             }
 
@@ -121,8 +119,7 @@
                         $('#' + txtConsigneeName).val(ui.item.consigneename);
                         $('#' + txtConsigneeMobileNo).val(ui.item.consigneemobileno);
                         $('#' + txtConsigneeAddress).val(ui.item.consigneeaddress);
-                        $('#' + hdnSelectedClientId).val(ui.item.clientid);
-                        
+
                         //$("[id*=btnLoad]").click();
                     }
                     return false;
@@ -492,7 +489,6 @@
                     <div class="col-sm-6">
                       <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtCnNumber" placeholder="Select" ></asp:TextBox> 
                            <asp:HiddenField runat="server" ID="hdnCnId" Value="0" /> 
-                          <asp:HiddenField runat="server" ID="hdnSelectedClientId" Value="0" /> 
                     </div>
                   </div>
 
@@ -587,8 +583,8 @@
      <div class="row">
       <div class="col-md-12">
      <%--  <asp:LinkButton runat="server" ID="btnAddNew"  CssClass="btn btn-primary" Text="<i class='fa fa-plus'></i> Add New"></asp:LinkButton>--%>
-       <asp:LinkButton runat="server" ID="btnSave" OnClick="btnSave_Click" CssClass="btn btn-success" Text="<i class='fas fa-save'></i> Save"></asp:LinkButton>
-       <asp:LinkButton runat="server" ID="btnEdit" OnClick="btnEdit_Click" CssClass="btn btn-primary" Text="<i class='fas fa-edit'></i> Edit"></asp:LinkButton>
+       <asp:LinkButton runat="server" ID="btnSave" OnClick="btnSave_Click" CssClass="btn btn-success" Text="<i class='fas fa-check'></i> Approve"></asp:LinkButton>
+       <%--<asp:LinkButton runat="server" ID="btnEdit" OnClick="btnEdit_Click" CssClass="btn btn-primary" Text="<i class='fas fa-edit'></i> Edit"></asp:LinkButton>--%>
      
       
       </div>

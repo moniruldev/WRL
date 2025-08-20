@@ -10,7 +10,7 @@
 namespace PG.Web.WREL {
     
     
-    public partial class ChangeRequestForClient {
+    public partial class ChangeRequestApproval {
         
         /// <summary>
         /// hdnLoggedInUser control.
@@ -56,15 +56,6 @@ namespace PG.Web.WREL {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnCnId;
-        
-        /// <summary>
-        /// hdnSelectedClientId control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnSelectedClientId;
         
         /// <summary>
         /// txtClientName control.
@@ -119,14 +110,5 @@ namespace PG.Web.WREL {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnSave;
-        
-        /// <summary>
-        /// btnEdit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnEdit;
     }
 }

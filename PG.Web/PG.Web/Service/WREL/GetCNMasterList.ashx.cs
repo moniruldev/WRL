@@ -157,6 +157,7 @@ namespace PG.Web.Service.WREL
                                consigneemobileno=c.CONSIGNEE_MOBILE_NO,
                                destination=c.DESTINATION,
                                clientname=c.CLIENT_NAME,
+                               clientid=c.CLIENT_ID,
                                enable = true
                            };
 
