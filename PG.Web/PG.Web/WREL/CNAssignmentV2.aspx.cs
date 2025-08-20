@@ -440,13 +440,13 @@ namespace PG.Web.WREL
             cObj.CN_ASSIGN_ID = Conversion.StringToInt(strD);
             if (cObj.CN_ASSIGN_ID > 0)
             {
-                cObj.EDIT_BY = loggedinUser.UserName;
+                cObj.EDIT_BY = loggedinUser.UserID.ToString();
                 cObj.EDIT_DATE = DateTime.Now;
                 cObj._RecordState = RecordStateEnum.Edited;
             }
             else
             {
-                cObj.CREATE_BY = loggedinUser.UserName;
+                cObj.CREATE_BY = loggedinUser.UserID.ToString();
                 cObj.CREATE_DATE = DateTime.Now;
                 cObj._RecordState = RecordStateEnum.Added;
             }

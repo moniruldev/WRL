@@ -629,13 +629,13 @@ namespace PG.Web.WREL
              
                 if(isAdd)
                 {
-                    agreementMst.CREATE_BY = loggedinUser.UserName;
+                    agreementMst.CREATE_BY = loggedinUser.UserID.ToString();
                     agreementMst.CREATE_DATE = DateTime.Now;
                    
                 }
                 else
                 {
-                    agreementMst.EDIT_BY = loggedinUser.UserName;
+                    agreementMst.EDIT_BY = loggedinUser.UserID.ToString();
                     agreementMst.EDIT_DATE = DateTime.Now;
 
                 }

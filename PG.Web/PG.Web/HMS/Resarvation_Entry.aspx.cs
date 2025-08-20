@@ -675,14 +675,14 @@ namespace PG.Web.HMS
                 guest.IS_ACTIVE = "Y";
                 if(isAdd)
                 {
-                    guest.CREATE_BY = loggedinUser.UserName;
+                    guest.CREATE_BY = loggedinUser.UserID.ToString();
                     guest.CREATE_DATE = DateTime.Now;
                     guest.objReservationMst.CREATE_DATE = DateTime.Now;
-                    guest.objReservationMst.CREATE_BY = loggedinUser.UserName;
+                    guest.objReservationMst.CREATE_BY = loggedinUser.UserID.ToString();
                 }
                 else
                 {
-                    guest.UPDATE_BY = loggedinUser.UserName;
+                    guest.UPDATE_BY = loggedinUser.UserID.ToString();
                     guest.UPDATE_DATE = DateTime.Now;
 
                 }
@@ -857,7 +857,7 @@ namespace PG.Web.HMS
             {
                 dcHMRESERVATION_MST cObj = new dcHMRESERVATION_MST();
                 cObj.RESERVATION_ID = Conversion.StringToInt(hdnReservationId.Value);
-                cObj.CONFIRMED_BY = loggedinUser.UserName;
+                cObj.CONFIRMED_BY = loggedinUser.UserID.ToString();
                 cObj.CONFIRMED_DATE = DateTime.Now;
                 cObj.CONFIRMED_NOTE = txtConfirmNote.Text.Trim();
                 HMRESERVATION_MSTBL.Update(cObj);
@@ -885,7 +885,7 @@ namespace PG.Web.HMS
             {
                 dcHMRESERVATION_MST cObjcancel = new dcHMRESERVATION_MST();
                 cObjcancel.RESERVATION_ID = Conversion.StringToInt(hdnReservationId.Value);
-                cObjcancel.CANCEL_BY = loggedinUser.UserName;
+                cObjcancel.CANCEL_BY = loggedinUser.UserID.ToString();
                 cObjcancel.CANCEL_DATE = DateTime.Now;
                 cObjcancel.CANCEL_NOTE = txtCancelNote.Text.Trim();
                 HMRESERVATION_MSTBL.Update(cObjcancel);

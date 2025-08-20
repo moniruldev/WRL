@@ -601,12 +601,12 @@ namespace PG.Web.WREL
                 cObj._RecordState = RecordStateEnum.Added;
                 if (cObj._RecordState == RecordStateEnum.Added)
                 {
-                    cObj.CREATE_BY = loggedinUser.UserName;
+                    cObj.CREATE_BY = loggedinUser.UserID.ToString();
                     cObj.CREATE_DATE = DateTime.Now;
                 }
                 else
                 {
-                    cObj.EDIT_BY = loggedinUser.UserName;
+                    cObj.EDIT_BY = loggedinUser.UserID.ToString();
                     cObj.EDIT_DATE = DateTime.Now;
                 }
 

@@ -393,7 +393,7 @@ namespace PG.Web.WREL
          
             cObj.CARGO_ID =Conversion.StringToInt( hdnCargoID.Value);
             cObj.TRACK_DATE =Conversion.StringToDate(txtIssuedate.Text.Trim());
-            cObj.TRACK_BY = loggedinUser.UserName;
+            cObj.TRACK_BY = loggedinUser.UserID.ToString();
             cObj.FROM_HUB_ID = Conversion.StringToInt(hdnFromHubID.Value);
             cObj.TRANS_MEDIA_ID = Conversion.StringToInt(hdnTransMediaID.Value);
             cObj.TRANS_CONTACT_NO = txtMobileNo.Text.Trim();
@@ -407,13 +407,13 @@ namespace PG.Web.WREL
 
             if (isAdd)
             {
-                cObj.CREATE_BY = loggedinUser.UserName;
+                cObj.CREATE_BY = loggedinUser.UserID.ToString();
                 cObj.CREATE_DATE = DateTime.Now;
 
             }
             else
             {
-                cObj.EDIT_BY = loggedinUser.UserName;
+                cObj.EDIT_BY = loggedinUser.UserID.ToString();
                 cObj.EDIT_DATE = DateTime.Now;
 
             }

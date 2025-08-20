@@ -370,7 +370,7 @@ namespace PG.Web.WREL
                     cmd.Parameters.Add(":clientid", loggedinUser.CLIENT_ID);
                     cmd.Parameters.Add(":fileName", fileName);
                     cmd.Parameters.Add(":filePath", filePath);
-                    cmd.Parameters.Add(":uploadBy", loggedinUser.UserName);
+                    cmd.Parameters.Add(":uploadBy", loggedinUser.UserID.ToString());
 
                     cmd.ExecuteNonQuery();
                 }

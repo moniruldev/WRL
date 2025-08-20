@@ -384,7 +384,7 @@ namespace PG.Web.HMS
 
             if (isAdd)
             {
-                cObj.CREATE_BY = loggedinUser.UserName;
+                cObj.CREATE_BY = loggedinUser.UserID.ToString();
                 cObj.CREATE_DATE = DateTime.Now;
 
             }
