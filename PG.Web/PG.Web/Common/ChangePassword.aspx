@@ -210,7 +210,7 @@ function btnSalaryInfo_onclick() {
 
             <div class="form-group">
                 <label for="txtUser">User</label>
-                <asp:TextBox ID="txtUser" runat="server" CssClass="textBox" ReadOnly="True"></asp:TextBox>
+                <asp:TextBox ID="txtUser" runat="server"  ReadOnly="True"></asp:TextBox>
             </div>
 
             <div class="form-group">
