@@ -37,7 +37,7 @@ namespace PG.Web.Service.WREL
             int nameCompType = WebUtility.GetQueryStringInteger("namecomptype", context);
 
             string Selected = WebUtility.GetQueryString("selectedId", context).ToUpper();
-            int typeid = WebUtility.GetQueryStringInteger("typeid", context);
+            int clientid = WebUtility.GetQueryStringInteger("clientid", context);
 
             string sortBy = WebUtility.GetQueryString("sidx", context); //colname
             string sortOrder = WebUtility.GetQueryString("sord", context);  //asc,desc
@@ -56,7 +56,7 @@ namespace PG.Web.Service.WREL
 
             System.Text.StringBuilder sbStatment = new System.Text.StringBuilder();
 
-            sbStatment.Append(CN_CREATION_MSTBL.GetCNListSQLString());
+            sbStatment.Append(CN_CREATION_MSTBL.GetCNInfoListSQLString());
 
             DBQuery dbq = new DBQuery();
             List<DBFilter> filterList = new List<DBFilter>();
@@ -112,10 +112,10 @@ namespace PG.Web.Service.WREL
             }
 
 
-            //if (typeid > 0)
-            //{
-            //    filterList.Add(new DBFilter("INV_ITEM_MASTER.ITEM_TYPE_ID", typeid));
-            //}
+            if (clientid > 0)
+            {
+                filterList.Add(new DBFilter("mst.CLIENT_ID", clientid));
+            }
 
 
 
@@ -152,6 +152,11 @@ namespace PG.Web.Service.WREL
                                cnnumber = c.CN_NUMBER,
                                billno = c.BILL_NO,
                                invoiceno = c.INVOICE_NO,
+                               consigneename=c.CONSIGNEE_NAME,
+                               consigneeaddress=c.CONSIGNEE_ADDRESS,
+                               consigneemobileno=c.CONSIGNEE_MOBILE_NO,
+                               destination=c.DESTINATION,
+                               clientname=c.CLIENT_NAME,
                                enable = true
                            };
 
