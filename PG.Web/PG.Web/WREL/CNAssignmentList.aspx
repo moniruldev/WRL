@@ -258,6 +258,8 @@
                         <asp:TextBox ID="txtCNName" runat="server" CssClass="form-control form-control-sm" Style="width: 140px;" Text='<%# Bind("CN_NUMBER") %>'></asp:TextBox>
 
                         <asp:HiddenField ID="hdnCNID" runat="server" Value='<%# Bind("CN_ID") %>' />
+
+                         <asp:HiddenField ID="hdnIsOTP_Service" runat="server" Value='<%# Bind("IS_OTP_SERVICE") %>' />
                         
                     </td>
                 </tr>
@@ -331,6 +333,8 @@
                                 CommandArgument='<%# Eval("CONSIGNEE_MOBILE_NO") %>'
                                 CssClass="btn btn-sm btn-primary"
                                 Text="Send" />
+                           <asp:HiddenField ID="hdnOTPCode" runat="server" Value='<%# Bind("OTP_CODE") %>' />
+
                         </ItemTemplate>
                         <ItemStyle Width="60px" />
                  </asp:TemplateField>
@@ -341,7 +345,7 @@
             <table>
                 <tr>
                     <td class="p-0">
-                        <asp:TextBox ID="txtgOTP" runat="server" CssClass="form-control form-control-sm" Style="width: 60px;" Text='<%# Bind("OTP_CODE") %>'></asp:TextBox>
+                        <asp:TextBox ID="txtgOTP" runat="server" CssClass="form-control form-control-sm" Style="width: 60px;" Text='<%# Bind("CUSTOMER_OTP") %>'></asp:TextBox>
                     </td>
                 </tr>
             </table>

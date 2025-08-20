@@ -22,6 +22,8 @@ using PG.DBClass.WRELDC;
 using PG.BLLibrary.WRElBL;
 using System.Collections;
 using System.IO;
+using System.Data;
+using OfficeOpenXml;
 
 namespace PG.Web.WREL
 {
@@ -601,7 +603,7 @@ namespace PG.Web.WREL
                 CN_ASSIGNMENTBL.Insert(detail);
             }
 
-            ReadTask();
+            //ReadTask();
             bStatus = true;
             ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Data saved successfully !!');", true);
 
@@ -830,41 +832,116 @@ namespace PG.Web.WREL
         private void BindDataToCNNumber(List<dcCN_ASSIGNMENT> listDataCN)
         {
             int rowCount = listDataCN.Count;
-            //if (rowCount == 0)
-            //{
-            //    listData.Add(new dcGLAccountHistoryRef());
-            //}
 
             GridView1.DataSource = listDataCN.ToList();
             GridView1.DataBind();
 
             GridView1.CssClass = "grid";
-            //SumDetGrid1();
-            //SumDetGrid1();
-
-            //int i = GRDDTLITEMLIST.PageCount;
-
-            //if (GRDDTLITEMLIST.PageIndex > 0)
-            //{
-            //  GRDDTLITEMLIST.PageIndex = GRDDTLITEMLIST.PageCount;
-            // GRDDTLITEMLIST.PageIndex = GRDDTLITEMLIST.PageIndex - 1;
-
-
-
-            //}
+            
 
         }
 
         protected void btnUpload_Click(object sender, EventArgs e)
         {
-            if (!FileUpload1.HasFile)
+            int k = 0;
+            if (FileUpload1.HasFile)
             {
-                //lblMessage.Text = "Please select an Excel file.";
-                return;
-            }
+                string ext = Path.GetExtension(FileUpload1.FileName).ToLower();
+                if (ext == ".xlsx")
+                {
+                    string filePath = Server.MapPath("~/Uploads/" + FileUpload1.FileName);
+                    FileUpload1.SaveAs(filePath);
 
-            string ext = Path.GetExtension(FileUpload1.FileName).ToLower();
-            string path = Server.MapPath("~/Uploads/" + FileUpload1.FileName);
+                    var tbl = new DataTable();
+
+                    using (var package = new ExcelPackage(new FileInfo(filePath)))
+                    {
+                        if (package.Workbook.Worksheets.Count == 0)
+                        {
+                            throw new Exception("❌ No worksheets found in the Excel file.");
+                        }
+
+                        var sheet = package.Workbook.Worksheets[1];
+
+                        if (sheet.Dimension == null)
+                        {
+                            throw new Exception("Worksheet is empty.");
+                        }
+
+                        bool hasHeader = true;
+                        int totalCols = sheet.Dimension.End.Column;
+                        int totalRows = sheet.Dimension.End.Row;
+
+                        // Add columns to DataTable
+                        for (int col = 1; col <= totalCols; col++)
+                        {
+                            string columnName = hasHeader ? sheet.Cells[1, col].Text : "Column{col}";
+
+                            if (string.IsNullOrWhiteSpace(columnName))
+                                columnName = "Column{col}";
+
+                            // Ensure uniqueness
+                            if (tbl.Columns.Contains(columnName))
+                            {
+                                int i = 1;
+                                string newColumnName;
+                                do
+                                {
+                                    newColumnName = columnName + "_" + i++;
+                                } while (tbl.Columns.Contains(newColumnName));
+                                columnName = newColumnName;
+                            }
+
+                            tbl.Columns.Add(columnName);
+                        }
+
+                        // Add rows to DataTable
+                        int startRow = hasHeader ? 2 : 1;
+                        for (int rowNum = startRow; rowNum <= totalRows; rowNum++)
+                        {
+                            DataRow row = tbl.NewRow();
+                            for (int col = 1; col <= totalCols; col++)
+                            {
+                                row[col - 1] = sheet.Cells[rowNum, col].Text;
+                            }
+                            tbl.Rows.Add(row);
+                        }
+                    }
+
+                    // Populate your list from the DataTable
+                    this.listDetails.Clear();
+
+                    if (tbl.Rows.Count > 0)
+                    {
+                        foreach (DataRow Row in tbl.Rows)
+                        {
+                            dcCN_ASSIGNMENT cObj = new dcCN_ASSIGNMENT();
+                            cObj.CN_NUMBER = Row["CN_NUMBER"].ToString();
+                            cObj = CN_ASSIGNMENTBL.GetCNInfoByCNNumber(cObj.CN_NUMBER);
+                            int CN_ID = cObj.CN_ID;
+                            string strclientName = cObj.CLIENT_NAME;
+                            string consigneename = cObj.CONSIGNEE_NAME;
+
+                            if (cObj != null)
+                            {
+                                //cObj.SLNo = k + 1;
+                                cObj.CN_ID = CN_ID;
+                                cObj.CLIENT_NAME = strclientName;
+                                cObj.CONSIGNEE_NAME = consigneename;
+                                //cObj.CARGO_ID = 0;
+                                //cObj.SOURCE_CARGO_ID = 0;
+                                this.listDetails.Add(cObj);
+                            }
+                        }
+
+                        GridView1.DataSource = listDetails;
+                        GridView1.DataBind();
+                        //SetControlGrid();
+
+                        btnSave.Enabled = true;
+                    }
+                }
+            }
         }
         private void cleartext()
         {

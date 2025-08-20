@@ -189,7 +189,9 @@ namespace PG.DBClass.WRELDC
          public string CONSIGNEE_MOBILE_NO { get; set; }
          public byte[] POD { get; set; }
          public string CLIENT_NAME { get; set; }
-         public string OTP_CODE { get; set; }   
+         public Int32 OTP_CODE { get; set; }
+         public Int32 CUSTOMER_OTP { get; set; }
+         public string IS_OTP_SERVICE { get; set; }
         
 
     }

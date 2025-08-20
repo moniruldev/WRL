@@ -37,12 +37,12 @@ namespace PG.BLLibrary.WRElBL
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append(" SELECT  MST.CN_ASSIGN_ID,MST.ASSIGN_DATE,MST.CN_ID,mst.DELIVERY_MAN_ID,STD.CN_NUMBER,STD.CONSIGNEE_NAME,STD.CONSIGNEE_MOBILE_NO,STD.CONSIGNEE_ADDRESS,dm.DELIVERY_MAN_NAME,STD.POD,STD.OTP_CODE ");
+            sb.Append(" SELECT  MST.CN_ASSIGN_ID,MST.ASSIGN_DATE,MST.CN_ID,mst.DELIVERY_MAN_ID,STD.CN_NUMBER,STD.CONSIGNEE_NAME,STD.CONSIGNEE_MOBILE_NO,STD.CONSIGNEE_ADDRESS,dm.DELIVERY_MAN_NAME,STD.POD,STD.OTP_CODE,STD.CUSTOMER_OTP,(SELECT ad.IS_OTP_SERVICE FROM AGREEMENT_DETAILL ad WHERE ad.ITEM_ID = STD.ITEM_ID AND ad.AGR_DETAIL_ID = ( SELECT MAX(AGR_DETAIL_ID) FROM AGREEMENT_DETAILL WHERE ITEM_ID = STD.ITEM_ID ) ) AS IS_OTP_SERVICE ");
             sb.Append(" FROM CN_ASSIGNMENT mst ");
             sb.Append(" INNER JOIN CN_CREATION_MST STD ON mst.CN_ID=std.CN_ID ");
             sb.Append(" INNER JOIN DELIVERY_MAN_MST dm ON mst.DELIVERY_MAN_ID=dm.DELIVERY_MAN_ID ");
 
-            sb.Append(" WHERE 1=1 ");
+            sb.Append(" WHERE 1=1 and  STD.IS_DELIVERED='N' ");
 
             return sb.ToString();
         }
@@ -513,5 +513,58 @@ namespace PG.BLLibrary.WRElBL
             return cObjList;
         }
 
+        public static string UpdateCNByCNID(int pCN_ID,string otpcode, DBContext dc)
+        {
+            bool isDCInit = false;
+            string _CNID = string.Empty;
+            try
+            {
+
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+
+                string abbr = " UPDATE CN_CREATION_MST SET IS_DELIVERED='Y',DELIVERY_DATE= SYSDATE,CUSTOMER_OTP=@otpcode WHERE CN_ID=@CN_ID ";
+                cmdInfo.DBParametersInfo.Add("@otpcode", otpcode);
+                cmdInfo.DBParametersInfo.Add("@CN_ID", pCN_ID);
+
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = abbr;
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+                DBQuery.ExecuteDBNonQuery(dbq, dc);
+                _CNID = pCN_ID.ToString();
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return _CNID;
+        }
+
+        public static string UpdateGenerateOTPByCNID(int pCN_ID, string otpcode, DBContext dc)
+        {
+            bool isDCInit = false;
+            string _CNID = string.Empty;
+            try
+            {
+
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+
+                string abbr = " UPDATE CN_CREATION_MST SET OTP_CODE=@otpcode WHERE CN_ID=@CN_ID ";
+                cmdInfo.DBParametersInfo.Add("@otpcode", otpcode);
+                cmdInfo.DBParametersInfo.Add("@CN_ID", pCN_ID);
+
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = abbr;
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+                DBQuery.ExecuteDBNonQuery(dbq, dc);
+                _CNID = pCN_ID.ToString();
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return _CNID;
+        }
     }
 }

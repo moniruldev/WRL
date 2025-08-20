@@ -19,6 +19,8 @@ using PG.BLLibrary.HMSBL;
 using PG.DBClass.WRELDC;
 using PG.BLLibrary.WRElBL;
 using Oracle.ManagedDataAccess.Client;
+using System.Text.RegularExpressions;
+using System.Net;
 
 namespace PG.Web.WREL
 {
@@ -111,6 +113,8 @@ namespace PG.Web.WREL
                 x.CONSIGNEE_NAME,
                 x.CONSIGNEE_MOBILE_NO,
                 x.OTP_CODE,
+                x.CUSTOMER_OTP,
+                x.IS_OTP_SERVICE,
                 POD = x.POD != null && x.POD.Length > 0
                     ? "data:image/png;base64," + Convert.ToBase64String(x.POD)
                     : null
@@ -119,7 +123,7 @@ namespace PG.Web.WREL
             GridView1.DataSource = bindList;
             GridView1.DataBind();
             SetGridInfo(listData.Count);
-
+            SetControlGrid();
         }
 
 
@@ -162,7 +166,20 @@ namespace PG.Web.WREL
                         img.Visible = true;
                     }
                 }
-                //string strD = DataBinder.Eval(e.Row.DataItem, "CN_ASSIGN_ID").ToString(); ;
+
+
+                string strD = DataBinder.Eval(e.Row.DataItem, "IS_OTP_SERVICE").ToString(); ;
+                LinkButton btnotp = (LinkButton)e.Row.FindControl("btnotp");
+                if(strD=="N")
+                {
+                    btnotp.Enabled = false;
+                    btnotp.ForeColor = System.Drawing.Color.OrangeRed;
+                }
+                else
+                {
+                    btnotp.Enabled = true;
+                    //btnotp.ForeColor = System.Drawing.Color.Green;
+                }
                 //HyperLink lnk = (HyperLink)e.Row.Cells[0].Controls[0];
 
                 //string hLink = "javascript:tbopen(" + strD + ")";
@@ -347,19 +364,66 @@ namespace PG.Web.WREL
         {
             if (e.CommandName == "submit")
             {
+
                 GridViewRow gvr = (GridViewRow)(((LinkButton)e.CommandSource).NamingContainer);
                 LinkButton btnforward = (LinkButton)gvr.FindControl("lnkView");
-               
+                Image imgPhoto = (Image)gvr.FindControl("imgPhoto");
                 int CN_ID =Conversion.StringToInt( e.CommandArgument.ToString());
+                TextBox txtgOTP = (TextBox)gvr.FindControl("txtgOTP");
+                HiddenField hdnOTPCode = (HiddenField)gvr.FindControl("hdnOTPCode");
+               
+                string generateOTP = hdnOTPCode.Value;
+                string otpcode = txtgOTP.Text;//ViewState["OTP"].ToString();
+               
+                //if (generateOTP != otpcode)
+                //{
+                //    ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', ' Input OTP Dose not Match !', 'Error');", true);
+                //    return;
+                //}
+
+                if (imgPhoto != null && !string.IsNullOrEmpty(imgPhoto.ImageUrl) && !imgPhoto.ImageUrl.Contains("no-image.png"))
+                {
+                    CN_ASSIGNMENTBL.UpdateCNByCNID(CN_ID,otpcode, null);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', ' POD Submit Successfuly!', 'Error');", true);
+                    //return;
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', ' POD not Upload!', 'Error');", true);
+                    return;
+                }
+                LoadData();
+            }
+
+            if (e.CommandName == "OTP")
+            {
+
+                GridViewRow gvr = (GridViewRow)(((LinkButton)e.CommandSource).NamingContainer);
+                LinkButton btnotp = (LinkButton)gvr.FindControl("btnotp");
+
+                HiddenField hdnOTPCode = (HiddenField)gvr.FindControl("hdnOTPCode");
+                string CONSIGNEE_MOBILE_NO = e.CommandArgument.ToString();
+                HiddenField hdnCNID = (HiddenField)gvr.FindControl("hdnCNID");//Conversion.StringToInt(e.CommandArgument.ToString());
+                int CN_ID =Conversion.StringToInt(hdnCNID.Value);
+                string otp = GenerateOtp();
+                hdnOTPCode.Value = otp;
+                //ViewState["OTP"] = otp;  
+                CN_ASSIGNMENTBL.UpdateGenerateOTPByCNID(CN_ID, otp, null);
+                if(CONSIGNEE_MOBILE_NO!="")
+                {
+                   // sendsms(CONSIGNEE_MOBILE_NO, otp);
+                }
+                btnotp.Enabled = false;
 
             }
 
+            
             if (e.CommandName == "UploadImage")
             {
                 int rowIndex = Convert.ToInt32(((GridViewRow)((Button)e.CommandSource).NamingContainer).RowIndex);
                 GridViewRow row = GridView1.Rows[rowIndex];
                 FileUpload fu = (FileUpload)row.FindControl("FileUpload1");
-
+                TextBox txtgOTP = (TextBox)row.FindControl("txtgOTP");
                 if (fu.HasFile)
                 {
                     byte[] fileData = fu.FileBytes;
@@ -368,9 +432,11 @@ namespace PG.Web.WREL
                     using (OracleConnection con = new OracleConnection("User Id=WRCUORIER;Password=WRCUORIER;Data Source=DESKTOP-0UVQ4LL/ORCL"))
                     {
                         con.Open();
-                        OracleCommand cmd = new OracleCommand("UPDATE CN_CREATION_MST SET POD = :photo WHERE CN_ID = :id", con);
+                        OracleCommand cmd = new OracleCommand("UPDATE CN_CREATION_MST SET POD = :photo,CUSTOMER_OTP= :CUSTOMER_OTP WHERE CN_ID = :id", con);
                         cmd.Parameters.Add(":photo", OracleDbType.Blob).Value = fileData;
+                        cmd.Parameters.Add(":CUSTOMER_OTP", OracleDbType.Varchar2).Value = txtgOTP.Text;
                         cmd.Parameters.Add(":CN_ID", OracleDbType.Int32).Value = Convert.ToInt32(id);
+                       
                         cmd.ExecuteNonQuery();
                     }
 
@@ -379,7 +445,104 @@ namespace PG.Web.WREL
             }
         }
 
+        private void sendsms(string CONSIGNEE_MOBILE_NO,string otp)
+        {
+            string ApiUrlSend = "http://188.138.41.146:7788/sendtext";
+            string ApiUrlStatus = "http://188.138.41.146:7788/getstatus";
+            string ApiKey = "f935c7b4da7cd83e";//"f935c7b4da7cd83e"; // Replace with your API Key
+            string SecretKey = "8796c6de";//"8796c6de"; // Replace with your Secret Key
+            string SenderId = "12345"; // Replace with your Sender ID
+            string message = string.Empty;
+            string requestUrl = string.Empty;
+            //txtTotSalesAmt.Text = totAmount.ToString();
+            string mobileNumber = CONSIGNEE_MOBILE_NO;  // Replace with the target phone number
+            
+            
+            if (IsValidMobileNumber(mobileNumber))
+            {
+                if (mobileNumber.Length == 11 && mobileNumber.StartsWith("01"))
+                {
+                    message = "( WorldRunner Express Ltd.) Your OTP to Proceed with Delivery Man is : " + otp + " ";  
 
+                    // Concatenate the URL
+                    requestUrl = ApiUrlSend + "?apikey=" + ApiKey +
+                                        "&secretkey=" + SecretKey +
+                                        "&callerID=" + SenderId +
+                                        "&toUser=" + mobileNumber +
+                                        "&messageContent=" + Uri.EscapeDataString(message);
 
+                    try
+                    {
+                        // Create the web request
+                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestUrl);
+                        request.Method = "GET";
+
+                        // Get the response
+                        using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                        {
+                            if (response.StatusCode == HttpStatusCode.OK)
+                            {
+                                // Success response
+                                //lblMessage.Text = "SMS sent successfully.";
+                                //Console.WriteLine("SMS sent successfully.");
+                                ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', ' OTP Sent Successfully!', 'Error');", true);
+                                return;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Failed to send SMS. Status Code: " + response.StatusCode);
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error: " + ex.Message);
+                    }
+                }
+                else
+                {
+                    //lblMessage.Text = "Invalid mobile number!";
+                }
+            }
+            else
+            {
+                //lblMessage.Text = "Invalid mobile number!";
+            }
+        }
+
+        private bool IsValidMobileNumber(string mobileNumber)
+        {
+            string pattern = @"^(\+?\d{1,3})?[\s.-]?\d{10,15}$";
+
+            return Regex.IsMatch(mobileNumber, pattern);
+        }
+
+        private string GenerateOtp()
+        {
+            var random = new Random();
+            return random.Next(100000, 999999).ToString();
+        }
+
+        private void SetControlGrid()
+        {
+           
+
+            foreach (GridViewRow gvR in this.GridView1.Rows)
+            {
+                if (gvR.RowType == DataControlRowType.DataRow)
+                {
+                    ((TextBox)gvR.FindControl("txtConsigneeMobil")).Attributes.Add("readonly", "readonly");
+                    ((TextBox)gvR.FindControl("txtConsignee")).Attributes.Add("readonly", "readonly");
+                    ((TextBox)gvR.FindControl("txtAssignDate")).Attributes.Add("readonly", "readonly");
+                    ((TextBox)gvR.FindControl("txtCNName")).Attributes.Add("readonly", "readonly");
+                    
+                   
+
+                }
+            }
+
+           
+
+        }
     }
 }
