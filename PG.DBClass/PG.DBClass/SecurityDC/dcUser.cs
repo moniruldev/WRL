@@ -43,6 +43,7 @@ namespace PG.DBClass.SecurityDC
         private DateTime? m_UserCreateDt = null;
         private string m_IS_BACK_ENTRY_AUTH = "N";
         private string m_ALL_DEPT = "N";
+        private string m_ISDELIVERYMAN = "N";
         private int m_CLIENT_ID = 0;
 
         #endregion  //private members
@@ -350,6 +351,17 @@ namespace PG.DBClass.SecurityDC
             {
                 this.m_ALL_DEPT = value;
                 this.NotifyPropertyChanged("ALL_DEPT");
+            }
+        }
+
+        [DBColumn(Name = "ISDELIVERYMAN", Storage = "m_ISDELIVERYMAN", DbType = "126")]
+        public string ISDELIVERYMAN
+        {
+            get { return this.m_ISDELIVERYMAN; }
+            set
+            {
+                this.m_ISDELIVERYMAN = value;
+                this.NotifyPropertyChanged("ISDELIVERYMAN");
             }
         }
 

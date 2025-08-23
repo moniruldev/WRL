@@ -1,7 +1,10 @@
-﻿using PG.Core.DBBase;
+﻿using PG.BLLibrary.SecurityBL;
+using PG.Core.DBBase;
+using PG.DBClass.SecurityDC;
 using PG.DBClass.WRELDC;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Linq;
 using System.Linq;
 using System.Text;
@@ -26,6 +29,17 @@ namespace PG.BLLibrary.WRElBL
 
             sb.Append(" WHERE IS_ACTIVE='Y' ");
 
+
+            return sb.ToString();
+        }
+
+        public static string GetDeliveryManSQLString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(" SELECT mst.*,a.agent_company_name AGENT_NAME FROM delivery_man_mst MST ");
+            sb.Append(" LEFT JOIN agent_mst A ON mst.agent_id=a.agent_id  ");
+            sb.Append(" WHERE 1=1 ");
 
             return sb.ToString();
         }
@@ -83,6 +97,70 @@ namespace PG.BLLibrary.WRElBL
             catch { throw; }
             finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
             return cObj;
+        }
+
+        public static dcDELIVERY_MAN_MST GetDeliveryManInfoById(int pDELIVERY_MAN_MSTID)
+        {
+            return GetDeliveryManInfoById(pDELIVERY_MAN_MSTID, null);
+        }
+        public static dcDELIVERY_MAN_MST GetDeliveryManInfoById(int pDELIVERY_MAN_MSTID, DBContext dc)
+        {
+            dcDELIVERY_MAN_MST cObj = new dcDELIVERY_MAN_MST();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetDeliveryManSQLString());
+                if (pDELIVERY_MAN_MSTID > 0)
+                {
+                    sb.Append(" AND MST.DELIVERY_MAN_ID= @pDELIVERY_MAN_MSTID ");
+                    cmdInfo.DBParametersInfo.Add("@pDELIVERY_MAN_MSTID", pDELIVERY_MAN_MSTID);
+                }
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObj = DBQuery.ExecuteDBQuery<dcDELIVERY_MAN_MST>(dbq, dc).FirstOrDefault();
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObj;
+        }
+
+        public static List<dcDELIVERY_MAN_MST> GetDeliveryManList(clsPrmWREL prm, DBContext dc)
+        {
+            List<dcDELIVERY_MAN_MST> cObjList = new List<dcDELIVERY_MAN_MST>();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetDeliveryManSQLString());
+
+
+                if (prm.Status != "0")
+                {
+                    sb.Append(" AND mst.IS_ACTIVE= @Status ");
+                    cmdInfo.DBParametersInfo.Add("@Status", prm.Status);
+                }
+
+
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcDELIVERY_MAN_MST>(dbq, dc);
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
         }
 
         public static int Insert(dcDELIVERY_MAN_MST cObj)
@@ -194,9 +272,42 @@ namespace PG.BLLibrary.WRElBL
                     {
                         bool bStatus = false;
 
-                        ///code list save logic here
+                       if(cObj._RecordState == RecordStateEnum.Added)
+                       {
+                           bool isExist = UserBL.IsUserExists(1, cObj.MOBILE_NO.Trim());
+                           if(!isExist)
+                           {
+                               dcUser objUser = new dcUser();
+                               objUser.AppID = 1;
+                               objUser.UserName = cObj.MOBILE_NO;
+                               objUser.Password = cObj.MOBILE_NO;
+                               objUser.RoleID = 7;
+                               objUser.FullName = cObj.DELIVERY_MAN_NAME;
+                               objUser.Email = "";
+                               objUser.IsActive = true;
+                               objUser.ISDELIVERYMAN = "Y";
 
-                        bStatus = true;
+                               int userId = UserBL.Insert(objUser);
+                               if (userId > 0)
+                                   bStatus = true;
+                           }
+                         
+                       }
+                        if(cObj._RecordState == RecordStateEnum.Edited)
+                        {
+                            dcUser existingUser = UserBL.GetAllUserByUserName(1, cObj.MOBILE_NO,null);
+                            if (existingUser != null)
+                            {
+                                dcUser user = new dcUser();
+                                user.UserID = existingUser.UserID;
+                                user.FullName = cObj.DELIVERY_MAN_NAME;
+                                user.IsActive = cObj.IS_ACTIVE == "Y"? true : false;
+                                bStatus = UserBL.Update(user);
+
+                            }
+                        }
+
+                       
                         if (bStatus)
                         {
                             dc.CommitTransaction(isTransInit);
@@ -249,6 +360,47 @@ namespace PG.BLLibrary.WRElBL
             DBContextManager.ReleaseDBContext(ref dc, isDCInit);
             bStatus = true;
             return bStatus;
+        }
+
+        public static bool IsMobileNumberExists(string pMobileNo, int pDELIVERY_MAN_ID)
+        {
+            return IsMobileNumberExists(pMobileNo, pDELIVERY_MAN_ID, null);
+        }
+
+        public static bool IsMobileNumberExists(string pMobileNo,int pDELIVERY_MAN_ID, DBContext dc)
+        {
+            StringBuilder sb = new StringBuilder();
+            bool isData = false;
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+
+                sb.Append(" select Count(MOBILE_NO) tID From DELIVERY_MAN_MST Where MOBILE_NO=@MobileNo AND DELIVERY_MAN_ID <> @DeliveryManId ");
+                cmdInfo.DBParametersInfo.Add("@MobileNo", pMobileNo);
+                cmdInfo.DBParametersInfo.Add("@DeliveryManId", pDELIVERY_MAN_ID);
+
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+
+                int tcount = Convert.ToInt32(DBQuery.ExecuteDBScalar(dbq));
+                if (tcount > 0)
+                {
+                    isData = true;
+                }
+
+            }
+            finally
+            {
+                DBContextManager.ReleaseDBContext(ref dc, isDCInit);
+            }
+            return isData;
         }
     }
 }

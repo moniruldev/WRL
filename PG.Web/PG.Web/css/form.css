@@ -1505,6 +1505,11 @@ Search Box /popup
    {
       background-image : url(../image/crossred_over.png)
    } 
+
+   .required::after {
+    content: " *";
+    color: red;
+    }
    
    
    

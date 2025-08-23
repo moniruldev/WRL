@@ -323,7 +323,20 @@ namespace PG.Web
 
         protected string GetIframeSource()
         {
-            return user.UserType.ToUpper() == "CLIENT" ? "WREL/ParcelTrackingWithReference.aspx?_t=1&_n=1" : "WREL/QuickLinks.aspx?_t=1&_n=1";
+            //return user.UserType.ToUpper() == "CLIENT" ? "WREL/ParcelTrackingWithReference.aspx?_t=1&_n=1" : "WREL/QuickLinks.aspx?_t=1&_n=1";
+            if (user.UserType.ToUpper() == "CLIENT")
+            {
+                return "WREL/ParcelTrackingWithReference.aspx?_t=1&_n=1";
+            }
+            else if (user.UserType.ToUpper() == "ADMIN")
+            {
+                return "WREL/QuickLinks.aspx?_t=1&_n=1";
+            }
+            else
+            {
+                return "WREL/Blank.aspx?_t=1&_n=1";
+            }
+
         }
 
     

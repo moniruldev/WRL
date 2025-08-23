@@ -68,6 +68,7 @@ namespace PG.BLLibrary.SecurityBL
             //below line is newly added by mamun(here left join should be omited)
             //sb.Append(" INNER JOIN EMP_INFO ON tblUser.EMPID=EMP_INFO.EMP_KEY ");
             sb.Append(" WHERE 1=1 ");
+            sb.Append(" AND tblUser.ISACTIVE='Y' ");
 
             if (pAppID > 0)
             {
@@ -523,6 +524,44 @@ namespace PG.BLLibrary.SecurityBL
             int cnt = dc.DoUpdate<dcUser>(cObj);
             DBContextManager.ReleaseDBContext(ref dc, isDCInit);
             return cnt > 0;
+        }
+
+        public static dcUser GetAllUserByUserName(int pAppID, string pUserName, DBContext dc)
+        {
+
+            DBCommandInfo cmdInfo = new DBCommandInfo();
+
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append("SELECT tblUser.* ");
+            sb.Append(" , tblRole.RoleName, tblRole.IsAdmin ");
+            sb.Append(" FROM tblUser ");
+            sb.Append(" INNER JOIN tblRole ON tblRole.RoleID = tblUser.RoleID ");
+            sb.Append(" WHERE 1=1 ");
+
+            if (pAppID > 0)
+            {
+                sb.Append(" AND tblUser.AppID=@pAppID ");
+                cmdInfo.DBParametersInfo.Add("@pAppID", pAppID);
+            }
+
+            if (pUserName != string.Empty)
+            {
+                sb.Append(" AND Upper(tblUser.UserName)= Upper(@pUserName) ");
+                cmdInfo.DBParametersInfo.Add("@pUserName", pUserName);
+            }
+
+            sb.Append(" ORDER BY tblUser.AppID, tblUser.UserName");
+
+            DBQuery dbq = new DBQuery();
+
+            dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+            cmdInfo.CommandText = sb.ToString();
+            cmdInfo.CommandType = CommandType.Text;
+            dbq.DBCommandInfo = cmdInfo;
+
+            return GetUserList(dbq, dc).FirstOrDefault();
+
         }
     }
 }

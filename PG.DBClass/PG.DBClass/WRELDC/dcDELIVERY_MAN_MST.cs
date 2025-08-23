@@ -191,4 +191,14 @@ namespace PG.DBClass.WRELDC
 
         #endregion //properties
     }
+
+    public partial class dcDELIVERY_MAN_MST
+    {
+        private string m_AGENT_NAME = string.Empty;
+        public string AGENT_NAME
+        {
+            get { return m_AGENT_NAME; }
+            set { m_AGENT_NAME = value; }
+        }
+    }
 }
