@@ -17,8 +17,35 @@
       <link href="css/toastr.css" rel="stylesheet" />
      <script src="javascript/toastr.js" type="text/javascript"></script>
     <style>
+        body {
+    background: linear-gradient(135deg, #e0e7ff, #f9fafb);
+    font-family: 'Segoe UI', sans-serif;
+}
 
-         body, input, button {
+.login-card {
+    width: 400px;
+}
+
+.logo-img {
+    max-height: 60px;
+}
+
+.form-control:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 0.2rem rgba(79, 70, 229, 0.25);
+}
+
+.btn-primary {
+    background: #4f46e5;
+    border: none;
+}
+
+.btn-primary:hover {
+    background: #4338ca;
+}
+
+
+         /*body, input, button {
             font-family: 'Outfit', sans-serif;
         }
         .logo-text, .card-header h1 {
@@ -54,7 +81,7 @@
         }
         .form-check {
             font-size: 0.875rem !important;
-        }
+        }*/
       
     </style>
 
@@ -124,7 +151,36 @@
 <body >
 
   <form id="loginform" runat="server">
-<div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center">
+      <div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center bg-light">
+    <div class="login-card shadow-lg p-4 rounded-4 bg-white">
+        <div class="text-center mb-4">
+            <img src="image/wr.png" alt="Logo" class="logo-img mb-2" style="max-width:200px;">
+            <%--<p class="text-muted">Your trusted courier service provider</p>--%>
+        </div>
+
+        <asp:Label ID="lblMessage" runat="server" CssClass="text-danger fw-bold d-block mb-2" />
+
+        <div class="mb-3">
+            <asp:TextBox ID="txtUser" runat="server" CssClass="form-control form-control-lg rounded-3" placeholder="Enter Username"></asp:TextBox>
+        </div>
+
+        <div class="mb-3">
+            <asp:TextBox ID="txtPassword" runat="server" TextMode="Password" CssClass="form-control form-control-lg rounded-3" placeholder="Enter Password"></asp:TextBox>
+        </div>
+
+        <div class="d-flex align-items-center justify-content-between mb-3">
+            <div class="form-check">
+                <asp:CheckBox ID="chkRememberMe" runat="server" CssClass="form-check-input" />
+                <label class="form-check-label" for="chkRememberMe">Remember Me</label>
+            </div>
+            <a href="#" class="text-decoration-none text-primary small">Forgot Password?</a>
+        </div>
+
+        <asp:Button ID="btnLogin" runat="server" Text="Log in" CssClass="btn btn-primary btn-lg w-100 rounded-3 fw-bold shadow-sm" OnClick="btnLogin_Click" />
+    </div>
+</div>
+
+<%--<div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center">
   <div class="row h-100 justify-content-center align-items-center">
     <div class="splash-container">
       <div class="card p-4">
@@ -162,7 +218,7 @@
       </div>
     </div>
   </div>
-</div>
+</div>--%>
 
 
             <div id="dvLoginHidden" style="visibility:hidden">

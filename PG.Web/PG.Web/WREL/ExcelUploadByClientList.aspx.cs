@@ -334,8 +334,8 @@ namespace PG.Web.WREL
                 //}
                  string filePath = e.CommandArgument.ToString(); // full UNC file path
                 string shareFolder = Path.GetDirectoryName(filePath); // gets \\192.168.12.235\ExcelFile
-                string username = "Administrator";
-                string password = "NMl@152634";
+                string username = "pcadmin";
+                string password = "Admin@202512";
 
                 try
                 {

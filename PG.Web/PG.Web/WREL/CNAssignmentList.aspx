@@ -233,16 +233,136 @@
 
             <div class="row">
              <div class="col-md-12">
-                   <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" ShowHeader="true" CssClass="table table-sm table-striped table-bordered table-responsive-sm"  
+                 <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" 
+    CssClass="table table-sm table-striped table-bordered table-responsive-sm"
+    DataKeyNames="CN_ASSIGN_ID" AllowPaging="true" PageSize="10"
+    OnRowCommand="GridView1_RowCommand" EmptyDataText="There is no record">
+
+    <PagerSettings Mode="NumericFirstLast" />
+    <HeaderStyle CssClass="table-info" Font-Size="Smaller" />
+
+    <Columns>
+
+        <asp:TemplateField HeaderText="SL">
+            <ItemTemplate>
+                <asp:Label ID="lblSL" runat="server"></asp:Label>
+            </ItemTemplate>
+            <HeaderStyle Width="40px" />
+            <ItemStyle Width="40px" CssClass="text-center" />
+        </asp:TemplateField>
+
+        <asp:TemplateField HeaderText="CN Number">
+            <ItemTemplate>
+                <asp:TextBox ID="txtCNName" runat="server" 
+                    CssClass="form-control form-control-sm" Style="width: 140px;" 
+                    Text='<%# Bind("CN_NUMBER") %>'></asp:TextBox>
+                <asp:HiddenField ID="hdnCNID" runat="server" Value='<%# Bind("CN_ID") %>' />
+                <asp:HiddenField ID="hdnIsOTP_Service" runat="server" Value='<%# Bind("IS_OTP_SERVICE") %>' />
+            </ItemTemplate>
+            <HeaderStyle Width="150px" />
+        </asp:TemplateField>
+
+        <asp:TemplateField HeaderText="Consignee">
+            <ItemTemplate>
+                <asp:TextBox ID="txtConsignee" runat="server" CssClass="form-control form-control-sm"
+                    Style="width: 130px;" Text='<%# Bind("CONSIGNEE_NAME") %>'></asp:TextBox>
+            </ItemTemplate>
+            <HeaderStyle Width="140px" />
+        </asp:TemplateField>
+
+        <asp:TemplateField HeaderText="Mobile">
+            <ItemTemplate>
+                <asp:TextBox ID="txtConsigneeMobil" runat="server" CssClass="form-control form-control-sm"
+                    Style="width: 90px;" Text='<%# Bind("CONSIGNEE_MOBILE_NO") %>'></asp:TextBox>
+            </ItemTemplate>
+            <HeaderStyle Width="90px" />
+        </asp:TemplateField>
+
+        <asp:TemplateField HeaderText="Status">
+            <ItemTemplate>
+                <asp:DropDownList ID="ddlgStatus" runat="server" CssClass="form-control form-control-sm" AutoPostBack="true"
+                    OnSelectedIndexChanged="ddlStatus_SelectedIndexChanged">
+                     
+                    <asp:ListItem Selected="True" Text="Delivered" Value="1"></asp:ListItem>
+                    <asp:ListItem Text="Return" Value="2"></asp:ListItem>
+                </asp:DropDownList>
+            </ItemTemplate>
+            <HeaderStyle Width="100px" />
+        </asp:TemplateField>
+
+        <asp:TemplateField HeaderText="Return Cause">
+            <ItemTemplate>
+                <asp:DropDownList ID="ddlRetrunCause" runat="server" CssClass="form-control form-control-sm"></asp:DropDownList>
+            </ItemTemplate>
+            <HeaderStyle Width="100px" />
+        </asp:TemplateField>
+
+        <asp:TemplateField HeaderText="OTP">
+            <ItemTemplate>
+                <asp:LinkButton ID="btnotp" runat="server" CommandName="OTP"
+                    CommandArgument='<%# Eval("CONSIGNEE_MOBILE_NO") %>'
+                    CssClass="btn btn-sm btn-primary" Text="Send" />
+                <asp:HiddenField ID="hdnOTPCode" runat="server" Value='<%# Bind("OTP_CODE") %>' />
+            </ItemTemplate>
+            <HeaderStyle Width="60px" CssClass="text-center" />
+            <ItemStyle CssClass="text-center" />
+        </asp:TemplateField>
+
+        <asp:TemplateField HeaderText="OTP_No">
+            <ItemTemplate>
+                <asp:TextBox ID="txtgOTP" runat="server" CssClass="form-control form-control-sm text-center"
+                    Style="width: 60px;" Text='<%# Bind("CUSTOMER_OTP") %>'></asp:TextBox>
+            </ItemTemplate>
+            <HeaderStyle Width="60px" />
+        </asp:TemplateField>
+
+        <asp:TemplateField HeaderText="Upload Image">
+            <ItemTemplate>
+                <div class="d-flex align-items-center">
+            <table>
+                <tr>
+                    <td class="p-0 pe-1">
+                        <asp:FileUpload ID="POD_Upload" runat="server" CssClass="form-control form-control-sm" />
+                    </td>
+                    <td class="p-0 pe-1">
+                        <asp:Button ID="btnUpload" runat="server" 
+                            Text="Upload" CssClass="btn btn-sm btn-primary"
+                            CommandName="UploadImage" CommandArgument='<%# Eval("CN_ID") %>' Width="55px" />
+                    </td>
+                    <td class="p-0">
+                      
+                        <asp:Image ID="imgPhoto" runat="server" Width="60px" Height="37px"
+    CssClass="img-thumbnail"
+    ImageUrl='<%# string.IsNullOrEmpty(Convert.ToString(Eval("POD"))) ? "~/images/no-image.png" : Convert.ToString(Eval("POD")) %>'
+    onclick="return showLargeImage(this)" Style="cursor:pointer;" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+            </ItemTemplate>
+           <%-- <HeaderStyle Width="500px" />
+            <ItemStyle Width="500" />--%>
+        </asp:TemplateField>
+
+        <asp:TemplateField HeaderText="Action">
+            <ItemTemplate>
+                <asp:LinkButton ID="lnkView" runat="server" CommandName="submit"
+                    CommandArgument='<%# Eval("CN_ID") %>'
+                    CssClass="btn btn-sm btn-success" Text="Submit" Width="65px" />
+            </ItemTemplate>
+            <HeaderStyle Width="70px" />
+            <ItemStyle CssClass="text-center" />
+        </asp:TemplateField>
+
+    </Columns>
+</asp:GridView>
+                 <%--  <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" ShowHeader="true" CssClass="table table-sm table-striped table-bordered table-responsive-sm"  
                 DataKeyNames="CN_ASSIGN_ID" EnableModelValidation="True" ClientIDMode="AutoID" OnRowDataBound="GridView1_RowDataBound" AllowPaging="true" EmptyDataText="There is no record" PageSize="10" 
                  OnPageIndexChanging="GridView1_PageIndexChanging" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" OnRowCommand="GridView1_RowCommand">
                   <PagerSettings Mode="NumericFirstLast" />
                 <HeaderStyle CssClass="table-info" Font-Size="Smaller" />                                      
               <Columns>
-                  <%-- <asp:HyperLinkField HeaderText="" Text="">
-                   <ControlStyle CssClass="buttonViewGrid" Height="20px" Width="40px" />
-                  <ItemStyle Width="50px" />
-                  </asp:HyperLinkField>--%>
+                 
                   <asp:TemplateField HeaderText="SL">
     <ItemTemplate>
         <asp:Label ID="lblSL" runat="server"></asp:Label>
@@ -273,7 +393,7 @@
             <table>
                 <tr>
                     <td class="p-0">
-                        <%--<asp:TextBox ID="txtAssignDate" runat="server" CssClass="form-control form-control-sm" Style="width: 100px;" Text='<%# Bind("ASSIGN_DATE") %>' DataFormatString="{0:dd-MMM-yyyy}"></asp:TextBox>--%>
+                       
                         <asp:TextBox ID="txtAssignDate" runat="server" CssClass="form-control form-control-sm" Style="width: 80px;" Text='<%# Eval("ASSIGN_DATE", "{0:dd-MMM-yy}") %>' ReadOnly="true"></asp:TextBox>
                     </td>
                 </tr>
@@ -318,7 +438,7 @@
                     <td class="p-0">
                        <asp:DropDownList ID="ddlgStatus" runat="server" CssClass="dropDownList">
                            <asp:ListItem Selected="True" Text="Delivered" Value="1"></asp:ListItem>
-                            <asp:ListItem  Text="Refund" Value="2"></asp:ListItem>
+                            <asp:ListItem  Text="Return" Value="2"></asp:ListItem>
                        </asp:DropDownList>
                     </td>
                 </tr>
@@ -326,6 +446,22 @@
         </div>
     </ItemTemplate>
 </asp:TemplateField>
+                   <asp:TemplateField HeaderText="Return Cause">
+    <ItemTemplate>
+        <div class="d-flex align-items-center">
+            <table>
+                <tr>
+                    <td class="p-0">
+                       <asp:DropDownList ID="ddlRetrunCause" runat="server" CssClass="dropDownList">
+                          
+                       </asp:DropDownList>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </ItemTemplate>
+</asp:TemplateField>
+
                    <asp:TemplateField HeaderText="OTP">
                        <ItemTemplate>
                             <asp:LinkButton ID="btnotp" runat="server"
@@ -390,8 +526,7 @@
                         </ItemTemplate>
                         <ItemStyle Width="130px" />
                  </asp:TemplateField>
-                 <%-- <asp:BoundField DataField="ASSIGN_DATE" HeaderText="Date" DataFormatString="{0:dd-MMM-yyyy}" HtmlEncode="false" />
-                  <asp:BoundField DataField="" HeaderText="Delivery Man" />--%>
+               
                  
                   
                   
@@ -399,7 +534,7 @@
 
                </Columns>
                                                      
-          </asp:GridView>
+          </asp:GridView>--%>
 
    
              </div>

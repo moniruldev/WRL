@@ -263,9 +263,9 @@ namespace PG.Web.WREL
         protected void btnUpload_Click(object sender, EventArgs e)
         {
 
-            string networkFolder = @"\\192.168.12.235\ExcelFile"; // Use shared folder, not c$
-            string username = "Administrator";
-            string password = "NMl@152634";
+            string networkFolder = @"\\203.76.125.42\ExcelFile"; // Use shared folder, not c$
+            string username = "pcadmin";
+            string password = "Admin@202512";
 
             try
             {
@@ -356,7 +356,7 @@ namespace PG.Web.WREL
      
         private void SaveFilePathToOracle(string fileName, string filePath)
         {
-            string connStr = "Data Source=192.168.12.235/ORCL;User Id=WRCUORIER;Password=WRCUORIER;";
+            string connStr = "Data Source=203.76.125.42/WRLORCL;User Id=WRCUORIER;Password=WRCUORIER;";
             using (OracleConnection conn = new OracleConnection(connStr))
             {
                 conn.Open();

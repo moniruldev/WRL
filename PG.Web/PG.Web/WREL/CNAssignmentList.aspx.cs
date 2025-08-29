@@ -180,23 +180,26 @@ namespace PG.Web.WREL
                     btnotp.Enabled = true;
                     //btnotp.ForeColor = System.Drawing.Color.Green;
                 }
-                //HyperLink lnk = (HyperLink)e.Row.Cells[0].Controls[0];
 
-                //string hLink = "javascript:tbopen(" + strD + ")";
-                //if (base.PageMode == PG.Core.Web.PageModeEnum.InTab)
-                //{
-                //    hLink = "javascript:tbopen(" + strD + ")";
-                //}
-                //else
-                //{
-                //    hLink = "~/WREL/CNAssignmentV2.aspx?id=" + strD;
-                //}
-                //lnk.NavigateUrl = hLink;
-                Label lblSL = (Label)e.Row.FindControl("lblSL");
-                if (lblSL != null)
+                DropDownList ddlReturnCause = (DropDownList)e.Row.FindControl("ddlReturnCause");
+                if (ddlReturnCause != null)
                 {
-                    lblSL.Text = (e.Row.RowIndex + 1).ToString();
+                    // Initially keep empty
+                    ddlReturnCause.Items.Insert(0, new ListItem("-- Select Cause --", ""));
                 }
+
+                int serialNo = (GridView1.PageIndex * GridView1.PageSize) + e.Row.RowIndex + 1;
+
+                Label lbl = (Label)e.Row.FindControl("lblSL");
+                if (lbl != null)
+                {
+                    lbl.Text = serialNo.ToString();
+                }
+                //Label lblSL = (Label)e.Row.FindControl("lblSL");
+                //if (lblSL != null)
+                //{
+                //    lblSL.Text = (e.Row.RowIndex + 1).ToString();
+                //}
 
                
             }
@@ -207,7 +210,30 @@ namespace PG.Web.WREL
             }
         }
 
+        protected void ddlStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DropDownList ddlStatus = (DropDownList)sender;
+            GridViewRow row = (GridViewRow)ddlStatus.NamingContainer;
 
+            DropDownList ddlRetrunCause = (DropDownList)row.FindControl("ddlRetrunCause");
+
+            if (ddlStatus.SelectedValue == "2") // Returned
+            {
+                if (ddlRetrunCause != null)
+                {
+                    ddlRetrunCause.DataSource = REFUND_CAUSE_MSTBL.GetReturnCauseListInfoByName(null);
+                    ddlRetrunCause.DataTextField = "REFUND_CAUSE_NAME";   // column for display
+                    ddlRetrunCause.DataValueField = "REFUND_CAUSE_ID";    // column for value
+                    ddlRetrunCause.DataBind();
+                    ddlRetrunCause.Items.Insert(0, new ListItem("-- Select Cause --", ""));
+                }
+            }
+            else
+            {
+                ddlRetrunCause.Items.Clear();
+                ddlRetrunCause.Items.Insert(0, new ListItem("-- N/A --", ""));
+            }
+        }
         protected void btnLoadData_Click(object sender, EventArgs e)
         {
             GridView1.PageIndex = 0;
@@ -371,7 +397,13 @@ namespace PG.Web.WREL
                 int CN_ID =Conversion.StringToInt( e.CommandArgument.ToString());
                 TextBox txtgOTP = (TextBox)gvr.FindControl("txtgOTP");
                 HiddenField hdnOTPCode = (HiddenField)gvr.FindControl("hdnOTPCode");
-               
+                DropDownList ddlRetrunCause = (DropDownList)gvr.FindControl("ddlRetrunCause");
+                int rtncauseid = 0;
+                if(ddlRetrunCause.SelectedValue!="")
+                {
+                    rtncauseid =Conversion.StringToInt(ddlRetrunCause.SelectedValue);
+                }
+
                 string generateOTP = hdnOTPCode.Value;
                 string otpcode = txtgOTP.Text;//ViewState["OTP"].ToString();
                
@@ -383,7 +415,14 @@ namespace PG.Web.WREL
 
                 if (imgPhoto != null && !string.IsNullOrEmpty(imgPhoto.ImageUrl) && !imgPhoto.ImageUrl.Contains("no-image.png"))
                 {
-                    CN_ASSIGNMENTBL.UpdateCNByCNID(CN_ID,otpcode, null);
+                    if (rtncauseid == 0)
+                    {
+                        CN_ASSIGNMENTBL.UpdateCNByCNID(CN_ID, otpcode, null);
+                    }
+                    else
+                    {
+                        CN_ASSIGNMENTBL.UpdateCNReturnInfoByCNID(CN_ID, otpcode,rtncauseid, null);
+                    }
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', ' POD Submit Successfuly!', 'Error');", true);
                     //return;
                 }
@@ -422,7 +461,7 @@ namespace PG.Web.WREL
             {
                 int rowIndex = Convert.ToInt32(((GridViewRow)((Button)e.CommandSource).NamingContainer).RowIndex);
                 GridViewRow row = GridView1.Rows[rowIndex];
-                FileUpload fu = (FileUpload)row.FindControl("FileUpload1");
+                FileUpload fu = (FileUpload)row.FindControl("POD_Upload");
                 TextBox txtgOTP = (TextBox)row.FindControl("txtgOTP");
                 if (fu.HasFile)
                 {
@@ -462,7 +501,7 @@ namespace PG.Web.WREL
             {
                 if (mobileNumber.Length == 11 && mobileNumber.StartsWith("01"))
                 {
-                    message = "( WorldRunner Express Ltd.) Your OTP to Proceed with Delivery Man is : " + otp + " ";  
+                    message = "(WorldRunner Express) Your OTP to proceed with Delivery Man is: " + otp + " ";  
 
                     // Concatenate the URL
                     requestUrl = ApiUrlSend + "?apikey=" + ApiKey +
@@ -533,7 +572,7 @@ namespace PG.Web.WREL
                 {
                     ((TextBox)gvR.FindControl("txtConsigneeMobil")).Attributes.Add("readonly", "readonly");
                     ((TextBox)gvR.FindControl("txtConsignee")).Attributes.Add("readonly", "readonly");
-                    ((TextBox)gvR.FindControl("txtAssignDate")).Attributes.Add("readonly", "readonly");
+                   
                     ((TextBox)gvR.FindControl("txtCNName")).Attributes.Add("readonly", "readonly");
                     
                    

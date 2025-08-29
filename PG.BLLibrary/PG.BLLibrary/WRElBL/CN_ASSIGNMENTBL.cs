@@ -539,7 +539,32 @@ namespace PG.BLLibrary.WRElBL
             finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
             return _CNID;
         }
+        public static string UpdateCNReturnInfoByCNID(int pCN_ID, string otpcode,int rtncauseid, DBContext dc)
+        {
+            bool isDCInit = false;
+            string _CNID = string.Empty;
+            try
+            {
 
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+
+                string abbr = " UPDATE CN_CREATION_MST SET IS_REFUND='Y',REFUND_CAUSE_ID=rtncauseid,REFUND_DATE=SYSDATE WHERE CN_ID=@CN_ID ";
+           
+                cmdInfo.DBParametersInfo.Add("@CN_ID", pCN_ID);
+
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = abbr;
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+                DBQuery.ExecuteDBNonQuery(dbq, dc);
+                _CNID = pCN_ID.ToString();
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return _CNID;
+        }
         public static string UpdateGenerateOTPByCNID(int pCN_ID, string otpcode, DBContext dc)
         {
             bool isDCInit = false;
