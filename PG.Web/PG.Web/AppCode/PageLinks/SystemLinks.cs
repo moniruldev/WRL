@@ -57,6 +57,11 @@ namespace PG.Web.PageLinks
         {
             get { return WebUtility.GetAbsoluteUrl("~/Service/GetDataInfo.ashx"); }
         }
+
+        public static string GetLink_UserInfo
+        {
+            get { return WebUtility.GetAbsoluteUrl("~/Service/Security/GetUser.ashx"); }
+        }
       
 
         public static string GetLink_SearchTest

@@ -25,18 +25,19 @@ using System.Configuration;
 using Oracle.ManagedDataAccess.Client;
 using PG.BLLibrary.WRElBL;
 using PG.DBClass.WRELDC;
+using PG.BLLibrary.SecurityBL;
 
-namespace PG.Web.WREL
+namespace PG.Web.Admin
 {
-    public partial class DeliveryManEntry : BagePage
+    public partial class UserEntry : BagePage
     {
         //this 
-        string ViewStateKey = "DELIVERY_MAN_ID";
-        string ViewStateKeyPrev = "DELIVERY_MAN_ID";
+        string ViewStateKey = "UserID";
+        string ViewStateKeyPrev = "UserID";
         ReportOpenTypeEnum ReportOpenType = ReportOpenTypeEnum.Preview;
         // int CompanyID = 0;
 
-        int DELIVERY_MAN_ID = 0;
+        int UserID = 0;
         string saveMsg = string.Empty;
         string errMsg = string.Empty;
 
@@ -46,7 +47,7 @@ namespace PG.Web.WREL
         public string ReportPrintPageLink = PageLinks.ReportLinks.GetLink_ReportPrint;
         public string ReportPDFPageLink = PageLinks.ReportLinks.GetLink_ReportPDF;
 
-        public string AgentListServiceLink = PageLinks.InventoryLink.GetLink_AgentList;
+        public string ClientListServiceLink = PageLinks.InventoryLink.GetLink_ClientList;
 
         protected override void OnPreInit(EventArgs e)
         {
@@ -64,7 +65,7 @@ namespace PG.Web.WREL
 
             loggedinUser = AppSecurity.GetUserInfoFromSession();
 
-            this.DELIVERY_MAN_ID = base.GetPageQueryInteger("id");
+            this.UserID = base.GetPageQueryInteger("id");
 
             if (!IsPostBack) //first Time
             {
@@ -74,7 +75,7 @@ namespace PG.Web.WREL
                 FillCombo();
 
 
-                if (this.DELIVERY_MAN_ID == 0) //not query string
+                if (this.UserID == 0) //not query string
                 {
                     SetDate();
                     AddTask();
@@ -99,7 +100,7 @@ namespace PG.Web.WREL
             else
             {
                 this.EditMode = base.GetEditModeFromViewState(base.EditModeViewStateKey);
-                this.DELIVERY_MAN_ID = int.Parse(ViewState[ViewStateKey].ToString());
+                this.UserID = int.Parse(ViewState[ViewStateKey].ToString());
             }
 
             SetHyperLink();
@@ -115,15 +116,17 @@ namespace PG.Web.WREL
             EditTask();
         }
 
-        public void FillCombo()
+        private void FillCombo()
         {
-            //ddlHubType.Items.Clear();
-            //ddlHubType.AppendDataBoundItems = true;
-            //ddlHubType.DataTextField = "HUB_TYPE_NAME";
-            //ddlHubType.DataValueField = "HUB_TYPE_ID";
-            //ddlHubType.DataSource = HUB_TYPE_MSTBL.GetHUB_TYPEComboList();
-            //ddlHubType.DataBind();
-            //ddlHubType.SelectedIndex = 0;
+
+            ddlRole.Items.Clear();
+            ddlRole.Items.Add("(select role)");
+
+            ddlRole.DataTextField = "RoleName";
+            ddlRole.DataValueField = "RoleID";
+            ddlRole.AppendDataBoundItems = true;
+            ddlRole.DataSource = AppSecurity.GetRoleList(0).Where(x=>x.IsActive).ToList();
+            ddlRole.DataBind();
 
         }
 
@@ -147,19 +150,19 @@ namespace PG.Web.WREL
         private void ReadTask()
         {
             this.EditMode = FormDataMode.Read;
-            ReadData(this.DELIVERY_MAN_ID);
-            ViewState[ViewStateKey] = this.DELIVERY_MAN_ID.ToString();
+            ReadData(this.UserID);
+            ViewState[ViewStateKey] = this.UserID.ToString();
 
             SetControl(FormDataMode.Read);
 
         }
         private void AddTask()
         {
-            ViewState[ViewStateKeyPrev] = this.DELIVERY_MAN_ID.ToString();
+            ViewState[ViewStateKeyPrev] = this.UserID.ToString();
 
             this.EditMode = FormDataMode.Add;
             this.IsDirty = false;
-            this.DELIVERY_MAN_ID = 0;
+            this.UserID = 0;
             ViewState[ViewStateKey] = "0";
             SetControl(FormDataMode.Add);
             ClearText();
@@ -167,42 +170,45 @@ namespace PG.Web.WREL
         private void EditTask()
         {
             this.EditMode = FormDataMode.Edit;
-            ReadData(this.DELIVERY_MAN_ID);
+            ReadData(this.UserID);
             this.EditMode = FormDataMode.Edit;
-            ViewState[ViewStateKey] = this.DELIVERY_MAN_ID.ToString();
+            ViewState[ViewStateKey] = this.UserID.ToString();
             
             SetControl(FormDataMode.Edit);
         }
 
         private void ClearText()
         {
-            txtName.Text = string.Empty;
-            txtFathersName.Text = string.Empty;
-            txtMothersName.Text = string.Empty;
-            txtAddress.Text = string.Empty;
-            txtMobileNo.Text = string.Empty;
-            txtAgent.Text = string.Empty;
+            txtUserName.Text = string.Empty;
+            txtFullName.Text = string.Empty;
+            txtPassword.Text = string.Empty;
+            txtConfirmPassword.Text = string.Empty;
+            txtClientName.Text = string.Empty;
             ddlStatus.SelectedValue = "Y";   
-            hdnAgentId.Value = string.Empty;
+            hdnClientId.Value = string.Empty;
 
         }
 
         private bool ReadData(int id)
         {
             bool bStatus = false;
-            byte[] bytes = null;
-            dcDELIVERY_MAN_MST cObj = DELIVERY_MAN_MSTBL.GetDeliveryManInfoById(id);
+            dcUser cObj = UserBL.GetAllUserList(0,0,id,"0",null).FirstOrDefault();
             if (cObj != null)
             {
 
-                txtName.Text = cObj.DELIVERY_MAN_NAME;
-                txtFathersName.Text = cObj.FATHER_NAME;
-                txtMothersName.Text = cObj.MOTHER_NAME;
-                txtAddress.Text = cObj.ADDRESS;
-                txtMobileNo.Text = cObj.MOBILE_NO;
-                txtAgent.Text = cObj.AGENT_NAME;
-                ddlStatus.SelectedValue = cObj.IS_ACTIVE;
-                hdnAgentId.Value = cObj.AGENT_ID.ToString();
+                txtUserName.Text = cObj.UserName;
+                txtFullName.Text = cObj.FullName;
+                //txtPassword.Text = cObj.Password;
+                //txtConfirmPassword.Text = cObj.Password;
+                ddlUserType.SelectedValue = string.IsNullOrEmpty(cObj.UserType) ? "0" : cObj.UserType;
+                if(cObj.UserType == "CLIENT")
+                {
+                    txtClientName.Text = cObj.CLIENT_NAME.ToString();
+                    hdnClientId.Value = cObj.CLIENT_ID.ToString();
+                }
+                ddlApp.SelectedValue = cObj.AppID.ToString();
+                ddlRole.SelectedIndex = Helper.FindIndexByValue(ddlRole, cObj.RoleID.ToString());
+                ddlStatus.SelectedValue = cObj.IsActive ? "Y" : "N";
 
                 bStatus = true;
             }
@@ -220,24 +226,33 @@ namespace PG.Web.WREL
             }
 
 
-            SetTextBoxState(txtName, isEnabled);
-            SetTextBoxState(txtFathersName, isEnabled);
-            SetTextBoxState(txtMothersName, isEnabled);
-            SetTextBoxState(txtAddress, isEnabled);
-            if(dataMode == FormDataMode.Add)
+            SetTextBoxState(txtUserName, isEnabled);
+            SetTextBoxState(txtFullName, isEnabled);
+          
+            if (dataMode == FormDataMode.Add)
             {
-                SetTextBoxState(txtMobileNo, true);
+             
+                SetTextBoxState(txtUserName, true);
+                SetTextBoxState(txtPassword, true);
+                SetTextBoxState(txtConfirmPassword, true);
             }
             else
             {
-               
-                txtMobileNo.Attributes.Add("readonly", "readonly");
+                SetTextBoxState(txtPassword, false);
+                SetTextBoxState(txtConfirmPassword, false);
+                txtUserName.Attributes.Add("readonly", "readonly");
                 ddlStatus.CssClass = "form-control form-control-sm";
             }
           
-            SetTextBoxState(txtAgent, isEnabled);
+            SetTextBoxState(txtClientName, isEnabled);
             ddlStatus.Enabled = isEnabled;
             ddlStatus.CssClass = "form-control form-control-sm";
+            ddlRole.Enabled = isEnabled;
+            ddlRole.CssClass = "form-control form-control-sm";
+            ddlUserType.Enabled = isEnabled;
+            ddlUserType.CssClass = "form-control form-control-sm";
+            ddlApp.Enabled = isEnabled;
+            ddlApp.CssClass = "form-control form-control-sm";
             
             //buttons
             btnAddNew.Visible = !isEnabled;
@@ -309,27 +324,62 @@ namespace PG.Web.WREL
             bool status = true;
             errMsg = string.Empty;
 
-            if (txtName.Text == "")
-            {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', 'Enter  name!', 'Error');", true);
-                txtName.Focus();
-                return false;
 
+            if (txtUserName.Text.Trim() == string.Empty)
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', 'Enter User Name!', 'Error');", true);
+                txtUserName.Focus();
+                return false;
             }
 
-            if (txtMobileNo.Text == "")
-            {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', 'Enter mobile number!', 'Error');", true);
-                txtMobileNo.Focus();
-                return false;
 
+            if (ddlRole.SelectedIndex <= 0)
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', 'Please Select Role!', 'Error');", true);
+                ddlRole.Focus();
+                return false;
+            }
+            if(ddlUserType.SelectedValue == "CLIENT")
+            {
+                if(hdnClientId.Value == "0")
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', 'Please Select Client', 'Error');", true);
+                    return false;
+
+                }
             }
 
-            if(DELIVERY_MAN_MSTBL.IsMobileNumberExists(txtMobileNo.Text,this.DELIVERY_MAN_ID,null))
+            if (EditMode == FormDataMode.Add)
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', 'This mobile number already in used!', 'Error');", true);
-                txtMobileNo.Focus();
-                return false;
+
+
+                if (UserBL.IsUserExists(Conversion.StringToInt(ddlApp.SelectedValue), txtUserName.Text.Trim()))
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', 'User Name Already Exists', 'Error');", true);
+                    return false;
+
+                }
+
+                if (txtPassword.Text == "")
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', 'Please Enter Password', 'Error');", true);
+                    return false;
+                }
+
+                if (txtPassword.Text != txtConfirmPassword.Text)
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', 'Password does not Matched', 'Error');", true);
+                    return false;
+                }
+            }
+            else if (EditMode == FormDataMode.Edit)
+            {
+                if (UserBL.IsUserExists(Conversion.StringToInt(ddlApp.SelectedValue), txtUserName.Text.Trim(),this.UserID))
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', 'User Name Already Exists', 'Error');", true);
+                    return false;
+
+                }
             }
 
             
@@ -343,15 +393,15 @@ namespace PG.Web.WREL
         {
 
             //new button
-            string hLink = "javascript:tbopen(" + this.DELIVERY_MAN_ID.ToString() + ")";
+            string hLink = "javascript:tbopen(" + this.UserID.ToString() + ")";
             if (base.PageMode == PG.Core.Web.PageModeEnum.InTab)
             {
-                hLink = "javascript:tbopenSalInfo(" + this.DELIVERY_MAN_ID.ToString() + ")";
+                hLink = "javascript:tbopenSalInfo(" + this.UserID.ToString() + ")";
                 this.btnAddNew.Attributes.Add("onclick", hLink);
             }
             else
             {
-                hLink = "~/WREL/DeliveryManEntry.aspx?id=" + this.DELIVERY_MAN_ID.ToString();
+                hLink = "~/WREL/DeliveryManEntry.aspx?id=" + this.UserID.ToString();
                 this.btnAddNew.Attributes.Add("onclick", hLink);
             }
 
@@ -364,11 +414,11 @@ namespace PG.Web.WREL
             bool bStatus = false;
 
             bool isAdd = false;
-            int newDELIVERY_MAN_ID = 0;
-            dcDELIVERY_MAN_MST cObj = new dcDELIVERY_MAN_MST();
-            if (this.DELIVERY_MAN_ID > 0)
+            int newUserID = 0;
+            dcUser cObj = new dcUser();
+            if (this.UserID > 0)
             {
-                cObj.DELIVERY_MAN_ID = this.DELIVERY_MAN_ID;
+                cObj.UserID = this.UserID;
                 cObj._RecordState = RecordStateEnum.Edited;
             }
             else
@@ -377,42 +427,32 @@ namespace PG.Web.WREL
                 isAdd = true;
             }
 
-            cObj.DELIVERY_MAN_NAME = txtName.Text.Trim();
-            cObj.ADDRESS = txtAddress.Text.Trim();
-            cObj.MOBILE_NO = txtMobileNo.Text.Trim();
-            cObj.FATHER_NAME = txtFathersName.Text.Trim();
-            cObj.MOTHER_NAME = txtMothersName.Text.Trim();
-            cObj.AGENT_ID = Conversion.StringToInt(hdnAgentId.Value);
-            if(cObj.AGENT_ID > 0)
-            {
-                cObj.IS_UNDER_AGENT = "Y";
-            }
-            else
-            {
-                cObj.IS_UNDER_AGENT = "N";
-
-            }
-            cObj.IS_ACTIVE = ddlStatus.SelectedValue;
+            cObj.AppID = Conversion.StringToInt(ddlApp.SelectedValue);
+            cObj.UserName = txtUserName.Text;
+            cObj.RoleID = Convert.ToInt32(ddlRole.SelectedValue);
+            cObj.FullName = txtFullName.Text;
+            cObj.Email = "";
+            cObj.UserType = ddlUserType.SelectedValue;
+            cObj.CLIENT_ID =Conversion.StringToInt(hdnClientId.Value);
+            cObj.IsActive = ddlStatus.SelectedValue == "Y" ? true : false;
+           
 
             if (isAdd)
             {
-                cObj.CREATE_BY = loggedinUser.UserID.ToString();
-                cObj.CREATE_DATE = DateTime.Now;
-
+                cObj.Password = txtPassword.Text.Trim();
+                cObj.UserCreateDt = DateTime.Now;
+                newUserID = UserBL.Insert(cObj);
             }
             else
             {
-                cObj.EDIT_BY = loggedinUser.UserID.ToString();
-                cObj.EDIT_DATE = DateTime.Now;
-
+                bStatus = UserBL.Update(cObj);
+                newUserID = cObj.UserID;
             }
 
-            newDELIVERY_MAN_ID = DELIVERY_MAN_MSTBL.Save(cObj);
-            if (newDELIVERY_MAN_ID > 0)
+          
+            if (newUserID > 0)
             {
-
-
-                this.DELIVERY_MAN_ID = newDELIVERY_MAN_ID;
+                this.UserID = newUserID;
                 ReadTask();
                 bStatus = true;
             }
@@ -432,8 +472,31 @@ namespace PG.Web.WREL
             ClearText();
         }
 
-       
+        protected void ddlUserType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(ddlUserType.SelectedValue == "CLIENT")
+            {
+                dvClient.Visible = true;
+            }
+            else
+            {
+                dvClient.Visible = false;
+            }
+            
+        }
 
 
+        protected void ddlApp_OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+            ddlRole.Items.Clear();
+            ddlRole.Items.Add("(select role)");
+
+            ddlRole.DataTextField = "RoleName";
+            ddlRole.DataValueField = "RoleID";
+            ddlRole.AppendDataBoundItems = true;
+            ddlRole.DataSource = AppSecurity.GetRoleList(0).Where(x => x.IsActive).ToList();
+            ddlRole.DataBind();
+           
+        }
     }
 }

@@ -41,7 +41,7 @@ namespace PG.Web.Admin
 
         private void FillCombo()
         {
-            this.ddlRole.DataSource = RoleBL.GetRoleList(AppInfo.AppID);
+            this.ddlRole.DataSource = RoleBL.GetRoleList(AppInfo.AppID).Where(x=>x.IsActive).ToList();
             this.ddlRole.DataTextField = "RoleName";
             this.ddlRole.DataValueField = "RoleID";
             this.ddlRole.DataBind();

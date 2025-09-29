@@ -60,11 +60,12 @@ namespace PG.BLLibrary.SecurityBL
             StringBuilder sb = new StringBuilder();
 
             sb.Append("SELECT tblUser.* ");
-            sb.Append(" , tblRole.RoleName, tblRole.IsAdmin ");
+            sb.Append(" , tblRole.RoleName, tblRole.IsAdmin,c.client_name ");
             //below line is newly added by mamun
             //sb.Append(" ,EMP_INFO.DEPARTMENT_ID ");
             sb.Append(" FROM tblUser ");
             sb.Append(" INNER JOIN tblRole ON tblRole.RoleID = tblUser.RoleID ");
+            sb.Append(" LEFT JOIN client_mst C ON tbluser.client_id=c.client_id ");
             //below line is newly added by mamun(here left join should be omited)
             //sb.Append(" INNER JOIN EMP_INFO ON tblUser.EMPID=EMP_INFO.EMP_KEY ");
             sb.Append(" WHERE 1=1 ");
@@ -333,18 +334,44 @@ namespace PG.BLLibrary.SecurityBL
         }
         public static bool IsUserExists(int AppID, string pUserName, int pUserID, DBContext dc)
         {
+            StringBuilder sb = new StringBuilder();
             bool isData = false;
             bool isDCInit = false;
             try
             {
                 isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
-                using (DataContext dataContext = dc.NewDataContext())
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                //TODO Change 9-04-2015
+                //string sql = "select Count(UserID) tID From tblUser Where UserID=@userID AND UserName=@UserName";
+                sb.Append(" select Count(UserID) tID From tblUser Where UserName=@UserName and UserID<>@pUserID  ");
+                cmdInfo.DBParametersInfo.Add("@UserName", pUserName);
+                cmdInfo.DBParametersInfo.Add("@pUserID", pUserID);
+                sb.Append(" AND AppID=@appID ");
+                cmdInfo.DBParametersInfo.Add("@appID", AppID);
+
+
+
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+
+                int tcount = Convert.ToInt32(DBQuery.ExecuteDBScalar(dbq));
+                if (tcount > 0)
                 {
-                    var result = from cObj in dataContext.GetTable<dcUser>()
-                                 where cObj.UserID != pUserID && cObj.AppID == AppID && cObj.UserName == pUserName
-                                 select cObj;
-                    isData = result.Count() > 0;
+                    isData = true;
                 }
+
+                //using (DataContext dataContext = dc.NewDataContext())
+                //{
+                //    var result = from cObj in dataContext.GetTable<dcUser>()
+                //                 where cObj.AppID == AppID && cObj.UserName == pUserName
+                //                 select cObj;
+                //    isData = result.Count() > 0;
+                //}
             }
             finally
             {
@@ -561,6 +588,63 @@ namespace PG.BLLibrary.SecurityBL
             dbq.DBCommandInfo = cmdInfo;
 
             return GetUserList(dbq, dc).FirstOrDefault();
+
+        }
+
+        public static List<dcUser> GetAllUserList(int pAppID, int pRoleID, int pUserID, string status, DBContext dc)
+        {
+
+            DBCommandInfo cmdInfo = new DBCommandInfo();
+
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append("SELECT tblUser.* ");
+            sb.Append(" , tblRole.RoleName, tblRole.IsAdmin,c.client_name ");
+            sb.Append(" FROM tblUser ");
+            sb.Append(" INNER JOIN tblRole ON tblRole.RoleID = tblUser.RoleID ");
+            sb.Append(" LEFT JOIN client_mst C ON tbluser.client_id=c.client_id ");
+            sb.Append(" WHERE 1=1 ");
+           
+
+            if (pAppID > 0)
+            {
+                sb.Append(" AND tblUser.AppID=@pAppID ");
+                //cmd.Parameters.AddWithValue("@pAppID", pAppID);
+
+                cmdInfo.DBParametersInfo.Add("@pAppID", pAppID);
+            }
+
+            if (pUserID > 0)
+            {
+                sb.Append(" AND tblUser.UserID=@pUserID ");
+                cmdInfo.DBParametersInfo.Add("@pUserID", pUserID);
+            }
+
+            if (pRoleID > 0)
+            {
+                sb.Append(" AND tblUser.RoleID=@pRoleID ");
+                cmdInfo.DBParametersInfo.Add("@pRoleID", pRoleID);
+            }
+            if (status != "0")
+            {
+                sb.Append(" AND tblUser.ISACTIVE=@status ");
+                cmdInfo.DBParametersInfo.Add("@status", status);
+            }
+
+            sb.Append(" ORDER BY tblUser.AppID, tblUser.UserName");
+
+            DBQuery dbq = new DBQuery();
+
+            dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+            cmdInfo.CommandText = sb.ToString();
+            cmdInfo.CommandType = CommandType.Text;
+            dbq.DBCommandInfo = cmdInfo;
+
+
+            return GetUserList(dbq, dc);
+
+           
+
 
         }
     }

@@ -446,6 +446,7 @@ namespace PG.DBClass.SecurityDC
         }
         public int CompanyId { get; set; }
         public int DEPARTMENT_ID { get; set; }
+        public string CLIENT_NAME { get; set; }
 
 
     }
