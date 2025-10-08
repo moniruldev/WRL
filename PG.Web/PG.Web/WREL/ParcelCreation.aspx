@@ -1105,7 +1105,7 @@ OnPageIndexChanging="GridView1_PageIndexChanging" >
         </div>
     </ItemTemplate>
 </asp:TemplateField>
-        <asp:TemplateField HeaderText="Pickup Date">
+       <%-- <asp:TemplateField HeaderText="Pickup Date">
     <ItemTemplate>
         <div class="d-flex align-items-center">
             <table>
@@ -1118,8 +1118,8 @@ OnPageIndexChanging="GridView1_PageIndexChanging" >
             </table>
         </div>
     </ItemTemplate>
-</asp:TemplateField>
-        <asp:TemplateField HeaderText="Client Code">
+</asp:TemplateField>--%>
+     <%--   <asp:TemplateField HeaderText="Client Code">
     <ItemTemplate>
         <div class="d-flex align-items-center">
             <table>
@@ -1132,7 +1132,7 @@ OnPageIndexChanging="GridView1_PageIndexChanging" >
             </table>
         </div>
     </ItemTemplate>
-</asp:TemplateField>
+</asp:TemplateField>--%>
 
     <asp:TemplateField HeaderText="Recipient Name">
     <ItemTemplate>
@@ -1212,7 +1212,7 @@ OnPageIndexChanging="GridView1_PageIndexChanging" >
         </div>
     </ItemTemplate>
 </asp:TemplateField>
-        <asp:TemplateField HeaderText="UPS">
+        <%--<asp:TemplateField HeaderText="UPS">
     <ItemTemplate>
         <div class="d-flex align-items-center">
             <table>
@@ -1225,11 +1225,11 @@ OnPageIndexChanging="GridView1_PageIndexChanging" >
             </table>
         </div>
     </ItemTemplate>
-</asp:TemplateField>
+</asp:TemplateField>--%>
         
         
 
-            <asp:TemplateField HeaderText="Destination">
+          <%--  <asp:TemplateField HeaderText="Destination">
     <ItemTemplate>
         <div class="d-flex align-items-center">
             <table>
@@ -1247,7 +1247,7 @@ OnPageIndexChanging="GridView1_PageIndexChanging" >
             </table>
         </div>
     </ItemTemplate>
-</asp:TemplateField>
+</asp:TemplateField>--%>
         
     <asp:TemplateField HeaderText="SLA Days">
     <ItemTemplate>
@@ -1265,13 +1265,13 @@ OnPageIndexChanging="GridView1_PageIndexChanging" >
         </div>
     </ItemTemplate>
 </asp:TemplateField>
-           <asp:TemplateField HeaderText="STATUS">
+           <asp:TemplateField HeaderText="Weight">
     <ItemTemplate>
         <div class="d-flex align-items-center">
             <table>
                 <tr>
                     <td class="p-0">
-                        <asp:TextBox ID="txtSTATUS" runat="server" CssClass="form-control form-control-sm" Style="width: 150px;" Text='<%# Bind("STATUS") %>' ></asp:TextBox>
+                        <asp:TextBox ID="txtWEIGHT" runat="server" CssClass="form-control form-control-sm" Style="width: 150px;" Text='<%# Bind("WEIGHT") %>' ></asp:TextBox>
                     </td>
                 </tr>
             </table>
@@ -1279,13 +1279,13 @@ OnPageIndexChanging="GridView1_PageIndexChanging" >
     </ItemTemplate>
 </asp:TemplateField>
         
-         <asp:TemplateField HeaderText="NARRATION">
+         <asp:TemplateField HeaderText="Quantity">
     <ItemTemplate>
         <div class="d-flex align-items-center">
             <table>
                 <tr>
                     <td class="p-0">
-                        <asp:TextBox ID="txtNARRATION" runat="server" CssClass="form-control form-control-sm" Style="width: 150px;" Text='<%# Bind("NARRATION") %>' ></asp:TextBox>
+                        <asp:TextBox ID="txtQTY" runat="server" CssClass="form-control form-control-sm" Style="width: 150px;" Text='<%# Bind("QTY") %>' ></asp:TextBox>
                     </td>
                 </tr>
             </table>
@@ -1293,19 +1293,62 @@ OnPageIndexChanging="GridView1_PageIndexChanging" >
     </ItemTemplate>
 </asp:TemplateField>
 
-         <asp:TemplateField HeaderText="Refernce">
+         <asp:TemplateField HeaderText="Rate">
     <ItemTemplate>
         <div class="d-flex align-items-center">
             <table>
                 <tr>
                     <td class="p-0">
-                        <asp:TextBox ID="txtREF_TYPE" runat="server" CssClass="form-control form-control-sm" Style="width: 100px;" Text='<%# Bind("REF_TYPE") %>' ></asp:TextBox>
+                        <asp:TextBox ID="txtRATE" runat="server" CssClass="form-control form-control-sm" Style="width: 100px;" Text='<%# Bind("RATE") %>' ></asp:TextBox>
                     </td>
                 </tr>
             </table>
         </div>
     </ItemTemplate>
 </asp:TemplateField>
+        <asp:TemplateField HeaderText="Taka">
+    <ItemTemplate>
+        <div class="d-flex align-items-center">
+            <table>
+                <tr>
+                    <td class="p-0">
+                        <asp:TextBox ID="txtTaka" runat="server" CssClass="form-control form-control-sm" Style="width: 100px;" Text='<%# Bind("TAKA") %>' ></asp:TextBox>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </ItemTemplate>
+</asp:TemplateField>
+        
+
+        <asp:TemplateField HeaderText="Service Amont">
+    <ItemTemplate>
+        <div class="d-flex align-items-center">
+            <table>
+                <tr>
+                    <td class="p-0">
+                        <asp:TextBox ID="txtSERVICE_CHARGE" runat="server" CssClass="form-control form-control-sm" Style="width: 100px;" Text='<%# Bind("SERVICE_CHARGE") %>' ></asp:TextBox>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </ItemTemplate>
+</asp:TemplateField>
+
+        <asp:TemplateField HeaderText="Total Amont">
+    <ItemTemplate>
+        <div class="d-flex align-items-center">
+            <table>
+                <tr>
+                    <td class="p-0">
+                        <asp:TextBox ID="txtTotalAmount" runat="server" CssClass="form-control form-control-sm" Style="width: 100px;" Text='<%# Bind("TOTAL_AMT") %>' ></asp:TextBox>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </ItemTemplate>
+</asp:TemplateField>
+        
         
 <asp:TemplateField HeaderText="Delete" ShowHeader="false">
     <ItemTemplate>

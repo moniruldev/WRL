@@ -539,6 +539,9 @@
                           <asp:ListItem Value="0" Text="select" Selected="True"></asp:ListItem>
                           <asp:ListItem Value="ADMIN" Text="Admin" ></asp:ListItem>
                           <asp:ListItem Value="CLIENT" Text="Client" ></asp:ListItem>
+                          <asp:ListItem Value="DELIVERYMAN" Text="Delivery Man" ></asp:ListItem>
+                          <asp:ListItem Value="AGENT" Text="Agent" ></asp:ListItem>
+                          <asp:ListItem Value="BRANCH" Text="Branch" ></asp:ListItem>
                       </asp:DropDownList>
                     </div>
                   </div>

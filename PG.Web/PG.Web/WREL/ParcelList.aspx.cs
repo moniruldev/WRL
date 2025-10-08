@@ -21,6 +21,7 @@ using PG.BLLibrary.WRElBL;
 using PG.Report;
 using PG.Report.ReportEnums;
 using PG.Report.ReportGen.WRELRGN;
+using PG.DBClass.SecurityDC;
 
 namespace PG.Web.WREL
 {
@@ -67,7 +68,15 @@ namespace PG.Web.WREL
         private void SetDate()
         {
             var now = DateTime.Now;
+
+            // First day of current month
             var firstDate = new DateTime(now.Year, now.Month, 1);
+
+            // Last day of current month
+            var lastDate = firstDate.AddMonths(1).AddDays(-1);
+
+            txtFromDate.Text = firstDate.ToString("dd-MMM-yyyy");
+            txtToDate.Text = lastDate.ToString("dd-MMM-yyyy");
 
         }
 
@@ -88,13 +97,25 @@ namespace PG.Web.WREL
         }
         private void LoadData()
         {
-            dcCN_CREATION_MST prmClient = new dcCN_CREATION_MST();
+            dcUser loggedinUser = AppSecurity.GetUserInfoFromSession();
+            clsPrmWREL prmCn = new clsPrmWREL();
             DateTime? fromDate = null;
             DateTime? toDate = null;
 
-            //prmClient.IS_ACTIVE = ddlIsActive.SelectedValue;
+            DateTime dt;
+            if (DateTime.TryParse(txtFromDate.Text, out dt))
+            {
+                fromDate = dt;
+            }
+            if (DateTime.TryParse(txtToDate.Text, out dt))
+            {
+                toDate = dt;
+            }
+            prmCn.FromDate = fromDate;
+            prmCn.ToDate = toDate;
+            prmCn.USER_TYPE = loggedinUser.UserType;
 
-            List<dcCN_CREATION_MST> listData = CN_CREATION_MSTBL.GetCNInfoList();
+            List<dcCN_CREATION_MST> listData = CN_CREATION_MSTBL.GetCNInfoList(prmCn,null);
             listData = listData
                 .OrderBy(x => x.CN_ID) // ascending
                 .ToList();
@@ -128,19 +149,45 @@ namespace PG.Web.WREL
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                string strD = DataBinder.Eval(e.Row.DataItem, "CN_ID").ToString(); ;
-                HyperLink lnk = (HyperLink)e.Row.Cells[0].Controls[0];
+                dcCN_CREATION_MST rowData = (dcCN_CREATION_MST)e.Row.DataItem;
 
-                string hLink = "javascript:tbopen(" + strD + ")";
-                if (base.PageMode == PG.Core.Web.PageModeEnum.InTab)
+                // Example: If EntryDate is older than SLA days → make row red
+                if (rowData.CREATE_DATE != null && rowData.SLA_DAYS > 0)
                 {
-                    hLink = "javascript:tbopen(" + strD + ")";
+                    DateTime expiryDate = rowData.CREATE_DATE.Value.AddDays((double)rowData.SLA_DAYS);
+                    if (rowData.IS_DELIVERED == "N")
+                    {
+                        if (DateTime.Now > expiryDate)
+                        {
+                            e.Row.BackColor = System.Drawing.Color.Red;
+                            e.Row.ForeColor = System.Drawing.Color.White; // optional for contrast
+                        }
+                    }
                 }
-                else
+
+                // Example: If EntryDate is today → highlight differently
+                if (rowData.IS_DELIVERED == "N")
                 {
-                    hLink = "~/WREL/ParcelCreation.aspx?id=" + strD;
+                    if (rowData.CREATE_DATE == DateTime.Now.Date)
+                    {
+                        e.Row.BackColor = System.Drawing.Color.LightGreen;
+                    }
                 }
-                lnk.NavigateUrl = hLink;
+
+
+                //string strD = DataBinder.Eval(e.Row.DataItem, "CN_ID").ToString(); ;
+                //HyperLink lnk = (HyperLink)e.Row.Cells[0].Controls[0];
+
+                //string hLink = "javascript:tbopen(" + strD + ")";
+                //if (base.PageMode == PG.Core.Web.PageModeEnum.InTab)
+                //{
+                //    hLink = "javascript:tbopen(" + strD + ")";
+                //}
+                //else
+                //{
+                //    hLink = "~/WREL/ParcelCreation.aspx?id=" + strD;
+                //}
+                //lnk.NavigateUrl = hLink;
 
 
                

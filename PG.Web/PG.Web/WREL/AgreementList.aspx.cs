@@ -26,8 +26,8 @@ namespace PG.Web.WREL
         int CompanyID = 0;
         public string ItemListServiceLink = PageLinks.InventoryLink.GetLink_ItemList;
         public string ItemGroupListServiceLink = PageLinks.InventoryLink.GetLink_ItemGroupList;
-      
 
+        public string ClientListServiceLink = PageLinks.InventoryLink.GetLink_ClientList;
         protected override void OnPreInit(EventArgs e)
         {
             if (Globals.AppMasterPage != string.Empty)
@@ -80,7 +80,9 @@ namespace PG.Web.WREL
         }
         private void LoadData()
         {
-            dcAGENT_MST prmHms = new dcAGENT_MST();
+            clsPrmWREL prmHms=new clsPrmWREL()  ; 
+
+            //dcAGENT_MST prmHms = new dcAGENT_MST();
             DateTime? fromDate = null;
             DateTime? toDate = null;
             //DateTime dt;
@@ -92,9 +94,9 @@ namespace PG.Web.WREL
             //{
             //    toDate = dt;
             //}
-           
-            
-            prmHms.IS_ACTIVE = ddlIsActive.SelectedValue;
+            prmHms.CLIENT_ID =Conversion.StringToInt(hdnClientId.Value);
+
+            prmHms.IsActive = ddlIsActive.SelectedValue;
 
             List<dcAGREEMENT_MST> listData = AGREEMENT_MSTBL.GetAgreementList(prmHms, null);
             BindGridData(listData);

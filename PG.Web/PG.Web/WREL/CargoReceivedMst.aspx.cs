@@ -81,8 +81,9 @@ namespace PG.Web.WREL
 
                 if (this.CARGO_TRACK_ID == 0) //not query string
                 {
-                    SetDate();
+                   
                     AddTask();
+                    SetDate();
                     this.EditMode = FormDataMode.Add;
                 }
                 else
@@ -162,7 +163,8 @@ namespace PG.Web.WREL
 
         private void SetDate()
         {
-
+        
+            txtIssuedate.Text = DateTime.Now.ToString("dd-MMM-yyyy");
 
         }
 

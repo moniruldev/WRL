@@ -210,26 +210,22 @@
        </div>
 
         <div class="card-body">
-        <%--  <div class="row mb-0">
+          <div class="row mb-0">
 
                
 
 
-                 <div class="col-md-4">
-                  <div class="form-group row mb-0">
-                    <label for="name" class="col-sm-4 col-form-label-sm">Active Status :</label>
-                    <div class="col-sm-8">
-                     <asp:DropDownList runat="server" ID="ddlIsActive" CssClass="form-control form-control-sm">
-                         <asp:ListItem Text="All" Value="0" Selected="True"></asp:ListItem>
-                         <asp:ListItem Text="Active" Value="Y"></asp:ListItem>
-                         <asp:ListItem Text="Inactive" Value="N"></asp:ListItem>
-                     </asp:DropDownList>
-                    </div>
-                  </div>
+               <div class="d-flex align-items-center mr-3">
+                <label for="txtFromDate" class="mr-2 mb-0 small">From Date:</label>
+                <asp:TextBox ID="txtFromDate" runat="server" CssClass="TextBoxnew textDate dateParse form-control form-control-sm" Style="width:130px;"></asp:TextBox>
+            </div>
 
-                </div>
+            <div class="d-flex align-items-center mr-3">
+                <label for="txtToDate" class="mr-2 mb-0 small">To Date:</label>
+                <asp:TextBox ID="txtToDate" runat="server" CssClass="TextBoxnew textDate dateParse form-control form-control-sm" Style="width:130px;"></asp:TextBox>
+            </div>
 
-           </div>--%>
+           </div>
 
 
             <div class="row-mb-0">
@@ -256,10 +252,10 @@
                   <PagerSettings Mode="NumericFirstLast" />
                 <HeaderStyle CssClass="table-info" Font-Size="Smaller" />                                      
               <Columns>
-                   <asp:HyperLinkField HeaderText="" Text="">
+                  <%-- <asp:HyperLinkField HeaderText="" Text="">
                    <ControlStyle CssClass="buttonViewGrid" Height="20px" Width="40px" />
                   <ItemStyle Width="50px" />
-                  </asp:HyperLinkField>
+                  </asp:HyperLinkField>--%>
               
                    <asp:BoundField DataField="CN_NUMBER" HeaderText="CN Number" />
                   <asp:BoundField DataField="CONSIGNEE_NAME" HeaderText="Recipient Name" />

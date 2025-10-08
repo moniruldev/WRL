@@ -140,7 +140,7 @@ namespace PG.Web.Admin
                 hdnPROD_ID.Value = cObj.PROD_ID.ToString();
                
                 hdnSUPERVISOR_ID.Value = cObj.SUPERVISOR_ID;
-                ddlDEPT_ID.SelectedValue =  cObj.DEPT_ID.ToString();
+                //ddlDEPT_ID.SelectedValue =  cObj.DEPT_ID.ToString();
                 //txtREF_NO_MANUAL.Text = cObj.REF_NO_MANUAL;
                 hndFORECUSTID.Value = cObj.FORECUST_ID.ToString();
 

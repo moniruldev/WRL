@@ -383,25 +383,6 @@ namespace PG.Web.WREL
             }
         }
 
-
-
-
-        //protected void DisplayRoomDetails(int roomTypeId)
-        //{
-        //    byte[] bytes = null;
-        //    dcHMROOM_TYPE objRT = HMROOM_TYPEBL.GetRoomTypeInfoById(roomTypeId);
-        //    if (objRT.THUMBNAILS_IMAGE != null)
-        //    {
-        //        bytes = (byte[])objRT.THUMBNAILS_IMAGE;
-        //        string strBase64 = Convert.ToBase64String(bytes);
-        //        ImgRoomType.ImageUrl = "data:Image/png;base64," + strBase64;
-        //    }
-        //    lblRoomTitle.Text = "Room Type : " + objRT.TITLE;
-        //    lblRoomDescription.Text ="Room Type : " + objRT.TITLE +", Description: "+ objRT.DESCRIPTION + ", Max Person: " + objRT.MAX_PERSON + ", Normal Rate: " + objRT.NORMAL_RATE + ", Discounted Rate: " + objRT.DISCOUNTED_RATE;
-        //    ScriptManager.RegisterStartupScript(this.Page, Page.GetType(), "MyScript", "$('#modalRoomDetails').modal({backdrop: 'static', keyboard: false});", true);
-        //}
-
-
         private void BindDataToGrid(List<dcCN_CREATION_MST> listData)
         {
             int rowCount = listData.Count;
@@ -433,20 +414,21 @@ namespace PG.Web.WREL
                 if (gvR.RowType == DataControlRowType.DataRow)
                 {
 
-                    ((TextBox)gvR.FindControl("txtPICKUP_DATE")).Attributes.Add("readonly", "readonly");
+                    //((TextBox)gvR.FindControl("txtPICKUP_DATE")).Attributes.Add("readonly", "readonly");
                     ((TextBox)gvR.FindControl("txtRecipientName")).Attributes.Add("readonly", "readonly");
-                    ((TextBox)gvR.FindControl("txtCN_CLIENT_CODE")).Attributes.Add("readonly", "readonly");
+                    ((TextBox)gvR.FindControl("txtSERVICE_CHARGE")).Attributes.Add("readonly", "readonly");
                     ((TextBox)gvR.FindControl("txtRecipientAddress")).Attributes.Add("readonly", "readonly");
                     ((TextBox)gvR.FindControl("txtRecipientMobileNo")).Attributes.Add("readonly", "readonly");
                     ((TextBox)gvR.FindControl("txtITEM_NAME")).Attributes.Add("readonly", "readonly");
                     ((TextBox)gvR.FindControl("txtPRODUCT_TYPE")).Attributes.Add("readonly", "readonly");
 
-                    ((TextBox)gvR.FindControl("txtUPS")).Attributes.Add("readonly", "readonly");
-                    ((TextBox)gvR.FindControl("txtDestinationDist")).Attributes.Add("readonly", "readonly");
+                    ((TextBox)gvR.FindControl("txtTaka")).Attributes.Add("readonly", "readonly");
+                    //((TextBox)gvR.FindControl("txtDestinationDist")).Attributes.Add("readonly", "readonly");
                     ((TextBox)gvR.FindControl("txtSLA_DAYS")).Attributes.Add("readonly", "readonly");
-                    ((TextBox)gvR.FindControl("txtSTATUS")).Attributes.Add("readonly", "readonly");
-                    ((TextBox)gvR.FindControl("txtNARRATION")).Attributes.Add("readonly", "readonly");
-                    ((TextBox)gvR.FindControl("txtREF_TYPE")).Attributes.Add("readonly", "readonly");
+                    ((TextBox)gvR.FindControl("txtTotalAmount")).Attributes.Add("readonly", "readonly");
+                    ((TextBox)gvR.FindControl("txtRATE")).Attributes.Add("readonly", "readonly");
+                    ((TextBox)gvR.FindControl("txtQTY")).Attributes.Add("readonly", "readonly");
+                    ((TextBox)gvR.FindControl("txtWEIGHT")).Attributes.Add("readonly", "readonly");
                     
                     LinkButton lnkDelete = (LinkButton)gvR.FindControl("btnDeleteRow");
                     lnkDelete.Enabled = isEnabled;
@@ -486,7 +468,6 @@ namespace PG.Web.WREL
                     }
                     else
                     {
-                        //if(cObj.ROOM_QTY > 0)
                         this.listDetails.Add(cObj);
                     }
 
@@ -513,10 +494,10 @@ namespace PG.Web.WREL
 
             strD = ((HiddenField)gvR.FindControl("hdnAgreementDTLID")).Value;
             cObj.AGR_DETAIL_ID = Conversion.StringToInt(strD);
-            strD = ((TextBox)gvR.FindControl("txtPICKUP_DATE")).Text;
-            cObj.PICKUP_DATE =Conversion.StringToDate(strD);
-            strD = ((TextBox)gvR.FindControl("txtCN_CLIENT_CODE")).Text;
-            cObj.CN_CLIENT_CODE = strD;
+            //strD = ((TextBox)gvR.FindControl("txtPICKUP_DATE")).Text;
+            //cObj.PICKUP_DATE =Conversion.StringToDate(strD);
+            //strD = ((TextBox)gvR.FindControl("txtCN_CLIENT_CODE")).Text;
+            //cObj.CN_CLIENT_CODE = strD;
             strD = ((TextBox)gvR.FindControl("txtRecipientName")).Text;
             cObj.CONSIGNEE_NAME = strD;
             strD = ((TextBox)gvR.FindControl("txtRecipientAddress")).Text;
@@ -527,20 +508,28 @@ namespace PG.Web.WREL
             cObj.ITEM_NAME = strD;
             strD = ((HiddenField)gvR.FindControl("hdnITEM_ID")).Value;
             cObj.ITEM_ID =Conversion.StringToInt(strD);
-            strD = ((TextBox)gvR.FindControl("txtPRODUCT_TYPE")).Text;
-            cObj.PRODUCT_TYPE = strD;
-            strD = ((TextBox)gvR.FindControl("txtUPS")).Text;
-            cObj.UPS = strD;
-            strD = ((TextBox)gvR.FindControl("txtDestinationDist")).Text;
-            cObj.DESTINATION = strD;
+            //strD = ((TextBox)gvR.FindControl("txtPRODUCT_TYPE")).Text;
+            //cObj.PRODUCT_TYPE = strD;
+            //strD = ((TextBox)gvR.FindControl("txtUPS")).Text;
+            //cObj.UPS = strD;
+            //strD = ((TextBox)gvR.FindControl("txtDestinationDist")).Text;
+            //cObj.DESTINATION = strD;
             strD = ((TextBox)gvR.FindControl("txtSLA_DAYS")).Text;
             cObj.SLA_DAYS =Conversion.StringToInt(strD);
-            strD = ((TextBox)gvR.FindControl("txtSTATUS")).Text;
-            cObj.STATUS = strD;
-            strD = ((TextBox)gvR.FindControl("txtNARRATION")).Text;
-            cObj.NARRATION = strD;
-            strD = ((TextBox)gvR.FindControl("txtREF_TYPE")).Text;
-            cObj.REF_TYPE = strD;
+            strD = ((TextBox)gvR.FindControl("txtWEIGHT")).Text;
+            cObj.WEIGHT = Conversion.StringToDecimal(strD);
+            strD = ((TextBox)gvR.FindControl("txtQTY")).Text;
+            cObj.QTY = Conversion.StringToDecimal(strD);
+            strD = ((TextBox)gvR.FindControl("txtTaka")).Text;
+            cObj.TAKA = Conversion.StringToDecimal(strD);
+           
+             strD = ((TextBox)gvR.FindControl("txtSERVICE_CHARGE")).Text;
+            cObj.SERVICE_CHARGE = Conversion.StringToDecimal(strD);
+            strD = ((TextBox)gvR.FindControl("txtTotalAmount")).Text;
+            cObj.TOTAL_AMT = Conversion.StringToDecimal(strD);
+            
+                
+                
             strD = ((HiddenField)gvR.FindControl("hdnServiceAmount")).Value;
             cObj.SERVICE_AMOUNT = Conversion.StringToDecimal(strD);
             strD = ((HiddenField)gvR.FindControl("hdnDISTANCE_TYPE_ID")).Value;
@@ -664,22 +653,7 @@ namespace PG.Web.WREL
         private void SetHyperLink()
         {
 
-            //new button
-            //string hLink = "javascript:tbopenSalInfo("+ this.AccYearID.ToString() +")";
-            //if (base.PageMode == PG.Core.Web.PageModeEnum.InTab)
-            //{
-            //    hLink = "javascript:tbopenSalInfo(" + this.AccYearID.ToString() + ")";
-            //    //this.btnSalaryInfo = string.Empty;
-            //    this.btnSalaryInfo.Attributes.Add("onclick", hLink);
-            //}
-            //else
-            //{
-            //    hLink = "~/Master/EmpSalaryInfo.aspx?eid=" + this.AccYearID.ToString();
-            //    //this.btnAddNew.PostBackUrl = hLink;
-            //    //this.btnAddNew.OnClientClick = string.Empty;
-            //    this.btnSalaryInfo.Attributes.Add("onclick", hLink);
-            //}
-
+           
         }
 
         //newly added comment
@@ -708,7 +682,7 @@ namespace PG.Web.WREL
 
                 cObj.CN_NUMBER = CN_CREATION_MSTBL.Get_New_CN_No(DateTime.Now.ToString("dd-MMM-yy"), null);
                 cObj.CLIENT_ID = Conversion.StringToInt(hdnClientId.Value);
-                cObj.CLIENT_DEPT_ID = Conversion.StringToInt(hdnDeptID.Value);
+                //cObj.CLIENT_DEPT_ID = Conversion.StringToInt(hdnDeptID.Value);
                 cObj.AGR_DETAIL_ID = obj.AGR_DETAIL_ID;
                 cObj.PICKUP_DATE = obj.PICKUP_DATE;
                 cObj.CN_CLIENT_CODE = obj.CN_CLIENT_CODE;
@@ -722,17 +696,21 @@ namespace PG.Web.WREL
                 cObj.CONSIGNEE_NAME = obj.CONSIGNEE_NAME;
                 cObj.CONSIGNEE_ADDRESS = obj.CONSIGNEE_ADDRESS;
                 cObj.CONSIGNEE_MOBILE_NO = obj.CONSIGNEE_MOBILE_NO;
-                cObj.DESTINATION = obj.DESTINATION;
-                cObj.DESTINATION_DIST_ID = obj.DESTINATION_DIST_ID;
-                cObj.PRODUCT_TYPE = obj.PRODUCT_TYPE;
-                cObj.UPS = obj.UPS;
-                cObj.DESTINATION = obj.DESTINATION;
+                //cObj.DESTINATION = obj.DESTINATION;
+                //cObj.DESTINATION_DIST_ID = obj.DESTINATION_DIST_ID;
+                //cObj.PRODUCT_TYPE = obj.PRODUCT_TYPE;
+                //cObj.UPS = obj.UPS;
+                //cObj.DESTINATION = obj.DESTINATION;
                 cObj.SLA_DAYS = obj.SLA_DAYS;
-                cObj.NARRATION = obj.NARRATION;
-                cObj.STATUS = obj.STATUS;
-                cObj.REF_TYPE = obj.REF_TYPE;
+                //cObj.NARRATION = obj.NARRATION;
+                //cObj.STATUS = obj.STATUS;
+                //cObj.REF_TYPE = obj.REF_TYPE;
                 cObj.DISTANCE_TYPE_ID = obj.DISTANCE_TYPE_ID;
-          
+                cObj.WEIGHT = obj.WEIGHT;
+                cObj.QTY = obj.QTY;
+                cObj.RATE = obj.RATE;
+                cObj.TAKA = obj.TAKA;
+                cObj.SERVICE_CHARGE = obj.SERVICE_CHARGE;
 
                 newCN_ID = CN_CREATION_MSTBL.Save(cObj);
             }
@@ -954,92 +932,6 @@ namespace PG.Web.WREL
             }
         }
 
-        //protected void btnUpload_Click(object sender, EventArgs e)
-        //{
-        //    string ConStr = "";
-        //    string ext = Path.GetExtension(FileUpload1.FileName).ToLower();
-
-
-        //    if (!string.IsNullOrEmpty(ext))
-        //    {
-        //        string path = Server.MapPath("~/Uploads/" + FileUpload1.FileName);
-        //        if (!File.Exists(path))
-        //        {
-        //            File.Delete(path);
-        //        }
-        //        FileUpload1.SaveAs(path);
-
-        //        if (ext.Trim() == ".xls")
-        //        {
-        //            //connection string for that file which extantion is .xls  
-        //            ConStr = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path + ";Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=2\"";
-        //        }
-        //        else if (ext.Trim() == ".xlsx")
-        //        {
-        //            //connection string for that file which extantion is .xlsx  
-        //            ConStr = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + path + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=2\"";
-        //        }
-
-        //        string query = "SELECT * FROM [Sheet1$]";
-
-        //        OleDbConnection conn = new OleDbConnection(ConStr);
-
-        //        if (conn.State == ConnectionState.Closed)
-        //        {
-        //            conn.Open();
-        //        }
-        //        //create command object  
-        //        OleDbCommand cmd = new OleDbCommand(query, conn);
-
-        //        OleDbDataAdapter da = new OleDbDataAdapter(cmd);
-        //        DataSet ds = new DataSet();
-
-        //        da.Fill(ds);
-
-        //        conn.Close();
-
-        //        DataTable tbl = ds.Tables[0];
-        //        int count = tbl.Rows.Count;
-        //        string strSql = string.Empty;
-
-        //        this.listDetails.Clear();
-
-
-        //        foreach (DataRow Row in tbl.Rows)
-        //        {
-        //            dcCN_CREATION_MST cObj = new dcCN_CREATION_MST();
-        //            //cObj.item_code = Row["ITEM_CODE"].ToString();
-        //            //dcINV_ITEM_MASTER objitem = new dcINV_ITEM_MASTER();
-        //            //objitem = INV_ITEM_MASTERBL.GetItemByCode(cObj.item_code);
-
-        //            //if (objitem != null)
-        //            //{
-        //            cObj.CONSIGNEE_NAME = (Row["CONSIGNEE_NAME"].ToString());
-        //            cObj.CONSIGNEE_ADDRESS = (Row["CONSIGNEE_ADDRESS"].ToString());
-        //            cObj.CONSIGNEE_MOBILE_NO = (Row["CONSIGNEE_MOBILE_NO"].ToString());
-        //            cObj.DESTINATION_DIST_NAME = (Row["DESTINATION_DIST_NAME"].ToString());
-        //            cObj.DESTINATION_TOWN_NAME = (Row["DESTINATION_TOWN_NAME"].ToString());
-
-        //            //cObj.PRIORITY = Row["PRIORITY"].ToString();
-        //            //cObj.UOM_ID = objitem.UOM_ID;
-        //            //cObj.INDT_REMARKS = Row["INDENT_REMARKS"].ToString();
-
-        //            //this.listDetails.Add(cObj);
-        //            //}
-        //        }
-
-        //        GridView1.DataSource = listDetails;
-        //        GridView1.DataBind();
-        //        //SetControlGrid();
-
-        //        btnSave.Enabled = true;
-
-        //    }
-
-
-           
-        //}
-
         protected void btnDownloadSample_Click(object sender, EventArgs e)
         {
               string fileName = "sample_parcel_import.xlsx"; // Name of the file to download
@@ -1059,6 +951,7 @@ namespace PG.Web.WREL
             }
         }
 
+        #region paste Excel
         protected void btnPasteData_Click(object sender, EventArgs e)
         {
             finddataPaste();
@@ -1193,7 +1086,7 @@ namespace PG.Web.WREL
 
             //Modalpopupextender2.Show();
         }
-
+        #endregion
         protected void btnPrint_Click(object sender, EventArgs e)
         {
             this.ReportOpenType = ReportOpenTypeEnum.Preview;
@@ -1286,51 +1179,37 @@ namespace PG.Web.WREL
                     {
                         foreach (DataRow Row in tbl.Rows)
                         {
-                                 DBContext dc = null;
-                                bool isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
-                                bool isTransInit = dc.StartTransaction();
-                            try
-                            {
-                            dcTEMP_CN_INFO cObj = new dcTEMP_CN_INFO();
-                            cObj.SLNO =Conversion.StringToInt(Row["SL_NO"].ToString());
-                            cObj.PICKUP_DATE = Conversion.StringToDate(Row["PICKUP_DATE"].ToString());
-                            cObj.CN_CLIENT_CODE = Row["CLIENT_CODE"].ToString();
-                            cObj.CN_NAME = Row["NAME"].ToString();
-                            cObj.CN_MOBILE_NO = Row["MobileNo"].ToString();
-                            cObj.ADDRESS = Row["Address"].ToString();
-                            cObj.ITEM_NAME = Row["Item"].ToString();
-                           
-                            cObj.PRODUCT_TYPE = Row["Product_Type"].ToString();
+                            DBContext dc = null;
+                            bool isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+                            bool isTransInit = dc.StartTransaction();
+                             try
+                             {
+                                dcTEMP_CN_INFO cObj = new dcTEMP_CN_INFO();
+                                cObj.SLNO =Conversion.StringToInt(Row["SL_NO"].ToString());
+                                cObj.CLIENT_DEPTORBRANCH = Row["DEPTORBRANCH"].ToString();
+                                cObj.CN_NAME = Row["CONSIGNEE_NAME"].ToString();
+                                cObj.ADDRESS = Row["CONSIGNEE_ADDRESS"].ToString();
+                                cObj.CN_MOBILE_NO = Row["CONSIGNEE_PHONE"].ToString();
+                                cObj.CN_DATE = Conversion.StringToDate(Row["DATE"].ToString());
+                                cObj.ITEM_NAME = Row["ITEM"].ToString();
 
-                            cObj.UPS = Row["UPS"].ToString();
-                            cObj.DESTINATION = Row["Destination"].ToString();
-                            cObj.SLA_BREEZE = Conversion.StringToInt(Row["SLA_Breeze"].ToString());
-                            cObj.STATUS = Row["Status"].ToString();
-                            cObj.NARRATION = Row["Narration"].ToString();
-                            cObj.CN_DATE = Conversion.StringToDate(Row["DATE"].ToString());
-                            cObj.REF_TYPE = Row["REF_TYPE"].ToString();
-                            cObj.DISTANCE_TYPE_NAME = Row["DISTANCE_TYPE"].ToString();
-                            //cObj.REF_CHALLAN_NO = Row["ChallanNo"].ToString();
-                            //cObj.REF_ACCOUNT_NO = Row["AccountNo"].ToString();
-                            TEMP_CN_INFOBL.Insert(cObj, dc);
-                           // string strclientName = cObj.CLIENT_NAME;
-                            dc.CommitTransaction(isTransInit);
-            }
-            catch
-            {
-                // cStatus = false;
-                dc.RollbackTransaction();
-            }
-            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
-                            //if (cObj != null)
-                            //{
-                            //   // cObj.SLNo = k + 1;
-                            //    cObj.CN_ID = CN_ID;
-                            //    cObj.CLIENT_NAME = strclientName;
-                            //   // cObj.CARGO_ID = 0;
-                            //    //cObj.SOURCE_CARGO_ID = 0;
-                            //    this.listDetails.Add(cObj);
-                            //}
+                                cObj.WEIGHT =Conversion.StringToDecimal( Row["WEIGHT"].ToString());
+                                cObj.QTY = Conversion.StringToDecimal(Row["QTY"].ToString());
+                                cObj.RATE =Conversion.StringToDecimal( Row["RATE"].ToString());
+                                cObj.TAKA = Conversion.StringToDecimal(Row["TAKA"].ToString());
+                                cObj.SERVICE_CHARGE = Conversion.StringToDecimal(Row["SERVICE_CHARGE"].ToString());
+                                cObj.TOTAL_AMT = Conversion.StringToDecimal(Row["TOTAL_AMT"].ToString());     
+                                cObj.SLA_BREEZE = Conversion.StringToInt(Row["SLA_Breeze"].ToString());
+                                cObj.DISTANCE_TYPE_NAME = Row["DISTANCE_TYPE"].ToString();
+                                TEMP_CN_INFOBL.Insert(cObj, dc);
+                                dc.CommitTransaction(isTransInit);
+                            }
+                            catch
+                            {
+                                dc.RollbackTransaction();
+                            }
+                            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+
                         }
 
                         CNTEMPlistDetails=  TEMP_CN_INFOBL.GetTempCNListInfo("1", null);
@@ -1342,8 +1221,8 @@ namespace PG.Web.WREL
                             objcn.SLNO = Item.SLNO;
                             objcn.CN_NUMBER = "";
                             objcn.CN_ID = 0;
-                            objcn.PICKUP_DATE = Item.PICKUP_DATE;
-                            objcn.CN_CLIENT_CODE = Item.CN_CLIENT_CODE;
+                            //objcn.PICKUP_DATE = Item.PICKUP_DATE;
+                            //objcn.CN_CLIENT_CODE = Item.CN_CLIENT_CODE;
                            
                             objcn.CONSIGNEE_NAME = Item.CN_NAME;
                             objcn.CONSIGNEE_MOBILE_NO = Item.CN_MOBILE_NO;
@@ -1355,15 +1234,20 @@ namespace PG.Web.WREL
                             objcn.DISTANCE_TYPE_ID = DISTANCE_TYPE_MSTBL.getDistanceTypeIDByTypeName(objcn.DISTANCE_TYPE_NAME,null);
                             objcn.SERVICE_AMOUNT = Conversion.StringToDecimal(AGREEMENT_DETAILLBL.getServiceAmountByItemID(Conversion.StringToInt(hdnClientId.Value), objcn.ITEM_ID, objcn.DISTANCE_TYPE_ID, null));
                             objcn.AGR_DETAIL_ID = Conversion.StringToInt(AGREEMENT_DETAILLBL.getAgreementdtlIDByItemID(Conversion.StringToInt(hdnClientId.Value), objcn.ITEM_ID, objcn.DISTANCE_TYPE_ID, null)); 
-                            objcn.PRODUCT_TYPE = Item.PRODUCT_TYPE;
-                            objcn.UPS = Item.UPS;
-                            objcn.DESTINATION = Item.DESTINATION;
-                         
+                            //objcn.PRODUCT_TYPE = Item.PRODUCT_TYPE;
+                            //objcn.UPS = Item.UPS;
+                            //objcn.DESTINATION = Item.DESTINATION;
+                             objcn.WEIGHT =Item.WEIGHT;
+                                objcn.QTY = Item.QTY;
+                                objcn.RATE =Item.RATE;
+                                objcn.TAKA = Item.TAKA;
+                                objcn.SERVICE_CHARGE = Item.SERVICE_CHARGE;
+                                objcn.TOTAL_AMT = Item.TOTAL_AMT;
                             objcn.SLA_DAYS = Item.SLA_BREEZE;
-                            objcn.STATUS = Item.STATUS;
-                            objcn.NARRATION = Item.NARRATION;
+                            //objcn.STATUS = Item.STATUS;
+                            //objcn.NARRATION = Item.NARRATION;
                             objcn.BOOKING_DATE = Item.CN_DATE;
-                            objcn.REF_TYPE = Item.REF_TYPE;
+                            //objcn.REF_TYPE = Item.REF_TYPE;
                             
                             listDetails.Add(objcn);
                             
@@ -1371,7 +1255,6 @@ namespace PG.Web.WREL
                         Session["CNList"] = listDetails;
                         GridView1.DataSource = listDetails;
                         GridView1.DataBind();
-                        //SetControlGrid();
                         TEMP_CN_INFOBL.DeleteTempData(null);
                         btnSave.Enabled = true;
                     }

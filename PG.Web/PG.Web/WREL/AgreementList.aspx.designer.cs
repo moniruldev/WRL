@@ -22,6 +22,24 @@ namespace PG.Web.WREL {
         protected global::System.Web.UI.WebControls.LinkButton btnNewAdd;
         
         /// <summary>
+        /// txtClientName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtClientName;
+        
+        /// <summary>
+        /// hdnClientId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnClientId;
+        
+        /// <summary>
         /// ddlIsActive control.
         /// </summary>
         /// <remarks>

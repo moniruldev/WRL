@@ -450,7 +450,7 @@ namespace PG.Web.WREL
                 CN_ASSIGNMENTBL.UpdateGenerateOTPByCNID(CN_ID, otp, null);
                 if(CONSIGNEE_MOBILE_NO!="")
                 {
-                   // sendsms(CONSIGNEE_MOBILE_NO, otp);
+                    sendsms(CONSIGNEE_MOBILE_NO, otp);
                 }
                 btnotp.Enabled = false;
 
@@ -468,7 +468,7 @@ namespace PG.Web.WREL
                     byte[] fileData = fu.FileBytes;
                     string id = e.CommandArgument.ToString();
 
-                    using (OracleConnection con = new OracleConnection("User Id=WRCUORIER;Password=WRCUORIER;Data Source=DESKTOP-0UVQ4LL/ORCL"))
+                    using (OracleConnection con = new OracleConnection("User Id=WRCUORIER;Password=WRCUORIER;Data Source=203.76.125.42/WRLORCL"))
                     {
                         con.Open();
                         OracleCommand cmd = new OracleCommand("UPDATE CN_CREATION_MST SET POD = :photo,CUSTOMER_OTP= :CUSTOMER_OTP WHERE CN_ID = :id", con);

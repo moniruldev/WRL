@@ -164,7 +164,7 @@ namespace PG.Web.WREL
 
         private void SetDate()
         {
-
+            
 
         }
 

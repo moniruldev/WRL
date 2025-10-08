@@ -165,7 +165,7 @@ namespace PG.Web.WREL
         private void SetDate()
         {
 
-
+            txtAgreementdt.Text = DateTime.Now.ToString("dd-MMM-yyyy");
         }
 
         private void ReadTask()
@@ -480,6 +480,28 @@ namespace PG.Web.WREL
 
             if (CheckData())
             {
+                //if (this.listDetails.Any())
+                //{
+                //    if (this.listDetails
+                //        .GroupBy(x => new { x.ITEM_ID, x.DISTANCE_TYPE_ID })
+                //        .Any(g => g.Count() > 1))
+                //    {
+                //        ScriptManager.RegisterStartupScript(this, GetType(), "showalert",
+                //            "alert('You can’t add duplicate Item + Distance Type combination!!');", true);
+                //        return false;
+                //    }
+                //}
+                //if (this.listDetails.Any())
+                //{
+                //    if ((this.listDetails.GroupBy(x => x.ITEM_ID & x.DISTANCE_TYPE_ID).Any(g => g.Count() > 1)))
+                //    {
+                      
+                //        ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('You can't add duplicate item!!');", true);
+                       
+                //        return false;
+                //    }
+
+                //}
 
                 bool bStatus = SaveData();
 
@@ -509,19 +531,27 @@ namespace PG.Web.WREL
         private bool ValidateDetails(List<dcAGREEMENT_DETAILL> list)
         {
             bool y = true;
+
             foreach (var item in list)
             {
-                //if(!(item.ROOM_QTY > 0))
-                //{
-                //    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Select atleast one Room !!');", true);
-                //    y = false;
+                if (!(item.ITEM_ID > 0))
+                {
+                    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Select valid Item Name !!');", true);
+                    y = false;
 
-                //}
-                
+                }
+
+                if (!(item.DISTANCE_TYPE_ID > 0))
+                {
+                    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Select valid Distance Type !!');", true);
+                    y = false;
+
+                }
+
             }
-
             return y;
-        }
+  
+            }
 
         private bool CheckData()
         {
@@ -599,6 +629,15 @@ namespace PG.Web.WREL
         //newly added comment
         private bool SaveData()
         {
+            //if (this.listDetails.Any())
+            //{
+            //    if (this.listDetails.GroupBy(x => new { x.ITEM_ID, x.DISTANCE_TYPE_ID }).Any(g => g.Count() > 1))
+            //    {
+            //        ScriptManager.RegisterStartupScript(this, GetType(), "showalert",
+            //            "alert('You can\\'t add duplicate Item with same Distance Type!!');", true);
+            //        return false;
+            //    }
+            //}
 
             bool bStatus = false;
             bool isAdd = false;

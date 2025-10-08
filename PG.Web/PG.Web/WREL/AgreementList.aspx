@@ -14,11 +14,12 @@
         // <!CDATA[
 
         var ItemListServiceLink = '<%=this.ItemListServiceLink%>';
-
+        var ClientListServiceLink = '<%=this.ClientListServiceLink%>';
         var btnGridPageGoTo = '<%=btnGridPageGoTo.ClientID %>';
         var txtGridPageNo = '<%=txtGridPageNo.ClientID %>';
      
-
+        var txtClientName = '<%=txtClientName.ClientID%>';
+        var hdnClientId = '<%=hdnClientId.ClientID%>';
 
         function PageResizeCompleted(pg, cntMain) {
             resizeContentInner(cntMain);
@@ -98,10 +99,79 @@
 
         $(document).ready(function () {
 
+            if ($('#' + txtClientName).is(':visible')) {
 
+                bindClientList();
+
+            }
         });    
 
-     
+        function bindClientList() {
+            var cgColumns = [
+                             { 'columnName': 'clientname', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Name' }
+                            , { 'columnName': 'mobile', 'width': '200', 'align': 'left', 'highlight': 4, 'label': 'Mobile' }
+
+            ];
+            var serviceURL = ClientListServiceLink + "?isterm=1&includeempty=0&hasitem=1&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+
+            serviceURL += "&ispaging=0";
+            var groupIDElem = $('#' + txtClientName);
+
+            $('#' + txtClientName).click(function (e) {
+                $(groupIDElem).combogrid("dropdownClick");
+            });
+
+            $(groupIDElem).combogrid({
+                debug: true,
+                searchButton: false,
+                resetButton: false,
+                alternate: true,
+                munit: 'px',
+                scrollBar: true,
+                showPager: true,
+                colModel: cgColumns,
+                autoFocus: true,
+                showError: true,
+                width: 350,
+                url: serviceURL,
+                search: function (event, ui) {
+
+                    var newServiceURL = serviceURL;
+                    $(this).combogrid("option", "url", newServiceURL);
+
+
+                },
+                select: function (event, ui) {
+                    if (!ui.item) {
+                        event.preventDefault();
+                        return false;
+                    }
+
+                    if (ui.item.dealerid == '') {
+                        event.preventDefault();
+                        return false;
+                    }
+                    else {
+                        $('#' + hdnClientId).val(ui.item.clientid);
+                        $('#' + txtClientName).val(ui.item.clientname);
+                    }
+                    return false;
+                },
+
+                lc: ''
+            });
+
+
+            $(groupIDElem).blur(function () {
+                var self = this;
+
+                var groupID = $(groupIDElem).val();
+                if (groupID == '') {
+                    $('#' + hdnClientId).val('');
+                    $('#' + txtClientName).val('0');
+                }
+            });
+        }
     </script>
 
     <style type="text/css">
@@ -125,7 +195,17 @@
           <div class="row mb-0">
 
                
+              
+                  <div class="col-md-4">
+                  <div class="form-group row mb-0">
+                    <label for="name" class="col-sm-6 col-form-label-sm">Client Name :</label>
+                    <div class="col-sm-6">
+                      <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtClientName" placeholder="Select" ></asp:TextBox> 
+                           <asp:HiddenField runat="server" ID="hdnClientId" Value="0" /> 
+                    </div>
+                  </div>
 
+                </div>
 
                  <div class="col-md-4">
                   <div class="form-group row mb-0">

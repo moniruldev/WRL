@@ -97,8 +97,9 @@ namespace PG.Web.WREL
                     //GridView1.DataSource = roomList;
                     //GridView1.DataBind();
 
-                    SetDate();
+                   
                     AddTask();
+                    SetDate();
                     this.EditMode = FormDataMode.Add;
                 }
                 else
@@ -171,7 +172,7 @@ namespace PG.Web.WREL
         private void SetDate()
         {
 
-
+            txtAssignDate.Text = DateTime.Now.ToString("dd-MMM-yyyy");
         }
 
         private void ReadTask()
@@ -518,15 +519,28 @@ namespace PG.Web.WREL
         private bool ValidateDetails(List<dcCN_ASSIGNMENT> list)
         {
             bool y = true;
+
+            // Case-insensitive duplicate check
+            HashSet<string> cnNumbers = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
             foreach (var item in list)
             {
-                //if(!(item.ROOM_QTY > 0))
-                //{
-                //    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Select atleast one Room !!');", true);
-                //    y = false;
+                if (string.IsNullOrWhiteSpace(item.CN_NUMBER))
+                {
+                    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "",
+                        "alert('Please select at least CN Number !!');", true);
+                    y = false;
+                    break;
+                }
 
-                //}
-
+                // ✅ Duplicate check
+                if (!cnNumbers.Add(item.CN_NUMBER.Trim()))
+                {
+                    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "",
+                        "alert('Duplicate CN Number not allowed !!');", true);
+                    y = false;
+                    break;
+                }
             }
 
             return y;
@@ -803,10 +817,19 @@ namespace PG.Web.WREL
             if (isexit == 0)
             {
                 dcCN_ASSIGNMENT cobjb = CN_ASSIGNMENTBL.GetCNInfoByCNNumberassign(txtCNNo.Text.Trim());
-                hdnCNIDtop.Value = cobjb.CN_ID.ToString();
-                hdnConsigneeName.Value = cobjb.CONSIGNEE_NAME;
+                if (cobjb != null)
+                {
+                    hdnCNIDtop.Value = cobjb.CN_ID.ToString();
+                    hdnConsigneeName.Value = cobjb.CONSIGNEE_NAME;
 
-                btnadd_Click(sender, e);
+                    btnadd_Click(sender, e);
+                }
+                else
+                {
+                    cleartext();
+                    ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('CN Number Not valid !!');", true);
+                    return;
+                }
             }
             else
             {

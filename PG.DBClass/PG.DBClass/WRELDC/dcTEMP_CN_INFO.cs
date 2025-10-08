@@ -32,6 +32,14 @@ namespace PG.DBClass.WRELDC
         private string m_REF_CHALLAN_NO = string.Empty;
         private string m_REF_ACCOUNT_NO = string.Empty;
         private string m_DISTANCE_TYPE_NAME = string.Empty;
+        private string m_CLIENT_DEPTORBRANCH = string.Empty;
+        private decimal m_WEIGHT = 0;
+        private decimal m_QTY = 0;
+        private decimal m_RATE = 0;
+        private decimal m_TAKA = 0;
+        private decimal m_SERVICE_CHARGE = 0;
+        private decimal m_TOTAL_AMT = 0;   
+            
         //dd
         #endregion  //private members
 
@@ -260,8 +268,81 @@ namespace PG.DBClass.WRELDC
                 this.NotifyPropertyChanged("DISTANCE_TYPE_NAME");
             }
         }
+        [DBColumn(Name = "CLIENT_DEPTORBRANCH", Storage = "m_CLIENT_DEPTORBRANCH", DbType = "107")]
+         public string CLIENT_DEPTORBRANCH
+        {
+            get { return this.m_CLIENT_DEPTORBRANCH; }
+            set
+            {
+                this.m_CLIENT_DEPTORBRANCH = value;
+                this.NotifyPropertyChanged("CLIENT_DEPTORBRANCH");
+            }
+        }
+         [DBColumn(Name = "WEIGHT", Storage = "m_WEIGHT", DbType = "107")]
+        public decimal WEIGHT
+        {
+            get { return this.m_WEIGHT; }
+            set
+            {
+                this.m_WEIGHT = value;
+                this.NotifyPropertyChanged("WEIGHT");
+            }
+        }
 
+          [DBColumn(Name = "QTY", Storage = "m_QTY", DbType = "107")]
+         public decimal QTY
+        {
+            get { return this.m_QTY; }
+            set
+            {
+                this.m_QTY = value;
+                this.NotifyPropertyChanged("QTY");
+            }
+        }
+          [DBColumn(Name = "RATE", Storage = "m_RATE", DbType = "107")]
+          public decimal RATE
+        {
+            get { return this.m_RATE; }
+            set
+            {
+                this.m_RATE = value;
+                this.NotifyPropertyChanged("RATE");
+            }
+        }
+         [DBColumn(Name = "TAKA", Storage = "m_TAKA", DbType = "107")]
+          public decimal TAKA
+        {
+            get { return this.m_TAKA; }
+            set
+            {
+                this.m_TAKA = value;
+                this.NotifyPropertyChanged("TAKA");
+            }
+        }
+         [DBColumn(Name = "SERVICE_CHARGE", Storage = "m_SERVICE_CHARGE", DbType = "107")]
+          public decimal SERVICE_CHARGE
+        {
+            get { return this.m_SERVICE_CHARGE; }
+            set
+            {
+                this.m_SERVICE_CHARGE = value;
+                this.NotifyPropertyChanged("SERVICE_CHARGE");
+            }
+        }
+         [DBColumn(Name = "TOTAL_AMT", Storage = "m_TOTAL_AMT", DbType = "107")]
+         public decimal TOTAL_AMT
+        {
+            get { return this.m_TOTAL_AMT; }
+            set
+            {
+                this.m_TOTAL_AMT = value;
+                this.NotifyPropertyChanged("TOTAL_AMT");
+            }
+        }
         
+            
+            
+
 
         #endregion //properties
     }

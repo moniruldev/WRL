@@ -280,7 +280,7 @@
 
         <asp:TemplateField HeaderText="Status">
             <ItemTemplate>
-                <asp:DropDownList ID="ddlgStatus" runat="server" CssClass="form-control form-control-sm" AutoPostBack="true"
+                <asp:DropDownList ID="ddlStatus" runat="server" CssClass="form-control form-control-sm" AutoPostBack="true"
                     OnSelectedIndexChanged="ddlStatus_SelectedIndexChanged">
                      
                     <asp:ListItem Selected="True" Text="Delivered" Value="1"></asp:ListItem>

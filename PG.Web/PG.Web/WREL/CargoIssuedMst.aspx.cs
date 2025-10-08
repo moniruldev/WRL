@@ -81,8 +81,9 @@ namespace PG.Web.WREL
 
                 if (this.CARGO_TRACK_ID == 0) //not query string
                 {
-                    SetDate();
+                   
                     AddTask();
+                    SetDate();
                     this.EditMode = FormDataMode.Add;
                 }
                 else
@@ -109,7 +110,7 @@ namespace PG.Web.WREL
 
             SetHyperLink();
 
-          
+          //  txtCargoNo.Attributes.Add("readonly", "readonly");
             //this.ShowPageMessage(this.lblMessage);
             // Response.Write("UserID : " + this.UserID.ToString());
 
@@ -157,7 +158,7 @@ namespace PG.Web.WREL
         private void SetDate()
         {
 
-
+            txtIssuedate.Text = DateTime.Now.ToString("dd-MMM-yyyy");
         }
 
         private void ReadTask()
@@ -419,6 +420,7 @@ namespace PG.Web.WREL
 
                 this.CARGO_TRACK_ID = newCARGO_TRACK_ID;
                 ReadTask();
+                CARGO_CREATION_MSTBL.UpdateCargoCreationMst(cObj.CARGO_ID,null);
                 bStatus = true;
                 ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Data saved successfully !!');", true);
             }

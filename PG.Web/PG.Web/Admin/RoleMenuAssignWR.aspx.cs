@@ -92,11 +92,19 @@ namespace PG.Web.Admin
                 menuList = menuList.Where(w => w.AppMenuID == menuId).ToList();
             }
 
-            menuList = menuList.OrderBy(o => o.AppMenuID).ThenBy(o => o.ParentMenuID).ThenBy(o => o.AppMenuSLNo).ToList();
+            // ✅ Filter only role menus
+            var roleMenus = (from m in menuList
+                             join r in roleMenuList on m.AppMenuID equals r.APPMENUID
+                             select m).ToList();
 
-            if (menuList.Count > 0)
+            roleMenus = roleMenus.OrderBy(o => o.AppMenuID)
+                                 .ThenBy(o => o.ParentMenuID)
+                                 .ThenBy(o => o.AppMenuSLNo)
+                                 .ToList();
+
+            if (roleMenus.Count > 0)
             {
-                GridView1.DataSource = menuList;
+                GridView1.DataSource = roleMenus;
                 GridView1.DataBind();
             }
             else
@@ -104,6 +112,18 @@ namespace PG.Web.Admin
                 GridView1.DataSource = null;
                 GridView1.DataBind();
             }
+            //menuList = menuList.OrderBy(o => o.AppMenuID).ThenBy(o => o.ParentMenuID).ThenBy(o => o.AppMenuSLNo).ToList();
+
+            //if (menuList.Count > 0)
+            //{
+            //    GridView1.DataSource = menuList;
+            //    GridView1.DataBind();
+            //}
+            //else
+            //{
+            //    GridView1.DataSource = null;
+            //    GridView1.DataBind();
+            //}
 
         }
 

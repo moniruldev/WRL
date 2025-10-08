@@ -103,9 +103,10 @@ namespace PG.Web.WREL
                     //GridView1.DataSource = roomList;
                     //GridView1.DataBind();
 
-                    SetDate();
+               
                     AddTask();
                     this.EditMode = FormDataMode.Add;
+                    SetDate();
                 }
                 else
                 {
@@ -176,7 +177,7 @@ namespace PG.Web.WREL
 
         private void SetDate()
         {
-
+            txtCargoDate.Text = DateTime.Now.ToString("dd-MMM-yyyy");
 
         }
 
@@ -556,15 +557,26 @@ namespace PG.Web.WREL
         private bool ValidateDetails(List<dcCARGO_CREATION_DETAIL> list)
         {
             bool y = true;
+
+            // Case-insensitive duplicate check
+            HashSet<string> cnNumbers = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
             foreach (var item in list)
             {
-                //if(!(item.ROOM_QTY > 0))
-                //{
-                //    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Select atleast one Room !!');", true);
-                //    y = false;
+                if (string.IsNullOrWhiteSpace(item.CN_NUMBER))
+                {
+                    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "","alert('Please select at least one Room !!');", true);
+                    y = false;
+                    break;
+                }
 
-                //}
-
+                // ✅ Duplicate check
+                if (!cnNumbers.Add(item.CN_NUMBER.Trim()))
+                {
+                    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "","alert('Duplicate CN Number not allowed !!');", true);
+                    y = false;
+                    break;
+                }
             }
 
             return y;
@@ -574,53 +586,45 @@ namespace PG.Web.WREL
         {
             errMsg = string.Empty;
 
-            //if(txtCheckInDate.Text == "")
-            //{
-            //    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Enter Check In Date !!');", true);
-            //    txtCheckInDate.Focus();
-            //    return false;
+            if (txtCargoDate.Text == "")
+            {
+                ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Enter Date !!');", true);
+                txtCargoDate.Focus();
+                return false;
 
-            //}
+            }
 
-            //if (txtCheckOutDate.Text == "")
-            //{
-            //    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Enter Check Out Date !!');", true);
-            //    txtCheckOutDate.Focus();
-            //    return false;
+            if (hdnStartingDistId.Value == "0")
+            {
+                ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Enter Starting District !!');", true);
+                txtStartingDist.Focus();
+                return false;
 
-            //}
+            }
 
-            //if (txtName.Text == "")
-            //{
-            //    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Enter Name !!');", true);
-            //    txtName.Focus();
-            //    return false;
+            if (hdnDestDistId.Value == "0")
+            {
+                ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Enter Destination District !!');", true);
+                txtDestinationDist.Focus();
+                return false;
 
-            //}
+            }
 
-            //if (txtAddress.Text == "")
-            //{
-            //    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Enter Address !!');", true);
-            //    txtAddress.Focus();
-            //    return false;
+            if (hdnDestTownId.Value == "0")
+            {
+                ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Enter Destination Town !!');", true);
+                txtStartingDist.Focus();
+                return false;
 
-            //}
+            }
 
-            //if (txtMobileNo.Text == "")
-            //{
-            //    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Enter Mobile No !!');", true);
-            //    txtMobileNo.Focus();
-            //    return false;
+            if (hdnRouteId.Value == "0")
+            {
+                ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Enter Route Name !!');", true);
+                txtDestinationDist.Focus();
+                return false;
 
-            //}
-
-            //if (hdnCountryId.Value == "0")
-            //{
-            //    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Select Country !!');", true);
-            //    txtCountry.Focus();
-            //    return false;
-
-            //}
+            }
 
             ReadDetailsFromGrid();
 
@@ -682,9 +686,9 @@ namespace PG.Web.WREL
             txtCargoNo.Text = cObj.CARGO_NUMBER;
             cObj.CARGO_DATE = Conversion.StringToDate(txtCargoDate.Text);
             cObj.CARGO_STARTING_DIS_ID = Conversion.StringToInt(hdnStartingDistId.Value);
-            cObj.CARGO_DESTINATION_DIST_ID = Conversion.StringToInt(hdnStartingDistId.Value);
-            cObj.CARGO_DESTINATION_TOWN_ID = Conversion.StringToInt(hdnStartingDistId.Value);
-            cObj.ROUTE_ID = Conversion.StringToInt(hdnStartingDistId.Value);
+            cObj.CARGO_DESTINATION_DIST_ID = Conversion.StringToInt(hdnDestDistId.Value);
+            cObj.CARGO_DESTINATION_TOWN_ID = Conversion.StringToInt(hdnDestTownId.Value);
+            cObj.ROUTE_ID = Conversion.StringToInt(hdnRouteId.Value);
             cObj.MANAGER_ID = hdnManagerId.Value;
             cObj.WEIGHT_IN_KG = Conversion.StringToDecimal(txtWeight.Text);
             cObj.REMARKS = txtRemarks.Text.Trim();
@@ -949,28 +953,11 @@ namespace PG.Web.WREL
         private void BindDataToCNNumber(List<dcCARGO_CREATION_DETAIL> listDataCN)
         {
             int rowCount = listDataCN.Count;
-            //if (rowCount == 0)
-            //{
-            //    listData.Add(new dcGLAccountHistoryRef());
-            //}
-
             GridView1.DataSource = listDataCN.ToList();
             GridView1.DataBind();
 
             GridView1.CssClass = "grid";
-            //SumDetGrid1();
-            //SumDetGrid1();
-
-            //int i = GRDDTLITEMLIST.PageCount;
-
-            //if (GRDDTLITEMLIST.PageIndex > 0)
-            //{
-          //  GRDDTLITEMLIST.PageIndex = GRDDTLITEMLIST.PageCount;
-               // GRDDTLITEMLIST.PageIndex = GRDDTLITEMLIST.PageIndex - 1;
-
-
-
-            //}
+         
 
         }
 
