@@ -70,7 +70,7 @@ namespace PG.BLLibrary.WRElBL
             return cObjList;
         }
 
-        public static List<dcAGREEMENT_MST> GetAgreementList(dcAGENT_MST prmHms, DBContext dc)
+        public static List<dcAGREEMENT_MST> GetAgreementList(clsPrmWREL prmHms, DBContext dc)
         {
             List<dcAGREEMENT_MST> cObjList = new List<dcAGREEMENT_MST>();
             bool isDCInit = false;
@@ -82,12 +82,16 @@ namespace PG.BLLibrary.WRElBL
                 StringBuilder sb = new StringBuilder(GetAgreementMstListString());
 
 
+                if(prmHms.CLIENT_ID>0)
+                {
+                    sb.Append(" AND mst.CLIENT_ID= @CLIENT_ID ");
+                    cmdInfo.DBParametersInfo.Add("@CLIENT_ID", prmHms.CLIENT_ID);
+                }
 
-
-                if (prmHms.IS_ACTIVE != "0")
+                if (prmHms.IsActive != "0")
                 {
                     sb.Append(" AND IS_ACTIVE= @IS_ACTIVE ");
-                    cmdInfo.DBParametersInfo.Add("@IS_ACTIVE", prmHms.IS_ACTIVE);
+                    cmdInfo.DBParametersInfo.Add("@IS_ACTIVE", prmHms.IsActive);
                 }
 
 

@@ -29,7 +29,7 @@ namespace PG.BLLibrary.WRElBL
             sb.Append(" LEFT JOIN district_mst DTD ON mst.cargo_starting_dis_id=DTD.dist_id ");
             sb.Append(" LEFT JOIN thana_town_mst TWN ON mst.cargo_destination_town_id=twn.town_id ");
             sb.Append(" LEFT JOIN route_mst R ON mst.route_id=r.route_id ");
-            sb.Append(" WHERE 1=1 ");
+            sb.Append(" WHERE 1=1 AND mst.IS_ISSUED='N' ");
 
             return sb.ToString();
         }
@@ -319,6 +319,36 @@ namespace PG.BLLibrary.WRElBL
             catch { throw; }
             finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
             return _CARGO_No;
+        }
+
+        //
+
+        public static string UpdateCargoCreationMst(int cargoID, DBContext dc)
+        {
+             bool isDCInit = false;
+            bool isTransInit = false;
+            string _TRANS_ID = string.Empty;
+            try
+            {
+
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+                isTransInit = dc.StartTransaction();
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+
+                string abbr = " UPDATE CN_CREATION_MST SET IS_ISSUED='Y' WHERE CARGO_ID=@cargoID ";
+                 cmdInfo.DBParametersInfo.Add("@cargoID", cargoID);
+                    
+                    cmdInfo.CommandText = abbr;
+                    cmdInfo.CommandType = CommandType.Text;
+                    dbq.DBCommandInfo = cmdInfo;
+                    DBQuery.ExecuteDBNonQuery(dbq, dc);
+
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return _TRANS_ID;
         }
     }
 }

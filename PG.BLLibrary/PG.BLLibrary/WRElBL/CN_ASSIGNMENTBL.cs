@@ -549,7 +549,7 @@ namespace PG.BLLibrary.WRElBL
                 isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
                 DBCommandInfo cmdInfo = new DBCommandInfo();
 
-                string abbr = " UPDATE CN_CREATION_MST SET IS_REFUND='Y',REFUND_CAUSE_ID=rtncauseid,REFUND_DATE=SYSDATE WHERE CN_ID=@CN_ID ";
+                string abbr = " UPDATE CN_CREATION_MST SET IS_REFUND='Y',REFUND_CAUSE_ID="+rtncauseid+",REFUND_DATE=SYSDATE WHERE CN_ID=@CN_ID ";
            
                 cmdInfo.DBParametersInfo.Add("@CN_ID", pCN_ID);
 
