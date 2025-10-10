@@ -207,20 +207,20 @@
         <div class="card-body">
           <div class="row mb-0">
 
-               
+                <div class="d-flex align-items-center mr-3">
+                            <label for="txtFromDate" class="mr-2 mb-0 small">From Date:</label>
+                            <asp:TextBox ID="txtFromDate" runat="server" CssClass="TextBoxnew textDate dateParse form-control form-control-sm" Style="width: 130px;"></asp:TextBox>
+                        </div>
 
-
-                <div class="col-md-4">
-                  <div class="form-group row mb-0">
-                    <label for="name" class="col-sm-4 col-form-label-sm">Delivery Man :</label>
-                    <div class="col-sm-8">
-                       
-                       <asp:TextBox ID="txtDeliveryMan" runat="server" CssClass="form-control form-control-sm" ></asp:TextBox>
+                        <div class="d-flex align-items-center mr-3">
+                            <label for="txtToDate" class="mr-2 mb-0 small">To Date:</label>
+                            <asp:TextBox ID="txtToDate" runat="server" CssClass="TextBoxnew textDate dateParse form-control form-control-sm" Style="width: 130px;"></asp:TextBox>
+                        </div>
+                <div class="d-flex align-items-center mr-3">
+                            <label for="txtToDate" class="mr-2 mb-0 small">Delivery Man:</label>
+                              <asp:TextBox ID="txtDeliveryMan" runat="server" CssClass="form-control form-control-sm" Width="200px" ></asp:TextBox>
                         <asp:HiddenField runat="server" ID="hdnDeliveryManID" Value="0" /> 
-
-                    </div>
-                  </div>
-                </div>
+                        </div>
 
            </div>
 

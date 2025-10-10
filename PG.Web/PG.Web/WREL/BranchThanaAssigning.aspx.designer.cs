@@ -10,61 +10,61 @@
 namespace PG.Web.WREL {
     
     
-    public partial class CNAssignmentList {
+    public partial class BranchThanaAssigning {
         
         /// <summary>
-        /// btnNewAdd control.
+        /// hdnLoggedInUser control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnNewAdd;
+        protected global::System.Web.UI.WebControls.HiddenField hdnLoggedInUser;
         
         /// <summary>
-        /// txtFromDate control.
+        /// hdnBRANCH_THANA_ID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFromDate;
+        protected global::System.Web.UI.WebControls.HiddenField hdnBRANCH_THANA_ID;
         
         /// <summary>
-        /// txtToDate control.
+        /// txtBranchName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtToDate;
+        protected global::System.Web.UI.WebControls.TextBox txtBranchName;
         
         /// <summary>
-        /// txtDeliveryMan control.
+        /// hdnBranchId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDeliveryMan;
+        protected global::System.Web.UI.WebControls.HiddenField hdnBranchId;
         
         /// <summary>
-        /// hdnDeliveryManID control.
+        /// btnLoad control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnDeliveryManID;
+        protected global::System.Web.UI.WebControls.Button btnLoad;
         
         /// <summary>
-        /// btnLoadData control.
+        /// UpdatePanel1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnLoadData;
+        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
         
         /// <summary>
         /// GridView1 control.
@@ -76,111 +76,57 @@ namespace PG.Web.WREL {
         protected global::System.Web.UI.WebControls.GridView GridView1;
         
         /// <summary>
-        /// lblTotal control.
+        /// Hidden1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTotal;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden Hidden1;
         
         /// <summary>
-        /// hdnRowCount control.
+        /// Hidden2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnRowCount;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden Hidden2;
         
         /// <summary>
-        /// btnGridPageGoTo control.
+        /// btnNewRow control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnGridPageGoTo;
+        protected global::System.Web.UI.WebControls.LinkButton btnNewRow;
         
         /// <summary>
-        /// Label2 control.
+        /// UpdateProgress2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.UpdateProgress UpdateProgress2;
         
         /// <summary>
-        /// ddlGridPageSize control.
+        /// btnSave control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlGridPageSize;
+        protected global::System.Web.UI.WebControls.LinkButton btnSave;
         
         /// <summary>
-        /// Label1 control.
+        /// btnEdit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
-        
-        /// <summary>
-        /// txtGridPageNo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtGridPageNo;
-        
-        /// <summary>
-        /// lblGridPageInfo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblGridPageInfo;
-        
-        /// <summary>
-        /// btnGridPageFirst control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnGridPageFirst;
-        
-        /// <summary>
-        /// btnGridPagePrev control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnGridPagePrev;
-        
-        /// <summary>
-        /// btnGridPageNext control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnGridPageNext;
-        
-        /// <summary>
-        /// btnGridPageLast control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnGridPageLast;
+        protected global::System.Web.UI.WebControls.LinkButton btnEdit;
     }
 }

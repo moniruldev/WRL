@@ -28,15 +28,15 @@ using PG.DBClass.WRELDC;
 
 namespace PG.Web.WREL
 {
-    public partial class CargoIssuedMst : BagePage
+    public partial class BranchEntry : BagePage
     {
         //this 
-        string ViewStateKey = "CARGO_TRACK_ID";
-        string ViewStateKeyPrev = "CARGO_TRACK_ID_PREV";
+        string ViewStateKey = "BRANCH_ID";
+        string ViewStateKeyPrev = "BRANCH_ID_PREV";
         ReportOpenTypeEnum ReportOpenType = ReportOpenTypeEnum.Preview;
         // int CompanyID = 0;
 
-        int CARGO_TRACK_ID = 0;
+        int BRANCH_ID = 0;
         string saveMsg = string.Empty;
         string errMsg = string.Empty;
 
@@ -47,12 +47,8 @@ namespace PG.Web.WREL
         public string ReportPDFPageLink = PageLinks.ReportLinks.GetLink_ReportPDF;
 
 
+        public string EmployeeListServiceLink = PageLinks.InventoryLink.GetLink_EmployeeList;
 
-        public string CountryListServiceLink = PageLinks.InventoryLink.GetLink_CountryList;
-        public string CargoListService = PageLinks.InventoryLink.GetLink_CargoMstList;
-        public string HubListServiceLink = PageLinks.InventoryLink.GetLink_HubList;
-        public string TransporterMstListServiceLink = PageLinks.InventoryLink.GetLink_TransporterMstList;
-        
         protected override void OnPreInit(EventArgs e)
         {
 
@@ -69,7 +65,7 @@ namespace PG.Web.WREL
 
             loggedinUser = AppSecurity.GetUserInfoFromSession();
 
-            this.CARGO_TRACK_ID = base.GetPageQueryInteger("id");
+            this.BRANCH_ID = base.GetPageQueryInteger("id");
 
             if (!IsPostBack) //first Time
             {
@@ -79,11 +75,10 @@ namespace PG.Web.WREL
                 FillCombo();
 
 
-                if (this.CARGO_TRACK_ID == 0) //not query string
+                if (this.BRANCH_ID == 0) //not query string
                 {
-                   
-                    AddTask();
                     SetDate();
+                    AddTask();
                     this.EditMode = FormDataMode.Add;
                 }
                 else
@@ -105,12 +100,12 @@ namespace PG.Web.WREL
             else
             {
                 this.EditMode = base.GetEditModeFromViewState(base.EditModeViewStateKey);
-                this.CARGO_TRACK_ID = int.Parse(ViewState[ViewStateKey].ToString());
+                this.BRANCH_ID = int.Parse(ViewState[ViewStateKey].ToString());
             }
 
             SetHyperLink();
 
-          //  txtCargoNo.Attributes.Add("readonly", "readonly");
+          
             //this.ShowPageMessage(this.lblMessage);
             // Response.Write("UserID : " + this.UserID.ToString());
 
@@ -123,8 +118,8 @@ namespace PG.Web.WREL
 
         public void FillCombo()
         {
-            dcCLIENT_TYPE_MST clientType = new dcCLIENT_TYPE_MST();
-            clientType.IS_ACTIVE = "Y";
+            //dcCLIENT_TYPE_MST clientType = new dcCLIENT_TYPE_MST();
+            //clientType.IS_ACTIVE = "Y";
             //ddlClientType.Items.Clear();
             //ddlClientType.AppendDataBoundItems = true;
             //ddlClientType.DataTextField = "TYPE_NAME";
@@ -133,13 +128,7 @@ namespace PG.Web.WREL
             //ddlClientType.DataBind();
             //ddlClientType.SelectedIndex = 0;
 
-            //ddlRoomStatus.Items.Clear();
-            //ddlRoomStatus.AppendDataBoundItems = true;
-            //ddlRoomStatus.DataTextField = "ROOM_STATUS";
-            //ddlRoomStatus.DataValueField = "ROOM_STATUS_ID";
-            //ddlRoomStatus.DataSource = HMROOMBL.GetRoomStatusList();
-            //ddlRoomStatus.DataBind();
-            //ddlRoomStatus.SelectedIndex = 0;
+           
 
 
         }
@@ -158,27 +147,25 @@ namespace PG.Web.WREL
         private void SetDate()
         {
 
-            txtIssuedate.Text = DateTime.Now.ToString("dd-MMM-yyyy");
+
         }
 
         private void ReadTask()
         {
             this.EditMode = FormDataMode.Read;
-            ReadData(this.CARGO_TRACK_ID);
-            ViewState[ViewStateKey] = this.CARGO_TRACK_ID.ToString();
+            ReadData(this.BRANCH_ID);
+            ViewState[ViewStateKey] = this.BRANCH_ID.ToString();
 
             SetControl(FormDataMode.Read);
 
         }
         private void AddTask()
         {
-            ViewState[ViewStateKeyPrev] = this.CARGO_TRACK_ID.ToString();
+            ViewState[ViewStateKeyPrev] = this.BRANCH_ID.ToString();
 
             this.EditMode = FormDataMode.Add;
             this.IsDirty = false;
-            this.CARGO_TRACK_ID = 0;
-           
-
+            this.BRANCH_ID = 0;
             ResetFormFields();
             ViewState[ViewStateKey] = "0";
             SetControl(FormDataMode.Add);
@@ -186,27 +173,18 @@ namespace PG.Web.WREL
         private void EditTask()
         {
             this.EditMode = FormDataMode.Edit;
-            ReadData(this.CARGO_TRACK_ID);
+            ReadData(this.BRANCH_ID);
             this.EditMode = FormDataMode.Edit;
-            ViewState[ViewStateKey] = this.CARGO_TRACK_ID.ToString();
+            ViewState[ViewStateKey] = this.BRANCH_ID.ToString();
             SetControl(FormDataMode.Edit);
         }
 
         private void ResetFormFields()
         {
-            hdnCargoID.Value = string.Empty;
-            txtCargoNo.Text = string.Empty;
-            txtFromHubName.Text = string.Empty;
-            hdnFromHubID.Value = string.Empty;
-            txtToHubName.Text = string.Empty;
-            hdnToHubID.Value = string.Empty;
-            txtContactPerson.Text = string.Empty;
-            txtTransportMedia.Text = string.Empty;
-            hdnTransMediaID.Value = string.Empty;
-            txtIssuedate.Text = string.Empty;
-
-            txtMobileNo.Text = string.Empty;
-            txtRemarks.Text = string.Empty;
+            txtBranchName.Text = string.Empty;
+            txtBranchCode.Text = string.Empty;
+            txtBranchHead.Text = string.Empty;
+        
         }
 
 
@@ -214,24 +192,14 @@ namespace PG.Web.WREL
         {
             bool bStatus = false;
             byte[] bytes = null;
-            dcCARGO_TRACKING cObj = CARGO_TRACKINGBL.GetCargoReceivedInfoById(id);
+            dcBRANCH_MST cObj = BRANCH_MSTBL.GetBranchMstInfoById(id);
             if (cObj != null)
             {
-                hdnCargoID.Value = cObj.CARGO_ID.ToString();
-                txtCargoNo.Text = cObj.CARGO_NUMBER;
-                txtFromHubName.Text = cObj.F_HUBNAME;
-                hdnFromHubID.Value = cObj.FROM_HUB_ID.ToString();
-                txtToHubName.Text = cObj.T_HUBNAME;
-                hdnToHubID.Value = cObj.TO_HUB_ID.ToString();
-                txtContactPerson.Text = cObj.TRANS_CONTACT_PERSON;
-                txtTransportMedia.Text = cObj.TRANS_MEDIA_NAME;
-                hdnTransMediaID.Value = cObj.TRANS_MEDIA_ID.ToString();
-                txtIssuedate.Text = Convert.ToDateTime(cObj.TRACK_DATE).ToString("dd-MMM-yyyy");
-                txtMobileNo.Text = cObj.TRANS_CONTACT_NO;
-                txtRemarks.Text = cObj.REMARKS;
 
-                
-            
+                txtBranchName.Text = cObj.BRANCH_NAME;
+                txtBranchCode.Text = cObj.BRANCH_CODE;
+                txtBranchHead.Text = cObj.BRANCH_HEAD_NAME;
+                ddlStatus.SelectedValue = cObj.IS_ACTIVE;
 
                 bStatus = true;
             }
@@ -249,16 +217,11 @@ namespace PG.Web.WREL
             }
 
 
-            txtCargoNo.Enabled = isEnabled;
-            txtFromHubName.Enabled = isEnabled;
-            txtToHubName.Enabled = isEnabled;
-            txtContactPerson.Enabled = isEnabled;
-            txtTransportMedia.Enabled = isEnabled;
-            txtIssuedate.Enabled = isEnabled;
-            txtMobileNo.Enabled = isEnabled;
-            txtRemarks.Enabled = isEnabled;
-
-
+            SetTextBoxState(txtBranchName, isEnabled);
+            SetTextBoxState(txtBranchCode, isEnabled);
+            SetTextBoxState(txtBranchHead, isEnabled);
+            ddlStatus.Enabled = isEnabled;
+            ddlStatus.CssClass = "form-control form-control-sm";
             
             //buttons
             btnAddNew.Visible = !isEnabled;
@@ -267,6 +230,20 @@ namespace PG.Web.WREL
             //btnUpdate.Visible = !isEnabled;
 
 
+        }
+
+        private void SetTextBoxState(TextBox txtBox, bool isEnabled)
+        {
+            if (isEnabled)
+            {
+                txtBox.Attributes.Remove("disabled");
+                txtBox.CssClass = "form-control form-control-sm";
+            }
+            else
+            {
+                txtBox.Attributes["disabled"] = "disabled";
+                txtBox.CssClass = "form-control form-control-sm";
+            }
         }
 
         protected void btnSave_Click(object sender, EventArgs e)
@@ -290,21 +267,20 @@ namespace PG.Web.WREL
 
                 if (bStatus)
                 {
-                    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Data Saved Successfully');", true);
-                   
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('success', 'Data Saved Successfully!', 'Success');", true);
+
                 }
                 else
                 {
-                    
-                    ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Error !! Data not Saved');", true);
+
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', ' Data not Saved!', 'Error');", true);
                 }
 
             }
             else
             {
 
-                ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Error !! Data not Saved');", true);
-                this.SetPageMessage(errMsg, MessageTypeEnum.InvalidData);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', ' Data not Saved!', 'Error');", true);
             }
 
             return true;
@@ -317,30 +293,40 @@ namespace PG.Web.WREL
             bool status = true;
             errMsg = string.Empty;
 
-            if (txtCargoNo.Text.Trim() == "")
+            if (txtBranchName.Text == "")
             {
-                ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Select Cargo !!');", true);
-                txtCargoNo.Focus();
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', 'Enter branch name!', 'Error');", true);
+                txtBranchName.Focus();
                 return false;
 
             }
 
-            if (txtFromHubName.Text.Trim() == "")
+            if (EditMode == FormDataMode.Add)
             {
-                ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Select From Hub !!');", true);
-                txtFromHubName.Focus();
-                return false;
+
+                if (BRANCH_MSTBL.IsBranchNameExists(txtBranchName.Text.Trim()))
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', 'Branch name already exists!', 'Error');", true);
+                    txtBranchName.Focus();
+                    return false;
+                }
+
+
 
             }
-
-            if (txtIssuedate.Text.Trim() == "")
+            else if (EditMode == FormDataMode.Edit)
             {
-                ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Please Enter Issue Date !!');", true);
-                txtIssuedate.Focus();
-                return false;
+
+                if (BRANCH_MSTBL.IsBranchNameExists(txtBranchName.Text.Trim(), this.BRANCH_ID))
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', 'Branch name already exists!', 'Error');", true);
+                    txtBranchName.Focus();
+                    return false;
+                }
+
+
 
             }
-            
 
 
             return status;
@@ -351,15 +337,15 @@ namespace PG.Web.WREL
         {
 
             //new button
-            string hLink = "javascript:tbopen(" + this.CARGO_TRACK_ID.ToString() + ")";
+            string hLink = "javascript:tbopen(" + this.BRANCH_ID.ToString() + ")";
             if (base.PageMode == PG.Core.Web.PageModeEnum.InTab)
             {
-                hLink = "javascript:tbopenSalInfo(" + this.CARGO_TRACK_ID.ToString() + ")";
+                hLink = "javascript:tbopenSalInfo(" + this.BRANCH_ID.ToString() + ")";
                 this.btnAddNew.Attributes.Add("onclick", hLink);
             }
             else
             {
-                hLink = "~/HMS/CargoIssuedMst.aspx?id=" + this.CARGO_TRACK_ID.ToString();
+                hLink = "~/WRL/BranchEntry.aspx?id=" + this.BRANCH_ID.ToString();
                 this.btnAddNew.Attributes.Add("onclick", hLink);
             }
 
@@ -372,11 +358,11 @@ namespace PG.Web.WREL
             bool bStatus = false;
 
             bool isAdd = false;
-            int newCARGO_TRACK_ID = 0;
-            dcCARGO_TRACKING cObj = new dcCARGO_TRACKING();
-            if (this.CARGO_TRACK_ID > 0)
+            int newBRANCH_ID = 0;
+            dcBRANCH_MST cObj = new dcBRANCH_MST();
+            if (this.BRANCH_ID > 0)
             {
-                cObj.CARGO_TRACK_ID = this.CARGO_TRACK_ID;
+                cObj.BRANCH_ID = this.BRANCH_ID;
                 cObj._RecordState = RecordStateEnum.Edited;
             }
             else
@@ -386,18 +372,10 @@ namespace PG.Web.WREL
             }
 
 
-            cObj.CARGO_ID =Conversion.StringToInt( hdnCargoID.Value);
-            cObj.TRACK_DATE =Conversion.StringToDate(txtIssuedate.Text.Trim());
-            cObj.TRACK_BY = loggedinUser.UserID.ToString();
-            cObj.FROM_HUB_ID = Conversion.StringToInt(hdnFromHubID.Value);
-            cObj.TRANS_MEDIA_ID = Conversion.StringToInt(hdnTransMediaID.Value);
-            cObj.TRANS_CONTACT_NO = txtMobileNo.Text.Trim();
-            cObj.TRANS_CONTACT_PERSON = txtContactPerson.Text.Trim();
-            cObj.REMARKS = txtRemarks.Text;
-            cObj.TRANS_TYPE = "I";
-            cObj.TO_HUB_ID = Conversion.StringToInt(hdnToHubID.Value);
-            cObj.HUB_ID = Conversion.StringToInt(hdnFromHubID.Value);
-           
+            cObj.BRANCH_NAME = txtBranchName.Text.Trim();
+            cObj.BRANCH_CODE = txtBranchCode.Text.Trim();
+            cObj.BRANCH_HEAD = hdnEmpId.Value;
+            cObj.IS_ACTIVE = ddlStatus.SelectedValue;
             
 
             if (isAdd)
@@ -413,16 +391,15 @@ namespace PG.Web.WREL
 
             }
 
-            newCARGO_TRACK_ID = CARGO_TRACKINGBL.Save(cObj);
-            if (newCARGO_TRACK_ID > 0)
+            newBRANCH_ID = BRANCH_MSTBL.Save(cObj);
+            if (newBRANCH_ID > 0)
             {
 
 
-                this.CARGO_TRACK_ID = newCARGO_TRACK_ID;
+                this.BRANCH_ID = newBRANCH_ID;
                 ReadTask();
-                CARGO_CREATION_MSTBL.UpdateCargoCreationMst(cObj.CARGO_ID, null);
                 bStatus = true;
-                ScriptManager.RegisterClientScriptBlock(btnSave, GetType(), "", "alert('Data saved successfully !!');", true);
+               
             }
 
             return bStatus;

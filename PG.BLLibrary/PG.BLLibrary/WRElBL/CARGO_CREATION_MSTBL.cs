@@ -71,6 +71,56 @@ namespace PG.BLLibrary.WRElBL
             finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
             return cObjList;
         }
+
+        public static List<dcCARGO_CREATION_MST> GetCargoMstListInfo(clsPrmWREL prm, DBContext dc)
+        {
+            List<dcCARGO_CREATION_MST> cObjList = new List<dcCARGO_CREATION_MST>();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetCargoMstListString());
+                if (prm.TRANS_ID > 0)
+                {
+                    sb.Append(" AND mst.CARGO_ID= @pCargoMstId ");
+                    cmdInfo.DBParametersInfo.Add("@pCargoMstId", prm.TRANS_ID);
+                }
+                if (prm.FromDate.HasValue)
+                {
+                    if (prm.ToDate.HasValue)
+                    {
+                        sb.Append(" AND (TO_DATE(mst.CARGO_DATE) BETWEEN @fromDate AND @toDate) ");
+                        cmdInfo.DBParametersInfo.Add("@fromDate", prm.FromDate.Value);
+                        cmdInfo.DBParametersInfo.Add("@toDate", prm.ToDate.Value);
+                    }
+                    else
+                    {
+                        sb.Append(" AND TO_DATE(mst.CARGO_DATE) = @fromDate ");
+                        cmdInfo.DBParametersInfo.Add("@fromDate", prm.FromDate.Value);
+
+                    }
+
+                }
+
+                if (!string.IsNullOrEmpty(prm.TRANS_NO))
+                {
+                    sb.Append(" AND mst.CARGO_NUMBER LIKE @pCargoNo ");
+                    cmdInfo.DBParametersInfo.Add("@pCargoNo", "%" + prm.TRANS_NO + "%");
+                }
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcCARGO_CREATION_MST>(dbq, dc);
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
+        }
         public static List<dcCARGO_CREATION_MST> GetCARGO_CREATOION_MSTList()
         {
             return GetCARGO_CREATOION_MSTList(null, null);

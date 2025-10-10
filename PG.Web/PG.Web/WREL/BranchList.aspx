@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/AppMaster.Master" AutoEventWireup="true" CodeBehind="CargoCreationList.aspx.cs" Inherits="PG.Web.WREL.CargoCreationList" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/AppMaster.Master" AutoEventWireup="true" CodeBehind="BranchList.aspx.cs" Inherits="PG.Web.WREL.BranchList" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -13,18 +13,12 @@
     <script language="javascript" type="text/javascript">
         // <!CDATA[
 
-        <%--var ItemListServiceLink = '<%=this.ItemListServiceLink%>';--%>
+        var ItemListServiceLink = '<%=this.ItemListServiceLink%>';
 
         var btnGridPageGoTo = '<%=btnGridPageGoTo.ClientID %>';
         var txtGridPageNo = '<%=txtGridPageNo.ClientID %>';
-        var ReportViewPageLink = '<%=this.ReportViewPageLink%>';
-        var ReportViewPDFPageLink = '<%=this.ReportViewPDFPageLink%>';
-        var ReportPrintPageLink = '<%=this.ReportPrintPageLink%>';
-        var ReportPDFPageLink = '<%=this.ReportPDFPageLink%>';
-        var ifPrintButton = '<%=ifPrintButton.ClientID%>';
-     <%--   var ReportViewPageLink = '<%=this.ReportViewPageLink%>';
-        var ReportViewPDFPageLink = '<%=this.ReportViewPDFPageLink%>';
-       --%>
+     
+
 
         function PageResizeCompleted(pg, cntMain) {
             resizeContentInner(cntMain);
@@ -68,15 +62,15 @@
                 key = '';
             }
 
-            var url = IForm.RootPath + "WREL/CargoCreation.aspx?id=" + key;
+            var url = IForm.RootPath + "WREL/BranchEntry.aspx?id=" + key;
 
             if (IForm.PageMode == Enums.PageMode.InTab) {
 
                 var tdata = new xtabdata();
                 tdata.linktype = Enums.LinkType.Direct;
                 tdata.id = 0;
-                tdata.name = "Cargo Creation";
-                tdata.label = "Cargo Creation";
+                tdata.name = "Branch Entry";
+                tdata.label = "Branch Entry";
                 tdata.type = 0;
                 tdata.url = url;
                 tdata.tabaction = Enums.TabAction.InNewTab;
@@ -94,106 +88,6 @@
             }
             else {
                 window.location = url;
-            }
-        }
-
-
-
-        function tbopen(key, isPrint, isPDFAutoPrint, showWait) {
-            key = key || '';
-            isPrint = isPrint || false;
-            showWait = showWait || true;
-            var now = new Date();
-            var strTime = now.getTime().toString();
-            var url = ReportViewPageLink + "?rk=" + key + "&_tt=" + strTime;
-            //var url = ReportViewPageLink + "?rk=" + key;
-
-            //if (pageInTab == 1)
-            if (TabVar.PageMode == Enums.PageMode.InTab) {
-
-                var tdata = new xtabdata();
-                tdata.linktype = Enums.LinkType.Direct;
-                tdata.id = 7999;
-                tdata.name = "Report view";
-                //tdata.label = "User: " + userid;
-                tdata.label = "Report view";
-                tdata.type = 0;
-                tdata.url = url;
-                tdata.tabaction = Enums.TabAction.InNewTab;
-                tdata.selecttab = 1;
-                tdata.reload = 0;
-                tdata.param = "";
-                tdata.showWait = showWait;
-
-                try {
-                    //window.parent.OpenMenuByData(tdata);
-                    window.parent.TabMenu.OpenMenuByData(tdata);
-                }
-                catch (err) {
-                    alert("error in page");
-                }
-            }
-            else {
-                //on new window/tab
-                //window.open(url,'_blank');   
-
-                window.location = url;
-            }
-        }
-        $(document).ready(function () {
-            str = document.body.innerHTML
-
-
-            $("#tblParam tr.rowParam").each(function () {
-                var cell = $.trim($(this).find('td').text());
-                if (cell.length == 0) {
-                    //console.log('empty');
-                    //$(this).addClass('nodisplay');
-                    $(this).hide();
-                }
-            });
-
-            $("#btnOpenReportWindow").click(function () {
-                window.open(reportURL, '_blank');
-                //hideOverlayReport();
-            });
-
-            $("#btnCacnelReportWindow").click(function () {
-                //hideOverlayReport();
-            });
-
-            //hideOverlay();
-
-        });
-        function ReportPrint(key, isPDFAutoPrint) {
-            var rptPageLink = ReportViewPageLink;
-            if (isPDFAutoPrint) {
-                //rptPageLink = ReportPDFPageLink;
-                rptPageLink = ReportViewPDFPageLink;
-            }
-
-            //var url = "./Report/ReportView.aspx?rk=" + key
-            var now = new Date();
-            var strTime = now.getTime().toString();
-            var url = ReportViewPageLink + "?rk=" + key + "&_tt=" + strTime;
-
-            //var url = rptPageLink + "?rk=" + key;
-
-            iframe = document.getElementById(ifPrintButton);
-            if (iframe === null) {
-                iframe = document.createElement('iframe');
-                iframe.id = hiddenIFrameID;
-                //        iframe.style.display = 'none';
-                //        iframe.style = 'none';
-                document.body.appendChild(iframe);
-            }
-            iframe.src = url;
-        }
-        function reportInNewWindow(url) {
-            var rWin = window.open(url, '_blank');
-            if (rWin == null) {
-                reportURL = url;
-                //showOverlayReport();
             }
         }
 
@@ -222,27 +116,30 @@
       <div class="card">
       <div class="card-header p-0">
        <div class="d-flex align-items-center justify-content-between p-1">
-         <h5 class="card-title">Cargo List</h5>
+         <h5 class="card-title">Branch List</h5>
            <asp:LinkButton runat="server" ID="btnNewAdd" CssClass="btn btn-primary p-1"><i class="fas fa-plus"></i> New Entry</asp:LinkButton>
        </div>
        </div>
 
         <div class="card-body">
-        <div class="row mb-0">
+          <div class="row mb-0">
 
-                <div class="d-flex align-items-center mr-3">
-                            <label for="txtFromDate" class="mr-2 mb-0 small">From Date:</label>
-                            <asp:TextBox ID="txtFromDate" runat="server" CssClass="TextBoxnew textDate dateParse form-control form-control-sm" Style="width: 130px;"></asp:TextBox>
-                        </div>
+               
 
-                        <div class="d-flex align-items-center mr-3">
-                            <label for="txtToDate" class="mr-2 mb-0 small">To Date:</label>
-                            <asp:TextBox ID="txtToDate" runat="server" CssClass="TextBoxnew textDate dateParse form-control form-control-sm" Style="width: 130px;"></asp:TextBox>
-                        </div>
-                <div class="d-flex align-items-center mr-3">
-                            <label for="txtCargoNo" class="mr-2 mb-0 small">Cargo No:</label>
-                              <asp:TextBox ID="txtCargoNo" runat="server" CssClass="form-control form-control-sm" Width="200px" ></asp:TextBox>
-                        </div>
+
+                 <div class="col-md-4">
+                  <div class="form-group row mb-0">
+                    <label for="name" class="col-sm-4 col-form-label-sm">Active Status :</label>
+                    <div class="col-sm-8">
+                     <asp:DropDownList runat="server" ID="ddlIsActive" CssClass="form-control form-control-sm">
+                         <asp:ListItem Text="All" Value="0" Selected="True"></asp:ListItem>
+                         <asp:ListItem Text="Active" Value="Y"></asp:ListItem>
+                         <asp:ListItem Text="Inactive" Value="N"></asp:ListItem>
+                     </asp:DropDownList>
+                    </div>
+                  </div>
+
+                </div>
 
            </div>
 
@@ -256,8 +153,8 @@
             <div class="row">
              <div class="col-md-12">
                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" ShowHeader="true" CssClass="table table-sm table-striped table-bordered table-responsive-sm"  
-                DataKeyNames="CARGO_ID" EnableModelValidation="True" ClientIDMode="AutoID" OnRowDataBound="GridView1_RowDataBound" AllowPaging="true" EmptyDataText="There is no record" PageSize="2" 
-                 OnPageIndexChanging="GridView1_PageIndexChanging" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" OnRowCommand="GridView1_RowCommand">
+                DataKeyNames="BRANCH_ID" EnableModelValidation="True" ClientIDMode="AutoID" OnRowDataBound="GridView1_RowDataBound" AllowPaging="true" EmptyDataText="There is no record" PageSize="2" 
+                 OnPageIndexChanging="GridView1_PageIndexChanging" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
                   <PagerSettings Mode="NumericFirstLast" />
                 <HeaderStyle CssClass="table-info" Font-Size="Smaller" />                                      
               <Columns>
@@ -266,19 +163,11 @@
                   <ItemStyle Width="50px" />
                   </asp:HyperLinkField>
               
-                   <asp:BoundField DataField="CARGO_NUMBER" HeaderText="Cargo Number" />
-                  <asp:BoundField DataField="CARGO_DATE" HeaderText="Date" DataFormatString="{0:dd-MMM-yyyy}" HtmlEncode="false" />
-                  <asp:BoundField DataField="STARTING_DIST_NAME" HeaderText="Starting District" />
-                  <asp:BoundField DataField="DESTINATION_DIST_NAME" HeaderText="Destination District" />
-                  <asp:BoundField DataField="TOWN_NAME" HeaderText="Town" />
-
-                     <asp:TemplateField HeaderText="">
-                        <ItemTemplate>
-                            <asp:LinkButton ID="lnkPrint" runat="server" Text="Report" CommandName="ViewReport"  CommandArgument='<%# Eval("CARGO_NUMBER") %>' CssClass="btn btn-sm btn-primary">
-                            </asp:LinkButton>
-                        </ItemTemplate>
-                        <ItemStyle Width="50px" />
-                    </asp:TemplateField>
+                   <asp:BoundField DataField="BRANCH_NAME" HeaderText="Branch Name" />
+                   <asp:BoundField DataField="BRANCH_CODE" HeaderText="Branch Code" />
+                   <asp:BoundField DataField="BRANCH_HEAD_NAME" HeaderText="Branch Head" />
+                  <asp:BoundField DataField="IS_ACTIVE" HeaderText="Active Status" />
+                 
 
                </Columns>
                                                      
@@ -367,50 +256,6 @@
                         </div>
 
                 </div>
-
-            </div>
-            <div class="row">
-                <div class="col-md-12">
- 
-            <div id="dvContentFooterInner" class="d-none"  >
-                <div style="width: 100%; height: 100%; margin-bottom: 0px;">
-                    <div style="width: auto; min-width: 300px; height: auto; text-align: left;">
-                        <table border="0">
-                            <tr>
-                                <td style="width: 100px;"></td>
-                                <td>
-                                    <asp:Label ID="Label3" runat="server" Text="Report View"></asp:Label>
-                                </td>
-                                <td>
-                                    <asp:DropDownList ID="ddlReportViewMode" runat="server" CssClass="dropDownList">
-                                        <asp:ListItem Value="0">In This Tab</asp:ListItem>
-                                        <asp:ListItem  Value="1">In New Tab</asp:ListItem>
-                                        <asp:ListItem Selected="True" Value="2">In New Window</asp:ListItem>
-                                    </asp:DropDownList>
-                                </td>
-                                <td>
-                                    <asp:DropDownList ID="ddlReportViewType" runat="server" CssClass="dropDownList">
-                                        <asp:ListItem Value="0">Screen</asp:ListItem>
-                                        <asp:ListItem Selected="True" Value="1">PDF</asp:ListItem>
-                                    </asp:DropDownList>
-                                </td>
-                                <td></td>
-
-                                <td style="width: 20px;"></td>
-                                <td style="width: 10px;"></td>
-                                <td>
-                                    <div id="dvPrintIFrame" class="dvPrintIFrame">
-                                        <iframe id="ifPrintButton" runat="server" width="0" height="0"></iframe>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
-    
-                </div>
-             
 
             </div>
 

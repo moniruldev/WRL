@@ -31,6 +31,7 @@ namespace PG.DBClass.WRELDC
         private decimal m_SERVICE_AMOUNT = 0;
         private string m_USER_TYPE = string.Empty;
         private string m_IsActive = string.Empty;
+        private string m_TransType = string.Empty;
 
         public int CARGO_ID
         {
@@ -127,6 +128,11 @@ namespace PG.DBClass.WRELDC
         {
             get { return this.m_IsActive; }
             set { this.m_IsActive = value; }
+        }
+        public string TransType
+        {
+            get { return this.m_TransType; }
+            set { this.m_TransType = value; }
         }
         
     }

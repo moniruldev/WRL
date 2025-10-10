@@ -64,6 +64,9 @@ namespace PG.Web.WREL
             var now = DateTime.Now;
             var firstDate = new DateTime(now.Year, now.Month, 1);
 
+            txtFromDate.Text = firstDate.ToString("dd-MMM-yyyy");
+            txtToDate.Text = now.ToString("dd-MMM-yyyy");
+
         }
 
         private void SetHyperLink()
@@ -83,7 +86,22 @@ namespace PG.Web.WREL
         }
         private void LoadData()
         {
-            
+            clsPrmWREL prm = new clsPrmWREL();
+            DateTime? fromDate = null;
+            DateTime? toDate = null;
+            DateTime dt;
+            if (DateTime.TryParse(txtFromDate.Text, out dt))
+            {
+                fromDate = dt;
+            }
+            if (DateTime.TryParse(txtToDate.Text, out dt))
+            {
+                toDate = dt;
+            }
+
+            prm.TRANS_ID = Conversion.StringToInt(hdnDeliveryManID.Value);
+            prm.FromDate = fromDate;
+            prm.ToDate = toDate;
 
             //List<dcCN_ASSIGNMENT> listData = CN_ASSIGNMENTBL.GetCNAssignmentMstListDatabyDelManID(Conversion.StringToInt(hdnDeliveryManID.Value),null);
            
@@ -101,7 +119,7 @@ namespace PG.Web.WREL
             //}).ToList();
 
             //BindGridData(bindList);
-            List<dcCN_ASSIGNMENT> listData = CN_ASSIGNMENTBL.GetCNAssignmentMstListDatabyDelManID(Conversion.StringToInt(hdnDeliveryManID.Value), null);
+            List<dcCN_ASSIGNMENT> listData = CN_ASSIGNMENTBL.GetCNAssignmentMstListDatabyDelManID(prm, null);
 
             var bindList = listData.Select(x => new
             {

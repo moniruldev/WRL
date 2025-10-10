@@ -65,7 +65,7 @@ namespace PG.BLLibrary.WRElBL
             return cObjList;
         }
 
-        public static List<dcCARGO_TRACKING> GetCargoTransferListInfo(dcCARGO_TRACKING Prm, DBContext dc)
+        public static List<dcCARGO_TRACKING> GetCargoTransferListInfo(clsPrmWREL Prm, DBContext dc)
         {
             List<dcCARGO_TRACKING> cObjList = new List<dcCARGO_TRACKING>();
             bool isDCInit = false;
@@ -75,10 +75,26 @@ namespace PG.BLLibrary.WRElBL
 
                 DBCommandInfo cmdInfo = new DBCommandInfo();
                 StringBuilder sb = new StringBuilder(GetCargoTrackingSQLString());
-                if (Prm.TRANS_TYPE!=string.Empty)
+                if (Prm.TransType!=string.Empty)
                 {
                     sb.Append(" AND c.TRANS_TYPE= @pTRANS_TYPE ");
-                    cmdInfo.DBParametersInfo.Add("@pTRANS_TYPE", Prm.TRANS_TYPE);
+                    cmdInfo.DBParametersInfo.Add("@pTRANS_TYPE", Prm.TransType);
+                }
+                if (Prm.FromDate.HasValue)
+                {
+                    if (Prm.ToDate.HasValue)
+                    {
+                        sb.Append(" AND (TO_DATE(c.TRACK_DATE) BETWEEN @fromDate AND @toDate) ");
+                        cmdInfo.DBParametersInfo.Add("@fromDate", Prm.FromDate.Value);
+                        cmdInfo.DBParametersInfo.Add("@toDate", Prm.ToDate.Value);
+                    }
+                    else
+                    {
+                        sb.Append(" AND TO_DATE(c.TRACK_DATE) = @fromDate ");
+                        cmdInfo.DBParametersInfo.Add("@fromDate", Prm.FromDate.Value);
+
+                    }
+
                 }
                 DBQuery dbq = new DBQuery();
                 dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;

@@ -21,7 +21,7 @@ using PG.BLLibrary.WRElBL;
 
 namespace PG.Web.WREL
 {
-    public partial class CargoTransferList : BagePage
+    public partial class BranchList : BagePage
     {
         int CompanyID = 0;
         public string ItemListServiceLink = PageLinks.InventoryLink.GetLink_ItemList;
@@ -61,9 +61,6 @@ namespace PG.Web.WREL
             var now = DateTime.Now;
             var firstDate = new DateTime(now.Year, now.Month, 1);
 
-            txtFromDate.Text = firstDate.ToString("dd-MMM-yyyy");
-            txtToDate.Text = now.ToString("dd-MMM-yyyy");
-
         }
 
         private void SetHyperLink()
@@ -83,31 +80,16 @@ namespace PG.Web.WREL
         }
         private void LoadData()
         {
-            clsPrmWREL prmHms = new clsPrmWREL();
-            DateTime? fromDate = null;
-            DateTime? toDate = null;
-            DateTime dt;
-            if (DateTime.TryParse(txtFromDate.Text, out dt))
-            {
-                fromDate = dt;
-            }
-            if (DateTime.TryParse(txtToDate.Text, out dt))
-            {
-                toDate = dt;
-            }
-
-
-            prmHms.TransType = ddlTransType.SelectedValue;
-            prmHms.FromDate = fromDate;
-            prmHms.ToDate = toDate;
-            List<dcCARGO_TRACKING> listData = CARGO_TRACKINGBL.GetCargoTransferListInfo(prmHms, null);
+            clsPrmWREL prmObj = new clsPrmWREL();
+            prmObj.IsActive = ddlIsActive.SelectedValue;
+            List<dcBRANCH_MST> listData = BRANCH_MSTBL.GetBranchListInfo(prmObj, null);
             BindGridData(listData);
             SetGridInfo(listData.Count);
 
         }
 
 
-        private void BindGridData(List<dcCARGO_TRACKING> listData)
+        private void BindGridData(List<dcBRANCH_MST> listData)
         {
             int pageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
             if (pageSize == 0)
@@ -129,71 +111,30 @@ namespace PG.Web.WREL
 
         protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                string cargoTrackId = DataBinder.Eval(e.Row.DataItem, "CARGO_TRACK_ID").ToString();
-                string transType = DataBinder.Eval(e.Row.DataItem, "TRANS_TYPE").ToString(); // "I" or "R"
-
+                string strD = DataBinder.Eval(e.Row.DataItem, "BRANCH_ID").ToString(); ;
                 HyperLink lnk = (HyperLink)e.Row.Cells[0].Controls[0];
 
-                string hLink = "";
-
+                string hLink = "javascript:tbopen(" + strD + ")";
                 if (base.PageMode == PG.Core.Web.PageModeEnum.InTab)
                 {
-                    // Example for tabbed mode, you can customize it
-                   // hLink = "javascript:tbopen('" + cargoTrackId + "')";
-                     hLink = "javascript:tbopen('" + cargoTrackId + "', '', '" + transType + "')";
+                    hLink = "javascript:tbopen(" + strD + ")";
                 }
                 else
                 {
-                    // Set the link based on TRANSTYPE
-                    if (transType == "I")
-                    {
-                        hLink = "~/WREL/CargoIssuedMst.aspx?id=" + cargoTrackId;
-                    }
-                    else if (transType == "R")
-                    {
-                        hLink = "~/WREL/CargoReceivedMst.aspx?id=" + cargoTrackId;
-                    }
-                    else
-                    {
-                        hLink = "#"; // default or disabled
-                    }
+                    hLink = "~/WREL/BranchEntry.aspx?id=" + strD;
                 }
-
                 lnk.NavigateUrl = hLink;
+
+
+               
             }
 
             if (e.Row.RowType == DataControlRowType.Pager)
             {
                 e.Row.Visible = false;
             }
-
-            //if (e.Row.RowType == DataControlRowType.DataRow)
-            //{
-            //    string strD = DataBinder.Eval(e.Row.DataItem, "CARGO_TRACK_ID").ToString(); ;
-            //    HyperLink lnk = (HyperLink)e.Row.Cells[0].Controls[0];
-
-            //    string hLink = "javascript:tbopen(" + strD + ")";
-            //    if (base.PageMode == PG.Core.Web.PageModeEnum.InTab)
-            //    {
-            //        hLink = "javascript:tbopen(" + strD + ")";
-            //    }
-            //    else
-            //    {
-            //        hLink = "~/WREL/CargoIssuedMst.aspx?id=" + strD;
-            //    }
-            //    lnk.NavigateUrl = hLink;
-
-
-               
-            //}
-
-            //if (e.Row.RowType == DataControlRowType.Pager)
-            //{
-            //    e.Row.Visible = false;
-            //}
         }
 
 
@@ -268,7 +209,7 @@ namespace PG.Web.WREL
             }
             else
             {
-                BindGridData(new List<dcCARGO_TRACKING>());
+                BindGridData(new List<dcBRANCH_MST>());
                 SetGridInfo(0);
             }
         }
@@ -287,7 +228,7 @@ namespace PG.Web.WREL
             }
             else
             {
-                BindGridData(new List<dcCARGO_TRACKING>());
+                BindGridData(new List<dcBRANCH_MST>());
                 SetGridInfo(0);
             }
         }
@@ -313,7 +254,7 @@ namespace PG.Web.WREL
             }
             else
             {
-                BindGridData(new List<dcCARGO_TRACKING>());
+                BindGridData(new List<dcBRANCH_MST>());
                 SetGridInfo(0);
             }
         }

@@ -72,6 +72,9 @@ namespace PG.Web.WREL
             var now = DateTime.Now;
             var firstDate = new DateTime(now.Year, now.Month, 1);
 
+            txtFromDate.Text = firstDate.ToString("dd-MMM-yyyy");
+            txtToDate.Text = now.ToString("dd-MMM-yyyy");
+
         }
 
         private void SetHyperLink()
@@ -91,13 +94,26 @@ namespace PG.Web.WREL
         }
         private void LoadData()
         {
-            dcCARGO_CREATION_MST prmClient = new dcCARGO_CREATION_MST();
+            clsPrmWREL prm = new clsPrmWREL();
             DateTime? fromDate = null;
             DateTime? toDate = null;
+            DateTime dt;
+            if (DateTime.TryParse(txtFromDate.Text, out dt))
+            {
+                fromDate = dt;
+            }
+            if (DateTime.TryParse(txtToDate.Text, out dt))
+            {
+                toDate = dt;
+            }
+
+            prm.FromDate = fromDate;
+            prm.ToDate = toDate;
+            prm.TRANS_NO = txtCargoNo.Text.Trim();
 
             //prmClient.IS_ACTIVE = ddlIsActive.SelectedValue;
 
-            List<dcCARGO_CREATION_MST> listData = CARGO_CREATION_MSTBL.GetCargoMstList();
+            List<dcCARGO_CREATION_MST> listData = CARGO_CREATION_MSTBL.GetCargoMstListInfo(prm,null);
             BindGridData(listData);
             SetGridInfo(listData.Count);
 

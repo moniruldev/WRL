@@ -17,7 +17,7 @@
 
         var btnGridPageGoTo = '<%=btnGridPageGoTo.ClientID %>';
         var txtGridPageNo = '<%=txtGridPageNo.ClientID %>';
-     
+
 
 
         function PageResizeCompleted(pg, cntMain) {
@@ -50,11 +50,11 @@
                 }
             });
 
-         
+
 
 
         });
- 
+
         function tbopen(key, userid, transtype) {
             if (!key) {
                 key = '';
@@ -136,9 +136,9 @@
         $(document).ready(function () {
 
 
-        });    
+        });
 
-     
+
     </script>
 
     <style type="text/css">
@@ -149,162 +149,164 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="row">
-    <div class="container-fluid">
-      <div class="card">
-      <div class="card-header p-0">
-       <div class="d-flex align-items-center justify-content-between p-1">
-         <h5 class="card-title">Cargo Transfer List</h5>
-           <asp:LinkButton runat="server" ID="btnNewAdd" CssClass="btn btn-primary p-1"><i class="fas fa-plus"></i> New Entry</asp:LinkButton>
-       </div>
-       </div>
-
-        <div class="card-body">
-          <div class="row mb-0">
-
-               
-
-
-                 <div class="col-md-4">
-                  <div class="form-group row mb-0">
-                    <label for="name" class="col-sm-4 col-form-label-sm">Trans Type :</label>
-                    <div class="col-sm-8">
-                     <asp:DropDownList runat="server" ID="ddlTransType" CssClass="form-control form-control-sm">
-                         <asp:ListItem Selected="True" Text="Issue" Value="I"></asp:ListItem>
-                         <asp:ListItem Text="Receive" Value="R"></asp:ListItem>
-                     </asp:DropDownList>
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header p-0">
+                    <div class="d-flex align-items-center justify-content-between p-1">
+                        <h5 class="card-title">Cargo Transfer List</h5>
+                        <asp:LinkButton runat="server" ID="btnNewAdd" CssClass="btn btn-primary p-1"><i class="fas fa-plus"></i> New Entry</asp:LinkButton>
                     </div>
-                  </div>
-
                 </div>
 
-           </div>
+                <div class="card-body">
+                    <div class="row mb-0">
+
+                        <div class="d-flex align-items-center mr-3">
+                            <label for="txtFromDate" class="mr-2 mb-0 small">From Date:</label>
+                            <asp:TextBox ID="txtFromDate" runat="server" CssClass="TextBoxnew textDate dateParse form-control form-control-sm" Style="width: 130px;"></asp:TextBox>
+                        </div>
+
+                        <div class="d-flex align-items-center mr-3">
+                            <label for="txtToDate" class="mr-2 mb-0 small">To Date:</label>
+                            <asp:TextBox ID="txtToDate" runat="server" CssClass="TextBoxnew textDate dateParse form-control form-control-sm" Style="width: 130px;"></asp:TextBox>
+                        </div>
+                        <div class="d-flex align-items-center mr-3">
+                            <label for="name" class="mr-2 mb-0 small">Trans Type :</label>
+                            <asp:DropDownList runat="server" ID="ddlTransType" CssClass="form-control form-control-sm" Width="130px">
+                                <asp:ListItem Selected="True" Text="Issue" Value="I"></asp:ListItem>
+                                <asp:ListItem Text="Receive" Value="R"></asp:ListItem>
+                            </asp:DropDownList>
+                        </div>
 
 
-            <div class="row-mb-0">
-              <div class="card-footer m-2 p-1">
-              <asp:LinkButton runat="server" ID="btnLoadData" OnClick="btnLoadData_Click"  CssClass="btn btn-primary" Text="<i class='fa fa-list'></i> Show Data"></asp:LinkButton>
-             </div>
-            </div>
-            <%--DataKeyNames="CARGO_TRACK_ID"--%>
-            <div class="row">
-             <div class="col-md-12">
-                   <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" ShowHeader="true" CssClass="table table-sm table-striped table-bordered table-responsive-sm"  
-                 EnableModelValidation="True" ClientIDMode="AutoID" OnRowDataBound="GridView1_RowDataBound" AllowPaging="true" EmptyDataText="There is no record" PageSize="2" 
-                 OnPageIndexChanging="GridView1_PageIndexChanging" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
-                  <PagerSettings Mode="NumericFirstLast" />
-                <HeaderStyle CssClass="table-info" Font-Size="Smaller" />                                      
-              <Columns>
-                   <%-- <asp:TemplateField HeaderText="Action">
+                    </div>
+
+
+                    <div class="row-mb-0">
+                        <div class="card-footer m-2 p-1">
+                            <asp:LinkButton runat="server" ID="btnLoadData" OnClick="btnLoadData_Click" CssClass="btn btn-primary" Text="<i class='fa fa-list'></i> Show Data"></asp:LinkButton>
+                        </div>
+                    </div>
+                    <%--DataKeyNames="CARGO_TRACK_ID"--%>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" ShowHeader="true" CssClass="table table-sm table-striped table-bordered table-responsive-sm"
+                                EnableModelValidation="True" ClientIDMode="AutoID" OnRowDataBound="GridView1_RowDataBound" AllowPaging="true" EmptyDataText="There is no record" PageSize="2"
+                                OnPageIndexChanging="GridView1_PageIndexChanging" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
+                                <PagerSettings Mode="NumericFirstLast" />
+                                <HeaderStyle CssClass="table-info" Font-Size="Smaller" />
+                                <Columns>
+                                    <%-- <asp:TemplateField HeaderText="Action">
             <ItemTemplate>
                 <asp:HyperLink ID="lnkOpen" runat="server" CssClass="buttonViewGrid" />
             </ItemTemplate>
         </asp:TemplateField>--%>
-                   <asp:HyperLinkField HeaderText="" Text="">
-                   <ControlStyle CssClass="buttonViewGrid" Height="20px" Width="40px" />
-                  <ItemStyle Width="50px" />
-                  </asp:HyperLinkField>
-                   <asp:BoundField DataField="CARGO_TRACK_ID" HeaderText="Track ID" />
-                   <asp:BoundField DataField="TRANS_TYPE" HeaderText="Type" />
-                   <asp:BoundField DataField="CARGO_NUMBER" HeaderText="Cargo Number" />
-                  <asp:BoundField DataField="TRACK_DATE" HeaderText="Trans Date" DataFormatString="{0:dd-MMM-yyyy}" HtmlEncode="false" />
-                  
-                  <asp:BoundField DataField="T_HUBNAME" HeaderText="To Hub Name" />
-                 <asp:BoundField DataField="TRANS_MEDIA_NAME" HeaderText="Trans Media" />
-                  
-               </Columns>
-                                                     
-          </asp:GridView>
-             </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                     <div id="dvGridFooter" style="width: 100%; height: 25px; font-size: smaller;" class="subFooter">
-                            <table style="height: 100%; width: 100%;"
-                                cellspacing="2" cellpadding="1" rules="all">
-                                <tr>
-                                    <td align="left" style="width: 40%">
-                                        <table>
-                                            <tr>
-                                                <td style="width: 2px;"></td>
-                                                <td>
-                                                    <asp:Label ID="lblTotal" CssClass="col-form-label-sm" runat="server" Text="Rows: 0 of 0"></asp:Label>
-                                                    <asp:HiddenField ID="hdnRowCount" runat="server" Value="0" />
-                                                </td>
-                                            </tr>
-                                        </table>
+                                    <asp:HyperLinkField HeaderText="" Text="">
+                                        <ControlStyle CssClass="buttonViewGrid" Height="20px" Width="40px" />
+                                        <ItemStyle Width="50px" />
+                                    </asp:HyperLinkField>
+                                    <asp:BoundField DataField="CARGO_TRACK_ID" HeaderText="Track ID" />
+                                    <asp:BoundField DataField="TRANS_TYPE" HeaderText="Type" />
+                                    <asp:BoundField DataField="CARGO_NUMBER" HeaderText="Cargo Number" />
+                                    <asp:BoundField DataField="TRACK_DATE" HeaderText="Trans Date" DataFormatString="{0:dd-MMM-yyyy}" HtmlEncode="false" />
 
+                                    <asp:BoundField DataField="T_HUBNAME" HeaderText="To Hub Name" />
+                                    <asp:BoundField DataField="TRANS_MEDIA_NAME" HeaderText="Trans Media" />
 
+                                </Columns>
 
-                                    </td>
-                                    <td align="right" style="width: 60%">
-                                        <div id="dvGridPager" class="dvGridPager">
+                            </asp:GridView>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="dvGridFooter" style="width: 100%; height: 25px; font-size: smaller;" class="subFooter">
+                                <table style="height: 100%; width: 100%;"
+                                    cellspacing="2" cellpadding="1" rules="all">
+                                    <tr>
+                                        <td align="left" style="width: 40%">
                                             <table>
                                                 <tr>
-                                                    <td>
-                                                        <asp:Button ID="btnGridPageGoTo" runat="server" Text="Go"
-                                                            OnClick="btnGridPageGoTo_Click" />
-                                                    </td>
-                                                    <td>
-                                                        <asp:Label ID="Label2" CssClass="col-form-label-sm p-2" runat="server" Text="Page Size:"></asp:Label>
-                                                    </td>
-                                                    <td>
-                                                        <asp:DropDownList ID="ddlGridPageSize" runat="server" CssClass="form-control form-control-sm m-1 p-0" AutoPostBack="True"
-                                                            OnSelectedIndexChanged="ddlGridPageSize_SelectedIndexChanged">
-                                                            <asp:ListItem Value="10" Selected="True">10</asp:ListItem>
-                                                            <asp:ListItem Value="20">20</asp:ListItem>
-                                                            <asp:ListItem Value="30">30</asp:ListItem>
-                                                            <asp:ListItem Value="50">50</asp:ListItem>
-                                                            <asp:ListItem Value="100">100</asp:ListItem>
-                                                            <asp:ListItem Value="200">200</asp:ListItem>
-                                                            <asp:ListItem Value="0" >all</asp:ListItem>
-                                                        </asp:DropDownList>
-                                                    </td>
-
-
-                                                    <td>
-                                                        <asp:Label ID="Label1" runat="server" CssClass="col-form-label-sm p-2" Text="Page:"></asp:Label>
-                                                    </td>
-                                                    <td>
-                                                        <asp:TextBox ID="txtGridPageNo" runat="server" CssClass="form-control form-control-sm m-1 p-0" Width="50px">0</asp:TextBox>
-                                                    </td>
-                                                    <td>
-                                                        <asp:Label ID="lblGridPageInfo" runat="server" CssClass="col-form-label-sm p-2"  Text=" of 0"></asp:Label>
-                                                    </td>
-                                                    <td>
-                                                        <asp:Button ID="btnGridPageFirst" runat="server" Text="" CssClass="btnGridPageFirst"
-                                                            OnClick="btnGridPageFirst_Click" ToolTip="First" />
-                                                    </td>
-                                                    <td>
-                                                        <asp:Button ID="btnGridPagePrev" runat="server" Text="" CssClass="btnGridPagePrev"
-                                                            OnClick="btnGridPagePrev_Click" ToolTip="Previous" />
-                                                    </td>
-                                                    <td>
-                                                        <asp:Button ID="btnGridPageNext" runat="server" Text="" CssClass="btnGridPageNext"
-                                                            OnClick="btnGridPageNext_Click" ToolTip="Next" />
-                                                    </td>
-                                                    <td>
-                                                        <asp:Button ID="btnGridPageLast" runat="server" Text="" CssClass="btnGridPageLast"
-                                                            OnClick="btnGridPageLast_Click" ToolTip="Last" />
-                                                    </td>
                                                     <td style="width: 2px;"></td>
+                                                    <td>
+                                                        <asp:Label ID="lblTotal" CssClass="col-form-label-sm" runat="server" Text="Rows: 0 of 0"></asp:Label>
+                                                        <asp:HiddenField ID="hdnRowCount" runat="server" Value="0" />
+                                                    </td>
                                                 </tr>
                                             </table>
-                                        </div>
 
-                                    </td>
 
-                                </tr>
-                            </table>
+
+                                        </td>
+                                        <td align="right" style="width: 60%">
+                                            <div id="dvGridPager" class="dvGridPager">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <asp:Button ID="btnGridPageGoTo" runat="server" Text="Go"
+                                                                OnClick="btnGridPageGoTo_Click" />
+                                                        </td>
+                                                        <td>
+                                                            <asp:Label ID="Label2" CssClass="col-form-label-sm p-2" runat="server" Text="Page Size:"></asp:Label>
+                                                        </td>
+                                                        <td>
+                                                            <asp:DropDownList ID="ddlGridPageSize" runat="server" CssClass="form-control form-control-sm m-1 p-0" AutoPostBack="True"
+                                                                OnSelectedIndexChanged="ddlGridPageSize_SelectedIndexChanged">
+                                                                <asp:ListItem Value="10" Selected="True">10</asp:ListItem>
+                                                                <asp:ListItem Value="20">20</asp:ListItem>
+                                                                <asp:ListItem Value="30">30</asp:ListItem>
+                                                                <asp:ListItem Value="50">50</asp:ListItem>
+                                                                <asp:ListItem Value="100">100</asp:ListItem>
+                                                                <asp:ListItem Value="200">200</asp:ListItem>
+                                                                <asp:ListItem Value="0">all</asp:ListItem>
+                                                            </asp:DropDownList>
+                                                        </td>
+
+
+                                                        <td>
+                                                            <asp:Label ID="Label1" runat="server" CssClass="col-form-label-sm p-2" Text="Page:"></asp:Label>
+                                                        </td>
+                                                        <td>
+                                                            <asp:TextBox ID="txtGridPageNo" runat="server" CssClass="form-control form-control-sm m-1 p-0" Width="50px">0</asp:TextBox>
+                                                        </td>
+                                                        <td>
+                                                            <asp:Label ID="lblGridPageInfo" runat="server" CssClass="col-form-label-sm p-2" Text=" of 0"></asp:Label>
+                                                        </td>
+                                                        <td>
+                                                            <asp:Button ID="btnGridPageFirst" runat="server" Text="" CssClass="btnGridPageFirst"
+                                                                OnClick="btnGridPageFirst_Click" ToolTip="First" />
+                                                        </td>
+                                                        <td>
+                                                            <asp:Button ID="btnGridPagePrev" runat="server" Text="" CssClass="btnGridPagePrev"
+                                                                OnClick="btnGridPagePrev_Click" ToolTip="Previous" />
+                                                        </td>
+                                                        <td>
+                                                            <asp:Button ID="btnGridPageNext" runat="server" Text="" CssClass="btnGridPageNext"
+                                                                OnClick="btnGridPageNext_Click" ToolTip="Next" />
+                                                        </td>
+                                                        <td>
+                                                            <asp:Button ID="btnGridPageLast" runat="server" Text="" CssClass="btnGridPageLast"
+                                                                OnClick="btnGridPageLast_Click" ToolTip="Last" />
+                                                        </td>
+                                                        <td style="width: 2px;"></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+
+                                        </td>
+
+                                    </tr>
+                                </table>
+                            </div>
+
                         </div>
+
+                    </div>
 
                 </div>
 
             </div>
 
         </div>
-
-      </div>
-
-    </div>
     </div>
 </asp:Content>

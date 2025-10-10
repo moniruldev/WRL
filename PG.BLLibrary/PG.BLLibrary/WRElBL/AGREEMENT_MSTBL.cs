@@ -90,8 +90,24 @@ namespace PG.BLLibrary.WRElBL
 
                 if (prmHms.IsActive != "0")
                 {
-                    sb.Append(" AND IS_ACTIVE= @IS_ACTIVE ");
+                    sb.Append(" AND mst.IS_ACTIVE= @IS_ACTIVE ");
                     cmdInfo.DBParametersInfo.Add("@IS_ACTIVE", prmHms.IsActive);
+                }
+                if (prmHms.FromDate.HasValue)
+                {
+                    if (prmHms.ToDate.HasValue)
+                    {
+                        sb.Append(" AND (TO_DATE(mst.AGREEMENT_DATE) BETWEEN @fromDate AND @toDate) ");
+                        cmdInfo.DBParametersInfo.Add("@fromDate", prmHms.FromDate.Value);
+                        cmdInfo.DBParametersInfo.Add("@toDate", prmHms.ToDate.Value);
+                    }
+                    else
+                    {
+                        sb.Append(" AND TO_DATE(mst.AGREEMENT_DATE) = @fromDate ");
+                        cmdInfo.DBParametersInfo.Add("@fromDate", prmHms.FromDate.Value);
+
+                    }
+
                 }
 
 

@@ -61,6 +61,9 @@ namespace PG.Web.WREL
             var now = DateTime.Now;
             var firstDate = new DateTime(now.Year, now.Month, 1);
 
+            txtFromDate.Text = firstDate.ToString("dd-MMM-yyyy");
+            txtToDate.Text = now.ToString("dd-MMM-yyyy");
+
         }
 
         private void SetHyperLink()
@@ -85,17 +88,18 @@ namespace PG.Web.WREL
             //dcAGENT_MST prmHms = new dcAGENT_MST();
             DateTime? fromDate = null;
             DateTime? toDate = null;
-            //DateTime dt;
-            //if (DateTime.TryParse(txtCheckInFromDate.Text, out dt))
-            //{
-            //    fromDate = dt;
-            //}
-            //if (DateTime.TryParse(txtCheckInToDate.Text, out dt))
-            //{
-            //    toDate = dt;
-            //}
+            DateTime dt;
+            if (DateTime.TryParse(txtFromDate.Text, out dt))
+            {
+                fromDate = dt;
+            }
+            if (DateTime.TryParse(txtToDate.Text, out dt))
+            {
+                toDate = dt;
+            }
             prmHms.CLIENT_ID =Conversion.StringToInt(hdnClientId.Value);
-
+            prmHms.FromDate = fromDate;
+            prmHms.ToDate = toDate;
             prmHms.IsActive = ddlIsActive.SelectedValue;
 
             List<dcAGREEMENT_MST> listData = AGREEMENT_MSTBL.GetAgreementList(prmHms, null);

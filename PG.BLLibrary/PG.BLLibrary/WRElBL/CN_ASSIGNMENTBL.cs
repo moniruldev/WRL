@@ -114,7 +114,7 @@ namespace PG.BLLibrary.WRElBL
         }
 
 
-        public static List<dcCN_ASSIGNMENT> GetCNAssignmentMstListDatabyDelManID(int pDElMan_ID, DBContext dc)
+        public static List<dcCN_ASSIGNMENT> GetCNAssignmentMstListDatabyDelManID(clsPrmWREL prm, DBContext dc)
         {
             List<dcCN_ASSIGNMENT> cObjList = new List<dcCN_ASSIGNMENT>();
             bool isDCInit = false;
@@ -124,10 +124,26 @@ namespace PG.BLLibrary.WRElBL
 
                 DBCommandInfo cmdInfo = new DBCommandInfo();
                 StringBuilder sb = new StringBuilder(GetCNAssignmentMstListString());
-                if (pDElMan_ID > 0)
+                if (prm.TRANS_ID > 0)
                 {
                     sb.Append(" AND mst.DELIVERY_MAN_ID= @pDElMan_ID ");
-                    cmdInfo.DBParametersInfo.Add("@pDElMan_ID", pDElMan_ID);
+                    cmdInfo.DBParametersInfo.Add("@pDElMan_ID", prm.TRANS_ID);
+                }
+                if (prm.FromDate.HasValue)
+                {
+                    if (prm.ToDate.HasValue)
+                    {
+                        sb.Append(" AND (TO_DATE(mst.ASSIGN_DATE) BETWEEN @fromDate AND @toDate) ");
+                        cmdInfo.DBParametersInfo.Add("@fromDate", prm.FromDate.Value);
+                        cmdInfo.DBParametersInfo.Add("@toDate", prm.ToDate.Value);
+                    }
+                    else
+                    {
+                        sb.Append(" AND TO_DATE(mst.ASSIGN_DATE) = @fromDate ");
+                        cmdInfo.DBParametersInfo.Add("@fromDate", prm.FromDate.Value);
+
+                    }
+
                 }
                 DBQuery dbq = new DBQuery();
                 dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
