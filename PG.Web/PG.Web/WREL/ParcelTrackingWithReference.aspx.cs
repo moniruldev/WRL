@@ -103,6 +103,24 @@ namespace PG.Web.WREL
             HighlightSteps(completedSteps);
             UpdateStatusText(completedSteps);
             lblCnNumber.Text = string.Format("Parcel Number: {0}", clientParcel.CN_NUMBER);
+
+            dcCN_CREATION_MST osf = new dcCN_CREATION_MST();
+            osf = CN_CREATION_MSTBL.GetCNInfoListimage(prm, null);
+
+
+
+            if (osf.PODIMG != null && osf.PODIMG.Length > 0)
+            {
+                // byte[] photoBytes = img.POD as byte[];
+
+                string imageUrl = "data:image/jpeg;base64," + Convert.ToBase64String(osf.PODIMG);
+                imgPhoto.ImageUrl = imageUrl; // Your <asp:Image> control
+            }
+            else
+            {
+                imgPhoto.ImageUrl = "~/Images/no-image.png"; // Fallback
+            }
+
         }
 
 

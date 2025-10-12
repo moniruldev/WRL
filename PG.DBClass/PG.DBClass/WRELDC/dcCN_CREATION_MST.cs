@@ -751,6 +751,7 @@ namespace PG.DBClass.WRELDC
          public int SLNO { get; set; }
          public string DEPT_NAME { get; set; }
          public string DISTANCE_TYPE_NAME { get; set; }
+         public byte[] PODIMG { get; set; }
          
      }
 }

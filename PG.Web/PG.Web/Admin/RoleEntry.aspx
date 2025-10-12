@@ -430,7 +430,7 @@
                     <div class="col-sm-9">
                       <asp:DropDownList ID="ddlApp" runat="server" CssClass="form-control form-control-sm">
                          <asp:ListItem Value="1" Text="Courier" Selected="True" ></asp:ListItem>
-                         <asp:ListItem Value="2" Text="Bank" ></asp:ListItem>   
+                         <asp:ListItem Value="2" Text="Client" ></asp:ListItem>   
                       </asp:DropDownList>
                     </div>
                   </div>

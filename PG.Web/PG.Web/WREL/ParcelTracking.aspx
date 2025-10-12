@@ -316,7 +316,10 @@
                     <div class="label">Delivered</div>
                 </div>
             </div>
-
+            <div>
+                <asp:Image ID="imgPhoto" runat="server" Width="60px" Height="37px"
+    CssClass="img-thumbnail" />
+            </div>
             <asp:Label ID="lblStatusMessage" runat="server" CssClass="text-center d-block mt-3 font-weight-bold"></asp:Label>
         </asp:Panel>
 

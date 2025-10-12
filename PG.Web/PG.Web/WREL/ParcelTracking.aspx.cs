@@ -84,7 +84,28 @@ namespace PG.Web.WREL
                 pnlTracking.Visible = false;
                 return;
             }
+            dcCN_CREATION_MST osf=new dcCN_CREATION_MST();
+            osf=CN_CREATION_MSTBL.GetCNInfoListimage(prm,null);
 
+  
+
+    if (osf.PODIMG != null && osf.PODIMG.Length > 0)
+    {
+         // byte[] photoBytes = img.POD as byte[];
+
+        string imageUrl = "data:image/jpeg;base64," + Convert.ToBase64String(osf.PODIMG);
+        imgPhoto.ImageUrl = imageUrl; // Your <asp:Image> control
+    }
+    else
+    {
+        imgPhoto.ImageUrl = "~/Images/no-image.png"; // Fallback
+    }
+
+
+            //imgPhoto.ImageUrl=clientParcel
+            //     POD = x.POD != null && x.POD.Length > 0
+            //        ? "data:image/png;base64," + Convert.ToBase64String(x.POD)
+            //        : null
             // Get completed steps using your class
             List<dcCN_CREATION_MST> completedSteps = CN_CREATION_MSTBL.GetCNTrackingInfoList(prm, null);
           

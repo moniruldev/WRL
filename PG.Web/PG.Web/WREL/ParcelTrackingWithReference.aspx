@@ -41,7 +41,13 @@
             var gridFooterHeight = $("#dvGridFooter").height();
             $("#dvGrid").height(gridHeight - gridHeaderHeight - gridFooterHeight - 2);
         }
-
+        function showLargeImage(img) {
+            var src = img.src; // get small image src
+            document.getElementById("imgLarge").src = src; // set modal image
+            var modal = new bootstrap.Modal(document.getElementById('imgModal'));
+            modal.show();
+            return false; // prevent postback
+        }
 
         $(document).ready(function () {
             //$('#' + txtGridPageNo).keydown(function (e) {
@@ -323,14 +329,58 @@
                     <div class="label">Delivered</div>
                 </div>
             </div>
+            <div class="d-flex justify-content-between align-items-center">
+    <!-- Left side: CN Number + Status -->
+    <div>
+        <asp:Label ID="lblCnNumber" runat="server" 
+            CssClass="text-left font-weight-bold d-block"></asp:Label>
+        <asp:Label ID="lblStatusMessage" runat="server" 
+            CssClass="text-left font-weight-bold d-block"></asp:Label>
+    </div>
 
-            <asp:Label ID="lblCnNumber" runat="server" CssClass="text-center d-block mt-3 font-weight-bold"></asp:Label>
+    <!-- Right side: Proof label + image -->
+    <div class="d-flex align-items-center">
+        <asp:Label ID="lblprof" runat="server" Text="Proof of Delivery :" 
+            CssClass="me-2 font-weight-bold"></asp:Label>
+        <asp:Image ID="imgPhoto" runat="server" Width="350px" Height="170px"
+            CssClass="img-thumbnail" Style="cursor:pointer;"
+            onclick="return showLargeImage(this)" />
+    </div>
+</div>
+
+           <%-- <div class="d-flex justify-content-between align-items-center">
+    <div>
+        <asp:Label ID="lblCnNumber" runat="server" 
+            CssClass="text-left font-weight-bold d-block"></asp:Label>
+        <asp:Label ID="lblStatusMessage" runat="server" 
+            CssClass="text-left font-weight-bold d-block"></asp:Label>
+    </div>
+<asp:Label ID="lblprof" runat="server" Text="Proof of Delivery :"></asp:Label>
+    <asp:Image ID="imgPhoto" runat="server" Width="100px" Height="57px"
+        CssClass="img-thumbnail" Style="cursor:pointer;"
+        onclick="return showLargeImage(this)" />
+</div>--%>
+
+            <%--<asp:Label ID="lblCnNumber" runat="server" CssClass="text-center d-block mt-3 font-weight-bold"></asp:Label>
             <asp:Label ID="lblStatusMessage" runat="server" CssClass="text-center d-block mt-3 font-weight-bold"></asp:Label>
+            <div id="dff" runat="server" align="right">
+                <asp:Image ID="imgPhoto" runat="server" Width="60px" Height="37px" onclick="return showLargeImage(this)" Style="cursor:pointer;" 
+    CssClass="img-thumbnail" />
+            </div>--%>
         </asp:Panel>
 
         <asp:Label ID="lblError" runat="server" CssClass="text-danger text-center d-block mt-3"></asp:Label>
     </div>
-
+     <!-- Bootstrap Modal for Large Image -->
+<div class="modal fade" id="imgModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <img id="imgLarge" src="" class="img-fluid" />
+      </div>
+    </div>
+  </div>
+</div>
       <div class="row-mb-0 d-none">
               <div class="card-footer m-2 p-1">
 

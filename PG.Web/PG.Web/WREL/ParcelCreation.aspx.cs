@@ -496,8 +496,8 @@ namespace PG.Web.WREL
             cObj.AGR_DETAIL_ID = Conversion.StringToInt(strD);
             //strD = ((TextBox)gvR.FindControl("txtPICKUP_DATE")).Text;
             //cObj.PICKUP_DATE =Conversion.StringToDate(strD);
-            //strD = ((TextBox)gvR.FindControl("txtCN_CLIENT_CODE")).Text;
-            //cObj.CN_CLIENT_CODE = strD;
+            strD = ((Label)gvR.FindControl("txtCNNumber")).Text;
+            cObj.CN_NUMBER = strD;
             strD = ((TextBox)gvR.FindControl("txtRecipientName")).Text;
             cObj.CONSIGNEE_NAME = strD;
             strD = ((TextBox)gvR.FindControl("txtRecipientAddress")).Text;
@@ -680,7 +680,7 @@ namespace PG.Web.WREL
                     cObj.EDIT_DATE = DateTime.Now;
                 }
 
-                cObj.CN_NUMBER = CN_CREATION_MSTBL.Get_New_CN_No(DateTime.Now.ToString("dd-MMM-yy"), null);
+                cObj.CN_NUMBER =CN_CREATION_MSTBL.Get_New_CN_No(DateTime.Now.ToString("dd-MMM-yy"), null);
                 cObj.CLIENT_ID = Conversion.StringToInt(hdnClientId.Value);
                 //cObj.CLIENT_DEPT_ID = Conversion.StringToInt(hdnDeptID.Value);
                 cObj.AGR_DETAIL_ID = obj.AGR_DETAIL_ID;
@@ -1174,16 +1174,21 @@ namespace PG.Web.WREL
 
                     // Populate your list from the DataTable
                     this.listDetails.Clear();
-                   
+                    DBContext dc = null;
+                    bool isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+                     try
+                      {
+
+                    TEMP_CN_INFOBL.DeleteTempData(null);
+                    bool isTransInit = dc.StartTransaction();
                     if (tbl.Rows.Count > 0)
                     {
                         foreach (DataRow Row in tbl.Rows)
                         {
-                            DBContext dc = null;
-                            bool isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
-                            bool isTransInit = dc.StartTransaction();
-                             try
-                             {
+                            //DBContext dc = null;
+                            //bool isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+                          
+                            
                                 dcTEMP_CN_INFO cObj = new dcTEMP_CN_INFO();
                                 cObj.SLNO =Conversion.StringToInt(Row["SL_NO"].ToString());
                                 cObj.CLIENT_DEPTORBRANCH = Row["DEPTORBRANCH"].ToString();
@@ -1203,16 +1208,12 @@ namespace PG.Web.WREL
                                 cObj.DISTANCE_TYPE_NAME = Row["DISTANCE_TYPE"].ToString();
                                 TEMP_CN_INFOBL.Insert(cObj, dc);
                                 dc.CommitTransaction(isTransInit);
-                            }
-                            catch
-                            {
-                                dc.RollbackTransaction();
-                            }
-                            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+                           
+                           
 
                         }
 
-                        CNTEMPlistDetails=  TEMP_CN_INFOBL.GetTempCNListInfo("1", null);
+                        CNTEMPlistDetails = TEMP_CN_INFOBL.GetTempCNListInfo("1", dc);
                       
                         foreach (var Item in CNTEMPlistDetails)
                         {
@@ -1258,7 +1259,12 @@ namespace PG.Web.WREL
                         TEMP_CN_INFOBL.DeleteTempData(null);
                         btnSave.Enabled = true;
                     }
-                   
+                  }
+                  catch
+                   {
+                         dc.RollbackTransaction();
+                     }
+                    finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
             
                 }
             }

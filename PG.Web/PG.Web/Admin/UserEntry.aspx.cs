@@ -253,7 +253,7 @@ namespace PG.Web.Admin
             ddlUserType.CssClass = "form-control form-control-sm";
             ddlApp.Enabled = isEnabled;
             ddlApp.CssClass = "form-control form-control-sm";
-            
+            txtUserName.Enabled = isEnabled;
             //buttons
             btnAddNew.Visible = !isEnabled;
             btnEdit.Visible = !isEnabled;

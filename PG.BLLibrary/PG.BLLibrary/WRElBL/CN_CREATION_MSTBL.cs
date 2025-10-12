@@ -522,5 +522,48 @@ namespace PG.BLLibrary.WRElBL
             bStatus = true;
             return bStatus;
         }
+
+
+        public static dcCN_CREATION_MST GetCNInfoListimage(clsPrmWREL prm, DBContext dc)
+        {
+            dcCN_CREATION_MST cobt = new dcCN_CREATION_MST();
+            bool isDCInit = false;
+
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder("SELECT POD AS PODIMG FROM CN_CREATION_MST WHERE 1=1");
+
+                if (!string.IsNullOrWhiteSpace(prm.CN_NUMBER))
+                {
+                    sb.Append(" AND UPPER(CN_NUMBER) LIKE @cnNumber ");
+                    cmdInfo.DBParametersInfo.Add("@cnNumber", "%" + prm.CN_NUMBER.ToUpper() + "%");
+                }
+
+                DBQuery dbq = new DBQuery
+                {
+                    DBQueryMode = DBQueryModeEnum.DBCommandInfo,
+                    DBCommandInfo = cmdInfo
+                };
+
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+
+                cobt = DBQuery.ExecuteDBQuery<dcCN_CREATION_MST>(dbq, dc).FirstOrDefault();
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                DBContextManager.ReleaseDBContext(ref dc, isDCInit);
+            }
+
+            return cobt;
+        }
+
     }
 }
