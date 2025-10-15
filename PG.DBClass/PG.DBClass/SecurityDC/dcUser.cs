@@ -45,6 +45,8 @@ namespace PG.DBClass.SecurityDC
         private string m_ALL_DEPT = "N";
         private string m_ISDELIVERYMAN = "N";
         private int m_CLIENT_ID = 0;
+        private int m_DELIVERY_MAN_ID = 0;
+        private int m_AGENT_ID = 0;
 
         #endregion  //private members
 
@@ -376,6 +378,28 @@ namespace PG.DBClass.SecurityDC
             }
         }
 
+        [DBColumn(Name = "DELIVERY_MAN_ID", Storage = "m_DELIVERY_MAN_ID", DbType = "107")]
+        public int DELIVERY_MAN_ID
+        {
+            get { return this.m_DELIVERY_MAN_ID; }
+            set
+            {
+                this.m_DELIVERY_MAN_ID = value;
+                this.NotifyPropertyChanged("DELIVERY_MAN_ID");
+            }
+        }
+
+        [DBColumn(Name = "AGENT_ID", Storage = "m_AGENT_ID", DbType = "107")]
+        public int AGENT_ID
+        {
+            get { return this.m_AGENT_ID; }
+            set
+            {
+                this.m_AGENT_ID = value;
+                this.NotifyPropertyChanged("AGENT_ID");
+            }
+        }
+
         #endregion //properties
 
        
@@ -447,6 +471,8 @@ namespace PG.DBClass.SecurityDC
         public int CompanyId { get; set; }
         public int DEPARTMENT_ID { get; set; }
         public string CLIENT_NAME { get; set; }
+        public string DELIVERY_MAN_NAME { get; set; }
+        public string AGENT_NAME { get; set; }
 
 
     }

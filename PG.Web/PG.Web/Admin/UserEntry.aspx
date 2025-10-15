@@ -19,9 +19,17 @@
 
       
         var ClientListServiceLink = '<%=this.ClientListServiceLink%>';
+        var DeliveryManlistServiceLink = '<%=this.DeliveryManlistServiceLink%>';
+        var AgentListServiceLink = '<%=this.AgentListServiceLink%>';
     
         var txtClientName = '<%=txtClientName.ClientID%>';
         var hdnClientId = '<%=hdnClientId.ClientID%>';
+
+        var txtDeliveryMan = '<%=txtDeliveryMan.ClientID%>';
+        var hdnDeliveryManID = '<%=hdnDeliveryManID.ClientID%>';
+
+        var txtAgentName = '<%=txtAgentName.ClientID%>';
+        var hdnAgentId = '<%=hdnAgentId.ClientID%>';
 
         $(document).ready(function () {
 
@@ -43,6 +51,18 @@
             if ($('#' + txtClientName).is(':visible')) {
 
                 bindClientList();
+
+            }
+
+            if ($('#' + txtDeliveryMan).is(':visible')) {
+
+                bindDeliveryManList();
+
+            }
+
+            if ($('#' + txtAgentName).is(':visible')) {
+
+                bindAgentNameList();
 
             }
 
@@ -114,6 +134,139 @@
                 if (groupID == '') {
                     $('#' + txtClientName).val('');
                     $('#' + hdnClientId).val('0');
+                }
+            });
+        }
+        function bindDeliveryManList() {
+            var cgColumns = [
+                             { 'columnName': 'delmanname', 'width': '200', 'align': 'left', 'highlight': 4, 'label': 'Name' }
+                            , { 'columnName': 'mobile', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Mobile' }
+
+            ];
+            var serviceURL = DeliveryManlistServiceLink + "?isterm=1&includeempty=0&hasitem=1&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+
+            serviceURL += "&ispaging=0";
+            var groupIDElem = $('#' + txtDeliveryMan);
+
+            $('#' + txtDeliveryMan).click(function (e) {
+                $(groupIDElem).combogrid("dropdownClick");
+            });
+
+            $(groupIDElem).combogrid({
+                debug: true,
+                searchButton: false,
+                resetButton: false,
+                alternate: true,
+                munit: 'px',
+                scrollBar: true,
+                showPager: true,
+                colModel: cgColumns,
+                autoFocus: true,
+                showError: true,
+                width: 450,
+                url: serviceURL,
+                search: function (event, ui) {
+
+                    var newServiceURL = serviceURL;
+                    $(this).combogrid("option", "url", newServiceURL);
+
+
+                },
+                select: function (event, ui) {
+                    if (!ui.item) {
+                        event.preventDefault();
+                        return false;
+                    }
+
+                    if (ui.item.dealerid == '') {
+                        event.preventDefault();
+                        return false;
+                    }
+                    else {
+                        $('#' + hdnDeliveryManID).val(ui.item.delmanid);
+                        $('#' + txtDeliveryMan).val(ui.item.delmanname);
+                    }
+                    return false;
+                },
+
+                lc: ''
+            });
+
+
+            $(groupIDElem).blur(function () {
+                var self = this;
+
+                var groupID = $(groupIDElem).val();
+                if (groupID == '') {
+                    $('#' + txtDeliveryMan).val('');
+                    $('#' + hdnDeliveryManID).val('0');
+                }
+            });
+        }
+        function bindAgentNameList() {
+            var cgColumns = [
+                             { 'columnName': 'agentcompanyname', 'width': '200', 'align': 'left', 'highlight': 4, 'label': 'Agent' }
+                            , { 'columnName': 'ownername', 'width': '200', 'align': 'left', 'highlight': 4, 'label': 'Owner' }
+
+            ];
+            var serviceURL = AgentListServiceLink + "?isterm=1&includeempty=0&hasitem=1&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+
+            serviceURL += "&ispaging=0";
+            var groupIDElem = $('#' + txtAgentName);
+
+            $('#' + txtAgentName).click(function (e) {
+                $(groupIDElem).combogrid("dropdownClick");
+            });
+
+            $(groupIDElem).combogrid({
+                debug: true,
+                searchButton: false,
+                resetButton: false,
+                alternate: true,
+                munit: 'px',
+                scrollBar: true,
+                showPager: true,
+                colModel: cgColumns,
+                autoFocus: true,
+                showError: true,
+                width: 450,
+                url: serviceURL,
+                search: function (event, ui) {
+
+                    var newServiceURL = serviceURL;
+                    $(this).combogrid("option", "url", newServiceURL);
+
+
+                },
+                select: function (event, ui) {
+                    if (!ui.item) {
+                        event.preventDefault();
+                        return false;
+                    }
+
+                    if (ui.item.dealerid == '') {
+                        event.preventDefault();
+                        return false;
+                    }
+                    else {
+                        $('#' + hdnAgentId).val(ui.item.agentid);
+                        $('#' + txtAgentName).val(ui.item.agentcompanyname);
+                    }
+                    return false;
+                },
+
+                lc: ''
+            });
+
+
+            $(groupIDElem).blur(function () {
+                var self = this;
+
+                var groupID = $(groupIDElem).val();
+                if (groupID == '') {
+                    $('#' + txtAgentName).val('');
+                    $('#' + hdnAgentId).val('0');
+
                 }
             });
         }
@@ -371,7 +524,6 @@
        </div>
         
       <div class="card-body">
-            <asp:HiddenField ID="hdnDeliveryManId" runat="server" />
 
               <div class="row mb-0">
                  
@@ -568,6 +720,56 @@
                     <div class="col-sm-9">
                       <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtClientName" placeholder="Select" ></asp:TextBox> 
                            <asp:HiddenField runat="server" ID="hdnClientId" Value="0" /> 
+                    </div>
+                  </div>
+
+                </div>
+
+                 <div class="col-md-2">
+                 
+                </div>
+
+             </div>
+           <div class="row mb-0" id="dvDeliveryman" runat="server" visible="false">
+                 
+                <div class="col-md-2">
+                 
+                </div>
+
+                
+
+
+                <div class="col-md-6">
+                  <div class="form-group row mb-0">
+                    <label for="name" class="col-sm-3 col-form-label-sm required">Delivary Man :</label>
+                    <div class="col-sm-9">
+                      <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtDeliveryMan" placeholder="Select" ></asp:TextBox> 
+                           <asp:HiddenField runat="server" ID="hdnDeliveryManID" Value="0" /> 
+                    </div>
+                  </div>
+
+                </div>
+
+                 <div class="col-md-2">
+                 
+                </div>
+
+             </div>
+          <div class="row mb-0" id="dvAgent" runat="server" visible="false">
+                 
+                <div class="col-md-2">
+                 
+                </div>
+
+                
+
+
+                <div class="col-md-6">
+                  <div class="form-group row mb-0">
+                    <label for="name" class="col-sm-3 col-form-label-sm required">Agent :</label>
+                    <div class="col-sm-9">
+                      <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtAgentName" placeholder="Select" ></asp:TextBox> 
+                           <asp:HiddenField runat="server" ID="hdnAgentId" Value="0" /> 
                     </div>
                   </div>
 

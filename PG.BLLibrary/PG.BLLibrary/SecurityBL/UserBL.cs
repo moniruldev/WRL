@@ -600,9 +600,12 @@ namespace PG.BLLibrary.SecurityBL
 
             sb.Append("SELECT tblUser.* ");
             sb.Append(" , tblRole.RoleName, tblRole.IsAdmin,c.client_name ");
+            sb.Append(" ,d.delivery_man_name,ag.agent_company_name AGENT_NAME ");
             sb.Append(" FROM tblUser ");
             sb.Append(" INNER JOIN tblRole ON tblRole.RoleID = tblUser.RoleID ");
             sb.Append(" LEFT JOIN client_mst C ON tbluser.client_id=c.client_id ");
+            sb.Append(" LEFT JOIN delivery_man_mst D ON tbluser.delivery_man_id=d.delivery_man_id ");
+            sb.Append(" LEFT JOIN agent_mst AG ON tbluser.agent_id=AG.agent_id ");
             sb.Append(" WHERE 1=1 ");
            
 

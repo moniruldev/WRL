@@ -48,6 +48,9 @@ namespace PG.Web.Admin
         public string ReportPDFPageLink = PageLinks.ReportLinks.GetLink_ReportPDF;
 
         public string ClientListServiceLink = PageLinks.InventoryLink.GetLink_ClientList;
+        public string DeliveryManlistServiceLink = PageLinks.InventoryLink.GetLink_DeliveryManList;
+        public string AgentListServiceLink = PageLinks.InventoryLink.GetLink_AgentList;
+        
 
         protected override void OnPreInit(EventArgs e)
         {
@@ -184,6 +187,8 @@ namespace PG.Web.Admin
             txtPassword.Text = string.Empty;
             txtConfirmPassword.Text = string.Empty;
             txtClientName.Text = string.Empty;
+            txtDeliveryMan.Text = string.Empty;
+            txtAgentName.Text = string.Empty;
             ddlStatus.SelectedValue = "Y";   
             hdnClientId.Value = string.Empty;
 
@@ -205,6 +210,16 @@ namespace PG.Web.Admin
                 {
                     txtClientName.Text = cObj.CLIENT_NAME.ToString();
                     hdnClientId.Value = cObj.CLIENT_ID.ToString();
+                }
+                if (cObj.UserType == "DELIVERYMAN")
+                {
+                    txtDeliveryMan.Text = cObj.DELIVERY_MAN_NAME.ToString();
+                    hdnDeliveryManID.Value = cObj.DELIVERY_MAN_ID.ToString();
+                }
+                if (cObj.UserType == "AGENT")
+                {
+                    txtAgentName.Text = cObj.AGENT_NAME.ToString();
+                    hdnAgentId.Value = cObj.AGENT_ID.ToString();
                 }
                 ddlApp.SelectedValue = cObj.AppID.ToString();
                 ddlRole.SelectedIndex = Helper.FindIndexByValue(ddlRole, cObj.RoleID.ToString());
@@ -245,6 +260,8 @@ namespace PG.Web.Admin
             }
           
             SetTextBoxState(txtClientName, isEnabled);
+            SetTextBoxState(txtAgentName, isEnabled);
+            SetTextBoxState(txtDeliveryMan, isEnabled);
             ddlStatus.Enabled = isEnabled;
             ddlStatus.CssClass = "form-control form-control-sm";
             ddlRole.Enabled = isEnabled;
@@ -349,6 +366,26 @@ namespace PG.Web.Admin
                 }
             }
 
+            if (ddlUserType.SelectedValue == "DELIVERYMAN")
+            {
+                if (hdnDeliveryManID.Value == "0")
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', 'Please Select Delivery Man', 'Error');", true);
+                    return false;
+
+                }
+            }
+
+            if (ddlUserType.SelectedValue == "AGENT")
+            {
+                if (hdnAgentId.Value == "0")
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrMessage", "showToastr('error', 'Please Select Agent', 'Error');", true);
+                    return false;
+
+                }
+            }
+
             if (EditMode == FormDataMode.Add)
             {
 
@@ -434,6 +471,8 @@ namespace PG.Web.Admin
             cObj.Email = "";
             cObj.UserType = ddlUserType.SelectedValue;
             cObj.CLIENT_ID =Conversion.StringToInt(hdnClientId.Value);
+            cObj.DELIVERY_MAN_ID = Conversion.StringToInt(hdnDeliveryManID.Value);
+            cObj.AGENT_ID = Conversion.StringToInt(hdnAgentId.Value);
             cObj.IsActive = ddlStatus.SelectedValue == "Y" ? true : false;
            
 
@@ -481,6 +520,24 @@ namespace PG.Web.Admin
             else
             {
                 dvClient.Visible = false;
+            }
+
+            if (ddlUserType.SelectedValue == "DELIVERYMAN")
+            {
+                dvDeliveryman.Visible = true;
+            }
+            else
+            {
+                dvDeliveryman.Visible = false;
+            }
+
+            if (ddlUserType.SelectedValue == "AGENT")
+            {
+                dvAgent.Visible = true;
+            }
+            else
+            {
+                dvAgent.Visible = false;
             }
             
         }
