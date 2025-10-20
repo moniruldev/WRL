@@ -32,8 +32,8 @@ namespace PG.Report.ReportClass.WRELRC
 
         public string CLIENT_ADDRESS { get; set; }
         public string CLIENT_MOBILE { get; set; }
-       
-
+        public decimal SERVICE_CHARGE { get; set; }
+         
         public string ROUTE_NAME { get; set; }
        
         public string TOWN_NAME { get; set; }

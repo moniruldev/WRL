@@ -90,7 +90,18 @@ namespace PG.BLLibrary.WRElBL
                     sb.Append(" AND im.IS_ACTIVE = @Status ");
                     cmdInfo.DBParametersInfo.Add("@Status", prmObj.Status);
                 }
+                if(prmObj.ITEM_NAME!="")
+                {
+                    sb.Append(" AND UPPER(IM.ITEM_NAME) LIKE UPPER('%" + prmObj.ITEM_NAME + "%') ");
+                    //sb.Append(" AND UPPER(IM.ITEM_NAME) Like UPPER('%" + prmObj.ITEM_NAME) + "%') ");
+                   
+                }
+                if (prmObj.Item_Type_ID >0)
+                {
+                    sb.Append(" AND IM.ITEM_TYPE_ID = @Item_Type_ID ");
+                    cmdInfo.DBParametersInfo.Add("@Item_Type_ID", prmObj.Item_Type_ID);
 
+                }
 
                 DBQuery dbq = new DBQuery();
                 dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
@@ -407,7 +418,7 @@ namespace PG.BLLibrary.WRElBL
                 isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
 
                 DBCommandInfo cmdInfo = new DBCommandInfo();
-                StringBuilder sb = new StringBuilder("SELECT   ITEM_ID FROM ITEM_MST Where ITEM_NAME=@pitemName ");
+                StringBuilder sb = new StringBuilder("SELECT   ITEM_ID FROM ITEM_MST Where UPPER(ITEM_NAME)=UPPER(@pitemName) ");
                 cmdInfo.DBParametersInfo.Add("@pitemName", pitemName);
 
 

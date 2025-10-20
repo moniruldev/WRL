@@ -17,12 +17,13 @@
         var ReportViewPDFPageLink = '<%=this.ReportViewPDFPageLink%>';
         var ReportPrintPageLink = '<%=this.ReportPrintPageLink%>';
         var ReportPDFPageLink = '<%=this.ReportPDFPageLink%>';
-
+        var ClientListServiceLink = '<%=this.ClientListServiceLink%>';
         var ItemListServiceLink = '<%=this.ItemListServiceLink%>';
 
         var btnGridPageGoTo = '<%=btnGridPageGoTo.ClientID %>';
         var txtGridPageNo = '<%=txtGridPageNo.ClientID %>';
-     
+        var txtClientName = '<%=txtClientName.ClientID%>';
+        var hdnClientId = '<%=hdnClientId.ClientID%>';
 
 
         function PageResizeCompleted(pg, cntMain) {
@@ -103,8 +104,82 @@
 
         $(document).ready(function () {
 
+            if ($('#' + txtClientName).is(':visible')) {
 
-        });    
+                bindClientList();
+
+            }
+
+        });
+
+        function bindClientList() {
+            var cgColumns = [
+                             { 'columnName': 'clientname', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Name' }
+                            , { 'columnName': 'mobile', 'width': '200', 'align': 'left', 'highlight': 4, 'label': 'Mobile' }
+
+            ];
+            var serviceURL = ClientListServiceLink + "?isterm=1&includeempty=0&hasitem=1&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+
+            serviceURL += "&ispaging=0";
+            var groupIDElem = $('#' + txtClientName);
+
+            $('#' + txtClientName).click(function (e) {
+                $(groupIDElem).combogrid("dropdownClick");
+            });
+
+            $(groupIDElem).combogrid({
+                debug: true,
+                searchButton: false,
+                resetButton: false,
+                alternate: true,
+                munit: 'px',
+                scrollBar: true,
+                showPager: true,
+                colModel: cgColumns,
+                autoFocus: true,
+                showError: true,
+                width: 350,
+                url: serviceURL,
+                search: function (event, ui) {
+
+                    var newServiceURL = serviceURL;
+                    $(this).combogrid("option", "url", newServiceURL);
+
+
+                },
+                select: function (event, ui) {
+                    if (!ui.item) {
+                        event.preventDefault();
+                        return false;
+                    }
+
+                    if (ui.item.dealerid == '') {
+                        event.preventDefault();
+                        return false;
+                    }
+                    else {
+                        $('#' + hdnClientId).val(ui.item.clientid);
+                        $('#' + txtClientName).val(ui.item.clientname);
+                    }
+                    return false;
+                },
+
+                lc: ''
+            });
+
+
+            $(groupIDElem).blur(function () {
+                var self = this;
+
+                var groupID = $(groupIDElem).val();
+                if (groupID == '') {
+                    $('#' + hdnClientId).val('0');
+                    $('#' + txtClientName).val('');
+                }
+            });
+        }
+
+
         function tbopen(key, isPrint, isPDFAutoPrint, showWait) {
             key = key || '';
             isPrint = isPrint || false;
@@ -204,18 +279,16 @@
       <div class="card">
       <div class="card-header p-0">
        <div class="d-flex align-items-center justify-content-between p-1">
-         <h5 class="card-title">Parcel List</h5>
+         <h5 class="card-title">Booking (CN) List</h5>
            <asp:LinkButton runat="server" ID="btnNewAdd" CssClass="btn btn-primary p-1"><i class="fas fa-plus"></i> New Entry</asp:LinkButton>
        </div>
        </div>
 
         <div class="card-body">
-          <div class="row mb-0">
-
-               
 
 
-               <div class="d-flex align-items-center mr-3">
+   <div class="d-flex align-items-center border-bottom pb-2 mb-2">
+            <div class="d-flex align-items-center mr-3">
                 <label for="txtFromDate" class="mr-2 mb-0 small">From Date:</label>
                 <asp:TextBox ID="txtFromDate" runat="server" CssClass="TextBoxnew textDate dateParse form-control form-control-sm" Style="width:130px;"></asp:TextBox>
             </div>
@@ -224,8 +297,63 @@
                 <label for="txtToDate" class="mr-2 mb-0 small">To Date:</label>
                 <asp:TextBox ID="txtToDate" runat="server" CssClass="TextBoxnew textDate dateParse form-control form-control-sm" Style="width:130px;"></asp:TextBox>
             </div>
+        <div class="d-flex align-items-center mr-3">
+                <label for="txtToDate" class="mr-2 mb-0 small">Client:</label>
+                <asp:TextBox runat="server" ID="txtClientName" CssClass="form-control form-control-sm" placeholder="Select"></asp:TextBox>
+        <asp:HiddenField runat="server" ID="hdnClientId" Value="0" />
+            </div>
+          
+        <div class="d-flex align-items-center mr-3">
+                <label for="lblClient" class="mr-2 mb-0 small">Status:</label>
+                <asp:DropDownList ID="ddlStatus" runat="server" CssClass="form-control form-control-sm">
+          <asp:ListItem Selected="True" Text="All" Value="0"></asp:ListItem>
+          <asp:ListItem Text="Delivered" Value="1"></asp:ListItem>
+          <asp:ListItem Text="Pending" Value="2"></asp:ListItem>
+          <asp:ListItem Text="Returned" Value="3"></asp:ListItem>
+        </asp:DropDownList>
+            </div>
+        </div>
+
+ 
+
+        <%--<div class="row mb-0">
+  <div class="col-md-4">
+    <div class="form-group row mb-0 align-items-center">
+      <label for="lblClientName" class="col-sm-4 col-form-label-sm text-left">Client Name :</label>
+      <div class="col-sm-8 text-left">
+        <asp:TextBox runat="server" ID="txtClientName" CssClass="form-control form-control-sm w-auto d-inline-block" placeholder="Select"></asp:TextBox>
+        <asp:HiddenField runat="server" ID="hdnClientId" Value="0" />
+      </div>
+    </div>
+  </div>
+</div>
+          <div class="row mb-0">
+               <div class="d-flex align-items-center mr-3">
+                <label for="txtFromDate" class="mr-2 mb-0 small">From Date :</label>
+                <asp:TextBox ID="txtFromDate" runat="server" CssClass="TextBoxnew textDate dateParse form-control form-control-sm" Style="width:130px;"></asp:TextBox>
+            </div>
+            <div class="d-flex align-items-center mr-3">
+                <label for="txtToDate" class="mr-2 mb-0 small">To Date :</label>
+                <asp:TextBox ID="txtToDate" runat="server" CssClass="TextBoxnew textDate dateParse form-control form-control-sm" Style="width:130px;"></asp:TextBox>
+            </div>
 
            </div>
+
+                 <div class="row mb-0">
+                  <div class="col-md-4">
+                    <div class="form-group row mb-0 align-items-center">
+                      <label for="lblStatus" class="col-sm-4 col-form-label-sm text-left">Status :</label>
+                      <div class="col-sm-8 text-left">
+                        <asp:DropDownList ID="ddlStatus" runat="server" CssClass="dropDownList" >
+                            <asp:ListItem Selected="True" Text="All" Value="0"></asp:ListItem>
+                            <asp:ListItem Text="Delivered" Value="1"></asp:ListItem>
+                            <asp:ListItem Text="Pending" Value="2"></asp:ListItem>
+                            <asp:ListItem Text="Returned" Value="3"></asp:ListItem>
+                        </asp:DropDownList>
+                      </div>
+                    </div>
+                  </div>
+                </div>--%>
 
 
             <div class="row-mb-0">
@@ -261,7 +389,7 @@
                   <asp:BoundField DataField="CONSIGNEE_NAME" HeaderText="Recipient Name" />
                   <asp:BoundField DataField="CONSIGNEE_ADDRESS" HeaderText="Recipient Address" />
                   <asp:BoundField DataField="CONSIGNEE_MOBILE_NO" HeaderText="Mobile No" />
-                    <asp:BoundField DataField="IS_DELIVERED" HeaderText="Delivery Status" />
+                    <asp:BoundField DataField="CN_STATUS" HeaderText="Delivery Status" />
                  
                    <asp:TemplateField HeaderText="Action">
                        <ItemTemplate>

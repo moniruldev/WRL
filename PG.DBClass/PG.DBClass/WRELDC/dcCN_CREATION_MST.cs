@@ -752,6 +752,12 @@ namespace PG.DBClass.WRELDC
          public string DEPT_NAME { get; set; }
          public string DISTANCE_TYPE_NAME { get; set; }
          public byte[] PODIMG { get; set; }
+         public string CN_STATUS { get; set; }
+          public string DELIVERY_MAN_NAME { get; set; }
+          public string DEL_MOBILE_NO { get; set; }
+         
+             
+         
          
      }
 }

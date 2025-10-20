@@ -32,13 +32,19 @@ namespace PG.DBClass.WRELDC
         private string m_USER_TYPE = string.Empty;
         private string m_IsActive = string.Empty;
         private string m_TransType = string.Empty;
-
+        private int m_Status_ID = 0;
+        private int m_Item_Type_ID = 0;
         public int CARGO_ID
         {
             get { return this.m_CARGO_ID; }
             set { this.m_CARGO_ID = value; }
         }
 
+        public int Item_Type_ID
+        {
+            get { return this.m_Item_Type_ID; }
+            set { this.m_Item_Type_ID = value; }
+        }
         public string CARGO_NUMBER
         {
             get { return this.m_CARGO_NUMBER; }
@@ -97,6 +103,13 @@ namespace PG.DBClass.WRELDC
             get { return this.m_CLIENT_ID; }
             set { this.m_CLIENT_ID = value; }
         }
+
+        public int Status_ID
+        {
+            get { return this.m_Status_ID; }
+            set { this.m_Status_ID = value; }
+        }
+        
         public string CLIENT_NAME
         {
             get { return this.m_CLIENT_NAME; }

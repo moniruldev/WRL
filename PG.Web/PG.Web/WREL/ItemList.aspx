@@ -131,7 +131,7 @@
                   <div class="form-group row mb-0">
                     <label for="name" class="col-sm-4 col-form-label-sm">Active Status :</label>
                     <div class="col-sm-8">
-                     <asp:DropDownList runat="server" ID="ddlIsActive" CssClass="form-control form-control-sm">
+                     <asp:DropDownList runat="server" ID="ddlIsActive" CssClass="form-control form-control-sm" >
                          <asp:ListItem Text="All" Value="0" Selected="True"></asp:ListItem>
                          <asp:ListItem Text="Active" Value="Y"></asp:ListItem>
                          <asp:ListItem Text="Inactive" Value="N"></asp:ListItem>
@@ -139,6 +139,25 @@
                     </div>
                   </div>
 
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group row mb-0">
+                    <label for="name" class="col-sm-4 col-form-label-sm">Item Type :</label>
+                    <div class="col-sm-8">
+                      <asp:DropDownList runat="server"  class="form-control form-control-sm"  ID="ddlItemType" >
+                         
+                      </asp:DropDownList> 
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group row mb-0">
+                    <label for="name" class="col-sm-4 col-form-label-sm">Item Name :</label>
+                    <div class="col-sm-8">
+                      <asp:TextBox runat="server"  class="form-control form-control-sm"  ID="txtItemName" placeholder="Item Name" ></asp:TextBox> 
+                    </div>
+                  </div>
                 </div>
 
            </div>

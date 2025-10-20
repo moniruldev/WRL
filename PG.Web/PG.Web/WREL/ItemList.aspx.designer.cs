@@ -31,6 +31,24 @@ namespace PG.Web.WREL {
         protected global::System.Web.UI.WebControls.DropDownList ddlIsActive;
         
         /// <summary>
+        /// ddlItemType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlItemType;
+        
+        /// <summary>
+        /// txtItemName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtItemName;
+        
+        /// <summary>
         /// btnLoadData control.
         /// </summary>
         /// <remarks>

@@ -103,6 +103,24 @@ namespace PG.Web.WREL
             HighlightSteps(completedSteps);
             UpdateStatusText(completedSteps);
             lblCnNumber.Text = string.Format("Parcel Number: {0}", clientParcel.CN_NUMBER);
+            lblRecepentName.Text = string.Format("Recipient Name: {0}", clientParcel.CONSIGNEE_NAME);
+            lblRecepentAddress.Text = string.Format("Recipient Address: {0}", clientParcel.CONSIGNEE_ADDRESS);
+            lblItemName.Text = string.Format("Item: {0}", clientParcel.ITEM_NAME);
+            if (clientParcel.CONSIGNEE_MOBILE_NO != "")
+            {
+                lblMobileNo.Text = string.Format("Recipient Mobile: {0}", clientParcel.CONSIGNEE_MOBILE_NO);
+            }
+            if (clientParcel.DELIVERY_DATE != null)
+            {
+                lblDeliveryDate.Text = string.Format("Delivery Date: {0}", Convert.ToDateTime(clientParcel.DELIVERY_DATE).ToString("dd-MMM-yyyy"));
+            }
+            if (clientParcel.REFUND_DATE != null)
+            {
+                lblReturnedDate.Text = string.Format("Returned Date: {0}", Convert.ToDateTime(clientParcel.REFUND_DATE).ToString("dd-MMM-yyyy"));
+            }
+            lblBookingDate.Text = string.Format("Booking Date: {0}", Convert.ToDateTime(clientParcel.BOOKING_DATE).ToString("dd-MMM-yyyy"));
+            lblDeliveryMan.Text = string.Format("Delivery Man: {0}", clientParcel.DELIVERY_MAN_NAME);
+            lblDeliveryManMobile.Text = string.Format("Del. Man Mobile: {0}", clientParcel.DEL_MOBILE_NO);
 
             dcCN_CREATION_MST osf = new dcCN_CREATION_MST();
             osf = CN_CREATION_MSTBL.GetCNInfoListimage(prm, null);

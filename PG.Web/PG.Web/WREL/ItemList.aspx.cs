@@ -51,9 +51,23 @@ namespace PG.Web.WREL
             SetHyperLink();
         }
 
-        private void FillCombo()
+        public void FillCombo()
         {
-           
+            dcITEM_TYPE_MST ItemType = new dcITEM_TYPE_MST();
+            ItemType.IS_ACTIVE = "Y";
+            ddlItemType.Items.Clear();
+            ddlItemType.AppendDataBoundItems = true;
+            ddlItemType.Items.Add(new ListItem("Select", "0"));
+            ddlItemType.DataTextField = "ITEM_TYPE_NAME";
+            ddlItemType.DataValueField = "ITEM_TYPE_ID";
+            ddlItemType.DataSource = ITEM_TYPE_MSTBL.GetItemTypeList(ItemType, null);
+            ddlItemType.DataBind();
+            ddlItemType.SelectedIndex = 0;
+
+
+          
+
+
         }
 
         private void SetDate()
@@ -82,6 +96,8 @@ namespace PG.Web.WREL
         {
             clsPrmWREL prmObj = new clsPrmWREL();
             prmObj.Status = ddlIsActive.SelectedValue;
+            prmObj.Item_Type_ID =Conversion.StringToInt(ddlItemType.SelectedValue);
+            prmObj.ITEM_NAME = txtItemName.Text.Trim();
             List<dcITEM_MST> listData = ITEM_MSTBL.GetItemList(prmObj, null);
             BindGridData(listData);
             SetGridInfo(listData.Count);

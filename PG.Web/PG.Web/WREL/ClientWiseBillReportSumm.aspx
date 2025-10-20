@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/AppMaster.Master" AutoEventWireup="true" CodeBehind="CNDashboardforClient.aspx.cs" Inherits="PG.Web.WREL.CNDashboardforClient" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/AppMaster.Master" AutoEventWireup="true" CodeBehind="ClientWiseBillReportSumm.aspx.cs" Inherits="PG.Web.WREL.ClientWiseBillReportSumm" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -15,17 +15,18 @@
 
         <%--var ItemListServiceLink = '<%=this.ItemListServiceLink%>';--%>
 
-        var btnGridPageGoTo = '<%=btnGridPageGoTo.ClientID %>';
-        var txtGridPageNo = '<%=txtGridPageNo.ClientID %>';
+       
         var ReportViewPageLink = '<%=this.ReportViewPageLink%>';
         var ReportViewPDFPageLink = '<%=this.ReportViewPDFPageLink%>';
         var ReportPrintPageLink = '<%=this.ReportPrintPageLink%>';
         var ReportPDFPageLink = '<%=this.ReportPDFPageLink%>';
+        var ClientListServiceLink = '<%=this.ClientListServiceLink%>';
         var ifPrintButton = '<%=ifPrintButton.ClientID%>';
      <%--   var ReportViewPageLink = '<%=this.ReportViewPageLink%>';
         var ReportViewPDFPageLink = '<%=this.ReportViewPDFPageLink%>';
        --%>
-
+        var txtClientName = '<%=txtClientName.ClientID%>';
+        var hdnClientId = '<%=hdnClientId.ClientID%>';
         function PageResizeCompleted(pg, cntMain) {
             resizeContentInner(cntMain);
 
@@ -146,12 +147,12 @@
 
 
         $(document).ready(function () {
-            $('#' + txtGridPageNo).keydown(function (e) {
-                if (e.keyCode == 13) {
-                    e.preventDefault();
-                    $('#' + btnGridPageGoTo).click();
-                }
-            });
+            //$('#' + txtGridPageNo).keydown(function (e) {
+            //    if (e.keyCode == 13) {
+            //        e.preventDefault();
+            //        $('#' + btnGridPageGoTo).click();
+            //    }
+            //});
 
          
 
@@ -300,11 +301,80 @@
 
 
         $(document).ready(function () {
-
-
+           
+            if ($('#' + txtClientName).is(':visible')) {
+               
+                bindClientList();
+                
+            }
         });    
 
-     
+        function bindClientList() {
+            var cgColumns = [
+                             { 'columnName': 'clientname', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Name' }
+                            , { 'columnName': 'mobile', 'width': '200', 'align': 'left', 'highlight': 4, 'label': 'Mobile' }
+
+            ];
+            var serviceURL = ClientListServiceLink + "?isterm=1&includeempty=0&hasitem=1&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+
+            serviceURL += "&ispaging=0";
+            var groupIDElem = $('#' + txtClientName);
+
+            $('#' + txtClientName).click(function (e) {
+                $(groupIDElem).combogrid("dropdownClick");
+            });
+
+            $(groupIDElem).combogrid({
+                debug: true,
+                searchButton: false,
+                resetButton: false,
+                alternate: true,
+                munit: 'px',
+                scrollBar: true,
+                showPager: true,
+                colModel: cgColumns,
+                autoFocus: true,
+                showError: true,
+                width: 350,
+                url: serviceURL,
+                search: function (event, ui) {
+
+                    var newServiceURL = serviceURL;
+                    $(this).combogrid("option", "url", newServiceURL);
+
+
+                },
+                select: function (event, ui) {
+                    if (!ui.item) {
+                        event.preventDefault();
+                        return false;
+                    }
+
+                    if (ui.item.dealerid == '') {
+                        event.preventDefault();
+                        return false;
+                    }
+                    else {
+                        $('#' + hdnClientId).val(ui.item.clientid);
+                        $('#' + txtClientName).val(ui.item.clientname);
+                    }
+                    return false;
+                },
+
+                lc: ''
+            });
+
+
+            $(groupIDElem).blur(function () {
+                var self = this;
+
+                var groupID = $(groupIDElem).val();
+                if (groupID == '') {
+                    $('#' + hdnClientId).val('');
+                    $('#' + txtClientName).val('0');
+                }
+            });
+        }
     </script>
 
  
@@ -312,19 +382,77 @@
 
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:HiddenField ID="hdnClientId" runat="server" Value="0" />
+   
     <div class="row">
     <div class="container-fluid">
       <div class="card">
       <div class="card-header p-0">
        <div class="d-flex align-items-center justify-content-between p-1">
-         <h5 class="card-title header-title">CN List</h5>
+         <h5 class="card-title header-title">CN Bill Report</h5>
         
        </div>
        </div>
 
         <div class="card-body">
 
+           <div class="container-fluid">
+  <div class="d-flex justify-content-center align-items-center flex-wrap my-2">
+
+    <!-- Client Name -->
+    <div class="d-flex align-items-center mx-2 mb-2">
+      <label for="txtClientName" class="mb-0 mr-2 small">Client Name:</label>
+      <asp:TextBox runat="server" ID="txtClientName" CssClass="form-control form-control-sm" Style="width:150px;"></asp:TextBox>
+      <asp:HiddenField ID="hdnClientId" runat="server" Value="0" />
+    </div>
+
+    <!-- From Date -->
+    <div class="d-flex align-items-center mx-2 mb-2">
+      <label for="txtFromDate" class="mb-0 mr-2 small">From Date:</label>
+      <asp:TextBox ID="txtFromDate" runat="server" CssClass="form-control form-control-sm textDate dateParse" Style="width:130px;"></asp:TextBox>
+    </div>
+
+    <!-- To Date -->
+    <div class="d-flex align-items-center mx-2 mb-2">
+      <label for="txtToDate" class="mb-0 mr-2 small">To Date:</label>
+      <asp:TextBox ID="txtToDate" runat="server" CssClass="form-control form-control-sm textDate dateParse" Style="width:130px;"></asp:TextBox>
+    </div>
+
+    <!-- Buttons -->
+    <div class="d-flex align-items-center mx-2 mb-2">
+      <asp:LinkButton runat="server" ID="btnDownloadPdf" OnClick="btnDownloadPdf_Click" CssClass="btn btn-primary btn-sm mx-1">
+        <i class="fas fa-file-pdf text-danger"></i> View PDF
+      </asp:LinkButton>
+      <asp:LinkButton runat="server" ID="LinkButton2" CssClass="btn btn-success btn-sm mx-1" Visible="false">
+        <i class="fa fa-file-excel"></i> Export Excel
+      </asp:LinkButton>
+    </div>
+
+  </div>
+</div>
+
+
+           <%-- <div class="row mb-0">
+
+            
+
+                <div class="col-md-4">
+  <div class="form-group row mb-0">
+    <label for="name" class="col-sm-6 col-form-label-sm text-left">Client Name :</label>
+    <div class="col-sm-6 text-left">
+      <asp:TextBox 
+        runat="server" 
+        ID="txtClientName" 
+        CssClass="form-control form-control-sm text-left" 
+        placeholder="Select">
+      </asp:TextBox>
+      <asp:HiddenField ID="hdnClientId" runat="server" Value="0" />
+    </div>
+  </div>
+</div>
+
+                 
+
+                </div>
         <div class="d-flex align-items-center border-bottom pb-2 mb-2">
             <div class="d-flex align-items-center mr-3">
                 <label for="txtFromDate" class="mr-2 mb-0 small">From Date:</label>
@@ -336,186 +464,25 @@
                 <asp:TextBox ID="txtToDate" runat="server" CssClass="TextBoxnew textDate dateParse form-control form-control-sm" Style="width:130px;"></asp:TextBox>
             </div>
 
-            <asp:LinkButton runat="server" ID="btnLoadData" OnClick="btnLoadData_Click" CssClass="btn btn-primary btn-sm">
-                <i class="fa fa-list"></i> Load Data
-            </asp:LinkButton>
+         
         </div>
 
-
-
-               <div class="row mb-0 d-none">
+        <div class="row mb-0 ">
                 <div class="m-2 p-1 d-flex justify-content-between align-items-center w-100">
-                    <div>
-                     
-                          <asp:LinkButton runat="server" ID="btnClearFilter" OnClick="btnClearFilter_Click" CssClass="btn btn-primary" Visible="false">
-                            <i class="fa fa-times text-danger"></i> Clear Filter
-                        </asp:LinkButton>
-                    </div>
+                   
 
-                    <div class="d-none">
+                    <div >
                         <asp:LinkButton runat="server" ID="btnDownloadPdf" OnClick="btnDownloadPdf_Click" CssClass="btn btn-primary">
                             <i class="fas fa-file-pdf text-danger"></i> View PDF
                         </asp:LinkButton>
-                        <asp:LinkButton runat="server" ID="LinkButton2" OnClick="btnLoadData_Click" CssClass="btn btn-primary">
+                        <asp:LinkButton runat="server" ID="LinkButton2" CssClass="btn btn-primary" Visible="false">
                             <i class="fa fa-file-excel"></i> Export Excel
                         </asp:LinkButton>
                     </div>
                 </div>
-            </div>
+            </div>--%>
 
-
-            <div class="row d-none">
-             <div class="col-md-12 d-none">
-                   <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" ShowHeader="true" CssClass="table table-sm table-striped table-bordered table-responsive-sm"  
-                DataKeyNames="CN_ID" EnableModelValidation="True" ClientIDMode="AutoID" OnRowDataBound="GridView1_RowDataBound" AllowPaging="true" EmptyDataText="There is no record" PageSize="2" 
-                 OnPageIndexChanging="GridView1_PageIndexChanging" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" OnRowCommand="GridView1_RowCommand">
-                  <PagerSettings Mode="NumericFirstLast" />
-                <HeaderStyle CssClass="table-info" Font-Size="Smaller" />                                      
-              <Columns>
-                   
-                   <asp:BoundField DataField="CN_NUMBER" HeaderText="CN Number" /> 
-                   <asp:BoundField DataField="ITEM_NAME" HeaderText="Item Name" />
-                  <asp:BoundField DataField="CONSIGNEE_NAME" HeaderText="Recipient Name" />
-                  <asp:BoundField DataField="CONSIGNEE_ADDRESS" HeaderText="Recipient Address" />
-                  <asp:BoundField DataField="CONSIGNEE_MOBILE_NO" HeaderText="Mobile No" />
-                    <asp:BoundField DataField="CN_STATUS" HeaderText="Status" />
-
-               </Columns>
-                                                     
-          </asp:GridView>
-             </div>
-            </div>
-            <div class="row">
-   <asp:Repeater ID="rptData" runat="server" OnItemCommand="rptData_ItemCommand">
-    <HeaderTemplate>
-        <table id="myTable" class="display table table-striped table-bordered" style="width:100%">
-            <thead class="table-info">
-                <tr>
-                    <th>CN Number</th>
-                    <th>Item Name</th>
-                    <th>Recipient Name</th>
-                    <th>Recipient Address</th>
-                    <th>Mobile No</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-    </HeaderTemplate>
-
-    <ItemTemplate>
-        <tr>
-            <td><%# Eval("CN_NUMBER") %></td>
-            <td><%# Eval("ITEM_NAME") %></td>
-            <td><%# Eval("CONSIGNEE_NAME") %></td>
-            <td><%# Eval("CONSIGNEE_ADDRESS") %></td>
-            <td><%# Eval("CONSIGNEE_MOBILE_NO") %></td>
-            <td><%# Eval("CN_STATUS") %></td>
-             <td>
-                <asp:LinkButton ID="lnkPrint" runat="server"
-                    CommandName="print"
-                    CommandArgument='<%# Eval("CN_ID") %>'
-                    CssClass="btn btn-sm btn-primary" Width="70px">
-                    CN Print
-                </asp:LinkButton>
-            </td>
-        </tr>
-    </ItemTemplate>
-
-    <FooterTemplate>
-            </tbody>
-        </table>
-    </FooterTemplate>
-</asp:Repeater>
-
-
-
-            </div>
-            <div class="row d-none">
-                <div class="col-md-12">
-                     <div id="dvGridFooter" style="width: 100%; height: 25px; font-size: smaller;" class="subFooter">
-                            <table style="height: 100%; width: 100%;"
-                                cellspacing="2" cellpadding="1" rules="all">
-                                <tr>
-                                    <td align="left" style="width: 40%">
-                                        <table>
-                                            <tr>
-                                                <td style="width: 2px;"></td>
-                                                <td>
-                                                    <asp:Label ID="lblTotal" CssClass="col-form-label-sm" runat="server" Text="Rows: 0 of 0"></asp:Label>
-                                                    <asp:HiddenField ID="hdnRowCount" runat="server" Value="0" />
-                                                </td>
-                                            </tr>
-                                        </table>
-
-
-
-                                    </td>
-                                    <td align="right" style="width: 60%">
-                                        <div id="dvGridPager" class="dvGridPager">
-                                            <table>
-                                                <tr>
-                                                    <td>
-                                                        <asp:Button ID="btnGridPageGoTo" runat="server" Text="Go"
-                                                            OnClick="btnGridPageGoTo_Click" />
-                                                    </td>
-                                                    <td>
-                                                        <asp:Label ID="Label2" CssClass="col-form-label-sm p-2" runat="server" Text="Page Size:"></asp:Label>
-                                                    </td>
-                                                    <td>
-                                                        <asp:DropDownList ID="ddlGridPageSize" runat="server" CssClass="form-control form-control-sm m-1 p-0" AutoPostBack="True"
-                                                            OnSelectedIndexChanged="ddlGridPageSize_SelectedIndexChanged">
-                                                            <asp:ListItem Value="10" Selected="True">10</asp:ListItem>
-                                                            <asp:ListItem Value="20">20</asp:ListItem>
-                                                            <asp:ListItem Value="30">30</asp:ListItem>
-                                                            <asp:ListItem Value="50">50</asp:ListItem>
-                                                            <asp:ListItem Value="100">100</asp:ListItem>
-                                                            <asp:ListItem Value="200">200</asp:ListItem>
-                                                            <asp:ListItem Value="0" >all</asp:ListItem>
-                                                        </asp:DropDownList>
-                                                    </td>
-
-
-                                                    <td>
-                                                        <asp:Label ID="Label1" runat="server" CssClass="col-form-label-sm p-2" Text="Page:"></asp:Label>
-                                                    </td>
-                                                    <td>
-                                                        <asp:TextBox ID="txtGridPageNo" runat="server" CssClass="form-control form-control-sm m-1 p-0" Width="50px">0</asp:TextBox>
-                                                    </td>
-                                                    <td>
-                                                        <asp:Label ID="lblGridPageInfo" runat="server" CssClass="col-form-label-sm p-2"  Text=" of 0"></asp:Label>
-                                                    </td>
-                                                    <td>
-                                                        <asp:Button ID="btnGridPageFirst" runat="server" Text="" CssClass="btnGridPageFirst"
-                                                            OnClick="btnGridPageFirst_Click" ToolTip="First" />
-                                                    </td>
-                                                    <td>
-                                                        <asp:Button ID="btnGridPagePrev" runat="server" Text="" CssClass="btnGridPagePrev"
-                                                            OnClick="btnGridPagePrev_Click" ToolTip="Previous" />
-                                                    </td>
-                                                    <td>
-                                                        <asp:Button ID="btnGridPageNext" runat="server" Text="" CssClass="btnGridPageNext"
-                                                            OnClick="btnGridPageNext_Click" ToolTip="Next" />
-                                                    </td>
-                                                    <td>
-                                                        <asp:Button ID="btnGridPageLast" runat="server" Text="" CssClass="btnGridPageLast"
-                                                            OnClick="btnGridPageLast_Click" ToolTip="Last" />
-                                                    </td>
-                                                    <td style="width: 2px;"></td>
-                                                </tr>
-                                            </table>
-                                        </div>
-
-                                    </td>
-
-                                </tr>
-                            </table>
-                        </div>
-
-                </div>
-
-            </div>
-            <div class="row">
+        <div class="row">
                 <div class="col-md-12">
  
             <div id="dvContentFooterInner" class="d-none"  >
@@ -559,6 +526,7 @@
              
 
             </div>
+            
 
         </div>
 

@@ -336,6 +336,25 @@
             CssClass="text-left font-weight-bold d-block"></asp:Label>
         <asp:Label ID="lblStatusMessage" runat="server" 
             CssClass="text-left font-weight-bold d-block"></asp:Label>
+        <asp:Label ID="lblBookingDate" runat="server" 
+            CssClass="text-left font-weight-bold d-block"></asp:Label>
+        <asp:Label ID="lblRecepentName" runat="server" 
+            CssClass="text-left font-weight-bold d-block"></asp:Label>
+         <asp:Label ID="lblRecepentAddress" runat="server" 
+            CssClass="text-left font-weight-bold d-block"></asp:Label>
+         <asp:Label ID="lblMobileNo" runat="server" 
+            CssClass="text-left font-weight-bold d-block"></asp:Label>
+         <asp:Label ID="lblItemName" runat="server" 
+            CssClass="text-left font-weight-bold d-block"></asp:Label>
+        
+        <asp:Label ID="lblDeliveryDate" runat="server" 
+            CssClass="text-left font-weight-bold d-block"></asp:Label>
+        <asp:Label ID="lblReturnedDate" runat="server" 
+            CssClass="text-left font-weight-bold d-block"></asp:Label>
+        <asp:Label ID="lblDeliveryMan" runat="server" 
+            CssClass="text-left font-weight-bold d-block"></asp:Label>
+         <asp:Label ID="lblDeliveryManMobile" runat="server" 
+            CssClass="text-left font-weight-bold d-block"></asp:Label>
     </div>
 
     <!-- Right side: Proof label + image -->

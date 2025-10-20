@@ -75,6 +75,44 @@ namespace PG.Report.ReportGen.WRELRGN
             return rpt;
         }
 
+
+        public static AppReport CNDateWiseBill_Report(clsPrmWREL rptClass, ReportOptions rptOptions)
+        {
+            return CNDateWiseBill_Report(rptClass, rptOptions, null);
+        }
+        public static AppReport CNDateWiseBill_Report(clsPrmWREL rptClass, ReportOptions rptOptions, DBContext dc)
+        {
+            AppReport rpt = new AppReport();
+            rpt.ReportID = ReportIDEnum.ItemReport;
+            rpt.ReportOptions = rptOptions;
+            rpt.ReportEmbeddedResource = @"PG.Report.ReportDef.WRELDef.rptCNBillDetails.rdlc";
+            List<rcBill> rList = WRELRBL.Get_CNDateWiseBill_Report(rptClass, dc);
+            rpt.DataSources.Add(new AppReport.DataSource("dsBill", rList));
+            return rpt;
+        }
+
+
+        public static AppReport CNDateWiseBillSummary_Report(clsPrmWREL rptClass, ReportOptions rptOptions)
+        {
+            return CNDateWiseBillSummary_Report(rptClass, rptOptions, null);
+        }
+        public static AppReport CNDateWiseBillSummary_Report(clsPrmWREL rptClass, ReportOptions rptOptions, DBContext dc)
+        {
+            AppReport rpt = new AppReport();
+            rpt.ReportID = ReportIDEnum.ItemReport;
+            rpt.ReportOptions = rptOptions;
+            rpt.ReportEmbeddedResource = @"PG.Report.ReportDef.WRELDef.rptCNBillSummary.rdlc";
+            List<rcBill> rList = WRELRBL.Get_CNDateWiseBillSummary_Report(rptClass, dc);
+            if (rList.Count > 0)
+            {
+                decimal taka = rList.Sum(c => c.TAKA);
+                string strQtyText = PG.Core.Utility.NumberInWord.GetInWord(taka.ToString());
+                rpt.AddParameter("prmItemQtyText", strQtyText);
+            }
+            rpt.DataSources.Add(new AppReport.DataSource("dsBill", rList));
+            return rpt;
+        }
+
         public static AppReport CN_Reference_Report(clsPrmWREL rptClass, ReportOptions rptOptions)
         {
             return CN_Reference_Report(rptClass, rptOptions, null);

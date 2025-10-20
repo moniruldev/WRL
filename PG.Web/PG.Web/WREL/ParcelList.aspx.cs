@@ -35,7 +35,7 @@ namespace PG.Web.WREL
         int CompanyID = 0;
         public string ItemListServiceLink = PageLinks.InventoryLink.GetLink_ItemList;
         public string ItemGroupListServiceLink = PageLinks.InventoryLink.GetLink_ItemGroupList;
-
+        public string ClientListServiceLink = PageLinks.InventoryLink.GetLink_ClientList;
         ReportOpenTypeEnum ReportOpenType = ReportOpenTypeEnum.Preview;
         protected override void OnPreInit(EventArgs e)
         {
@@ -114,8 +114,10 @@ namespace PG.Web.WREL
             prmCn.FromDate = fromDate;
             prmCn.ToDate = toDate;
             prmCn.USER_TYPE = loggedinUser.UserType;
+            prmCn.CLIENT_ID =Conversion.StringToInt(hdnClientId.Value);
+            prmCn.Status_ID = Conversion.StringToInt(ddlStatus.SelectedValue);
 
-            List<dcCN_CREATION_MST> listData = CN_CREATION_MSTBL.GetCNInfoList(prmCn,null);
+            List<dcCN_CREATION_MST> listData = CN_CREATION_MSTBL.GetCNInfoBookingList(prmCn, null);
             listData = listData
                 .OrderBy(x => x.CN_ID) // ascending
                 .ToList();

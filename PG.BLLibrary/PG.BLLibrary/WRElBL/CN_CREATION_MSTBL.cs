@@ -44,28 +44,64 @@ namespace PG.BLLibrary.WRElBL
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append(" SELECT mst.*, ");
-            sb.Append(" cl.client_name, ");
-            sb.Append(" agm.description AS AGREEMENT_DESCRIPTION, ");
-            sb.Append(" im.item_name, ");
-            sb.Append(" r.route_name, ");
-            sb.Append(" dis.dist_name AS DESTINATION_DIST_NAME, ");
-            sb.Append(" th.town_name AS DESTINATION_TOWN_NAME,dp.DEPT_NAME ");
-            sb.Append(" FROM CN_CREATION_MST mst ");
-            sb.Append(" LEFT JOIN client_mst cl ON mst.client_id = cl.client_id ");
-            sb.Append(" LEFT JOIN agreement_detaill ag ON mst.agr_detail_id = ag.agr_detail_id ");
-            sb.Append(" LEFT JOIN agreement_mst agm ON ag.agr_id = agm.agr_id ");
-            sb.Append(" LEFT JOIN item_mst im ON mst.item_id = im.item_id ");
-            sb.Append(" LEFT JOIN route_mst r ON mst.route_id = r.route_id ");
-            sb.Append(" LEFT JOIN district_mst dis ON mst.destination_dist_id = dis.dist_id ");
-            sb.Append(" LEFT JOIN thana_town_mst th ON mst.destination_town_id = th.town_id ");
-            sb.Append(" LEFT JOIN DEPARTMENT_MST dp ON mst.CLIENT_DEPT_ID = dp.DEPT_ID ");
+            sb.Append(" SELECT  mst.CN_ID,mst.CN_NUMBER,mst.CLIENT_ID,mst.AGR_DETAIL_ID,mst.ITEM_ID,mst.SERVICE_AMOUNT,mst.ROUTE_ID,mst.CONSIGNEE_NAME,mst.CONSIGNEE_ADDRESS  ");
+            sb.Append("  ,mst.CONSIGNEE_MOBILE_NO,mst.DESTINATION_DIST_ID,mst.DESTINATION_TOWN_ID,mst.SMS_AT_START_SENT,mst.SMS_AT_DELIVERY_SENT,mst.OTP_AT_DELIVERED,mst.IS_BILL_GENERATED  ");
+            sb.Append("  ,mst.BILL_NO,mst.BILL_GENERATE_DATE,mst.BILL_GENERATED_BY,mst.INVOICE_NO,mst.IS_REFUND,mst.REFUND_CAUSE_ID,mst.REFUND_DATE,mst.CREATE_BY,mst.CREATE_DATE,mst.EDIT_BY  ");
+            sb.Append("  ,mst.EDIT_DATE,mst.OTP_SUCCESSFUL,mst.RETURN_SERVICE_AMOUNT,mst.IS_DELIVERED,mst.POD,mst.DELIVERY_DATE,mst.SLA_DAYS,mst.PICKUP_DATE,mst.PICKUP_BY,mst.BOOKING_DATE  ");
+            sb.Append("  ,mst.CN_CLIENT_CODE,mst.PRODUCT_TYPE,mst.UPS,mst.STATUS,mst.NARRATION,mst.ITEM_NAME,mst.CLIENT_DEPT_ID,mst.HUB_ID,mst.DESTINATION,mst.REF_TYPE,mst.DISTANCE_TYPE_ID  ");
+            sb.Append("  ,mst.OTP_CODE,mst.CUSTOMER_OTP,mst.UPDATE_BY_REQUEST,mst.UPDATE_DATE_REQUEST,mst.CLIENT_DEPTORBRANCH,mst.WEIGHT,mst.QTY,mst.RATE,mst.TAKA,mst.SERVICE_CHARGE,mst.TOTAL_AMT,mst.CARGO_ID,  ");
+            sb.Append("  cl.client_name,  ");
+            sb.Append("  agm.description AS AGREEMENT_DESCRIPTION, "); 
+            sb.Append("  im.item_name,  ");
+            sb.Append("  r.route_name,  ");
+            sb.Append("  dis.dist_name AS DESTINATION_DIST_NAME,  ");
+            sb.Append("  th.town_name AS DESTINATION_TOWN_NAME,dp.DEPT_NAME, ");
+            sb.Append("  Case When mst.IS_DELIVERED='Y' THEN 'Delivered'  ");
+            sb.Append("  When mst.IS_REFUND='N' AND mst.IS_DELIVERED='N' THEN 'Pending' ");
+            sb.Append("  When mst.IS_REFUND='Y' AND mst.IS_DELIVERED='N' THEN 'Returned' END CN_STATUS ");
+            sb.Append("  FROM CN_CREATION_MST mst  ");
+            sb.Append("  LEFT JOIN client_mst cl ON mst.client_id = cl.client_id  ");
+            sb.Append("  LEFT JOIN agreement_detaill ag ON mst.agr_detail_id = ag.agr_detail_id "); 
+            sb.Append("  LEFT JOIN agreement_mst agm ON ag.agr_id = agm.agr_id  ");
+            sb.Append("  LEFT JOIN item_mst im ON mst.item_id = im.item_id  ");
+            sb.Append("  LEFT JOIN route_mst r ON mst.route_id = r.route_id  ");
+            sb.Append("  LEFT JOIN district_mst dis ON mst.destination_dist_id = dis.dist_id  ");
+            sb.Append("  LEFT JOIN thana_town_mst th ON mst.destination_town_id = th.town_id  ");
+            sb.Append("  LEFT JOIN DEPARTMENT_MST dp ON mst.CLIENT_DEPT_ID = dp.DEPT_ID  ");
+            sb.Append("  WHERE 1=1 ");
+
+            return sb.ToString();
+        }
+
+        public static string GetCNBillSQLString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(" SELECT a.CREATE_DATE BOOKING_DATE,a.CN_NUMBER,'H/O' DEPT,'Dhaka' BOOKING,a.CONSIGNEE_ADDRESS DESTINATION ");
+            sb.Append(" ,b.ITEM_NAME,a.QTY QUANTITY,u.UOM_NAME,a.RATE,a.TAKA,c.CLIENT_NAME ");
+            sb.Append(" FROM CN_CREATION_MST a ");
+            sb.Append(" INNER JOIN ITEM_MST b ON a.ITEM_ID=b.ITEM_ID ");
+            sb.Append(" INNER JOIN UOM_MST u ON b.UOM_ID=u.UOM_ID ");
+            sb.Append(" INNER JOIN CLIENT_MST c ON a.CLIENT_ID=c.CLIENT_ID ");
             sb.Append(" WHERE 1=1 ");
 
             return sb.ToString();
         }
 
+        public static string GetCNBillSummarySQLString()
+        {
+            StringBuilder sb = new StringBuilder();
 
+            sb.Append(" SELECT c.CLIENT_NAME,a.CREATE_DATE BOOKING_DATE,");
+            sb.Append(" SUM(NVL(a.QTY,0)) QUANTITY,SUM(NVL(a.QTY,0)*NVL(a.RATE,0)) TAKA ");
+            sb.Append(" FROM CN_CREATION_MST a ");
+            sb.Append(" INNER JOIN CLIENT_MST c ON a.CLIENT_ID=c.CLIENT_ID  ");
+            sb.Append(" WHERE 1=1 ");
+            
+
+            return sb.ToString();
+        }
+        
         public static dcCN_CREATION_MST GetCNInfoByCNNumber(string pCNNumber, DBContext dc)
         {
             dcCN_CREATION_MST cObjList = new dcCN_CREATION_MST();
@@ -105,9 +141,12 @@ namespace PG.BLLibrary.WRElBL
                 DBCommandInfo cmdInfo = new DBCommandInfo();
                 StringBuilder sb = new StringBuilder();
                 sb.Append(" SELECT * FROM ( ");
-                sb.Append(" SELECT REFCN.*, CN.CN_NUMBER, CN.CLIENT_ID ");
+                sb.Append(" SELECT REFCN.*, CN.CN_NUMBER, CN.CLIENT_ID,CN.CONSIGNEE_NAME,CN.CONSIGNEE_ADDRESS,it.ITEM_NAME,CN.CONSIGNEE_MOBILE_NO,CN.DELIVERY_DATE,CN.REFUND_DATE, ");
+                sb.Append(" (Select d.DELIVERY_MAN_NAME FROM CN_ASSIGNMENT a INNER JOIN DELIVERY_MAN_MST d ON a.DELIVERY_MAN_ID=d.DELIVERY_MAN_ID Where a.CN_NUMBER=CN.CN_NUMBER) DELIVERY_MAN_NAME, ");
+                sb.Append(" (Select d.MOBILE_NO FROM CN_ASSIGNMENT a INNER JOIN DELIVERY_MAN_MST d ON a.DELIVERY_MAN_ID=d.DELIVERY_MAN_ID Where a.CN_NUMBER=CN.CN_NUMBER) DEL_MOBILE_NO,CN.CREATE_DATE BOOKING_DATE ");
                 sb.Append(" FROM cn_creation_mst CN ");
                 sb.Append(" LEFT JOIN cn_reference_dtl REFCN ON cn.cn_id=REFCN.cn_id ");
+                sb.Append(" INNER JOIN ITEM_MST it ON cn.ITEM_ID=it.ITEM_ID ");
                 sb.Append(" WHERE 1=1 ");
 
                 if(prm.USER_TYPE.ToUpper() != "ADMIN")
@@ -240,6 +279,90 @@ namespace PG.BLLibrary.WRElBL
             return cObjList;
         }
 
+        public static List<dcCN_CREATION_MST> GetCNInfoBookingList(clsPrmWREL prm, DBContext dc)
+        {
+            List<dcCN_CREATION_MST> cObjList = new List<dcCN_CREATION_MST>();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetCNInfoListSQLString());
+
+                if (prm.CLIENT_ID>0)
+                {
+                    sb.Append(" AND mst.CLIENT_ID= @clientId ");
+                    cmdInfo.DBParametersInfo.Add("@clientId", prm.CLIENT_ID);
+                }
+
+                if (!string.IsNullOrWhiteSpace(prm.ITEM_NAME))
+                {
+                    sb.Append(" AND UPPER(im.item_name) LIKE @itemName ");
+                    cmdInfo.DBParametersInfo.Add("@itemName", "%" + prm.ITEM_NAME.ToUpper() + "%");
+                }
+
+                if (!string.IsNullOrWhiteSpace(prm.CONSIGNEE_NAME))
+                {
+                    sb.Append(" AND UPPER(mst.CONSIGNEE_NAME) LIKE @conName ");
+                    cmdInfo.DBParametersInfo.Add("@conName", "%" + prm.CONSIGNEE_NAME.ToUpper() + "%");
+                }
+
+                if (!string.IsNullOrWhiteSpace(prm.CN_NUMBER))
+                {
+                    sb.Append(" AND UPPER(mst.CN_NUMBER) LIKE @cnNumber ");
+                    cmdInfo.DBParametersInfo.Add("@cnNumber", "%" + prm.CN_NUMBER.ToUpper() + "%");
+                }
+
+                if (prm.CONSIGNEE_MOBILE_NO != "")
+                {
+                    sb.Append(" AND mst.CONSIGNEE_MOBILE_NO= @mobileNo ");
+                    cmdInfo.DBParametersInfo.Add("@mobileNo", prm.CONSIGNEE_MOBILE_NO);
+                }
+
+
+                if (prm.FromDate.HasValue)
+                {
+                    if (prm.ToDate.HasValue)
+                    {
+                        sb.Append(" AND (TO_DATE(mst.CREATE_DATE) BETWEEN @fromDate AND @toDate) ");
+                        cmdInfo.DBParametersInfo.Add("@fromDate", prm.FromDate.Value);
+                        cmdInfo.DBParametersInfo.Add("@toDate", prm.ToDate.Value);
+                    }
+                    else
+                    {
+                        sb.Append(" AND TO_DATE(mst.CREATE_DATE) = @fromDate ");
+                        cmdInfo.DBParametersInfo.Add("@fromDate", prm.FromDate.Value);
+
+                    }
+
+                }
+
+                if (prm.Status_ID==1)
+                {
+                    sb.Append(" AND mst.IS_DELIVERED= 'Y' ");
+                }
+                if (prm.Status_ID == 2)
+                {
+                    sb.Append(" AND mst.IS_DELIVERED= 'N' AND mst.IS_REFUND='N' ");
+                }
+                if (prm.Status_ID == 3)
+                {
+                    sb.Append(" AND mst.IS_DELIVERED= 'N' AND mst.IS_REFUND='Y' ");
+                }
+
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcCN_CREATION_MST>(dbq, dc);
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
+        }
 
         public static List<dcCN_CREATION_MST> GetCNTrackingInfoList(clsPrmWREL prm, DBContext dc)
         {
@@ -538,8 +661,8 @@ namespace PG.BLLibrary.WRElBL
 
                 if (!string.IsNullOrWhiteSpace(prm.CN_NUMBER))
                 {
-                    sb.Append(" AND UPPER(CN_NUMBER) LIKE @cnNumber ");
-                    cmdInfo.DBParametersInfo.Add("@cnNumber", "%" + prm.CN_NUMBER.ToUpper() + "%");
+                    sb.Append(" AND UPPER(CN_NUMBER) = @cnNumber ");
+                    cmdInfo.DBParametersInfo.Add("@cnNumber", prm.CN_NUMBER.ToUpper());
                 }
 
                 DBQuery dbq = new DBQuery
