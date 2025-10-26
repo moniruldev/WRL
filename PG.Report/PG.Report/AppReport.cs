@@ -628,6 +628,23 @@ namespace PG.Report
             context.Session[sessionKey] = pAppReport;
             return sessionKey;
         }
+        //New add
+        public static string SetAppReportToSessionnew(AppReport pAppReport)
+        {
+            return SetAppReportToSessionnew(pAppReport, HttpContext.Current);
+        }
+
+        public static string SetAppReportToSessionnew(AppReport pAppReport, HttpContext context)
+        {
+            // Generate a unique session key per report instance
+            string sessionKey = ReportGlobals.ReportSessionKeyPrefix
+                                + ((int)pAppReport.ReportID).ToString()
+                                + "_"
+                                + Guid.NewGuid().ToString(); // unique per call
+
+            context.Session[sessionKey] = pAppReport;
+            return sessionKey;
+        }
 
         public static void RemoveAppReportFromSession(string pSessionKey)
         {
