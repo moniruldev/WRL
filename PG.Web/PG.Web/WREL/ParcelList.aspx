@@ -60,7 +60,14 @@
 
 
         });
- 
+        function checkAll(source) {
+            var gv = document.getElementById('<%= GridView1.ClientID %>');
+            var checkBoxes = gv.getElementsByTagName("input");
+            for (var i = 0; i < checkBoxes.length; i++) {
+            if (checkBoxes[i].type == "checkbox" && checkBoxes[i] != source)
+              checkBoxes[i].checked = source.checked;
+               }
+          }
 
 
         function tbopen(key, userid) {
@@ -304,7 +311,7 @@
             </div>
           
         <div class="d-flex align-items-center mr-3">
-                <label for="lblClient" class="mr-2 mb-0 small">Status:</label>
+                <label for="lblStatus" class="mr-2 mb-0 small">Status:</label>
                 <asp:DropDownList ID="ddlStatus" runat="server" CssClass="form-control form-control-sm">
           <asp:ListItem Selected="True" Text="All" Value="0"></asp:ListItem>
           <asp:ListItem Text="Delivered" Value="1"></asp:ListItem>
@@ -359,6 +366,8 @@
             <div class="row-mb-0">
               <div class="card-footer m-2 p-1">
               <asp:LinkButton runat="server" ID="btnLoadData" OnClick="btnLoadData_Click"  CssClass="btn btn-primary" Text="<i class='fa fa-list'></i> Show Data"></asp:LinkButton>
+                  &nbsp;&nbsp;
+                 <asp:LinkButton ID="btnAllPrint" runat="server" CssClass="btn btn-primary" OnClick="btnAllPrint_Click"><i class="bi bi-printer"></i> Print Multiple CN </asp:LinkButton>
 
                    <asp:DropDownList ID="ddlReportViewType" runat="server" CssClass="dropDownList" Visible="false">
                             <asp:ListItem Value="0">Screen</asp:ListItem>
@@ -380,10 +389,15 @@
                   <PagerSettings Mode="NumericFirstLast" />
                 <HeaderStyle CssClass="table-info" Font-Size="Smaller" />                                      
               <Columns>
-                  <%-- <asp:HyperLinkField HeaderText="" Text="">
-                   <ControlStyle CssClass="buttonViewGrid" Height="20px" Width="40px" />
-                  <ItemStyle Width="50px" />
-                  </asp:HyperLinkField>--%>
+                   <asp:TemplateField HeaderText="">
+                        <HeaderTemplate>
+                <asp:CheckBox ID="chkAll" runat="server" onclick="checkAll(this);" />
+            </HeaderTemplate>
+                 <ItemTemplate>
+                <asp:CheckBox ID="chkSelect" runat="server" />
+               </ItemTemplate>
+               <HeaderStyle Width="50px" />
+                   </asp:TemplateField>
               
                    <asp:BoundField DataField="CN_NUMBER" HeaderText="CN Number" />
                   <asp:BoundField DataField="CONSIGNEE_NAME" HeaderText="Recipient Name" />
@@ -393,11 +407,7 @@
                  
                    <asp:TemplateField HeaderText="Action">
                        <ItemTemplate>
-                            <asp:LinkButton ID="lnkView" runat="server"
-                                CommandName="print"
-                                CommandArgument='<%# Eval("CN_ID") %>'
-                                CssClass="btn btn-sm btn-primary"
-                                Text="  CN Print" />
+                            <asp:LinkButton ID="lnkView" runat="server" CommandName="print" CommandArgument='<%# Eval("CN_ID") %>' CssClass="btn btn-sm btn-primary" Text="  CN Print" />
                         </ItemTemplate>
                         <ItemStyle Width="200px" />
                  </asp:TemplateField>

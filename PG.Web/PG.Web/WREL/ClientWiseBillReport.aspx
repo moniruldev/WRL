@@ -21,12 +21,16 @@
         var ReportPrintPageLink = '<%=this.ReportPrintPageLink%>';
         var ReportPDFPageLink = '<%=this.ReportPDFPageLink%>';
         var ClientListServiceLink = '<%=this.ClientListServiceLink%>';
+        var DepartmentListbyClientIDServiceLink = '<%=this.DepartmentListbyClientIDServiceLink%>';
         var ifPrintButton = '<%=ifPrintButton.ClientID%>';
      <%--   var ReportViewPageLink = '<%=this.ReportViewPageLink%>';
         var ReportViewPDFPageLink = '<%=this.ReportViewPDFPageLink%>';
        --%>
         var txtClientName = '<%=txtClientName.ClientID%>';
         var hdnClientId = '<%=hdnClientId.ClientID%>';
+        var txtDepartment = '<%=txtDepartment.ClientID%>';
+        var hdnDeptID = '<%=hdnDeptID.ClientID%>';
+
         function PageResizeCompleted(pg, cntMain) {
             resizeContentInner(cntMain);
 
@@ -64,59 +68,59 @@
                               columns: ':not(:last-child)' 
                           }
                       },
-                     {
-                         extend: 'pdfHtml5',
-                         text: '<i class="bi bi-file-earmark-pdf"></i> Export PDF',
-                         filename: exportTitle.replace(/\s+/g, '_'),
-                         title: exportTitle,
-                         customize: function (doc) {
-                             // Fix header wrapping by disabling line breaks on header cells
-                             var headerRows = doc.content[1].table.headerRows;
+                    // {
+                    //     extend: 'pdfHtml5',
+                    //     text: '<i class="bi bi-file-earmark-pdf"></i> Export PDF',
+                    //     filename: exportTitle.replace(/\s+/g, '_'),
+                    //     title: exportTitle,
+                    //     customize: function (doc) {
+                    //         // Fix header wrapping by disabling line breaks on header cells
+                    //         var headerRows = doc.content[1].table.headerRows;
 
-                             // Set noWrap: true on all header cells
-                             doc.content[1].table.body[0].forEach(function (cell) {
-                                 cell.noWrap = true;
-                             });
-                             doc.pageMargins = [20, 20, 20, 20];
-                             // Add cell borders (all sides)
-                             doc.content[1].layout = {
-                                 hLineWidth: function(i, node) {
-                                     return 0.5; // horizontal line thickness
-                                 },
-                                 vLineWidth: function(i, node) {
-                                     return 0.5; // vertical line thickness
-                                 },
-                                 hLineColor: function(i, node) {
-                                     return 'black'; // horizontal line color
-                                 },
-                                 vLineColor: function(i, node) {
-                                     return 'black'; // vertical line color
-                                 },
-                                 paddingLeft: function(i, node) { return 4; },
-                                 paddingRight: function(i, node) { return 4; },
-                                 paddingTop: function(i, node) { return 2; },
-                                 paddingBottom: function(i, node) { return 2; }
-                             };
-                         },
-                         exportOptions: {
-                             columns: ':not(:last-child)'
-                         }
-                     },
-                    //{ extend: 'copyHtml5', text: '<i class="bi bi-clipboard"></i> Copy' },
-                    {
-                        extend: 'print', text: '<i class="bi bi-printer"></i> Print',
-                        filename: exportTitle.replace(/\s+/g, '_'),
-                        title: exportTitle,
-                        customize: function (win) {
-                            $(win.document.body).find('h1').css({
-                                'text-align': 'center',
-                                'width': '100%'
-                            });
-                        },
-                        exportOptions: {
-                            columns: ':not(:last-child)'
-                        }
-                    }
+                    //         // Set noWrap: true on all header cells
+                    //         doc.content[1].table.body[0].forEach(function (cell) {
+                    //             cell.noWrap = true;
+                    //         });
+                    //         doc.pageMargins = [20, 20, 20, 20];
+                    //         // Add cell borders (all sides)
+                    //         doc.content[1].layout = {
+                    //             hLineWidth: function(i, node) {
+                    //                 return 0.5; // horizontal line thickness
+                    //             },
+                    //             vLineWidth: function(i, node) {
+                    //                 return 0.5; // vertical line thickness
+                    //             },
+                    //             hLineColor: function(i, node) {
+                    //                 return 'black'; // horizontal line color
+                    //             },
+                    //             vLineColor: function(i, node) {
+                    //                 return 'black'; // vertical line color
+                    //             },
+                    //             paddingLeft: function(i, node) { return 4; },
+                    //             paddingRight: function(i, node) { return 4; },
+                    //             paddingTop: function(i, node) { return 2; },
+                    //             paddingBottom: function(i, node) { return 2; }
+                    //         };
+                    //     },
+                    //     exportOptions: {
+                    //         columns: ':not(:last-child)'
+                    //     }
+                    // },
+                    ////{ extend: 'copyHtml5', text: '<i class="bi bi-clipboard"></i> Copy' },
+                    //{
+                    //    extend: 'print', text: '<i class="bi bi-printer"></i> Print',
+                    //    filename: exportTitle.replace(/\s+/g, '_'),
+                    //    title: exportTitle,
+                    //    customize: function (win) {
+                    //        $(win.document.body).find('h1').css({
+                    //            'text-align': 'center',
+                    //            'width': '100%'
+                    //        });
+                    //    },
+                    //    exportOptions: {
+                    //        columns: ':not(:last-child)'
+                    //    }
+                    //}
                 ],
                 language: {
                     emptyTable: "No data available"
@@ -307,6 +311,12 @@
                 bindClientList();
                 
             }
+
+            if ($('#' + txtDepartment).is(':visible')) {
+
+                bindDepartmentListByClientID();
+
+            }
         });    
 
         function bindClientList() {
@@ -371,7 +381,74 @@
                 var groupID = $(groupIDElem).val();
                 if (groupID == '') {
                     $('#' + hdnClientId).val('');
-                    $('#' + txtClientName).val('0');
+                    $('#' + txtClientName).val('');
+                }
+            });
+        }
+
+        function bindDepartmentListByClientID() {
+            var cgColumns = [
+                             { 'columnName': 'deptname', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Dept Name' }
+
+
+            ];
+            var serviceURL = DepartmentListbyClientIDServiceLink + "?isterm=1&includeempty=0&hasitem=1&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
+
+            serviceURL += "&ispaging=0";
+            var groupIDElem = $('#' + txtDepartment);
+
+            $('#' + txtDepartment).click(function (e) {
+                $(groupIDElem).combogrid("dropdownClick");
+            });
+
+            $(groupIDElem).combogrid({
+                debug: true,
+                searchButton: false,
+                resetButton: false,
+                alternate: true,
+                munit: 'px',
+                scrollBar: true,
+                showPager: true,
+                colModel: cgColumns,
+                autoFocus: true,
+                showError: true,
+                width: 350,
+                url: serviceURL,
+                search: function (event, ui) {
+                    var clientid = $('#' + hdnClientId).val();
+                    var newServiceURL = serviceURL + " &clientid=" + clientid;
+                    $(this).combogrid("option", "url", newServiceURL);
+
+
+                },
+                select: function (event, ui) {
+                    if (!ui.item) {
+                        event.preventDefault();
+                        return false;
+                    }
+
+                    if (ui.item.dealerid == '') {
+                        event.preventDefault();
+                        return false;
+                    }
+                    else {
+                        $('#' + hdnDeptID).val(ui.item.deptid);
+                        $('#' + txtDepartment).val(ui.item.deptname);
+                    }
+                    return false;
+                },
+
+                lc: ''
+            });
+
+
+            $(groupIDElem).blur(function () {
+                var self = this;
+
+                var groupID = $(groupIDElem).val();
+                if (groupID == '') {
+                    $('#' + txtDepartment).val('');
+                    $('#' + hdnDeptID).val('0');
                 }
             });
         }
@@ -404,7 +481,11 @@
       <asp:TextBox runat="server" ID="txtClientName" CssClass="form-control form-control-sm" Style="width:150px;"></asp:TextBox>
       <asp:HiddenField ID="hdnClientId" runat="server" Value="0" />
     </div>
-
+       <div class="d-flex align-items-center mx-2 mb-2">
+      <label for="txtDepartment" class="mb-0 mr-2 small">Department:</label>
+      <asp:TextBox runat="server" ID="txtDepartment" CssClass="form-control form-control-sm" Style="width:150px;"></asp:TextBox>
+      <asp:HiddenField ID="hdnDeptID" runat="server" Value="0" />
+    </div>
     <!-- From Date -->
     <div class="d-flex align-items-center mx-2 mb-2">
       <label for="txtFromDate" class="mb-0 mr-2 small">From Date:</label>
@@ -422,8 +503,8 @@
       <asp:LinkButton runat="server" ID="btnDownloadPdf" OnClick="btnDownloadPdf_Click" CssClass="btn btn-primary btn-sm mx-1">
         <i class="fas fa-file-pdf text-danger"></i> View PDF
       </asp:LinkButton>
-      <asp:LinkButton runat="server" ID="LinkButton2" CssClass="btn btn-success btn-sm mx-1" Visible="false">
-        <i class="fa fa-file-excel"></i> Export Excel
+      <asp:LinkButton runat="server" ID="btnExcelExport" OnClick="btnExcelExport_Click" CssClass="btn btn-success btn-sm mx-1" >
+        <i class="fa fa-file-excel"></i> Load Data
       </asp:LinkButton>
     </div>
 
@@ -431,56 +512,55 @@
 </div>
 
 
-           <%-- <div class="row mb-0">
+        
+             <div class="row">
+  
 
-            
+<asp:Repeater ID="rptData" runat="server">
+    <HeaderTemplate>
+        <table id="myTable" class="display table table-striped table-bordered" style="width:100%">
+            <thead class="table-info text-center">
+                <tr>
+                    <th style="width:5%">SLNo</th>
+                    <th style="width:10%">Date</th>
+                    <th style="width:15%">CN Number</th>
+                    <th style="width:10%">Department</th>
+                    <th style="width:10%">Booking</th>
+                    <th style="width:20%">Destination</th>
+                    <th style="width:15%">Item Name</th>
+                    <th style="width:5%">UOM</th>
+                    <th style="width:5%">Quantity</th>
+                    <th style="width:5%">Rate</th>
+                    <th style="width:5%">Taka</th>
+                </tr>
+            </thead>
+            <tbody>
+    </HeaderTemplate>
 
-                <div class="col-md-4">
-  <div class="form-group row mb-0">
-    <label for="name" class="col-sm-6 col-form-label-sm text-left">Client Name :</label>
-    <div class="col-sm-6 text-left">
-      <asp:TextBox 
-        runat="server" 
-        ID="txtClientName" 
-        CssClass="form-control form-control-sm text-left" 
-        placeholder="Select">
-      </asp:TextBox>
-      <asp:HiddenField ID="hdnClientId" runat="server" Value="0" />
-    </div>
-  </div>
-</div>
+    <ItemTemplate>
+        <tr>
+            <td class="text-center"><%# Container.ItemIndex + 1 %></td>
+            <td><%# Eval("BOOKING_DATE", "{0:dd-MMM-yyyy}") %></td>
+            <td><%# Eval("CN_NUMBER") %></td>
+            <td><%# Eval("DEPT") %></td>
+            <td><%# Eval("BOOKING") %></td>
+            <td><%# Eval("DESTINATION") %></td>
+            <td><%# Eval("ITEM_NAME") %></td>
+            <td class="text-center"><%# Eval("UOM_NAME") %></td>
+            <td class="text-center"><%# Eval("QUANTITY") %></td>
+            <td class="text-right"><%# Eval("RATE") %></td>
+            <td class="text-right"><%# Eval("TOTAMT") %></td>
+        </tr>
+    </ItemTemplate>
 
-                 
+    <FooterTemplate>
+            </tbody>
+        </table>
+    </FooterTemplate>
+</asp:Repeater>
 
-                </div>
-        <div class="d-flex align-items-center border-bottom pb-2 mb-2">
-            <div class="d-flex align-items-center mr-3">
-                <label for="txtFromDate" class="mr-2 mb-0 small">From Date:</label>
-                <asp:TextBox ID="txtFromDate" runat="server" CssClass="TextBoxnew textDate dateParse form-control form-control-sm" Style="width:130px;"></asp:TextBox>
+
             </div>
-
-            <div class="d-flex align-items-center mr-3">
-                <label for="txtToDate" class="mr-2 mb-0 small">To Date:</label>
-                <asp:TextBox ID="txtToDate" runat="server" CssClass="TextBoxnew textDate dateParse form-control form-control-sm" Style="width:130px;"></asp:TextBox>
-            </div>
-
-         
-        </div>
-
-        <div class="row mb-0 ">
-                <div class="m-2 p-1 d-flex justify-content-between align-items-center w-100">
-                   
-
-                    <div >
-                        <asp:LinkButton runat="server" ID="btnDownloadPdf" OnClick="btnDownloadPdf_Click" CssClass="btn btn-primary">
-                            <i class="fas fa-file-pdf text-danger"></i> View PDF
-                        </asp:LinkButton>
-                        <asp:LinkButton runat="server" ID="LinkButton2" CssClass="btn btn-primary" Visible="false">
-                            <i class="fa fa-file-excel"></i> Export Excel
-                        </asp:LinkButton>
-                    </div>
-                </div>
-            </div>--%>
 
         <div class="row">
                 <div class="col-md-12">

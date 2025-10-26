@@ -78,7 +78,7 @@ namespace PG.BLLibrary.WRElBL
             StringBuilder sb = new StringBuilder();
 
             sb.Append(" SELECT a.CREATE_DATE BOOKING_DATE,a.CN_NUMBER,'H/O' DEPT,'Dhaka' BOOKING,a.CONSIGNEE_ADDRESS DESTINATION ");
-            sb.Append(" ,b.ITEM_NAME,a.QTY QUANTITY,u.UOM_NAME,a.RATE,a.TAKA,c.CLIENT_NAME ");
+            sb.Append(" ,b.ITEM_NAME,a.QTY QUANTITY,u.UOM_NAME,a.RATE,a.TAKA,c.CLIENT_NAME,a.QTY*a.RATE TOTAMT  ");
             sb.Append(" FROM CN_CREATION_MST a ");
             sb.Append(" INNER JOIN ITEM_MST b ON a.ITEM_ID=b.ITEM_ID ");
             sb.Append(" INNER JOIN UOM_MST u ON b.UOM_ID=u.UOM_ID ");
@@ -209,6 +209,114 @@ namespace PG.BLLibrary.WRElBL
             return cObjList;
         }
 
+
+        //for Bill
+        public static List<dcCN_CREATION_MST> Get_CNDateWiseBill_forExcel(clsPrmWREL prm, DBContext dc)
+        {
+            List<dcCN_CREATION_MST> cObjList = new List<dcCN_CREATION_MST>();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetCNBillSQLString());
+
+                if (prm.CLIENT_ID > 0)
+                {
+                    sb.Append(" AND a.CLIENT_ID= @clientId ");
+                    cmdInfo.DBParametersInfo.Add("@clientId", prm.CLIENT_ID);
+                }
+
+                if (prm.FromDate.HasValue)
+                {
+                    if (prm.ToDate.HasValue)
+                    {
+                        sb.Append(" AND (TO_DATE(a.CREATE_DATE) BETWEEN @fromDate AND @toDate) ");
+                        cmdInfo.DBParametersInfo.Add("@fromDate", prm.FromDate.Value);
+                        cmdInfo.DBParametersInfo.Add("@toDate", prm.ToDate.Value);
+                    }
+                    else
+                    {
+                        sb.Append(" AND TO_DATE(a.CREATE_DATE) = @fromDate ");
+                        cmdInfo.DBParametersInfo.Add("@fromDate", prm.FromDate.Value);
+
+                    }
+
+                }
+                if (prm.Dept_ID > 0)
+                {
+                    sb.Append(" AND a.CLIENT_DEPT_ID = @Dept_ID ");
+                    cmdInfo.DBParametersInfo.Add("@Dept_ID", prm.Dept_ID);
+                }
+
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcCN_CREATION_MST>(dbq, dc);
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
+        }
+
+        public static List<dcCN_CREATION_MST> Get_CNDateWiseBill_forExcelSummary(clsPrmWREL prm, DBContext dc)
+        {
+            List<dcCN_CREATION_MST> cObjList = new List<dcCN_CREATION_MST>();
+            bool isDCInit = false;
+            try
+            {
+                isDCInit = DBContextManager.CheckAndInitDBContext(ref dc);
+
+                DBCommandInfo cmdInfo = new DBCommandInfo();
+                StringBuilder sb = new StringBuilder(GetCNBillSummarySQLString());
+
+                if (prm.CLIENT_ID > 0)
+                {
+                    sb.Append(" AND a.CLIENT_ID= @clientId ");
+                    cmdInfo.DBParametersInfo.Add("@clientId", prm.CLIENT_ID);
+                }
+
+                if (prm.FromDate.HasValue)
+                {
+                    if (prm.ToDate.HasValue)
+                    {
+                        sb.Append(" AND (TO_DATE(a.CREATE_DATE) BETWEEN @fromDate AND @toDate) ");
+                        cmdInfo.DBParametersInfo.Add("@fromDate", prm.FromDate.Value);
+                        cmdInfo.DBParametersInfo.Add("@toDate", prm.ToDate.Value);
+                    }
+                    else
+                    {
+                        sb.Append(" AND TO_DATE(a.CREATE_DATE) = @fromDate ");
+                        cmdInfo.DBParametersInfo.Add("@fromDate", prm.FromDate.Value);
+
+                    }
+
+                }
+                if (prm.Dept_ID > 0)
+                {
+                    sb.Append(" AND a.CLIENT_DEPT_ID = @Dept_ID ");
+                    cmdInfo.DBParametersInfo.Add("@Dept_ID", prm.Dept_ID);
+                }
+                sb.Append(" GROUP BY c.CLIENT_NAME,a.CREATE_DATE ");
+
+
+                DBQuery dbq = new DBQuery();
+                dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
+                cmdInfo.CommandText = sb.ToString();
+                cmdInfo.CommandType = CommandType.Text;
+                dbq.DBCommandInfo = cmdInfo;
+
+                cObjList = DBQuery.ExecuteDBQuery<dcCN_CREATION_MST>(dbq, dc);
+            }
+            catch { throw; }
+            finally { DBContextManager.ReleaseDBContext(ref dc, isDCInit); }
+            return cObjList;
+        }
+      
         public static List<dcCN_CREATION_MST> GetCNInfoList(clsPrmWREL prm, DBContext dc)
         {
             List<dcCN_CREATION_MST> cObjList = new List<dcCN_CREATION_MST>();
@@ -266,6 +374,12 @@ namespace PG.BLLibrary.WRElBL
                     }
 
                 }
+                //if(prm.Dept_ID>0)
+                //{
+                //    sb.Append(" AND mst.CLIENT_DEPT_ID = @Dept_ID ");
+                //    cmdInfo.DBParametersInfo.Add("@Dept_ID", prm.Dept_ID);
+                //}
+
                 DBQuery dbq = new DBQuery();
                 dbq.DBQueryMode = DBQueryModeEnum.DBCommandInfo;
                 cmdInfo.CommandText = sb.ToString();

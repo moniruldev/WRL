@@ -34,12 +34,18 @@ namespace PG.DBClass.WRELDC
         private string m_TransType = string.Empty;
         private int m_Status_ID = 0;
         private int m_Item_Type_ID = 0;
+        private int m_Dept_ID = 0;
         public int CARGO_ID
         {
             get { return this.m_CARGO_ID; }
             set { this.m_CARGO_ID = value; }
         }
 
+        public int Dept_ID
+        {
+            get { return this.m_Dept_ID; }
+            set { this.m_Dept_ID = value; }
+        }
         public int Item_Type_ID
         {
             get { return this.m_Item_Type_ID; }
@@ -147,6 +153,8 @@ namespace PG.DBClass.WRELDC
             get { return this.m_TransType; }
             set { this.m_TransType = value; }
         }
-        
+       // public List<string> CN_ID_LIST = new List<string>();
+        public string CN_ID_LIST { get; set; }
+         
     }
 }

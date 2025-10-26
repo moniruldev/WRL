@@ -250,5 +250,82 @@ namespace PG.Web
             }
             return dList;
         }
+
+        public static string NumberToWords(decimal number)
+        {
+            if (number == 0)
+                return "Zero Taka Only";
+
+            string words = "";
+
+            long intPortion = (long)Math.Floor(number);
+            int fraction = (int)((number - intPortion) * 100);
+
+            words = NumberToWordsHelper(intPortion) + " Taka";
+
+            if (fraction > 0)
+                words += " and " + NumberToWordsHelper(fraction) + " Paisa";
+
+            words += " Only";
+
+            return words;
+        }
+
+        private static string NumberToWordsHelper(long number)
+        {
+            if (number == 0)
+                return "";
+            if (number < 0)
+                return "Minus " + NumberToWordsHelper(Math.Abs(number));
+
+            string[] unitsMap = { "Zero", "One", "Two", "Three", "Four", "Five", "Six",
+                          "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve",
+                          "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen",
+                          "Eighteen", "Nineteen" };
+
+            string[] tensMap = { "Zero", "Ten", "Twenty", "Thirty", "Forty", "Fifty",
+                         "Sixty", "Seventy", "Eighty", "Ninety" };
+
+            string words = "";
+
+            if ((number / 10000000) > 0)
+            {
+                words += NumberToWordsHelper(number / 10000000) + " Crore ";
+                number %= 10000000;
+            }
+            if ((number / 100000) > 0)
+            {
+                words += NumberToWordsHelper(number / 100000) + " Lakh ";
+                number %= 100000;
+            }
+            if ((number / 1000) > 0)
+            {
+                words += NumberToWordsHelper(number / 1000) + " Thousand ";
+                number %= 1000;
+            }
+            if ((number / 100) > 0)
+            {
+                words += NumberToWordsHelper(number / 100) + " Hundred ";
+                number %= 100;
+            }
+
+            if (number > 0)
+            {
+                if (words != "")
+                    words += "and ";
+
+                if (number < 20)
+                    words += unitsMap[number];
+                else
+                {
+                    words += tensMap[number / 10];
+                    if ((number % 10) > 0)
+                        words += "-" + unitsMap[number % 10];
+                }
+            }
+
+            return words.Trim();
+        }
+
     }
 }

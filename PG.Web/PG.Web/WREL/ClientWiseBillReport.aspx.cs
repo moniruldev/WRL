@@ -38,6 +38,7 @@ namespace PG.Web.WREL
         public string ReportPrintPageLink = PageLinks.ReportLinks.GetLink_ReportPrint;
         public string ReportPDFPageLink = PageLinks.ReportLinks.GetLink_ReportPDF;
         public string ClientListServiceLink = PageLinks.InventoryLink.GetLink_ClientList;
+        public string DepartmentListbyClientIDServiceLink = PageLinks.InventoryLink.GetLink_DepartmentListbyClientID;
         //public string ReportViewPageLink = PageLinks.ReportLinks.GetLink_ReportView;
         //public string ReportViewPDFPageLink = PageLinks.ReportLinks.GetLink_ReportViewPDF;
 
@@ -115,22 +116,12 @@ namespace PG.Web.WREL
             prmCn.USER_TYPE = loggedinUser.UserType;
             prmCn.FromDate = fromDate;
             prmCn.ToDate = toDate;
+            prmCn.Dept_ID = Conversion.StringToInt(hdnDeptID.Value);
        
             List<dcCN_CREATION_MST> listData = CN_CREATION_MSTBL.GetCNInfoList(prmCn, null);
            
 
         }
-
-
-       
-
-
-      
-
-     
-       
-
-       
 
         private ReportOptions GetReportOptions()
         {
@@ -250,6 +241,7 @@ namespace PG.Web.WREL
             }
             prm.FromDate = fromDate;
             prm.ToDate = toDate;
+            prm.Dept_ID = Conversion.StringToInt(hdnDeptID.Value);
             ReportOptions rptOption = GetReportOptions();
 
             AppReport rpt = WRELRGN.CNDateWiseBill_Report(prm, rptOption);
@@ -274,6 +266,39 @@ namespace PG.Web.WREL
         public void Cleartextbox()
         {
           
+
+        }
+        protected void btnExcelExport_Click(object sender, EventArgs e)
+        {
+            if (txtClientName.Text == "")
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), "", "alert('Please Enter Client !!');", true);
+                txtClientName.Focus();
+                return;
+            }
+
+            clsPrmWREL prm = new clsPrmWREL();
+            prm.CLIENT_ID = Conversion.StringToInt(hdnClientId.Value);
+            DateTime? fromDate = null;
+            DateTime? toDate = null;
+
+            DateTime dt;
+            if (DateTime.TryParse(txtFromDate.Text, out dt))
+            {
+                fromDate = dt;
+            }
+            if (DateTime.TryParse(txtToDate.Text, out dt))
+            {
+                toDate = dt;
+            }
+            prm.FromDate = fromDate;
+            prm.ToDate = toDate;
+            prm.Dept_ID = Conversion.StringToInt(hdnDeptID.Value);
+
+            List<dcCN_CREATION_MST> listData = CN_CREATION_MSTBL.Get_CNDateWiseBill_forExcel(prm, null);
+            rptData.DataSource = listData;
+            rptData.DataBind();
+            
 
         }
 

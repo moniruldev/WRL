@@ -750,13 +750,17 @@ namespace PG.DBClass.WRELDC
 
          public int SLNO { get; set; }
          public string DEPT_NAME { get; set; }
+         public string DEPT { get; set; }
+         
          public string DISTANCE_TYPE_NAME { get; set; }
          public byte[] PODIMG { get; set; }
          public string CN_STATUS { get; set; }
           public string DELIVERY_MAN_NAME { get; set; }
           public string DEL_MOBILE_NO { get; set; }
-         
-             
+          public decimal TOTAMT { get; set; }
+          public string BOOKING { get; set; }
+          public string UOM_NAME { get; set; }
+          public decimal QUANTITY { get; set; }
          
          
      }

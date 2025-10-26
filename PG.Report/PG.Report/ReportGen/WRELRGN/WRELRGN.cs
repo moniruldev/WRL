@@ -30,6 +30,24 @@ namespace PG.Report.ReportGen.WRELRGN
         }
 
 
+
+        public static AppReport CN_Barcode_ReportDual(clsPrmWREL rptClass, ReportOptions rptOptions)
+        {
+            return CN_Barcode_ReportDual(rptClass, rptOptions, null);
+        }
+        public static AppReport CN_Barcode_ReportDual(clsPrmWREL rptClass, ReportOptions rptOptions, DBContext dc)
+        {
+            AppReport rpt = new AppReport();
+            rpt.ReportID = ReportIDEnum.Department_Production_Report;
+            rpt.ReportOptions = rptOptions;
+            // SetParameter(rptClass, rpt, dc);
+            rpt.ReportEmbeddedResource = @"PG.Report.ReportDef.WRELDef.rptCNBarcodeDual.rdlc";
+            List<rcWREL> rList = WRELRBL.Get_CNBarcodeDoubleCNInfo_Report(rptClass, dc);
+            rpt.DataSources.Add(new AppReport.DataSource("dsCN", rList));
+            return rpt;
+        }
+
+
         public static AppReport CN_BarcodeSingle_Report(clsPrmWREL rptClass, ReportOptions rptOptions)
         {
             return CN_BarcodeSingle_Report(rptClass, rptOptions, null);

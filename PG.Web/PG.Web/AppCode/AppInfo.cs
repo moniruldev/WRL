@@ -12,7 +12,7 @@ namespace PG.Web
 {
     public class AppInfo
     {
-        public static int AppIDDefault = 1;
+        public static int AppIDDefault =1;
 
         public static int AppID = 1;
         public static string AppCode = "ISACC";

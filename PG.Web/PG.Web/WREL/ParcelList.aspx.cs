@@ -22,6 +22,12 @@ using PG.Report;
 using PG.Report.ReportEnums;
 using PG.Report.ReportGen.WRELRGN;
 using PG.DBClass.SecurityDC;
+using Microsoft.Reporting.WebForms;
+using System.IO;
+using PG.Core.DBBase;
+using PG.Report.ReportClass.WRELRC;
+using PG.Report.ReportRBL.WRELRBL;
+using System.Text;
 
 namespace PG.Web.WREL
 {
@@ -439,12 +445,7 @@ namespace PG.Web.WREL
                 url = this.ReportViewPDFPageLink + "?rk=" + reportKey + "&_tt=" + strTime;
             }
 
-            //string url = this.ReportViewPageLink + "?rk=" + reportKey + "&_tt=" + strTime;
-            //string jsScript = "$(function(){tbopen('" + reportKey + "'," + strWait + ");});";
-
-            //string jsScript = "$(function(){tbopen('" + reportKey + "', " +  strIsPrint  +  "," + strWait + ");});";
-
-            //string jsScript = "$(function(){tbopen('" + reportKey + "', " + strIsPrint +  "," + strIsPDFAutoPrint  + "," + strWait + ");});";
+            
 
             string jsScript = "$(function(){tbopen('" + reportKey + "', " + strPDFView + ", " + strIsPrint + "," + strIsPDFAutoPrint + "," + strWait + ");});";
 
@@ -478,89 +479,63 @@ namespace PG.Web.WREL
                     ClientScript.RegisterClientScriptBlock(this.Page.GetType(), "showreport", jsScript, true);
                     break;
             }
-            //ReportOpenTypeEnum rptOpenType = this.ReportOpenType;
-            //ReportViewModeEnum rptViewMode = (ReportViewModeEnum)Convert.ToInt32(1);
-
-            //bool pdfView = true;
-
-            //string strWait = "true";
-            //string strIsPrint = "false";
-            //string strIsPDFAutoPrint = "false";
-            //string strPDFView = "false";
-
-
-            //switch (rptOpenType)
-            //{
-            //    case ReportOpenTypeEnum.Preview:
-            //        if (ddlReportViewType.SelectedValue == "1")
-            //        {
-            //            strPDFView = "true";
-            //        }
-
-            //        break;
-            //    case ReportOpenTypeEnum.Print:
-            //        rptViewMode = ReportViewModeEnum.InThisTab;
-            //        strWait = "false";
-            //        strIsPrint = "true";
-            //        break;
-            //    case ReportOpenTypeEnum.Export:
-            //        //rptViewMode = ReportViewModeEnum.InThisTab;
-            //        rptViewMode = ReportViewModeEnum.InNewWindow;
-            //        strWait = "false";
-            //        break;
-            //}
-
-            //bool isPDFAutoPrint = true;
-            //if (Request.Browser.Browser.ToLower().Contains("ie") == true)
-            //{
-            //    // isPDFAutoPrint = !AccSettings.IsIERsClientPrint;
-            //}
-
-            //strIsPDFAutoPrint = isPDFAutoPrint ? "true" : "false";
-
-
-            ////string strTime = DateTime.Now.ToString("hhmm");
-            //string strTime = DateTime.Now.ToFileTime().ToString();
-            ////string strTime = DateTime.Now now.getTime().toString();
-            //string url = this.ReportViewPageLink + "?rk=" + reportKey + "&_tt=" + strTime;
-            //if (pdfView && rptOpenType == ReportOpenTypeEnum.Preview)
-            //{
-            //    url = this.ReportViewPDFPageLink + "?rk=" + reportKey + "&_tt=" + strTime;
-            //}
-
-
-            //string jsScript = "$(function(){tbopen('" + reportKey + "', " + strPDFView + ", " + strIsPrint + "," + strIsPDFAutoPrint + "," + strWait + ");});";
-
-
-            //switch (rptViewMode)
-            //{
-            //    case ReportViewModeEnum.InThisTab:
-            //        if (rptOpenType == ReportOpenTypeEnum.Print)
-            //        {
-            //            ClientScript.RegisterClientScriptBlock(this.Page.GetType(), "showreport", jsScript, true);
-            //        }
-            //        else
-            //        {
-            //            Response.Redirect(url, false);
-            //        }
-
-
-            //        break;
-            //    case ReportViewModeEnum.InNewTab:
-            //        ClientScript.RegisterClientScriptBlock(this.Page.GetType(), "showreport", jsScript, true);
-            //        break;
-            //    case ReportViewModeEnum.InNewWindow:
-            //        ClientScript.RegisterStartupScript(this.GetType(), "newWindow", String.Format("<script>window.open('{0}');</script>", url));
-            //        break;
-            //    case ReportViewModeEnum.InDialog:
-            //        break;
-            //    default:
-            //        ClientScript.RegisterClientScriptBlock(this.Page.GetType(), "showreport", jsScript, true);
-            //        break;
-            //}
+            
         }
 
+      
 
+        protected void btnAllPrint_Click(object sender, EventArgs e)
+        {
+            List<int> selectedCnIds = new List<int>();
+
+            // Collect selected CN_IDs
+            foreach (GridViewRow row in GridView1.Rows)
+            {
+                CheckBox chk = (CheckBox)row.FindControl("chkSelect");
+                if (chk != null && chk.Checked)
+                {
+                    int cnID = Conversion.StringToInt(GridView1.DataKeys[row.RowIndex].Value.ToString());
+                    selectedCnIds.Add(cnID);
+                }
+            }
+
+            if (selectedCnIds.Count == 0)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "noSelect",
+                    "alert('Please select at least one CN!');", true);
+                return;
+            }
+
+            // Build a single JS script to open all reports
+            StringBuilder jsAll = new StringBuilder();
+
+            foreach (int cnID in selectedCnIds)
+            {
+                clsPrmWREL prm = new clsPrmWREL();
+                prm.CN_ID = cnID;
+
+                ReportOptions rptOption = GetReportOptions();
+                AppReport rpt = WRELRGN.CN_Barcode_Report(prm, rptOption);
+
+                // Generate unique session key per report
+                string reportKey = AppReport.SetAppReportToSessionnew(rpt, this.Context);
+
+                // Build URL for the report viewer
+                string url = this.ReportViewPageLink + "?rk=" + reportKey + "&_tt=" + DateTime.Now.ToFileTime().ToString();
+
+                if (ddlReportViewType.SelectedValue == "1")
+                {
+                    url = this.ReportViewPDFPageLink + "?rk=" + reportKey + "&_tt=" + DateTime.Now.ToFileTime().ToString();
+                }
+
+                // Append JS to open this report in new tab
+                jsAll.AppendFormat("window.open('{0}', '_blank');", url);
+            }
+
+            // Register the combined script once
+            ClientScript.RegisterStartupScript(this.GetType(), "openAllReports",
+                "<script type='text/javascript'>" + jsAll.ToString() + "</script>", false);
+        }
 
 
     }
