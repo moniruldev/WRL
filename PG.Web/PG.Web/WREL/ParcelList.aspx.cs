@@ -183,19 +183,19 @@ namespace PG.Web.WREL
                 }
 
 
-                //string strD = DataBinder.Eval(e.Row.DataItem, "CN_ID").ToString(); ;
-                //HyperLink lnk = (HyperLink)e.Row.Cells[0].Controls[0];
+                string strD = DataBinder.Eval(e.Row.DataItem, "CN_ID").ToString(); ;
+                HyperLink lnk = (HyperLink)e.Row.Cells[1].Controls[0];
 
-                //string hLink = "javascript:tbopen(" + strD + ")";
-                //if (base.PageMode == PG.Core.Web.PageModeEnum.InTab)
-                //{
-                //    hLink = "javascript:tbopen(" + strD + ")";
-                //}
-                //else
-                //{
-                //    hLink = "~/WREL/ParcelCreation.aspx?id=" + strD;
-                //}
-                //lnk.NavigateUrl = hLink;
+                string hLink = "javascript:tbopenTab(" + strD + ")";
+                if (base.PageMode == PG.Core.Web.PageModeEnum.InTab)
+                {
+                    hLink = "javascript:tbopenTab(" + strD + ")";
+                }
+                else
+                {
+                    hLink = "~/WREL/SingleParcelCreation.aspx?id=" + strD;
+                }
+                lnk.NavigateUrl = hLink;
 
 
                

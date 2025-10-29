@@ -70,12 +70,12 @@
           }
 
 
-        function tbopen(key, userid) {
+        function tbopenTab(key) {
             if (!key) {
                 key = '';
             }
 
-            var url = IForm.RootPath + "WREL/ParcelCreation.aspx?id=" + key;
+            var url = IForm.RootPath + "WREL/SingleParcelCreation.aspx?id=" + key;
 
             if (IForm.PageMode == Enums.PageMode.InTab) {
 
@@ -121,8 +121,8 @@
 
         function bindClientList() {
             var cgColumns = [
-                             { 'columnName': 'clientname', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Name' }
-                            , { 'columnName': 'mobile', 'width': '200', 'align': 'left', 'highlight': 4, 'label': 'Mobile' }
+                             { 'columnName': 'clientname', 'width': '200', 'align': 'left', 'highlight': 4, 'label': 'Name' }
+                            , { 'columnName': 'mobile', 'width': '100', 'align': 'left', 'highlight': 4, 'label': 'Mobile' }
 
             ];
             var serviceURL = ClientListServiceLink + "?isterm=1&includeempty=0&hasitem=1&iscodename=1&codecomptype=" + Enums.DataCompareType.StartsWith;
@@ -145,7 +145,7 @@
                 colModel: cgColumns,
                 autoFocus: true,
                 showError: true,
-                width: 350,
+                width: 450,
                 url: serviceURL,
                 search: function (event, ui) {
 
@@ -399,7 +399,10 @@
                <HeaderStyle Width="50px" />
                    </asp:TemplateField>
               
-                   <asp:BoundField DataField="CN_NUMBER" HeaderText="CN Number" />
+                  <asp:HyperLinkField HeaderText="CN Number" DataTextField="CN_NUMBER" >
+                    <ItemStyle Width="100px" HorizontalAlign="Center" />
+                  </asp:HyperLinkField>
+                   <%--<asp:BoundField DataField="CN_NUMBER" HeaderText="CN Number" />--%>
                   <asp:BoundField DataField="CONSIGNEE_NAME" HeaderText="Recipient Name" />
                   <asp:BoundField DataField="CONSIGNEE_ADDRESS" HeaderText="Recipient Address" />
                   <asp:BoundField DataField="CONSIGNEE_MOBILE_NO" HeaderText="Mobile No" />

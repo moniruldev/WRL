@@ -32,6 +32,30 @@ namespace PG.BLLibrary.WRElBL
             return sb.ToString();
         }
 
+        public static string GetItemByAgreementSQLString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(@"SELECT im.ITEM_ID,im.item_name,im.item_type_id,amst.agr_id,amst.agreement_date
+                        ,amst.agreement_name,amst.client_id,adtl.agr_detail_id,adtl.service_amount,adtl.sla_days
+                        FROM ITEM_MST im
+                        INNER JOIN agreement_detaill adtl ON im.item_id = adtl.item_id
+                        INNER JOIN agreement_mst amst ON adtl.agr_id = amst.agr_id
+                        WHERE im.is_active = 'Y'
+                        AND amst.is_active = 'Y'
+                        AND (amst.agreement_date, amst.agr_id) = (
+                            SELECT MAX(amst2.agreement_date), MAX(amst2.agr_id)
+                            FROM agreement_mst amst2
+                            INNER JOIN agreement_detaill adtl2 ON amst2.agr_id = adtl2.agr_id
+                            WHERE adtl2.item_id = im.item_id
+                              AND adtl2.distance_type_id = adtl.distance_type_id
+                              AND amst2.client_id = amst.client_id
+                              AND amst2.is_active = 'Y'
+                        ) ");
+
+            return sb.ToString();
+        }
+
         public static List<dcAGREEMENT_DETAILL> GetAgreementInfoListById(int pAgrId)
         {
             return GetAgreementInfoListById(pAgrId, null);

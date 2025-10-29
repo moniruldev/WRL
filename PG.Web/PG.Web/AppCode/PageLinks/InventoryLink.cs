@@ -248,6 +248,13 @@ namespace PG.Web.PageLinks
         {
             get { return WebUtility.GetAbsoluteUrl("~/Service/WREL/GetDepartmentListbyClientID.ashx"); }
         }
+
+        public static string GetLink_ItemListByAgreement
+        {
+            get { return WebUtility.GetAbsoluteUrl("~/Service/WREL/GetItemListByAgreement.ashx"); }
+        }
+
+        
         
         
     }

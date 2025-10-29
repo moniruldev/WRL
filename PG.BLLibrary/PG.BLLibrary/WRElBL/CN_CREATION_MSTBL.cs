@@ -50,7 +50,7 @@ namespace PG.BLLibrary.WRElBL
             sb.Append("  ,mst.EDIT_DATE,mst.OTP_SUCCESSFUL,mst.RETURN_SERVICE_AMOUNT,mst.IS_DELIVERED,mst.POD,mst.DELIVERY_DATE,mst.SLA_DAYS,mst.PICKUP_DATE,mst.PICKUP_BY,mst.BOOKING_DATE  ");
             sb.Append("  ,mst.CN_CLIENT_CODE,mst.PRODUCT_TYPE,mst.UPS,mst.STATUS,mst.NARRATION,mst.ITEM_NAME,mst.CLIENT_DEPT_ID,mst.HUB_ID,mst.DESTINATION,mst.REF_TYPE,mst.DISTANCE_TYPE_ID  ");
             sb.Append("  ,mst.OTP_CODE,mst.CUSTOMER_OTP,mst.UPDATE_BY_REQUEST,mst.UPDATE_DATE_REQUEST,mst.CLIENT_DEPTORBRANCH,mst.WEIGHT,mst.QTY,mst.RATE,mst.TAKA,mst.SERVICE_CHARGE,mst.TOTAL_AMT,mst.CARGO_ID,  ");
-            sb.Append("  cl.client_name,  ");
+            sb.Append("  cl.client_name,dst.type_name DISTANCE_TYPE_NAME, ");
             sb.Append("  agm.description AS AGREEMENT_DESCRIPTION, "); 
             sb.Append("  im.item_name,  ");
             sb.Append("  r.route_name,  ");
@@ -68,6 +68,7 @@ namespace PG.BLLibrary.WRElBL
             sb.Append("  LEFT JOIN district_mst dis ON mst.destination_dist_id = dis.dist_id  ");
             sb.Append("  LEFT JOIN thana_town_mst th ON mst.destination_town_id = th.town_id  ");
             sb.Append("  LEFT JOIN DEPARTMENT_MST dp ON mst.CLIENT_DEPT_ID = dp.DEPT_ID  ");
+            sb.Append("  LEFT JOIN distance_type_mst dst on mst.distance_type_id=dst.distance_type_id ");
             sb.Append("  WHERE 1=1 ");
 
             return sb.ToString();
